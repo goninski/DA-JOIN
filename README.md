@@ -1,2 +1,2 @@
-# DA-FE10-Join
+# DA-Join
 JS Group Project | Developer Academy FE
