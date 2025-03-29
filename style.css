@@ -19,4 +19,11 @@
     --clr-light: #FFFFFF;
     --clr-dark: #2A3647;
     --clr-light-blue: #29ABE2;
+
+    --ff-primary: "Inter", sans-serif;
+
+}
+
+body {
+    font-family: var(--ff-primary);
 }

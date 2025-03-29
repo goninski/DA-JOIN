@@ -2,6 +2,7 @@ button {
     line-height: 1.2;
     letter-spacing: 0;
     transition-duration: 125ms;
+    font-family: var(--ff-primary);
 }
 .btn-iconless {
     border-radius: 8px;
@@ -18,8 +19,8 @@ button {
     font-weight: 700;
 }
 .btn-primary {
-    color: #FFFFFF;
-    background-color: #2A3647;
+    color: var(--clr-light);
+    background-color: var(--clr-dark);
     border: none;
 }
 .btn-primary:hover {
