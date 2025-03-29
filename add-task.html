@@ -7,6 +7,7 @@
     <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
     <title>Add Task | Join</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./styles/styles-add-task.css">
     <script src="scripts/templates.js"></script>
     <script src="script.js"></script>
 </head>
@@ -18,10 +19,47 @@
         <section class="section">
             <div class="ct-container">
 
-                <h1 class="page-title">Add Task</h1>
+                <h1 class="page-title ">Add Task</h1>
+                <form class="flex-col">
 
-                <form>
+                    <div class="flex-row gap-40">
+                        <div class="flex-col flex-grow gap">
+                            <div class="field-wrapper">
+                                <label for="title">Title</label>
+                                <input type="text" placeholder="Enter a title" required>
+                            </div>
+                            <div class="field-wrapper">
+                                <label for="description">Description</label>
+                                <input type="text" placeholder="Enter a description">
+                            </div>
+                            <div class="field-wrapper">
+                                <label for="description">Due date</label>
+                                <input type="date" placeholder="dd/mm/yyyy" required>
+                            </div>
+                        </div>
 
+                        <div class="v-divider"></div>
+
+                        <div class="flex-col flex-grow gap">
+                            <div class="field-wrapper">
+                                <label for="title">Title</label>
+                                <input type="text" placeholder="Enter a title" required>
+                            </div>
+                            <div class="field-wrapper">
+                                <label for="description">Description</label>
+                                <input type="text" placeholder="Enter a description">
+                            </div>
+                            <div class="field-wrapper">
+                                <label for="description">Due date</label>
+                                <input type="date" placeholder="dd/mm/yyyy" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-wrapper flex-row gap mt-50 justify-end">
+                        <button class="btn-check btn-secondary">Clear</button>
+                        <button class="btn-check btn-primary">Create Task</button>
+                    </div>
                 </form>
 
             </div>

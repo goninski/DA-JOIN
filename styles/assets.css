@@ -1,6 +1,7 @@
 .page-title {
     font-size: 61px;
     font-weight: var(--fw-bold);
+    margin-bottom: 48px;
 }
 .subtitle {
     font-size: 27px;
@@ -8,6 +9,7 @@
 a:hover {
     text-decoration: underline;
 }
+
 
 /*** BUTTONS */
 button {
@@ -55,6 +57,11 @@ form {
     display: flex;
     flex-direction: column;
 }
+.field-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
 label {
     font-size: 20px;
 }
@@ -66,4 +73,8 @@ input {
 }
 input::placeholder {
     color: var(--clr-subtle);
+}
+
+.v-divider {
+    border-left: solid 1px var(--clr-subtle);
 }
