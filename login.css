@@ -1,0 +1,35 @@
+.logo_login{
+    width: 100.03px;
+    height: 121.97px;
+    top: 80px;
+    left: 77px;
+}
+
+.gap_16px{
+    gap: 16px;
+}
+
+.btn-third {
+    color: rgba(42, 54, 71, 1);
+    background-color: white;
+    border-color: rgba(42, 54, 71, 1);
+    border: 1px;
+    gap: 10px;
+}
+
+.btn-third:hover {
+    color: var(--clr-light-blue);
+    border-color: var(--clr-light-blue);
+    border-width: 2px;
+}
+
+.btn-login-size{
+    border: solid 1px var(--clr-main);
+    border-color: rgba(42, 54, 71, 1);
+    border-radius: 8px;
+    padding: 15px 24px;
+    gap: 10px;
+    min-height: 56px;
+    font-size: 21px;
+    font-weight: var(--fw-bold);
+}
