@@ -315,6 +315,9 @@
     .flex-wrap--ss-mob {
         flex-wrap: wrap;
     }
+    .hide--ss-mob {
+        display: none;
+    }
 }
 @media(max-width: 359px) {
 }
