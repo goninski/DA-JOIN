@@ -22,8 +22,19 @@
 
     --ff-primary: "Inter", sans-serif;
 
+    --fs-text: 16px;
+    --fs-title: 61px;
+    --fs-subtitle: 27px;
+
 }
 
 body {
     font-family: var(--ff-primary);
+    font-size: var(--fs-text);
+}
+.fs-title {
+    font-size: var(--fs-title);
+}
+.fs-subtitle {
+    font-size: var(--fs-subtitle);
 }
