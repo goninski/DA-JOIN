@@ -6,6 +6,8 @@
     font-size: 27px;
 }
 
+
+/*** BUTTONS */
 button {
     transition-duration: 125ms;
     font-family: var(--ff-primary);
@@ -41,4 +43,25 @@ button {
     color: var(--clr-light-blue);
     border-color: var(--clr-light-blue);
     border-width: 2px;
+}
+
+
+
+/*** FORM/INPUTS */
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+label {
+    font-size: 20px;
+}
+input {
+    padding: 12px 21px;
+    border-radius: 10px;
+    border: solid 1px var(--clr-subtle);
+    font-size: 20px;
+}
+input::placeholder {
+    color: var(--clr-subtle);
 }

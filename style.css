@@ -4,6 +4,23 @@
 @import url("styles/assets.css");
 
 :root {
+    --clr-main: #2A3647;
+    --clr-dark: #091931;
+    --clr-light-blue: #29ABE2;
+    --clr-disabled: #CDCDCD;
+    --clr-subtle: #D1D1D1;
+
+    --ff-primary: "Inter", sans-serif;
+    --fs-base: 16px;
+    --lh-base: 1.2;
+    --fw-regular: 400;
+    --fw-bold: 700;
+
+    --ct-w: 1440px;
+    --px-sec: 4vw;
+    --py-sec: var(--sp-40);
+    --p-card: 16px;
+
     --sp-05: 12px;
     --sp-10: 24px;
     --sp-20: 32px;
@@ -15,17 +32,6 @@
     --sp-80: 120px;
     --sp-90: 150px;
     --gap: var(--sp-10);
-
-    --clr-main: #2A3647;
-    --clr-dark: #091931;
-    --clr-light-blue: #29ABE2;
-    --clr-disabled: #CDCDCD;
-
-    --ff-primary: "Inter", sans-serif;
-    --fs-base: 16px;
-    --lh-base: 1.2;
-    --fw-regular: 400;
-    --fw-bold: 700;
 }
 
 body {
@@ -33,4 +39,32 @@ body {
     font-size: var(--fs-base);
     line-height: var(--lh-base);
     color: var(--clr-main);
+}
+
+
+
+
+
+
+
+
+/*** BREAKPOINTS */
+@media(max-width: 939px) {
+}
+@media(max-width: 719px) {
+    :root {
+        --px-sec: 24px;
+    }
+}
+@media(max-width: 511px) {
+}
+@media(max-width: 359px) {
+    :root {
+        --px-sec: 20px;
+    }
+}
+@media(min-width: 1516px) {
+    :root {
+        --px-sec: 64px;
+    }
 }

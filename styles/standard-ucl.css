@@ -114,7 +114,7 @@
 
 
 /*** SECTION SPACING */
-/* .p-card {
+.p-card {
     padding: var(--p-card);
 }
 .px-sec {
@@ -132,7 +132,7 @@
 .py-sec-xs {
     padding-top: var(--py-sec-xs);
     padding-bottom: var(--py-sec-xs);
-} */
+}
 .py {
     padding-top: var(--sp-10);
     padding-bottom: var(--sp-10);
@@ -185,6 +185,12 @@
 .mt-30 {
     margin-top: var(--sp-30);
 }
+.mt-40 {
+    margin-top: var(--sp-40);
+}
+.mt-50 {
+    margin-top: var(--sp-50);
+}
 
 .mb {
     margin-bottom: var(--sp-10);
@@ -203,6 +209,12 @@
 }
 .mb-30 {
     margin-bottom: var(--sp-30);
+}
+.mb-40 {
+    margin-bottom: var(--sp-40);
+}
+.mb-50 {
+    margin-bottom: var(--sp-50);
 }
 
 /*** GAP */

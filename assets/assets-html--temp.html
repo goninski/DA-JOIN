@@ -6,19 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asset Styles</title>
     <link rel="stylesheet" href="/style.css">
+    <style>
+        h2 {color: var(--clr-light-blue);}
+    </style>
 </head>
 
 <body>
 
-    <div class="center mt flex-col gap">
-        <button class="btn-iconless btn-primary">btn-iconless/primary</button>
+    <section class="section">
+        <div class="ct-container">
 
-        <button class="btn-iconless btn-secondary">btn-iconless/secondary</button>
-    
-        <button class="btn-check btn-primary">btn-check/primary</button>
-    
-        <button class="btn-check btn-secondary">btn-check/secondary</button>
-    </div>
+            <div class="center py flex-col gap">
+                <h2>Buttons</h2>
+                <button class="btn-iconless btn-primary">btn-iconless/primary</button>
+                <button class="btn-iconless btn-secondary">btn-iconless/secondary</button>
+                <button class="btn-check btn-primary">btn-check/primary</button>
+                <button class="btn-check btn-secondary">btn-check/secondary</button>
+            </div>
+        
+            <div class="center py flex-col gap">
+                <h2>Inputs</h2>
+                <form>
+                    <label for="name"></label>
+                    <input type="text" name="name" placeholder="Text Input"></Input>
+                </form>
+            </div>
+
+        </div>
+    </section>
 
 </body>
 

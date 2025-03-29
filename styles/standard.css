@@ -20,16 +20,16 @@ header {
 footer {
     margin-top: auto !important;
 }
-:where(section, .section) {
+.section {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
-/* :where(section, .section):not(.seamless-x, .seamless) {
+.section:not(.seamless-x, .seamless) {
     padding-left: var(--px-sec);
     padding-right: var(--px-sec);
 }
-:where(section, .section):not(.seamless-y, .seamless, header, footer) {
+.section:not(.seamless-y, .seamless, header, footer) {
     padding-top: var(--py-sec);
     padding-bottom: var(--py-sec);
 }
@@ -40,8 +40,7 @@ footer {
     max-width: var(--ct-w);
     margin-left: auto;
     margin-right: auto;
-} */
-
+}
 :where(h1, h2, h3, h4, h5, h6) {
     margin-top: 0;
     margin-bottom: 0;
