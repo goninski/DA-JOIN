@@ -1,0 +1,12 @@
+.headline-summary {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    left: 328px;
+    top: 206px;
+}
+
+.headline-key-metrics{
+    size: 27px;
+    font-weight: 400;
+}
