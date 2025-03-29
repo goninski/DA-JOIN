@@ -90,23 +90,11 @@
 
 
 /*** TYPOGRAPHY */
-.text-center {
-    text-align: center;
+.fs-base {
+    font-size: var(--fs-base);
 }
-/* .fs-text {
-    font-size: var(--fs-text);
-}
-.fs-text-sm {
-    font-size: var(--fs-text-sm);
-}
-.fs-text-lg {
-    font-size: var(--fs-text-lg);
-}
-.fs-text-xl {
-    font-size: var(--fs-text-xl);
-}
-.uppercase {
-    text-transform: uppercase;
+.lh-base {
+    line-height: var(--lh-base);
 }
 .fw-light {
     font-weight: var(--fw-light);
@@ -116,7 +104,13 @@
 }
 .fw-bold {
     font-weight: var(--fw-bold);
-} */
+}
+.text-center {
+    text-align: center;
+}
+.uppercase {
+    text-transform: uppercase;
+}
 
 
 /*** SECTION SPACING */

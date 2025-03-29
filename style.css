@@ -16,25 +16,21 @@
     --sp-90: 150px;
     --gap: var(--sp-10);
 
-    --clr-light: #FFFFFF;
-    --clr-dark: #2A3647;
+    --clr-main: #2A3647;
+    --clr-dark: #091931;
     --clr-light-blue: #29ABE2;
+    --clr-disabled: #CDCDCD;
 
     --ff-primary: "Inter", sans-serif;
-
-    --fs-text: 16px;
-    --fs-title: 61px;
-    --fs-subtitle: 27px;
-
+    --fs-base: 16px;
+    --lh-base: 1.2;
+    --fw-regular: 400;
+    --fw-bold: 700;
 }
 
 body {
     font-family: var(--ff-primary);
-    font-size: var(--fs-text);
-}
-.fs-title {
-    font-size: var(--fs-title);
-}
-.fs-subtitle {
-    font-size: var(--fs-subtitle);
+    font-size: var(--fs-base);
+    line-height: var(--lh-base);
+    color: var(--clr-main);
 }
