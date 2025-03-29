@@ -1,4 +1,4 @@
-@import url("assets/fonts/open-sans/fonts.css");
+@import url("assets/fonts/inter/inter.css");
 @import url("styles/standard.css");
 @import url("styles/standard-ucl.css");
 @import url("styles/assets.css");
@@ -16,6 +16,7 @@
     --sp-90: 150px;
     --gap: var(--sp-10);
 
+    --clr-light: #FFFFFF;
     --clr-dark: #2A3647;
     --clr-light-blue: #29ABE2;
 }
