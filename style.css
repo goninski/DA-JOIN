@@ -1,3 +1,21 @@
 @import url("assets/fonts/open-sans/fonts.css");
+@import url("styles/standard.css");
+@import url("styles/standard-ucl.css");
 @import url("styles/assets.css");
 
+:root {
+    --sp-05: 12px;
+    --sp-10: 24px;
+    --sp-20: 32px;
+    --sp-30: 40px;
+    --sp-40: 48px;
+    --sp-50: 64px;
+    --sp-60: 80px;
+    --sp-70: 96px;
+    --sp-80: 120px;
+    --sp-90: 150px;
+    --gap: var(--sp-10);
+
+    --clr-dark: #2A3647;
+    --clr-light-blue: #29ABE2;
+}

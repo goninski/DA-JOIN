@@ -1,0 +1,293 @@
+/***** STANDARD UTILITY CLASSES */
+
+.flex {
+    display: flex;
+}
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+.flex-row-reverse {
+    display: flex;
+    flex-direction: row-reverse;
+}
+.flex-wrap {
+    flex-wrap: wrap;
+}
+.justify-center {
+    justify-content: center;
+}
+.justify-between {
+    justify-content: space-between;
+}
+.justify-around {
+    justify-content: space-around;
+}
+.justify-start {
+    justify-content: flex-start;
+}
+.justify-end {
+    justify-content: flex-end;
+}
+.align-center {
+    align-items: center;
+}
+.align-end {
+    align-items: flex-end;
+}
+.align-stretch {
+    align-items: stretch;
+}
+.center {
+    justify-content: center;
+    align-items: center;
+}
+.align-self-stretch {
+    align-self: stretch;
+}
+.flex-grow {
+    flex-grow: 1;
+}
+.fw {
+    width: 100%;
+}
+.ct-fw {
+    --ct-w: 100%;
+}
+.fvh-min {
+    min-height: 100vh;
+}
+.expand {
+    width: 100%;
+    height: 100%;
+}
+.min-w-100 {
+    min-width: 100%;
+}
+.max-w-100 {
+    max-width: 100%;
+}
+.hide {
+    display: none !important;
+}
+
+
+/*** IMAGES */
+.bg-img-cover {
+    background-size: cover;
+    background-position: center;
+}
+.img-cover {
+    object-fit: cover;
+}
+.img-contain {
+    object-fit: contain;
+}
+
+
+/*** TYPOGRAPHY */
+.text-center {
+    text-align: center;
+}
+/* .fs-text {
+    font-size: var(--fs-text);
+}
+.fs-text-sm {
+    font-size: var(--fs-text-sm);
+}
+.fs-text-lg {
+    font-size: var(--fs-text-lg);
+}
+.fs-text-xl {
+    font-size: var(--fs-text-xl);
+}
+.uppercase {
+    text-transform: uppercase;
+}
+.fw-light {
+    font-weight: var(--fw-light);
+}
+.fw-regular {
+    font-weight: var(--fw-regular);
+}
+.fw-bold {
+    font-weight: var(--fw-bold);
+} */
+
+
+/*** SECTION SPACING */
+/* .p-card {
+    padding: var(--p-card);
+}
+.px-sec {
+    padding-left: var(--px-sec);
+    padding-right: var(--px-sec);
+}
+.py-sec {
+    padding-top: var(--py-sec);
+    padding-bottom: var(--py-sec);
+}
+.py-sec-sm {
+    padding-top: var(--py-sec-sm);
+    padding-bottom: var(--py-sec-sm);
+}
+.py-sec-xs {
+    padding-top: var(--py-sec-xs);
+    padding-bottom: var(--py-sec-xs);
+} */
+.py {
+    padding-top: var(--sp-10);
+    padding-bottom: var(--sp-10);
+}
+.py-05 {
+    padding-top: var(--sp-05);
+    padding-bottom: var(--sp-05);
+}
+.py-10 {
+    padding-top: var(--sp-10);
+    padding-bottom: var(--sp-10);
+}
+.py-20 {
+    padding-top: var(--sp-20);
+    padding-bottom: var(--sp-20);
+}
+.py-30 {
+    padding-top: var(--sp-30);
+    padding-bottom: var(--sp-30);
+}
+
+/*** MARGIN */
+.my-auto {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+.my-0 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.mt {
+    margin-top: var(--sp-10);
+}
+.mt-0 {
+    margin-top: 0;
+}
+.mt-05 {
+    margin-top: var(--sp-05);
+}
+.mt-10 {
+    margin-top: var(--sp-10);
+}
+.mt-20 {
+    margin-top: var(--sp-20);
+}
+.mt-30 {
+    margin-top: var(--sp-30);
+}
+
+.mb {
+    margin-bottom: var(--sp-10);
+}
+.mb-0 {
+    margin-bottom: 0;
+}
+.mb-05 {
+    margin-bottom: var(--sp-05);
+}
+.mb-10 {
+    margin-bottom: var(--sp-10);
+}
+.mb-20 {
+    margin-bottom: var(--sp-20);
+}
+.mb-30 {
+    margin-bottom: var(--sp-30);
+}
+
+/*** GAP */
+.gap {
+    gap: var(--gap);
+}
+.gap-05 {
+    gap: var(--sp-05);
+}
+.gap-10 {
+    gap: var(--sp-10);
+}
+.gap-20 {
+    gap: var(--sp-20);
+}
+.gap-30 {
+    gap: var(--sp-30);
+}
+.gap-40 {
+    gap: var(--sp-40);
+}
+
+/*** COL GAP */
+.col-gap {
+    column-gap: var(--gap);
+}
+.col-gap-05 {
+    column-gap: var(--sp-05);
+}
+.col-gap-10 {
+    column-gap: var(--sp-10);
+}
+.col-gap-20 {
+    column-gap: var(--sp-20);
+}
+
+/*** ROW GAP */
+.row-gap {
+    row-gap: var(--gap);
+}
+.row-gap-05 {
+    row-gap: var(--sp-05);
+}
+.row-gap-10 {
+    row-gap: var(--sp-10);
+}
+.row-gap-20 {
+    row-gap: var(--sp-20);
+}
+
+
+/*** POSITIONS & MORE*/
+.pos-relative {
+    position: relative;
+}
+.pos-absolute {
+    position: absolute;
+}
+.overlay-before:before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+    background-color: var(--overlay);
+}
+.overflow-hidden {
+    overflow: hidden;
+}
+
+
+
+
+/*** BREAKPOINTS */
+
+@media(max-width: 719px) {
+    .flex-wrap--ss-mob {
+        flex-wrap: wrap;
+    }
+}
+@media(max-width: 359px) {
+}
+@media(min-width: 1516px) {
+}
