@@ -308,12 +308,42 @@
 
 
 
+/*** DEBUG-COLORS */
+.bg-yellow {
+    background-color: yellow;
+}
+.bg-red {
+    background-color: red;
+}
+.bg-blue {
+    background-color: blue;
+}
+.bg-green {
+    background-color: green;
+}
+
+
+
 
 /*** BREAKPOINTS */
 
+/* @media(max-width: 992px) {
+    .flex-wrap--ss-tab {
+        flex-wrap: wrap;
+    }
+    .flex-col--ss-tab {
+        flex-direction: column;
+    }
+    .hide--ss-tab {
+        display: none;
+    }
+} */
 @media(max-width: 719px) {
     .flex-wrap--ss-mob {
         flex-wrap: wrap;
+    }
+    .flex-col--ss-mob {
+        flex-direction: column;
     }
     .hide--ss-mob {
         display: none;
@@ -322,4 +352,10 @@
 @media(max-width: 359px) {
 }
 @media(min-width: 1516px) {
+}
+
+@media(min-width: 720px) {
+    .show--ss-mob {
+        display: none;
+    }
 }

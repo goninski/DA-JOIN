@@ -81,7 +81,7 @@ input::placeholder {
 
 
 
-@media(max-width: 719px) {
+@media(max-width: 992px) {
     .field-row {
         flex-direction: column;
     }
