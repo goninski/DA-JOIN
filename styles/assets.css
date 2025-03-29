@@ -5,7 +5,9 @@
 .subtitle {
     font-size: 27px;
 }
-
+a:hover {
+    text-decoration: underline;
+}
 
 /*** BUTTONS */
 button {

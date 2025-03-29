@@ -1,5 +1,28 @@
 /***** STANDARD UTILITY CLASSES */
 
+.section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.section:not(.seamless-x, .seamless) {
+    padding-left: var(--px-sec);
+    padding-right: var(--px-sec);
+}
+.section:not(.seamless-y, .seamless, header, footer) {
+    padding-top: var(--py-sec);
+    padding-bottom: var(--py-sec);
+}
+.ct-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: var(--ct-w);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
 .flex {
     display: flex;
 }
