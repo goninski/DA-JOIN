@@ -89,15 +89,16 @@ label {
     left: 0;
     font-size: 20px;
 }
-input, textarea {
+input, textarea, select {
     padding: 12px 21px;
     border-radius: 10px;
     border: solid 1px var(--clr-subtle);
     font-size: 20px;
+    min-height: 48px;
 }
 textarea {
     resize: vertical;
-    min-height: 89px;
+    min-height: 120px;
 }
 .v-divider {
     border-left: solid 1px var(--clr-subtle);

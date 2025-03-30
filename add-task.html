@@ -53,11 +53,19 @@
                         </div>
                         <div class="field-wrapper">
                             <label for="assigned">Assigned to</label>
-                            <input type="text" name="assigned" placeholder="Select contacts to assign">
+                            <select id="inputAssigned" name="assigned" placeholder="Select contacts to assign">
+                                <option value="user-1">User 1</option>
+                                <option value="user-2">User 2</option>
+                                <option value="user-3">User 3</option>
+                            </select>
                         </div>
                         <div class="field-wrapper">
                             <label for="category" class="required">Category</label>
-                            <input type="text" name="category" placeholder="Select task category" required>
+                            <select id="inputCategory" name="category" placeholder="Select task category">
+                                <option value="category-1">Categorie 1</option>
+                                <option value="category-2">Categorie 2</option>
+                                <option value="category-3">Categorie 3</option>
+                            </select>
                         </div>
                         <div class="field-wrapper">
                             <label for="subtasks">Subtasks</label>
