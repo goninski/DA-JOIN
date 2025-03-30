@@ -346,7 +346,7 @@
         flex-direction: column;
     }
     .hide--ss-mob {
-        display: none;
+        display: none !important;
     }
 }
 @media(max-width: 359px) {
@@ -356,6 +356,6 @@
 
 @media(min-width: 720px) {
     .show--ss-mob {
-        display: none;
+        display: none !important;
     }
 }
