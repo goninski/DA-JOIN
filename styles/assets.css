@@ -175,6 +175,7 @@ textarea {
     }
     .priority-input-wrapper {
         justify-content: start;
+        flex-wrap: wrap;
     }
     .add-task-form .required-info {
         margin-top: 32px;
