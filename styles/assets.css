@@ -67,12 +67,18 @@ button img {
 form {
     display: flex;
     flex-direction: column;
+    --field-width: 440px;
 }
 .field-wrapper {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
+.field-col {
+    min-width: var(--field-width);
+    max-width: var(--field-width);
+}
+
 label {
     font-size: 20px;
 }
@@ -98,8 +104,6 @@ input, textarea, select {
     font-family: var(--ff-primary);
     font-size: 20px;
     min-height: 48px;
-    --field-width: 438px;
-    min-width: var(--field-width);
 }
 textarea {
     resize: vertical;
@@ -109,7 +113,8 @@ textarea {
     color: var(--clr-main);
     border: solid 1px var(--clr-subtle);
     cursor: pointer;
-    min-width: 136px;
+    width: 136px;
+    justify-content: center;
 }
 
 
@@ -118,6 +123,9 @@ textarea {
 }
 
 
+.priority-input-wrapper  {
+    gap: 16px;
+}
 .priority-input-wrapper label[for="inputPrioHigh"] {
     --icon-color: var(--clr-prio-high);
 }
@@ -157,12 +165,13 @@ textarea {
 
 
 
-@media(max-width: 1259px) {
-    form {
-        min-width: 100%;
-    }
+@media(max-width: 1339px) {
     .field-row {
-        flex-direction: column !important;
+        flex-direction: column;
+    }
+    .field-col {
+        min-width: 100%;
+        max-width: var(--field-width);
     }
     .priority-input-wrapper {
         justify-content: start;
@@ -171,7 +180,7 @@ textarea {
         margin-top: 32px;
         margin-bottom: 100px;
     }
-    
 }
+
 
 
