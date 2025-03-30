@@ -126,28 +126,37 @@ textarea {
 .priority-input-wrapper  {
     gap: 16px;
 }
-.priority-input-wrapper label[for="inputPrioHigh"] {
+.priority-input-wrapper input {
+    display: none;
+}
+label.prio-high {
     --icon-color: var(--clr-prio-high);
 }
-.priority-input-wrapper label[for="inputPrioMedium"] {
+label.prio-medium {
     --icon-color: var(--clr-prio-medium);
 }
-.priority-input-wrapper label[for="inputPrioLow"] {
+label.prio-low {
     --icon-color: var(--clr-prio-low);
 }
-.priority-input-wrapper label[for="inputPrioHigh"]:hover {
+label.prio-high:hover,
+input:checked + label.prio-high {
     background-color: var(--clr-prio-high);
 }
-.priority-input-wrapper label[for="inputPrioMedium"]:hover {
+label.prio-medium:hover,
+input:checked + label.prio-medium {
     background-color: var(--clr-prio-medium);
 }
-.priority-input-wrapper label[for="inputPrioLow"]:hover {
+label.prio-low:hover,
+input:checked + label.prio-low {
     background-color: var(--clr-prio-low);
 }
-.priority-input-wrapper label:hover {
+.priority-input-wrapper label:hover,
+.priority-input-wrapper input:checked + label {
     color: white;
     --icon-color: white;
 }
+
+
 
 ::placeholder,
 .placeholder {
