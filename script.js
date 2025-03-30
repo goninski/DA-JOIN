@@ -20,3 +20,8 @@ function getSidemenu() {
     sideMenuMobRef.innerHTML = getSideMenuMobTemplate();
     sideMenuMobRef.classList.add('show--ss-mob');
 }
+
+function resetInput(event, id) {
+    document.getElementById(id).reset()
+    event.preventDefault();
+}
