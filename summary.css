@@ -1,12 +1,120 @@
+body {
+    background-color: #F6F7F8;
+}
+
+header {
+    background-color: #FFFFFF;
+}
+
 .headline-summary {
     position: absolute;
     display: flex;
     align-items: center;
     left: 328px;
     top: 206px;
+    gap: 30px;
 }
 
-.headline-key-metrics{
-    size: 27px;
+.headline-key-metrics {
+    font-size: 27px;
     font-weight: 400;
+}
+
+.greeting-user {
+    position: absolute;
+    top: 547.5px;
+    left: 968px;
+    gap: 3px;
+    font-size: 47px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+}
+
+.username {
+    font-weight: 700;
+    font-size: 64px;
+    color: #29ABE2;
+    margin: 0px;
+}
+
+.greeting {
+    margin: 0px;
+}
+
+.key-metrics {
+    position: absolute;
+    top: 335px;
+    left: 328px;
+    height: 562px;
+    width: 560px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.to-do {
+    gap: 18px;
+    border-radius: 30px;
+    padding-top: 38px;
+    padding-right: 19px;
+    padding-bottom: 38px;
+    padding-left: 19px;
+    background-color: #FFFFFF;
+    width: 264px;
+    height: 168;
+}
+
+.done {
+    width: 264px;
+    height: 168px;
+    border-radius: 30px;
+    background-color: #FFFFFF;
+    padding-top: 38px;
+    padding-bottom: 38px;
+    padding-left: 58px;
+    padding-right: 58px;
+    gap: 18px;
+}
+
+.urgent-deadline {
+    width: 560px;
+    height: 168px;
+    border-radius: 30px;
+    padding-top: 28px;
+    padding-bottom: 28px;
+    padding-left: 48px;
+    padding-right: 48px;
+    gap: 61px;
+    background-color: #FFFFFF;
+}
+
+.tasks-in-board {
+    background-color: #FFFFFF;
+    border-radius: 30px;
+    width: 168px;
+    height: 168px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    gap: 13px;
+}
+
+.tasks-in-progress {
+    background-color: #FFFFFF;
+    border-radius: 30px;
+    height: 168px;
+    width: 168px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    gap: 13px;
+}
+
+.awaiting-feedback {
+    background-color: #FFFFFF;
+    border-radius: 30px;
+    height: 168px;
+    width: 168px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    gap: 13px;
 }
