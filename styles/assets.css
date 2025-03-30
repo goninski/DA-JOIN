@@ -98,7 +98,7 @@ input, textarea, select {
     font-family: var(--ff-primary);
     font-size: 20px;
     min-height: 48px;
-    --field-width: 410px;
+    --field-width: 438px;
     min-width: var(--field-width);
 }
 textarea {
@@ -109,6 +109,7 @@ textarea {
     color: var(--clr-main);
     border: solid 1px var(--clr-subtle);
     cursor: pointer;
+    min-width: 136px;
 }
 
 
