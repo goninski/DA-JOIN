@@ -14,9 +14,13 @@ a:hover {
 /*** BUTTONS */
 button {
     transition-duration: 125ms;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     font-family: var(--ff-primary);
     line-height: 1.2;
     letter-spacing: 0;
+    gap: 10px;
 }
 .btn-iconless {
     border-radius: 8px;
@@ -24,15 +28,15 @@ button {
     min-height: 48px;
     font-size: var(--fs-base);
 }
-.btn-check {
+.btn-icon {
     border-radius: 10px;
     padding: 16px;
     min-height: 56px;
     font-size: 21px;
-    font-weight: var(--fw-bold);
 }
 .btn-primary {
     color: white;
+    font-weight: var(--fw-bold);
     background-color: var(--clr-main);
     border: none;
 }
@@ -47,6 +51,10 @@ button {
     color: var(--clr-light-blue);
     border-color: var(--clr-light-blue);
     border-width: 2px;
+}
+button img {
+    height: 12px;
+    width: auto;
 }
 
 
@@ -65,18 +73,41 @@ form {
 label {
     font-size: 20px;
 }
-input {
+.required::after,
+.required-info::before {
+    content: "*";
+    color: var(--clr-warning);
+}
+.required-info {
+    position: relative;
+    margin-top: -12px;
+    padding-left: 12px;
+}
+.required-info::before {
+    position: absolute;
+    top: -0.175em;
+    left: 0;
+    font-size: 20px;
+}
+input, textarea {
     padding: 12px 21px;
     border-radius: 10px;
     border: solid 1px var(--clr-subtle);
     font-size: 20px;
 }
-input::placeholder {
-    color: var(--clr-subtle);
+textarea {
+    resize: vertical;
+    min-height: 89px;
 }
-
 .v-divider {
     border-left: solid 1px var(--clr-subtle);
+}
+::placeholder,
+.placeholder {
+    color: var(--clr-subtle);
+}
+.placeholder:focus {
+    color: var(--clr-main);
 }
 
 
