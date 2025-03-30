@@ -1,11 +1,11 @@
-.logo_login{
+.logo_login {
     width: 100.03px;
     height: 121.97px;
     top: 80px;
     left: 77px;
 }
 
-.gap_16px{
+.gap_16px {
     gap: 16px;
 }
 
@@ -23,7 +23,7 @@
     border-width: 2px;
 }
 
-.btn-login-size{
+.btn-login-size {
     border: solid 1px var(--clr-main);
     border-color: rgba(42, 54, 71, 1);
     border-radius: 8px;
@@ -32,4 +32,33 @@
     min-height: 56px;
     font-size: 21px;
     font-weight: var(--fw-bold);
+}
+
+.bg-grey {
+    background-color: #F6F7F8
+}
+
+.bg-white {
+    background-color: white
+}
+
+.login-div-size {
+    width: 652px;
+    height: 449px;
+}
+
+.login-email-part {
+    width: 422px;
+    height: 152px;
+    padding: 0px;
+    align-self: stretch;
+}
+
+.login-privacy-policy {
+    width: 246px;
+    height: 35px;
+}
+
+.gap-35 {
+    gap: 35px;
 }
