@@ -22,76 +22,76 @@
     <main>
  
         <section class="section add-task-section">
-
             <div class="ct-container">
-                <h1 class="page-title ">Add Task</h1>
-            </div>
-            
-            <form onsubmit="btnCheck" class="ct-container flex-col add-task-form">
-                <div class="field-row flex-row gap-40">
-                    <div class="field-col flex-col flex-grow gap">
-                        <div class="field-wrapper">
-                            <label for="title" class="required">Title</label>
-                            <input type="text" name="title" placeholder="Enter a title" required>
-                        </div>
-                        <div class="field-wrapper">
-                            <label for="description">Description</label>
-                            <textarea name="description" placeholder="Enter a description"></textarea>
-                        </div>
-                        <div class="field-wrapper">
-                            <label for="date" class="required">Due date</label>
-                            <input type="date" name="date" class="placeholder" required>
-                        </div>
-                    </div>
+                <div class="ct-max" style="max-width: 976px;">
 
-                    <div class="v-divider hide--ss-mob"></div>
-
-                    <div class="field-col flex-col flex-grow gap">
-                        <div class="field-wrapper">
-                            <label for="priority">Priority</label>
-                            <div class="priority-input-wrapper flex-row justify-between align-center">
-                                <label for="inputPrioHigh" id="labelPrioHigh" class="button btn-icon btn-radio"></label>
-                                <input type="radio" id="inputPrioHigh" name="priority" value="High" class="hide">
-
-                                <label for="inputPrioMedium" id="labelPrioMedium" class="button btn-icon btn-radio"></label>
-                                <input type="radio" id="inputPrioMedium" name="priority" value="Medium" class="hide">
-
-                                <label for="inputPrioLow" id="labelPrioLow" class="button btn-icon btn-radio"></label>
-                                <input type="radio" id="inputPrioLow" name="priority" value="Low" class="hide">
+                    <h1 class="page-title ">Add Task</h1>
+                    <form onsubmit="btnCheck" class="flex-col add-task-form">
+                        <div class="field-row flex-row gap-40">
+                            <div class="field-col flex-col flex-grow gap">
+                                <div class="field-wrapper">
+                                    <label for="title" class="required">Title</label>
+                                    <input type="text" name="title" placeholder="Enter a title" required>
+                                </div>
+                                <div class="field-wrapper">
+                                    <label for="description">Description</label>
+                                    <textarea name="description" placeholder="Enter a description"></textarea>
+                                </div>
+                                <div class="field-wrapper">
+                                    <label for="date" class="required">Due date</label>
+                                    <input type="date" name="date" class="placeholder" required>
+                                </div>
                             </div>
-                        </div>
-                        <div class="field-wrapper">
-                            <label for="assigned">Assigned to</label>
-                            <select id="inputAssigned" name="assigned" placeholder="Select contacts to assign">
-                                <option value="user-1">User 1</option>
-                                <option value="user-2">User 2</option>
-                                <option value="user-3">User 3</option>
-                            </select>
-                        </div>
-                        <div class="field-wrapper">
-                            <label for="category" class="required">Category</label>
-                            <select id="inputCategory" name="category" placeholder="Select task category">
-                                <option value="category-1">Categorie 1</option>
-                                <option value="category-2">Categorie 2</option>
-                                <option value="category-3">Categorie 3</option>
-                            </select>
-                        </div>
-                        <div class="field-wrapper">
-                            <label for="subtasks">Subtasks</label>
-                            <input type="text" name="subtasks" placeholder="Add new subtask">
-                        </div>
 
-                    </div>
+                            <div class="v-divider hide--ss-mob"></div>
+
+                            <div class="field-col flex-col flex-grow gap">
+                                <div class="field-wrapper">
+                                    <label for="priority">Priority</label>
+                                    <div class="priority-input-wrapper flex-row justify-between align-center">
+                                        <label for="inputPrioHigh" id="labelPrioHigh" class="button btn-icon btn-radio"></label>
+                                        <input type="radio" id="inputPrioHigh" name="priority" value="High" class="hide">
+
+                                        <label for="inputPrioMedium" id="labelPrioMedium" class="button btn-icon btn-radio"></label>
+                                        <input type="radio" id="inputPrioMedium" name="priority" value="Medium" class="hide">
+
+                                        <label for="inputPrioLow" id="labelPrioLow" class="button btn-icon btn-radio"></label>
+                                        <input type="radio" id="inputPrioLow" name="priority" value="Low" class="hide">
+                                    </div>
+                                </div>
+                                <div class="field-wrapper">
+                                    <label for="assigned">Assigned to</label>
+                                    <select id="inputAssigned" name="assigned" placeholder="Select contacts to assign">
+                                        <option value="user-1">User 1</option>
+                                        <option value="user-2">User 2</option>
+                                        <option value="user-3">User 3</option>
+                                    </select>
+                                </div>
+                                <div class="field-wrapper">
+                                    <label for="category" class="required">Category</label>
+                                    <select id="inputCategory" name="category" placeholder="Select task category">
+                                        <option value="category-1">Categorie 1</option>
+                                        <option value="category-2">Categorie 2</option>
+                                        <option value="category-3">Categorie 3</option>
+                                    </select>
+                                </div>
+                                <div class="field-wrapper">
+                                    <label for="subtasks">Subtasks</label>
+                                    <input type="text" name="subtasks" placeholder="Add new subtask">
+                                </div>
+
+                            </div>
+
+                            </div>
+
+                                <p class="required-info">This field is required</p>
+                                <div class="submit-button-wrapper flex-row gap justify-end">
+                                    <button id="btnCancel" class="btn-cancel btn-icon btn-secondary"></button>
+                                    <button type="submit" id="btnCheck" class="btn-check btn-icon btn-primary" disabled></button>
+                                </div>
+                    </form>
 
                 </div>
-
-                        <p class="required-info">This field is required</p>
-                        <div class="submit-button-wrapper flex-row gap justify-end">
-                            <button id="btnCancel" class="btn-cancel btn-icon btn-secondary"></button>
-                            <button type="submit" id="btnCheck" class="btn-check btn-icon btn-primary" disabled></button>
-                        </div>
-            </form>
-
             </div>
         </section>
 

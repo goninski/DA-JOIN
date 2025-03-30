@@ -92,17 +92,8 @@ main, header, footer {
     color: white;
 }
 
-.add-task-section .ct-container {
-    padding-right: calc(var(--ct-w) - 976px);
-}
 
 
-/*** BREAKPOINTS */
-@media(max-width: 939px) {
-    .add-task-section .ct-container {
-        padding-right: 0;
-    }
-}
 @media(max-width: 719px) {
     :root {
         --px-sec: 16px;
