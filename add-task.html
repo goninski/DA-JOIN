@@ -27,7 +27,7 @@
                 <h1 class="page-title ">Add Task</h1>
             </div>
             
-            <form class="ct-container flex-col add-task-form">
+            <form onsubmit="btnCheck" class="ct-container flex-col add-task-form">
                 <div class="field-row flex-row gap-40">
                     <div class="flex-col flex-grow gap">
                         <div class="field-wrapper">
@@ -48,8 +48,17 @@
 
                     <div class="flex-col flex-grow gap">
                         <div class="field-wrapper">
-                            <label for="title">Title</label>
-                            <input type="text" placeholder="Enter a title" required>
+                            <label for="priority">Priority</label>
+                            <div class="priority-input-wrapper flex-row gap-05 justify-between align-center">
+                                <label for="inputPrioHigh" id="labelPrioHigh" class="button btn-icon btn-radio"></label>
+                                <input type="radio" id="inputPrioHigh" name="priority" value="High" class="hide">
+
+                                <label for="inputPrioMedium" id="labelPrioMedium" class="button btn-icon btn-radio"></label>
+                                <input type="radio" id="inputPrioMedium" name="priority" value="Medium" class="hide">
+
+                                <label for="inputPrioLow" id="labelPrioLow" class="button btn-icon btn-radio"></label>
+                                <input type="radio" id="inputPrioLow" name="priority" value="Low" class="hide">
+                            </div>
                         </div>
                         <div class="field-wrapper">
                             <label for="assigned">Assigned to</label>
@@ -74,15 +83,11 @@
                     </div>
                 </div>
 
-                <div class="button-wrapper flex-row gap mt-50 justify-end">
-                    <button class="btn-icon btn-secondary">Clear
-                        <img src="assets/icons/cancel.svg" alt="cancel-icon" class="cancel-icon">
-                    </button>
-                    <button class="btn-icon btn-primary" disabled>Create Task
-                         <img src="assets/icons/check.svg" alt="check-icon" class="check-icon">
-                    </button>
+                <p class="required-info">This field is required</p>
+                <div class="submit-button-wrapper flex-row gap justify-end">
+                    <button id="btnCancel" class="btn-cancel btn-icon btn-secondary"></button>
+                    <button type="submit" id="btnCheck" class="btn-check btn-icon btn-primary" disabled></button>
                 </div>
-                <p class="required-info mr-auto">This field is required</p>
             </form>
 
             </div>

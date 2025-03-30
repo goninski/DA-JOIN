@@ -3,12 +3,18 @@
 @import url("styles/standard-ucl.css");
 @import url("styles/assets.css");
 
+
 :root {
     --clr-main: #2A3647;
     --clr-dark: #091931;
     --clr-light-blue: #29ABE2;
     --clr-disabled: #CDCDCD;
     --clr-subtle: #D1D1D1;
+
+    --clr-prio-high: #FF3D00;
+    --clr-prio-medium: #FFA800;
+    --clr-prio-low: #7AE229;
+
     --clr-warning: #FF8190;
 
     --ff-primary: "Inter", sans-serif;

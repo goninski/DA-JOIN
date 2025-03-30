@@ -12,7 +12,7 @@ a:hover {
 
 
 /*** BUTTONS */
-button {
+button, .button {
     transition-duration: 125ms;
     display: flex;
     flex-direction: row;
@@ -33,9 +33,11 @@ button {
     padding: 16px;
     min-height: 56px;
     font-size: 21px;
+    --icon-color: var(--clr-main);
 }
 .btn-primary {
     color: white;
+    --icon-color: white;
     font-weight: var(--fw-bold);
     background-color: var(--clr-main);
     border: none;
@@ -49,6 +51,7 @@ button {
 }
 .btn-secondary:hover {
     color: var(--clr-light-blue);
+    --icon-color: var(--clr-light-blue);
     border-color: var(--clr-light-blue);
     border-width: 2px;
 }
@@ -80,29 +83,63 @@ label {
 }
 .required-info {
     position: relative;
-    margin-top: -12px;
-    padding-left: 12px;
+    margin-left: 16px;
 }
 .required-info::before {
     position: absolute;
     top: -0.175em;
-    left: 0;
+    left: -12px;
     font-size: 20px;
 }
 input, textarea, select {
     padding: 12px 21px;
     border-radius: 10px;
     border: solid 1px var(--clr-subtle);
+    font-family: var(--ff-primary);
     font-size: 20px;
     min-height: 48px;
+    --field-width: 410px;
+    min-width: var(--field-width);
 }
 textarea {
     resize: vertical;
     min-height: 120px;
 }
+.btn-radio {
+    color: var(--clr-main);
+    border: solid 1px var(--clr-subtle);
+    cursor: pointer;
+}
+
+
 .v-divider {
     border-left: solid 1px var(--clr-subtle);
 }
+
+
+.priority-input-wrapper label[for="inputPrioHigh"] {
+    --icon-color: var(--clr-prio-high);
+}
+.priority-input-wrapper label[for="inputPrioMedium"] {
+    --icon-color: var(--clr-prio-medium);
+}
+.priority-input-wrapper label[for="inputPrioLow"] {
+    --icon-color: var(--clr-prio-low);
+}
+.priority-input-wrapper label[for="inputPrioHigh"]:hover {
+    background-color: var(--clr-prio-high);
+}
+.priority-input-wrapper label[for="inputPrioMedium"]:hover {
+    background-color: var(--clr-prio-medium);
+}
+.priority-input-wrapper label[for="inputPrioLow"]:hover {
+    background-color: var(--clr-prio-low);
+}
+.priority-input-wrapper label:hover {
+    color: white;
+    --icon-color: white;
+}
+
 ::placeholder,
 .placeholder {
     color: var(--clr-subtle);
@@ -111,11 +148,29 @@ textarea {
     color: var(--clr-main);
 }
 
-
-
-@media(max-width: 992px) {
-    .field-row {
-        flex-direction: column;
-    }
+.add-task-form .required-info {
+    margin-top: 171px;
+    margin-bottom: -64px;
 }
+
+
+
+
+@media(max-width: 1259px) {
+    form {
+        min-width: 100%;
+    }
+    .field-row {
+        flex-direction: column !important;
+    }
+    .priority-input-wrapper {
+        justify-content: start;
+    }
+    .add-task-form .required-info {
+        margin-top: 32px;
+        margin-bottom: 100px;
+    }
+    
+}
+
 

@@ -1,5 +1,5 @@
 function init() {
-    getMainTemplates()
+    getMainTemplates();
 }
 
 function getMainTemplates() {
