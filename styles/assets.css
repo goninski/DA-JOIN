@@ -154,6 +154,7 @@ input:checked + label.prio-low {
 .priority-input-wrapper input:checked + label {
     color: white;
     --icon-color: white;
+    border: none;
 }
 
 
