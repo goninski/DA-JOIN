@@ -115,6 +115,7 @@ textarea {
     cursor: pointer;
     width: 136px;
     justify-content: center;
+    padding: 16px 10px;
 }
 
 
@@ -155,6 +156,7 @@ input:checked + label.prio-low {
     color: white;
     --icon-color: white;
     border: none;
+    font-weight: var(--fw-bold);
 }
 
 
