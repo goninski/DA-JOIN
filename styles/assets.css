@@ -105,9 +105,6 @@ input, textarea, select {
     min-height: 48px;
     background-color: white;
 }
-:is(input, textarea, select) {
-    outline: var(--clr-light-blue);
-}
 select {
     appearance: base-select;
 }
