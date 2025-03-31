@@ -180,6 +180,25 @@ input:checked + label.prio-low {
 }
 
 
+.profile-batches {
+    display: flex;
+    flex-direction: flex-row;
+    gap: 12px;
+}
+.profile-batch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    color: white;
+    border: solid 2px white;
+    border-radius: 100%;
+    background-color: var(--profile-color);
+    font-size: 12px;
+}
+
+
 
 
 @media(max-width: 1339px) {
