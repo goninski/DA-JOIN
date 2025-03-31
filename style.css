@@ -122,6 +122,7 @@ main, header, footer {
 }
 
 .nav-button{
+    color: #cdcdcd;
     display: flex;
     align-items: center;
     padding-left: 56px;
