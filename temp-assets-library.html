@@ -101,7 +101,8 @@
 
                     <div class="field-wrapper">
                         <label for="date" class="required">Due date</label>
-                        <input type="date" name="date" class="placeholder" required>
+                        <input type="date" name="date" class="placeholder xshow-required-msg" required>
+                        <div class="required-msg">This field is required</div>
                     </div>
 
                     <div class="field-wrapper">
@@ -153,6 +154,7 @@
                 </form>
                 <div>
                     <p><b>Dev: </b>François</p>
+                    <p>for required inputs add class 'show-required-msg' if empty on validation to show message</p>
                     <p>Maybe some shadows are missing, need to check</p>
                     <p>Due date: active font color missing</p>
                     <p>I'm also working on custom select fields for User Assignement and Categories</p>
