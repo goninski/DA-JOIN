@@ -117,6 +117,7 @@ textarea {
 .required-msg {
     display: none;
 }
+.show-required-msg .required-msg,
 .show-required-msg + .required-msg {
     display: block;
     color: var(--clr-warning);
@@ -215,21 +216,68 @@ input:checked + label.prio-low {
 }
 
 
-/** INPUT SUBTASKS */
-.input-subtasks-wrapper {
+/** CUSTOM INPUT BUTTON */
+.input-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
+    flex-grow: 1;
 }
-.input-subtasks-wrapper input {
+.input-wrapper :is(input, select) {
     width: 100%;
 }
-.input-subtasks-wrapper .button-wrapper {
+.input-wrapper .input-button-wrapper {
     position: absolute;
     right: 16px;
 }
+/* .input-wrapper.custom-select  {
+    background-color: white;
+    height: 46px;
+    width: 20px;
+} */
+.input-button-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 4px;
+    height: 24px;
+    margin-left: 12px;
+}
+.input-button-wrapper button,
+.input-button-wrapper.custom-select {
+    width: 24px;
+    height: 24px;
+}
+.input-button-wrapper.custom-select {
+    background: white;
+    pointer-events: none;
+}
+.input-button-wrapper img {
+    height: 18px;
+    width: auto;
+    object-fit: contain;
+}
+.input-button-wrapper.custom-select img {
+    height: 6px;
+}
+.input-button-wrapper img.add {
+    height: 14px;
+}
+.input-button-wrapper img.cancel {
+    height: 13px;
+}
+.input-button-wrapper img.check {
+    height: 11px;
+}
+.input-button-wrapper .divider {
+    border-left: solid 1px #A8A8A8;
+    height: 100%;
+}
 
+
+/** INPUT SUBTASKS */
 .subtask-listing {
     margin-block: 0;
     margin-block-start: 4px;
@@ -254,51 +302,20 @@ input:checked + label.prio-low {
     margin-left: 28px;
     width: 100%;
 }
-.subtask-wrapper .button-wrapper {
-    display: flex;
-    justify-content: space-between;
-    flex-shrink: 0;
-    align-items: center;
-    gap: 4px;
-    height: 24px;
-    margin-left: 12px;
-}
-.subtask-listing .button-wrapper {
+.subtask-listing .input-button-wrapper {
     display: none;
 }
-.subtask-listing:hover .button-wrapper {
+.subtask-listing:hover .input-button-wrapper {
     display: flex;
-}
-.subtask-wrapper img {
-    height: 18px;
-    width: auto;
-    object-fit: contain;
-}
-.button-wrapper img.check {
-    height: 11px;
-}
-.button-wrapper img.cancel {
-    height: 13px;
-}
-.button-wrapper img.add {
-    height: 14px;
 }
 .subtask-listing li:hover {
     background-color: #EEEEEE;
     border-radius: 10px;
 }
-.subtask-wrapper button {
-    width: 24px;
-    height: 24px;
-}
-.subtask-wrapper button:hover {
+.subtask-wrapper .input-button-wrapper button:hover {
     background-color: #EEEEEE;
     transform: scale(1.05);
     border-radius: 100%;
-}
-.subtask-wrapper .divider {
-    border-left: solid 1px #A8A8A8;
-    height: 100%;
 }
 
 

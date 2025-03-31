@@ -77,40 +77,45 @@
                                     </ul>
                                 </div>
 
-                                <div class="field-wrapper">
+                                <div class="field-wrapper xshow-required-msg">
                                     <label for="inputCategory" class="required">Category</label>
-                                    <select id="inputCategory" name="inputCategory" placeholder="Select task category" class="xshow-required-msg" required>
-                                        <button><selectedcontent></selectedcontent></button>
-                                        <option value="category-1">Categorie 1</option>
-                                        <option value="category-2">Categorie 2</option>
-                                        <option value="category-3">Categorie 3</option>
-                                    </select>
+                                    <div class="input-wrapper input-wrapper-select">
+                                        <select id="inputCategory" name="inputCategory" placeholder="Select task category" class="xshow-required-msg" required>
+                                            <button><selectedcontent></selectedcontent></button>
+                                            <option value="category-1">Categorie 1</option>
+                                            <option value="category-2">Categorie 2</option>
+                                            <option value="category-3">Categorie 3</option>
+                                        </select>
+                                        <div class="input-button-wrapper custom-select">
+                                            <img src="/assets/icons/arrow_drop_down.svg">
+                                        </div>
+                                    </div>
                                     <div class="required-msg">This field is required</div>
                                 </div>
 
                                 <div class="field-wrapper subtask-wrapper">
                                     <label for="inputSubtasks">Subtasks</label>
-                                    <div class="input-subtasks-wrapper">
+                                    <div class="input-wrapper input-wrapper-subtasks">
                                         <input type="text" id="inputSubtasks" name="inputSubtasks" placeholder="Add new subtask">
-                                        <div id="subtaskInputButtons" class="button-wrapper hide">
+                                        <div id="subtaskInputButtons" class="input-button-wrapper hide">
                                             <button onclick="cancelSubtaskInput()"><img src="/assets/icons/cancel.svg" class="cancel"></button>
                                             <div class="divider"></div>
                                             <button onclick="saveSubtaskInput()"><img src="/assets/icons/check.svg" class="check"></button>
                                         </div>
-                                        <div id="subtaskInputButtonAdd" class="button-wrapper xhide">
+                                        <div id="subtaskInputButtonAdd" class="input-button-wrapper xhide">
                                             <button onclick="addSubtaskInput()"><img src="/assets/icons/add.svg" class="add"></button>
                                         </div>
                                     </div>
                                     <ul id="assignedSubtasks" class="subtask-listing">
                                         <li id="subtask-01"><span class="text">Subtask 1</span>
-                                            <div class="button-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button></div>
+                                            <div class="input-button-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button></div>
                                         </li>
                                         <li id="subtask-02"><span class="text">Subtask 2</span>
-                                            <div class="button-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button></div>
+                                            <div class="input-button-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button></div>
                                         </li>
                                     </ul>
                                     <div id="subtaskEdit" class="subtask-edit">Subtask XY
-                                        <div id="subtaskEditButtons" class="button-wrapper">
+                                        <div id="subtaskEditButtons" class="input-button-wrapper">
                                             <button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button>
                                             <div class="divider"></div>
                                             <button onclick="saveSubtaskEdits()"><img src="/assets/icons/check.svg" class="check"></button>
@@ -122,7 +127,7 @@
                         </div>
 
                         <p class="required-info">This field is required</p>
-                        <div class="submit-button-wrapper flex-row gap justify-end">
+                        <div class="submit-input-button-wrapper flex-row gap justify-end">
                             <button id="btnCancel" class="button btn-cancel btn-icon btn-secondary" onclick="resetInput(event, 'addTaskForm')"></button>
                             <button type="submit" id="btnCheck" class="button btn-check btn-icon btn-primary" disabled></button>
                         </div>
