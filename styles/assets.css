@@ -181,9 +181,11 @@ input:checked + label.prio-low {
 
 
 .profile-batches {
+    list-style: none;
     display: flex;
-    flex-direction: flex-row;
     gap: 12px;
+    margin-block: 0;
+    padding-inline: 0;
 }
 .profile-batch {
     display: flex;

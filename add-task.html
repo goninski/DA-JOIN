@@ -66,11 +66,11 @@
                                         <option value="user-2">User 2</option>
                                         <option value="user-3">User 3</option>
                                     </select>
-                                    <div id="assignedContactBatches" class="profile-batches">
-                                        <div class="profile-batch" style="--profile-color: violet;">P1</div>
-                                        <div class="profile-batch" style="--profile-color: pink;">P2</div>
-                                        <div class="profile-batch" style="--profile-color: orange;">P3</div>
-                                    </div>
+                                    <ul id="assignedContactBatches" class="profile-batches">
+                                        <li class="profile-batch" style="--profile-color: violet;">P1</li>
+                                        <li class="profile-batch" style="--profile-color: pink;">P2</li>
+                                        <li class="profile-batch" style="--profile-color: orange;">P3</li>
+                                    </ul>
                                 </div>
                                 <div class="field-wrapper">
                                     <label for="inputCategory" class="required">Category</label>
@@ -82,8 +82,9 @@
                                     </select>
                                 </div>
                                 <div class="field-wrapper">
-                                    <label for="subtasks">Subtasks</label>
-                                    <input type="text" name="subtasks" placeholder="Add new subtask">
+                                    <label for="inputSubtasks">Subtasks</label>
+                                    <input type="text" id="inputSubtasks" name="inputSubtasks" placeholder="Add new subtask">
+                                    <ul></div>
                                 </div>
 
                             </div>
