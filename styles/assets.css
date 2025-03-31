@@ -81,7 +81,7 @@ form {
 label {
     font-size: 20px;
 }
-.required::after,
+label.required::after,
 .required-info::before {
     content: "*";
     color: var(--clr-warning);
