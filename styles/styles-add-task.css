@@ -13,4 +13,43 @@ option:hover {
 }
 
 
+.subtask-listing {
+    margin-block: 0;
+    margin-block-start: 4px;
+    padding-inline: 0;
+}
+.subtask-listing .list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 16px;
+    min-height: 32px;
+    transition-duration: 125ms;
+}
+.subtask-listing .button-wrapper {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    width: 56px;
+    height: 24px;
+}
+.subtask-listing .divider {
+    border-left: solid 1px var(--clr-subtle);
+    height: 100%;
+}
+.subtask-listing img {
+    height: 18px;
+    width: auto;
+    
+}
+.subtask-listing .list-item:hover {
+    background-color: #EEEEEE;
+    border-radius: 10px;
+}
+.subtask-listing:hover .button-wrapper {
+    display: flex;
+}
+
+
 

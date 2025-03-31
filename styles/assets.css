@@ -12,8 +12,7 @@ a:hover {
 
 
 /*** BUTTONS */
-button, .button {
-    transition-duration: 125ms;
+.button {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -55,7 +54,7 @@ button, .button {
     border-color: var(--clr-light-blue);
     border-width: 2px;
 }
-button img {
+.button img {
     height: 12px;
     width: auto;
 }
@@ -199,7 +198,6 @@ input:checked + label.prio-low {
     background-color: var(--profile-color);
     font-size: 12px;
 }
-
 
 
 

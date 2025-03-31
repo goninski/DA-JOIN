@@ -7,7 +7,7 @@
     <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
     <title>Add Task | Join</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="./styles/add-task.css">
+    <link rel="stylesheet" href="./styles/styles-add-task.css">
     <script src="scripts/templates.js"></script>
     <script src="script.js"></script>
     <script src="scripts/add-task.js"></script>
@@ -84,7 +84,11 @@
                                 <div class="field-wrapper">
                                     <label for="inputSubtasks">Subtasks</label>
                                     <input type="text" id="inputSubtasks" name="inputSubtasks" placeholder="Add new subtask">
-                                    <ul></div>
+                                    <ul id="assignedSubtasks" class="subtask-listing">
+                                        <li class="list-item">Subtask 1
+                                            <div class="button-wrapper"><button><img src="/assets/icons/edit.svg"></button><div class="divider"></div><button><img src="/assets/icons/delete.svg"></button></div>
+                                        </li>
+                                    </ul>
                                 </div>
 
                             </div>
@@ -93,8 +97,8 @@
 
                                 <p class="required-info">This field is required</p>
                                 <div class="submit-button-wrapper flex-row gap justify-end">
-                                    <button id="btnCancel" class="btn-cancel btn-icon btn-secondary" onclick="resetInput(event, 'addTaskForm')"></button>
-                                    <button type="submit" id="btnCheck" class="btn-check btn-icon btn-primary" disabled></button>
+                                    <button id="btnCancel" class="button btn-cancel btn-icon btn-secondary" onclick="resetInput(event, 'addTaskForm')"></button>
+                                    <button type="submit" id="btnCheck" class="button btn-check btn-icon btn-primary" disabled></button>
                                 </div>
                     </form>
 

@@ -24,12 +24,15 @@ footer {
     margin-top: 0;
     margin-bottom: 0;
 }
-a {
+:where(a) {
     text-decoration: none;
     transition-duration: 125ms;
 }
-button {
+:where(button) {
     cursor: pointer;
+    border: 0;
+    background-color: transparent;
+    transition-duration: 125ms;
 }
 :where(figure) {
     margin-block-start: 0;

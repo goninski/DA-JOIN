@@ -1,9 +1,9 @@
-function initAddTask() {
+function initAssetLibrary() {
     getMainTemplates();
-    addIconsToAddTaskPage();
+    addIconsToAssetLibraryPage();
 }
 
-function addIconsToAddTaskPage() {
+function addIconsToAssetLibraryPage() {
     document.getElementById('labelPrioHigh').innerHTML = getIconTemplatePrioHigh();
     document.getElementById('labelPrioMedium').innerHTML = getIconTemplatePrioMedium();
     document.getElementById('labelPrioLow').innerHTML = getIconTemplatePrioLow();

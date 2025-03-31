@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Styles</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        h2 {font-size: 2rem; color: var(--clr-light-blue);}
+    </style>
+    <script src="scripts/templates.js"></script>
+    <script src="script.js"></script>
+    <script src="scripts/asset-library.js"></script>
+</head>
+
+<body onload="initAssetLibrary()">
+
+    <header id="header" class="section"></header>
+    <div id="sideMenu" class="side-menu"></div>
+    <div id="sideMenuMob" class="side-menu"></div>
+
+    <main>
+        <section class="section gap-40" style="--ct-w: 440px;">
+
+            <h1 class="page-title">Asset Library</h1>
+
+
+            <div class="ct-container gap">
+                <h2>Buttons</h2>
+                <button class="button btn-iconless btn-primary">primary simple</button>
+                <button class="button btn-iconless btn-secondary">secondary simple</button>
+                <button class="button btn-icon btn-primary">primary w/icon
+                    <img src="assets/icons/icon-ipsum-white.svg" alt="" class="">
+                </button>
+                <button class="button btn-icon btn-secondary">secondary w/icon
+                    <img src="assets/icons/icon-ipsum-black.svg" alt="" class="">
+                </button>
+                <button id="btnCheck" class="button btn-icon btn-primary"></button>
+                <button id="btnCancel" class="button btn-icon btn-secondary"></button>
+                <div>
+                    <p><b>Dev: </b>François</p>
+                    <p><b>Remarks: </b>shadow and click state missing, icons can also be injected as svg-code by js (see templates), this way state colors can be applied by css</p>
+                    <hr>
+                </div>
+            </div>
+            
+
+
+            <div class="ct-container gap">
+                <h2>Inputs</h2>
+                <form class="gap">
+
+                    <div class="field-wrapper">
+                        <label for="title" class="required">Title</label>
+                        <input type="text" name="title" placeholder="Enter a title" required>
+                    </div>
+                    <div class="field-wrapper">
+                        <label for="priority">Priority</label>
+                        <div class="priority-input-wrapper flex-row justify-between align-center">
+                            <input type="radio" id="inputPrioHigh" name="priority" value="high">
+                            <label for="inputPrioHigh" id="labelPrioHigh" class="prio-high button btn-icon btn-radio"></label>
+
+                            <input type="radio" id="inputPrioMedium" name="priority" value="medium">
+                            <label for="inputPrioMedium" id="labelPrioMedium" class="prio-medium button btn-icon btn-radio"></label>
+
+                            <input type="radio" id="inputPrioLow" name="priority" value="low"">
+                            <label for="inputPrioLow" id="labelPrioLow" class="prio-low button btn-icon btn-radio"></label>
+                        </div>
+                    </div>
+
+                    <p class="required-info">This field is required</p>
+
+                </form>
+                <div>
+                    <p><b>Dev: </b>François</p>
+                    <p><b>Remarks: </b> I'm working on custom select fields also</p>
+                    <hr>
+                </div>
+            </div>
+
+    
+        </section>
+    </main>
+
+</body>
+
+</html>
