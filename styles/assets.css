@@ -104,6 +104,10 @@ input, textarea, select {
     font-family: var(--ff-primary);
     font-size: 20px;
     min-height: 48px;
+    background-color: white;
+}
+select {
+    appearance: base-select;
 }
 textarea {
     resize: vertical;
@@ -111,6 +115,7 @@ textarea {
 }
 .btn-radio {
     color: var(--clr-main);
+    background-color: white;
     border: solid 1px var(--clr-subtle);
     cursor: pointer;
     width: 136px;

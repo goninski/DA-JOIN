@@ -1,5 +1,16 @@
-@media(max-width: 719px) {
-    .add-task-form {
 
-    }
+
+
+
+select,
+::picker(select) {
+    appearance: base-select;
 }
+option:checked,
+option:hover {
+    background-color: var(--clr-subtle);
+}
+
+
+
+
