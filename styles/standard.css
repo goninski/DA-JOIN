@@ -8,7 +8,7 @@ html {
 }
 :focus {
     outline: none;
-    box-shadow: 0 0 0 1px var(--clr-light-blue);
+    box-shadow: 0 0 0 1px var(--clr-focus);
 }
 body {
     margin: 0;

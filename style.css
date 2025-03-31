@@ -6,6 +6,7 @@
 
 :root {
     --bg-page: #f6f7f8;
+    --clr-focus: var(--clr-light-blue);
     --clr-main: #2A3647;
     --clr-dark: #091931;
     --clr-light-blue: #29ABE2;
@@ -54,12 +55,15 @@ body {
     color: var(--clr-main);
 }
 header {
+    position: fixed;
+    top: 0;
     justify-content: center;
     height: 96px;
     background-color: white;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
 }
 main {
+    margin-top: 96px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -105,7 +109,7 @@ main, header, footer {
     }
     main {
         position: fixed;
-        top: 96px;
+        top: 0;
         bottom: 80px;
         left: 0;
         right: 0;
