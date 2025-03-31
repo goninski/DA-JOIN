@@ -204,6 +204,20 @@ input:checked + label.prio-low {
 
 
 /** INPUT SUBTASKS */
+.input-subtasks-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+.input-subtasks-wrapper input {
+    width: 100%;
+}
+.input-subtasks-wrapper .button-wrapper {
+    position: absolute;
+    right: 16px;
+}
+
 .subtask-listing {
     margin-block: 0;
     margin-block-start: 4px;
@@ -218,39 +232,58 @@ input:checked + label.prio-low {
     min-height: 32px;
     transition-duration: 125ms;
 }
+.subtask-edit {
+    background-color: white;
+    border-bottom: solid 1px  var(--clr-light-blue);
+    margin-top: 12px;
+}
 .subtask-listing li .text {
     display: list-item;
     margin-left: 28px;
     width: 100%;
 }
-:is(.subtask-listing, subtask-edit) .button-wrapper {
-    display: none;
+.subtask-wrapper .button-wrapper {
+    display: flex;
     justify-content: space-between;
+    flex-shrink: 0;
     align-items: center;
     gap: 4px;
-    width: 57px;
     height: 24px;
     margin-left: 12px;
 }
-:is(.subtask-listing, subtask-edit) .divider {
-    border-left: solid 1px var(--clr-divider);
-    height: 100%;
-    --clr-divider: #A8A8A8;
+.subtask-listing .button-wrapper {
+    display: none;
 }
-.subtask-listing img {
+.subtask-listing:hover .button-wrapper {
+    display: flex;
+}
+.subtask-wrapper img {
     height: 18px;
     width: auto;
     object-fit: contain;
+}
+.button-wrapper img.check {
+    height: 11px;
+}
+.button-wrapper img.cancel {
+    height: 13px;
 }
 .subtask-listing li:hover {
     background-color: #EEEEEE;
     border-radius: 10px;
 }
-.subtask-listing:hover .button-wrapper {
-    display: flex;
+.subtask-wrapper button {
+    width: 24px;
+    height: 24px;
 }
-.subtask-listing button:hover {
+.subtask-wrapper button:hover {
+    background-color: #EEEEEE;
     transform: scale(1.05);
+    border-radius: 100%;
+}
+.subtask-wrapper .divider {
+    border-left: solid 1px #A8A8A8;
+    height: 100%;
 }
 
 

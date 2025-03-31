@@ -9,6 +9,7 @@
     <style>
         h2 {font-size: 2rem; color: var(--clr-light-blue);}
         h5 {margin-bottom: 1em;}
+        remarks {font-size: 12px; font-style: italic;}
     </style>
     <script src="scripts/templates.js"></script>
     <script src="script.js"></script>
@@ -91,6 +92,17 @@
                         <label for="title" class="required">Title</label>
                         <input type="text" name="title" placeholder="Enter a title" required>
                     </div>
+
+                    <div class="field-wrapper">
+                        <label for="description">Description</label>
+                        <textarea name="description" placeholder="Enter a description"></textarea>
+                    </div>
+
+                    <div class="field-wrapper">
+                        <label for="date" class="required">Due date</label>
+                        <input type="date" name="date" class="placeholder" required>
+                    </div>
+
                     <div class="field-wrapper">
                         <label for="priority">Priority</label>
                         <div class="priority-input-wrapper flex-row justify-between align-center">
@@ -105,13 +117,44 @@
                         </div>
                     </div>
 
+                    <div class="field-wrapper subtask-wrapper">
+                        <label for="inputSubtasks">Subtasks</label>
+                        <div class="input-subtasks-wrapper">
+                            <input type="text" id="inputSubtasks" name="inputSubtasks" placeholder="Add new subtask">
+                            <div id="subtaskInputButtons" class="button-wrapper hide">
+                                <button onclick="cancelSubtaskInput()"><img src="/assets/icons/cancel.svg" class="cancel"></button>
+                                <div class="divider"></div>
+                                <button onclick="saveSubtaskInput()"><img src="/assets/icons/check.svg" class="check"></button>
+                            </div>
+                            <div id="subtaskInputButtonAdd" class="button-wrapper xhide">
+                                <button onclick="addSubtaskInput()"><img src="/assets/icons/add.svg" class="add"></button>
+                            </div>
+                        </div>
+                        <ul id="assignedSubtasks" class="subtask-listing">
+                            <li id="subtask-01"><span class="text">Subtask 1</span>
+                                <div class="button-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button></div>
+                            </li>
+                            <li id="subtask-02"><span class="text">Subtask 2</span>
+                                <div class="button-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button></div>
+                            </li>
+                        </ul>
+                        <div id="subtaskEdit" class="subtask-edit">Subtask XY
+                            <div id="subtaskEditButtons" class="button-wrapper">
+                                <button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button>
+                                <div class="divider"></div>
+                                <button onclick="saveSubtaskEdits()"><img src="/assets/icons/check.svg" class="check"></button>
+                            </div>
+                        </div>
+                    </div>
+
                     <p class="required-info">This field is required</p>
 
                 </form>
                 <div>
                     <p><b>Dev: </b>François</p>
                     <p>Maybe some shadows are missing, need to check</p>
-                    <p>I'm also working on custom select fields for User Assignement and Subtask-Creation/Edit</p>
+                    <p>Due date: active font color missing</p>
+                    <p>I'm also working on custom select fields for User Assignement and Categories</p>
                     <hr>
                 </div>
             </div>

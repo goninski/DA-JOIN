@@ -46,6 +46,7 @@
                             <div class="v-divider hide--ss-mob"></div>
 
                             <div class="field-col flex-col flex-grow gap">
+
                                 <div class="field-wrapper">
                                     <label for="priority">Priority</label>
                                     <div class="priority-input-wrapper flex-row justify-between align-center">
@@ -59,6 +60,7 @@
                                         <label for="inputPrioLow" id="labelPrioLow" class="prio-low button btn-icon btn-radio"></label>
                                     </div>
                                 </div>
+
                                 <div class="field-wrapper">
                                     <label for="inputAassigned">Assigned to</label>
                                     <select id="inputAssigned" name="inputAssigned" placeholder="Select contacts to assign">
@@ -72,6 +74,7 @@
                                         <li class="profile-batch" style="--profile-color: orange;">P3</li>
                                     </ul>
                                 </div>
+
                                 <div class="field-wrapper">
                                     <label for="inputCategory" class="required">Category</label>
                                     <select id="inputCategory" name="inputCategory" placeholder="Select task category">
@@ -81,9 +84,20 @@
                                         <option value="category-3">Categorie 3</option>
                                     </select>
                                 </div>
-                                <div class="field-wrapper">
+
+                                <div class="field-wrapper subtask-wrapper">
                                     <label for="inputSubtasks">Subtasks</label>
-                                    <input type="text" id="inputSubtasks" name="inputSubtasks" placeholder="Add new subtask">
+                                    <div class="input-subtasks-wrapper">
+                                        <input type="text" id="inputSubtasks" name="inputSubtasks" placeholder="Add new subtask">
+                                        <div id="subtaskInputButtons" class="button-wrapper hide">
+                                            <button onclick="cancelSubtaskInput()"><img src="/assets/icons/cancel.svg" class="cancel"></button>
+                                            <div class="divider"></div>
+                                            <button onclick="saveSubtaskInput()"><img src="/assets/icons/check.svg" class="check"></button>
+                                        </div>
+                                        <div id="subtaskInputButtonAdd" class="button-wrapper xhide">
+                                            <button onclick="addSubtaskInput()"><img src="/assets/icons/add.svg" class="add"></button>
+                                        </div>
+                                    </div>
                                     <ul id="assignedSubtasks" class="subtask-listing">
                                         <li id="subtask-01"><span class="text">Subtask 1</span>
                                             <div class="button-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button></div>
@@ -96,10 +110,11 @@
                                         <div id="subtaskEditButtons" class="button-wrapper">
                                             <button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button>
                                             <div class="divider"></div>
-                                            <button onclick="saveSubtaskEdits()"><img src="/assets/icons/check.svg"></button>
+                                            <button onclick="saveSubtaskEdits()"><img src="/assets/icons/check.svg" class="check"></button>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
 
