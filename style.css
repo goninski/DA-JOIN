@@ -116,16 +116,17 @@ main, header, footer {
 
 .sidebar-footer{
     display: flex;
-    justify-content: center;
+    justify-content: end;
     flex-direction: column;
+    height: 317px;
     width: 100%;
+    margin-bottom: 20px;
 }
 
 .nav-button{
     color: #cdcdcd;
     display: flex;
     align-items: center;
-    padding-left: 56px;
     width: 100%;
     height: 46px;
     gap: 8px;
