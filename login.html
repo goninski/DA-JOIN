@@ -12,7 +12,7 @@
 </head>
 
 <body class="bg-grey">
-    <header class="flex justify-between">
+    <section class="flex justify-between header_login">
         <div>
             <img class="logo_login" src="./assets/img/Capa 2.png" alt="Logo">
         </div>
@@ -20,17 +20,20 @@
             <p>Legal notice</p>
             <button class="btn-login-size btn-primary">Sign up</button>
         </div>
-    </header>
-    <section class="flex center">
+    </section>
+    
+    <section class="flex justify-center">
         <div class="flex-col bg-white login-div-size flex center">
-            <div>
-                <h1 class="page-title gap_16px">Log in</h1>
+            <div class="headline_login flex-col align-center">
+                <h1 class="gap_16px login_title">Log in</h1>
+                <div class="login_border"></div>
             </div>
-            <div class="flex-col gap-20 login-email-part">
+            
+            <div class="flex-col gap-20 login-email-part center">
                 <input type="email" name="email" id="email" placeholder="Email">
                 <input type="password" id="pwd" name="pwd" minlength="8" placeholder="Password">
             </div>
-            <div class="flex-row center gap-35">
+            <div class="flex-row align-end justify-center gap-35">
                 <input type="submit" value="Log in" class="btn-login-size btn-primary">
                 <button class="btn-login-size btn-third btn-iconless">Guest Log in</button>
             </div>

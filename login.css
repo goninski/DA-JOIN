@@ -45,13 +45,16 @@
 .login-div-size {
     width: 652px;
     height: 449px;
+    padding: 48px 115px 48px 115px;
+    justify-content: space-around;
+    border-radius: 30px;
+    box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
 }
 
 .login-email-part {
     width: 422px;
     height: 152px;
     padding: 0px;
-    align-self: stretch;
 }
 
 .login-privacy-policy {
@@ -61,4 +64,31 @@
 
 .gap-35 {
     gap: 35px;
+}
+
+.login_border {
+    width: 150px;
+    height: 3px;
+    border: 3px solid #29ABE2;
+    transform: rotate(0deg);
+}
+
+.headline_login {
+    width: 315px;
+    height: 89px;
+}
+
+.login_title {
+    font-size: 61px;
+    font-weight: var(--fw-bold);
+}
+
+.header_login {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #F6F7F8;
 }
