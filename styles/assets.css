@@ -86,16 +86,6 @@ label.required::after,
     content: "*";
     color: var(--clr-warning);
 }
-.required-info {
-    position: relative;
-    margin-left: 16px;
-}
-.required-info::before {
-    position: absolute;
-    top: -0.175em;
-    left: -12px;
-    font-size: 20px;
-}
 input, textarea, select {
     padding: 12px 21px;
     border-radius: 10px;
@@ -121,14 +111,35 @@ textarea {
     justify-content: center;
     padding: 16px 10px;
 }
+.show-required-msg {
+    border-color: var(--clr-warning);
+}
+.required-msg {
+    display: none;
+}
+.show-required-msg + .required-msg {
+    display: block;
+    color: var(--clr-warning);
+    font-size: 12px;
+}
+.required-info {
+    position: relative;
+    margin-left: 16px;
+}
+.required-info::before {
+    position: absolute;
+    top: -0.175em;
+    left: -12px;
+    font-size: 20px;
+}
 .add-task-form .required-info {
     margin-top: 171px;
     margin-bottom: -64px;
 }
+
 .v-divider {
     border-left: solid 1px var(--clr-subtle);
 }
-
 
 ::placeholder,
 .placeholder {

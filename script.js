@@ -23,5 +23,5 @@ function getSidemenu() {
 
 function resetInput(event, id) {
     document.getElementById(id).reset()
-    event.preventDefault();
+    // event.preventDefault();
 }

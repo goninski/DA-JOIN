@@ -29,9 +29,10 @@
                     <form onsubmit="btnCheck" id="addTaskForm" class="flex-col add-task-form">
                         <div class="field-row flex-row gap-40">
                             <div class="field-col flex-col flex-grow gap">
-                                <div class="field-wrapper">
+                                <div class="field-wrapper required">
                                     <label for="title" class="required">Title</label>
-                                    <input type="text" name="title" placeholder="Enter a title" required>
+                                    <input type="text" name="title" placeholder="Enter a title" required class="xshow-required-msg">
+                                    <div class="required-msg">This field is required</div>
                                 </div>
                                 <div class="field-wrapper">
                                     <label for="description">Description</label>
@@ -39,7 +40,8 @@
                                 </div>
                                 <div class="field-wrapper">
                                     <label for="date" class="required">Due date</label>
-                                    <input type="date" name="date" class="placeholder" required>
+                                    <input type="date" name="date" class="placeholder xshow-required-msg" required>
+                                    <div class="required-msg">This field is required</div>
                                 </div>
                             </div>
 
@@ -77,12 +79,13 @@
 
                                 <div class="field-wrapper">
                                     <label for="inputCategory" class="required">Category</label>
-                                    <select id="inputCategory" name="inputCategory" placeholder="Select task category">
+                                    <select id="inputCategory" name="inputCategory" placeholder="Select task category" class="xshow-required-msg" required>
                                         <button><selectedcontent></selectedcontent></button>
                                         <option value="category-1">Categorie 1</option>
                                         <option value="category-2">Categorie 2</option>
                                         <option value="category-3">Categorie 3</option>
                                     </select>
+                                    <div class="required-msg">This field is required</div>
                                 </div>
 
                                 <div class="field-wrapper subtask-wrapper">
