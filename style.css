@@ -106,7 +106,12 @@ main, header, footer {
 }
 
 .sidebar-buttons{
-
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 200px;
+    gap: 20px;
 }
 
 .sidebar-footer{
@@ -114,6 +119,16 @@ main, header, footer {
     justify-content: center;
     flex-direction: column;
     width: 100%;
+}
+
+.nav-button{
+    display: flex;
+    align-items: center;
+    padding-left: 56px;
+    width: 100%;
+    height: 46px;
+    gap: 8px;
+    cursor: pointer;
 }
 
 @media(max-width: 719px) {
