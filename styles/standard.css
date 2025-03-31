@@ -6,6 +6,10 @@
 html {
     scroll-behavior: smooth;
 }
+:focus {
+    outline: none;
+    box-shadow: 0 0 0 1px var(--clr-light-blue);
+}
 body {
     margin: 0;
     display: flex;
