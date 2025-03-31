@@ -12,7 +12,12 @@ function getHeaderTemplate() {
 
 function getSideMenuTemplate() {
     return `
-        <a href="./">Home</a>
+        <div class="ct-container gap">
+            <a href="./">Home</a>
+            <a href="summary.html">Summary</a>
+            <a href="add-task.html">Add Task</a>
+            <a href="assets-page--temp.html">Asset Styles</a>
+        </div>
     `
 }
 
