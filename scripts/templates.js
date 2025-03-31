@@ -1,18 +1,37 @@
 function getHeaderTemplate() {
     return `
-        <div class="ct-container flex-row gap justify-between flex-wrap--ss-mob py">
-            <div><a href="./">Kanban Projekt Management Tool</a></div>
-            <div class="flex-row gap">
-                <img src="./assets/icons/icon-ipsum-black.svg" alt="">
-                <img src="./assets/icons/icon-ipsum-black.svg" alt="">
-            </div>
+        <div class="ct-container flex-row gap justify-between align-center flex-wrap--ss-mob py">
+            <p class="header-title">Kanban Project Management Tool</p>
+            <a id="help-icon" href="help.html">
+                <img class="help-icon" src="./assets/icons/Property 1=help.svg"></img>
+            </a>
         </div>
     `
 }
 
 function getSideMenuTemplate() {
     return `
-        Menu Content
+        <div class="sidebar-logo">
+            <img src="./assets/img/Capa 1.png" alt="join logo">
+        </div>
+        <div class="sidebar-buttons">
+            <a class="nav-button" href="summary.html">
+                <img src="./assets/icons/Property 1=Summary.svg">Summary
+            </a>
+            <a class="nav-button" href="add-task.html">
+                <img src="./assets/icons/Property 1=Add task.svg">Add Task
+            </a>
+            <a class="nav-button" href="board.html">
+                <img src="./assets/icons/Property 1=Board.svg">Board
+            </a>
+            <a class="nav-button" href="contact.html">
+                <img src="./assets/icons/Property 1=Contacts.svg">Contacts
+            </a>
+        </div>
+        <div class="sidebar-footer">
+            <a href="privacy-policy.html">Privacy Policy</button>
+            <a href="legal-notice.html">Legal notice</button>
+        </div>
     `
 }
 
