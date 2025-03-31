@@ -89,15 +89,15 @@
                 <h2>Inputs</h2>
                 <form class="gap">
 
-                    <div class="field-wrapper">
+                    <div class="field-wrapper xshow-required-msg">
                         <label for="title" class="required">Title</label>
-                        <input type="text" name="title" placeholder="Enter a title" class="xshow-required-msg" required>
+                        <input type="text" name="title" placeholder="Enter a title" required>
                         <div class="required-msg">This field is required</div>
                     </div>
 
-                    <div class="field-wrapper">
+                    <div class="field-wrapper show-required-msg">
                         <label for="title" class="required">Title</label>
-                        <input type="text" name="title" placeholder="Enter a title" class="show-required-msg" required>
+                        <input type="text" name="title" placeholder="Enter a title" required>
                         <div class="required-msg">This field is required</div>
                     </div>
 
@@ -106,16 +106,16 @@
                         <textarea name="description" placeholder="Enter a description"></textarea>
                     </div>
 
-                    <div class="field-wrapper">
+                    <div class="field-wrapper xshow-required-msg">
                         <label for="date" class="required">Due date</label>
-                        <input type="date" name="date" class="placeholder xshow-required-msg" required>
+                        <input type="date" name="date" class="placeholder" required>
                         <div class="required-msg">This field is required</div>
                     </div>
 
-                    <div class="field-wrapper xshow-required-msg">
+                    <div class="field-wrapper">
                         <label for="inputCategory" class="required">Category (with custom select button)</label>
-                        <div class="input-wrapper input-wrapper-select">
-                            <select id="inputCategory" name="inputCategory" placeholder="Select task category" class="xshow-required-msg" required>
+                        <div class="input-wrapper input-wrapper-select xshow-required-msg">
+                            <select id="inputCategory" name="inputCategory" placeholder="Select task category" required>
                                 <button><selectedcontent></selectedcontent></button>
                                 <option value="category-1">Categorie 1</option>
                                 <option value="category-2">Categorie 2</option>
@@ -177,7 +177,7 @@
                 </form>
                 <div>
                     <p><b>Dev: </b>François</p>
-                    <p>for required inputs add class 'show-required-msg' if empty on validation to show message. For required selects add the class in addition to the parent (field wrapper)</p>
+                    <p>for required inputs/selects add class 'show-required-msg' to the parent element with js, if empty on validation</p>
                     <p>Maybe some shadows are missing, need to check</p>
                     <p>Due date: active font color missing</p>
                     <p>I'm also working on custom select fields for Contacts and Categories</p>
