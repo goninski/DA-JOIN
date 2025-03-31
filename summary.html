@@ -7,65 +7,37 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="summary.css">
+    <script src="scripts/templates.js"></script>
+    <script src="script.js"></script>
 </head>
 
-<body>
-    <header id="header" class="section">
-        <p class="header-title">Kanban Project Management Tool</p>
-        <a id="help-icon" href="help.html">
-            <img class="help-icon" src="./assets/icons/Property 1=help.svg"></img>
-        </a>
-    </header>
-    <div id="sideMenu" class="side-menu">
-        <div class="sidebar-logo">
-            <img src="./assets/img/Capa 1.png" alt="join logo">
-        </div>
-        <div class="sidebar-buttons">
-            <a class="nav-button" href="summary.html">
-                <img src="./assets/icons/Property 1=Summary.svg">Summary
-            </a>
-            <a class="nav-button" href="add-task.html">
-                <img src="./assets/icons/Property 1=Add task.svg">Add Task
-            </a>
-            <a class="nav-button" href="board.html">
-                <img src="./assets/icons/Property 1=Board.svg">Board
-            </a>
-            <a class="nav-button" href="contact.html">
-                <img src="./assets/icons/Property 1=Contacts.svg">Contacts
-            </a>
-        </div>
-        <div class="sidebar-footer">
-            <a href="privacy-policy.html">Privacy Policy</button>
-            <a href="legal-notice.html">Legal notice</button>
-        </div>
+<body onload="init()">
+
+    <header id="header" class="section"></header>
+    <div id="sideMenu" class="side-menu"></div>
     <div id="sideMenuMob" class="side-menu"></div>
-    </div>
 
-    <div class="page-title headline-summary">
-        <p>Join 360</p>
-        <hr style="width: 3px; height: 59px; background-color: #29ABE2; border: none;">
-        <h4 class="headline-key-metrics">Key Metrics at a Glance</h4>
-    </div>
-    <div id="sidemenu" class="sidemenu flex-col flex-grow hide--ss-mob">
-        <a href="./">Home</a>
-    </div>
-    <div id="sidemenu-mob" class="sidemenu flex-row justify-between show--ss-mob">
-        <a href="./">Home</a>
-    </div>
+    
 
-    <div class="greeting-user">
-        <p class="greeting">Good morning,</p>
-        <p class="username">Username</p>
-    </div>
+                <div class="page-title headline-summary">
+                    <p>Join 360</p>
+                    <hr style="width: 3px; height: 59px; background-color: #29ABE2; border: none;">
+                    <h4 class="headline-key-metrics">Key Metrics at a Glance</h4>
+                </div>
 
-    <div class="key-metrics">
-        <div class="to-do">To-do</div>
-        <div class="done">Done</div>
-        <div class="urgent-deadline">Urgent <hr> October 16, 2022 <br> Upcoming Deadline</div>
-        <div class="tasks-in-board">Tasks in Board</div>
-        <div class="tasks-in-progress">Tasks in Progress</div>
-        <div class="awaiting-feedback">Awaiting Feedback</div>
-    </div>
+                <div class="greeting-user">
+                    <p class="greeting">Good morning,</p>
+                    <p class="username">Username</p>
+                </div>
+
+                <div class="key-metrics">
+                    <div class="to-do">To-do</div>
+                    <div class="done">Done</div>
+                    <div class="urgent-deadline">Urgent <hr> October 16, 2022 <br> Upcoming Deadline</div>
+                    <div class="tasks-in-board">Tasks in Board</div>
+                    <div class="tasks-in-progress">Tasks in Progress</div>
+                    <div class="awaiting-feedback">Awaiting Feedback</div>
+                </div>
 
 
 </body>
