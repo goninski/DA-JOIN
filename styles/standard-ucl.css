@@ -94,15 +94,14 @@
 .max-w-100 {
     max-width: 100%;
 }
-.hide {
-    display: none !important;
-}
 .ul-reset {
     list-style: none;
     margin-block: 0;
     padding-inline: 0;
 }
-
+.hide {
+    display: none !important;
+}
 
 
 /*** IMAGES */
@@ -316,22 +315,6 @@
 }
 .overflow-hidden {
     overflow: hidden;
-}
-
-
-
-/*** DEBUG-COLORS */
-.bg-yellow {
-    background-color: yellow;
-}
-.bg-red {
-    background-color: red;
-}
-.bg-blue {
-    background-color: blue;
-}
-.bg-green {
-    background-color: green;
 }
 
 

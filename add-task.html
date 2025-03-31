@@ -85,21 +85,30 @@
                                     <label for="inputSubtasks">Subtasks</label>
                                     <input type="text" id="inputSubtasks" name="inputSubtasks" placeholder="Add new subtask">
                                     <ul id="assignedSubtasks" class="subtask-listing">
-                                        <li class="list-item">Subtask 1
-                                            <div class="button-wrapper"><button><img src="/assets/icons/edit.svg"></button><div class="divider"></div><button><img src="/assets/icons/delete.svg"></button></div>
+                                        <li id="subtask-01"><span class="text">Subtask 1</span>
+                                            <div class="button-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button></div>
+                                        </li>
+                                        <li id="subtask-02"><span class="text">Subtask 2</span>
+                                            <div class="button-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button></div>
                                         </li>
                                     </ul>
+                                    <div id="subtaskEdit" class="subtask-edit">Subtask XY
+                                        <div id="subtaskEditButtons" class="button-wrapper">
+                                            <button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button>
+                                            <div class="divider"></div>
+                                            <button onclick="saveSubtaskEdits()"><img src="/assets/icons/check.svg"></button>
+                                        </div>
+                                    </div>
                                 </div>
-
                             </div>
+                        </div>
 
-                            </div>
+                        <p class="required-info">This field is required</p>
+                        <div class="submit-button-wrapper flex-row gap justify-end">
+                            <button id="btnCancel" class="button btn-cancel btn-icon btn-secondary" onclick="resetInput(event, 'addTaskForm')"></button>
+                            <button type="submit" id="btnCheck" class="button btn-check btn-icon btn-primary" disabled></button>
+                        </div>
 
-                                <p class="required-info">This field is required</p>
-                                <div class="submit-button-wrapper flex-row gap justify-end">
-                                    <button id="btnCancel" class="button btn-cancel btn-icon btn-secondary" onclick="resetInput(event, 'addTaskForm')"></button>
-                                    <button type="submit" id="btnCheck" class="button btn-check btn-icon btn-primary" disabled></button>
-                                </div>
                     </form>
 
             </div>

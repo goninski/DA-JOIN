@@ -123,10 +123,24 @@ textarea {
 }
 
 
+::placeholder,
+.placeholder {
+    color: var(--clr-subtle);
+}
+.placeholder:focus {
+    color: var(--clr-main);
+}
+.add-task-form .required-info {
+    margin-top: 171px;
+    margin-bottom: -64px;
+}
 .v-divider {
     border-left: solid 1px var(--clr-subtle);
 }
 
+
+
+/** PRIORITY RADIO BUTTONS */
 
 .priority-input-wrapper  {
     gap: 16px;
@@ -165,19 +179,8 @@ input:checked + label.prio-low {
 
 
 
-::placeholder,
-.placeholder {
-    color: var(--clr-subtle);
-}
-.placeholder:focus {
-    color: var(--clr-main);
-}
 
-.add-task-form .required-info {
-    margin-top: 171px;
-    margin-bottom: -64px;
-}
-
+/** INPUT CONTACTS */
 
 .profile-batches {
     list-style: none;
@@ -200,6 +203,60 @@ input:checked + label.prio-low {
 }
 
 
+/** INPUT SUBTASKS */
+.subtask-listing {
+    margin-block: 0;
+    margin-block-start: 4px;
+    padding-inline: 0;
+}
+.subtask-listing li,
+.subtask-edit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 16px;
+    min-height: 32px;
+    transition-duration: 125ms;
+}
+.subtask-listing li .text {
+    display: list-item;
+    margin-left: 28px;
+    width: 100%;
+}
+:is(.subtask-listing, subtask-edit) .button-wrapper {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    width: 57px;
+    height: 24px;
+    margin-left: 12px;
+}
+:is(.subtask-listing, subtask-edit) .divider {
+    border-left: solid 1px var(--clr-divider);
+    height: 100%;
+    --clr-divider: #A8A8A8;
+}
+.subtask-listing img {
+    height: 18px;
+    width: auto;
+    object-fit: contain;
+}
+.subtask-listing li:hover {
+    background-color: #EEEEEE;
+    border-radius: 10px;
+}
+.subtask-listing:hover .button-wrapper {
+    display: flex;
+}
+.subtask-listing button:hover {
+    transform: scale(1.05);
+}
+
+
+
+
+/** BREAKPOINTS */
 
 @media(max-width: 1339px) {
     .field-row {
