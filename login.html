@@ -11,24 +11,26 @@
     <script src="script.js"></script>
 </head>
 
-<body class="bg-grey">
-    <section class="flex justify-between header_login">
-        <div>
-            <img class="logo_login" src="./assets/img/Capa 2.png" alt="Logo">
+<body class="bg-grey flex justify-center"">
+    <section class=" flex-row justify-between header_login">
+    <div>
+        <img class="logo_login" src="./assets/img/Capa 2.png" alt="Logo">
+    </div>
+    <div class="flex-row">
+        <div class="pos-absol-header-login">
+            <p class="not_a_join_user-login-header label">Not a Join user?</p>
+            <button class="btn-login-header-size btn-primary">Sign up</button>
         </div>
-        <div class="flex">
-            <p>Legal notice</p>
-            <button class="btn-login-size btn-primary">Sign up</button>
-        </div>
+    </div>
     </section>
-    
+
     <section class="flex justify-center">
         <div class="flex-col bg-white login-div-size flex center">
             <div class="headline_login flex-col align-center">
                 <h1 class="gap_16px login_title">Log in</h1>
                 <div class="login_border"></div>
             </div>
-            
+
             <div class="flex-col gap-20 login-email-part center">
                 <input type="email" name="email" id="email" placeholder="Email">
                 <input type="password" id="pwd" name="pwd" minlength="8" placeholder="Password">
