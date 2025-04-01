@@ -206,7 +206,7 @@ input:checked + label.prio-low {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 42px;
+    min-width: 42px;
     height: 42px;
     color: white;
     border: solid 2px white;

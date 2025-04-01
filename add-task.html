@@ -7,7 +7,7 @@
     <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
     <title>Add Task | Join</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="./styles/add-task.css">
+    <link rel="stylesheet" href="add-task.css">
     <script src="scripts/templates.js"></script>
     <script src="script.js"></script>
     <script src="./scripts/add-task.js"></script>
@@ -64,8 +64,95 @@
                                 </div>
 
                                 <div class="field-wrapper">
-                                    <label for="inputAassigned">Assigned to</label>
-                                    <select id="inputAssigned" name="inputAssigned" placeholder="Select contacts to assign">
+                                    <div class="checkbox-wrapper flex-row align-center gap-05">
+                                        <input type="checkbox" id="checkbox-01" name="checkbox-01" value="val-1">
+                                        <label for="checkbox-01">Test Checkbox</label>
+                                    </div>
+                                </div>
+
+                                <style>
+                                    .select {
+                                        position: relative;
+                                        width: 100%;
+                                    }
+                                    .select-btn {
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: space-between;
+                                        height: 50px;
+                                        padding: 0 16px;
+                                        border-radius: 10px;
+                                        cursor: pointer;
+                                        background-color: white;
+                                    }
+                                    .select-btn .placeholder {
+                                    }
+                                    .select ul {
+                                        list-style: none;
+                                        padding-inline: 0;
+                                        margin-block: -8px;
+                                        border-bottom-left-radius: 10px;
+                                        border-bottom-right-radius: 10px;
+                                        overflow: hidden;
+                                        background-color: white;
+                                        width: 100%;
+                                        position: absolute;
+                                        animation-name: fadeinUp;
+                                        animation-duration: 0.4s;
+                                        animation-fill-mode: both;
+                                    }
+                                    .select li {
+                                        display: flex;
+                                        align-items: center;
+                                        gap: 8px;
+                                        height: 56px;
+                                        transition: 0.3s;
+                                        padding-inline: 16px;
+                                    }
+                                    .select label {
+                                        width: 100%
+                                    }
+                                    .select li:hover {
+                                        background-color: var(--clr-subtle);
+                                    }
+                                    .select-btn.open ~ ul {
+                                        opacity: 0;
+                                        animation-name: fadeInUp;
+                                        animation-duration: 0.4s;
+                                        animation-fill-mode: both;
+                                    }
+                                </style>
+
+                                <div class="field-wrapper">
+                                    Assigned to
+                                    <div class="select select-multiple">
+                                        <div class="select-btn xopen">
+                                            <span class="placeholder">Select contacts to assign</span>
+                                            <span class="input-button-wrapper custom-select"><img src="/assets/icons/arrow-drop-down.svg"></span>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div class="profile-batch" style="--profile-color: violet;">P1</div>
+                                                <label for="user-1">User 1</label>
+                                                <input type="checkbox" id="user-1" name="user-1" value="user-1">
+                                            </li>
+                                            <li>
+                                                <div class="profile-batch" style="--profile-color: pink;">P2</div>
+                                                <label for="user-2">User 2</label>
+                                                <input type="checkbox" id="user-2"  name="user-2" value="user-2">
+                                            </li>
+                                            <li>
+                                                <div class="profile-batch" style="--profile-color: orange;">P3</div>
+                                                <label for="user-3">User 3</label>
+                                                <input type="checkbox" id="user-3"  name="user-3" value="user-3">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="field-wrapper">
+                                    <label for="inputAassigned2">Assigned to</label>
+                                    <select id="inputAssigned2" name="inputAssigned2" placeholder="Select contacts to assign">
                                         <option value="user-1">User 1</option>
                                         <option value="user-2">User 2</option>
                                         <option value="user-3">User 3</option>
@@ -87,7 +174,7 @@
                                             <option value="category-3">Categorie 3</option>
                                         </select>
                                         <div class="input-button-wrapper custom-select">
-                                            <img src="/assets/icons/arrow_drop_down.svg">
+                                            <img src="/assets/icons/arrow-drop-down.svg">
                                         </div>
                                     </div>
                                     <div class="required-msg">This field is required</div>
