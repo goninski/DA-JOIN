@@ -12,7 +12,9 @@ function getHeaderTemplate() {
 function getSideMenuTemplate() {
     return `
         <div class="sidebar-logo">
-            <img src="./assets/img/Capa 1.png" alt="join logo">
+             <a href="summary.html" style="text-decoration: none; border: none;">
+                 <img src="./assets/img/Capa 1.png" alt="join logo">
+             </a>
         </div>
         <div class="sidebar-buttons">
             <a class="nav-button" href="summary.html">
