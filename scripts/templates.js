@@ -5,6 +5,7 @@ function getHeaderTemplate() {
             <a id="help-icon" href="help.html">
                 <img class="help-icon" src="./assets/icons/Property 1=help.svg"></img>
             </a>
+            <img
         </div>
     `
 }
