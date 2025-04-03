@@ -33,7 +33,7 @@
 
 
 
-
+            <!-- ASSET BLOCK TEMPLATE -->
             <div class="ct-container gap">
                 <h2>Asset Block (copy this block to add a new asset group)</h2>
 
@@ -51,7 +51,7 @@
 
 
 
-
+            <!-- PAGE TEMPLATE -->
             <div class="ct-container gap">
                 <h2>Page Template</h2>
                 <div>
@@ -65,6 +65,8 @@
             </div>
 
 
+
+            <!-- BUTTONS -->
             <div class="ct-container gap">
                 <h2>Buttons</h2>
                 <button class="button btn-iconless btn-primary">primary simple</button>
@@ -81,7 +83,7 @@
                 </div>
 
                 <div>
-                    <p><b>Dev: </b>François</p>
+                    <p>Dev: François</p>
                     <p>shadow and click state missing, follows asap</p>
                     <p>icons can also be injected as svg-code by js (see templates), this way state colors can be applied by css</p>
                     <hr>
@@ -90,6 +92,7 @@
             
 
 
+            <!-- VARIOUS INPUTS -->
             <div class="ct-container gap">
                 <h2>Various Inputs</h2>
                 <form class="gap">
@@ -121,7 +124,7 @@
 
                 </form>
                 <div>
-                    <p><b>Dev: </b>François</p>
+                    <p>Dev: François</p>
                     <p>for required inputs/selects add class 'show-required-msg' to the parent element with js, if empty on validation</p>
                     <p>Maybe some shadows are missing, need to check</p>
                     <p>Due date: active font color missing</p>
@@ -163,8 +166,8 @@
                     <label for="inputCategory" class="required">Category</label>
                     <div class="input-wrapper custom-select xshow-required-msg">
                         <select class="custom" id="inputCategory" name="inputCategory" placeholder="Select task category" required>
-                            <option value="technical-task">Technical Task</option>
-                            <option value="user-story">User Story</option>
+                            <option value="id-x">Technical Task</option>
+                            <option value="id-x">User Story</option>
                         </select>
                         <div class="input-button-wrapper custom-select">
                             <img src="/assets/icons/arrow-drop-down.svg">
@@ -174,7 +177,7 @@
                 </div>
                 <div>
                     <p>Dev: François</p>
-                    <p>call 'getCategorySelectOptions(id of selection element)' to get the option elements</p>
+                    <p>call 'getCategorySelectOptions(id of wrapper element)' to get the option elements</p>
                     <p>missing: dropdown styles, not possible with css</p>
                     <hr>
                 </div>
@@ -197,11 +200,11 @@
                         <ul id="inputContacts">
                             <li>
                                 <div class="profile-batch" style="--profile-color: violet;">P1</div>
-                                <label for="user-1">User 1</label>
+                                <label for="id-x">Contact 0</label>
                                 <div class="input-button-wrapper custom-checkbox">
                                     <button>
-                                        <input type="checkbox" class="custom" id="user-1" name="user-1" value="user-1">
-                                        <img src="assets/icons/checkbox-checked.svg" alt="" id="test" class="checkbox">
+                                        <input type="checkbox" class="custom" id="id-x" name="id-x" value="id-x">
+                                        <img src="assets/icons/checkbox-checked.svg" alt="checkbox-checked" class="checkbox">
                                     </button>
                                 </div>
                             </li>
@@ -210,7 +213,7 @@
                 </div>
                 <div style="margin-top: 210px;">
                     <p>Dev: François</p>
-                    <p>call 'getContactSelectOptions(id of selection element)' to get the option elements</p>
+                    <p>call 'getContactSelectOptions(id of wrapper element)' to get the option elements</p>
                     <p>missing: search, open/close dropdown</p>
                     <p>missing: select next element with only one tab click</p>
                     <hr>
@@ -222,19 +225,15 @@
 
             <!-- PROFILE BATCHES -->
             <div class="ct-container gap">
-                <h2>Contacts / Profiles</h2>
+                <h2>Profile Batches</h2>
 
-                <div>
-                    <h5>Profile Batches | Dev: FG</h5>
-                    <ul id="" class="profile-batches">
-                        <li class="profile-batch" style="--profile-color: violet;">P1</li>
-                        <li class="profile-batch" style="--profile-color: pink;">P2</li>
-                        <li class="profile-batch" style="--profile-color: orange;">P3</li>
-                    </ul>
-                </div>
+                <ul id="profileBatches" class="profile-batches">
+                    <li class="profile-batch" style="--profile-color: violet;">P1</li>
+                </ul>
 
                 <div>
                     <p>Dev: François</p>
+                    <p>call 'getProfileBatches(id of wrapper element)' to get the batches</p>
                     <hr>
                 </div>
             </div>
@@ -279,7 +278,7 @@
 
                 </form>
                 <div>
-                    <p><b>Dev: </b>François</p>
+                    <p>Dev: François</p>
                     <hr>
                 </div>
             </div>            

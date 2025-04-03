@@ -2,6 +2,7 @@ function initAddTask() {
     getMainTemplates();
     addIconsToAddTaskPage();
     getContactSelectOptions();
+    getProfileBatches();
     getCategorySelectOptions();
 }
 

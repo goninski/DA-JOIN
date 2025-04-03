@@ -2,6 +2,7 @@ function initAssetLibrary() {
     getMainTemplates();
     addIconsToAssetLibraryPage();
     getContactSelectOptions();
+    getProfileBatches();
     getCategorySelectOptions();
 }
 

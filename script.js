@@ -38,6 +38,14 @@ function getContactSelectOptions(id = 'inputContacts') {
     }
 }
 
+function getProfileBatches(id = 'profileBatches') {
+    let selectInput = document.getElementById(id);
+    selectInput.innerHTML = '';
+    for (let index = 0; index < contacts.length; index++) {
+        selectInput.innerHTML += getProfileBatchTemplate(contacts[index]);
+    }
+}
+
 function getCategorySelectOptions(id = 'inputCategory') {
     let selectInput = document.getElementById(id);
     selectInput.innerHTML = '';

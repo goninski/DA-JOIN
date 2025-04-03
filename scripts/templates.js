@@ -52,12 +52,20 @@ function getContactSelectOptionTemplate(contact) {
             <div class="input-button-wrapper custom-checkbox">
                 <button>
                     <input type="checkbox" class="custom" id="${contact.id}" name="${contact.id}" value="${contact.id}">
-                    <img src="assets/icons/checkbox-checked.svg" alt="" class="checkbox-img">
+                    <img src="assets/icons/checkbox-checked.svg" alt="checkbox-checked" class="checkbox">
                 </button>
             </div>
         </li>
     `
 }
+
+function getProfileBatchTemplate(contact) {
+    return `
+        <li class="profile-batch" style="--profile-color: ${contact.color};">${contact.initials}</li>
+    `
+}
+
+
 
 function getCategorySelectOptionTemplate(category) {
     return `
