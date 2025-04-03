@@ -30,7 +30,7 @@
     border-radius: 8px;
     padding: 15px 24px;
     gap: 10px;
-    min-height: 56px;
+    min-height: 48px;
     font-size: 21px;
     font-weight: var(--fw-bold);
 }
@@ -94,28 +94,31 @@
     background-color: #F6F7F8;
 }
 
+.btn-login-header {
+    color: white;
+}
+
 .btn-login-header-size {
     width: 91px;
     height: 49px;
-    color: white;
     font-size: 16px;
     font-weight: var(--fw-bold);
     border-radius: 8px;
     padding: 15px 16px;
-    font-weight: 700;   
+    font-weight: 700;
 }
 
-.btn-login-header-size:hover {
-    color: var(--clr-light-blue);
+.btn-login-header:hover {
+    color: white;
     border-color: var(--clr-light-blue);
     border-width: 2px;
 }
 
-.not_a_join_user-login-header{
+.not_a_join_user-login-header {
     font-weight: 400;
 }
 
-.pos-absol-header-login{
+.pos-absol-header-login {
     display: flex;
     flex-direction: row;
     gap: 35px;
@@ -124,3 +127,28 @@
     top: 15px;
 }
 
+.btn-login {
+    padding: 15px 24px;
+    gap: 10px;
+    background: #2A3647;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 21px;
+}
+
+.btn-size-guest-and-normal-login{
+    width: 322px;
+    height: 48px;
+}
+
+.btn-fourth{
+    color: white;
+    --icon-color: white;
+    font-weight: var(--fw-bold);
+    background-color: var(--clr-main);
+    border: none;
+}
+
+.btn-fourth:hover {
+    background-color: var(--clr-light-blue);
+}

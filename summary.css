@@ -51,6 +51,7 @@ header {
     width: 560px;
     display: flex;
     flex-wrap: wrap;
+    gap: 18px;
 }
 
 .to-do {
@@ -62,7 +63,10 @@ header {
     padding-left: 19px;
     background-color: #FFFFFF;
     width: 264px;
-    height: 168;
+    height: 168px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .done {
@@ -75,6 +79,9 @@ header {
     padding-left: 58px;
     padding-right: 58px;
     gap: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .urgent-deadline {
@@ -87,6 +94,9 @@ header {
     padding-right: 48px;
     gap: 61px;
     background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .tasks-in-board {
@@ -97,6 +107,9 @@ header {
     padding-top: 25px;
     padding-bottom: 25px;
     gap: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .tasks-in-progress {
@@ -107,6 +120,9 @@ header {
     padding-top: 25px;
     padding-bottom: 25px;
     gap: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .awaiting-feedback {
@@ -117,4 +133,39 @@ header {
     padding-top: 25px;
     padding-bottom: 25px;
     gap: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-direction-row {
+    flex-direction: row;
+    justify-items: center;
+}
+
+.number {
+    font-size: 64px;
+    font-weight: 600;
+}
+
+.black {
+    color: #000000;
+    margin: 0;
+}
+
+.date {
+    font-weight: 700;
+    font-size: 21px;
+}
+
+.deadline {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.urgency {
+    display: flex;
+    gap: 18px;
+    align-items: center;
 }
