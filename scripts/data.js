@@ -130,22 +130,25 @@ function setDemoData() {
     saveTaskDataLS();
 }
 
-function saveToLocalStorage(key, data){
-    localStorage.setItem(key, JSON.stringify(data));
+function getDataLS() {
+    getCategoryDataLS();
+    getContactDataLS();
+    getTaskDataLS();
 }
 
-function getFromLocalStorage(key){
-    return JSON.parse(localStorage.getItem(key));
+function getCategoryDataLS() {
+    categories = getFromLocalStorage('categories');
+    lastCategoryId = getFromLocalStorage('lastCategoryId');
 }
 
 function getContactDataLS() {
-    lastContactId = getFromLocalStorage('lastContactId');
     contacts = getFromLocalStorage('contacts');
+    lastContactId = getFromLocalStorage('lastContactId');
 }
 
 function getTaskDataLS() {
-    lastTaskId = getFromLocalStorage('lastTaskId');
     tasks = getFromLocalStorage('tasks');
+    lastTaskId = getFromLocalStorage('lastTaskId');
 }
 
 function saveCategoryDataLS() {
@@ -161,5 +164,13 @@ function saveContactDataLS() {
 function saveTaskDataLS() {
     saveToLocalStorage('tasks', tasks);
     saveToLocalStorage('lastTaskId', lastTaskId);
+}
+
+function saveToLocalStorage(key, data){
+    localStorage.setItem(key, JSON.stringify(data));
+}
+
+function getFromLocalStorage(key){
+    return JSON.parse(localStorage.getItem(key));
 }
 

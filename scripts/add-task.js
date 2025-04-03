@@ -1,10 +1,10 @@
 function initAddTask() {
     getMainTemplates();
     addIconsToAddTaskPage();
+    getDataLS();   
     getContactSelectOptions();
     getProfileBatches();
     getCategorySelectOptions();
-    getTaskDataLS();   
 }
 
 function addIconsToAddTaskPage() {
