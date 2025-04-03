@@ -30,14 +30,14 @@ footer {
 }
 :where(a) {
     text-decoration: none;
-    transition-duration: 125ms;
+    transition-duration: var(--transition-duration);
 }
 :where(button) {
     padding: 0;
     border: 0;
     background-color: transparent;
     cursor: pointer;
-    transition-duration: 125ms;
+    transition-duration: var(--transition-duration);
 }
 :where(figure) {
     margin-block-start: 0;

@@ -86,7 +86,7 @@ label.required::after,
     content: "*";
     color: var(--clr-warning);
 }
-input, textarea, select {
+input:not([type="checkbox"], [type="radio"]), textarea, select {
     padding: 12px 21px;
     border-radius: 10px;
     border: solid 1px var(--clr-subtle);
@@ -95,12 +95,15 @@ input, textarea, select {
     min-height: 48px;
     background-color: white;
 }
-select {
-    appearance: base-select;
+select.custom-select {
+    appearance: none;
 }
 textarea {
     resize: vertical;
     min-height: 120px;
+}
+.custom-checkbox input[type="checkbox"] {
+    appearance: none;
 }
 .btn-radio {
     color: var(--clr-main);
@@ -193,30 +196,7 @@ input:checked + label.prio-low {
 
 
 
-/** INPUT CONTACTS */
-
-.profile-batches {
-    list-style: none;
-    display: flex;
-    gap: 12px;
-    margin-block: 0;
-    padding-inline: 0;
-}
-.profile-batch {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 42px;
-    height: 42px;
-    color: white;
-    border: solid 2px white;
-    border-radius: 100%;
-    background-color: var(--profile-color);
-    font-size: 12px;
-}
-
-
-/** CUSTOM INPUT BUTTON */
+/** CUSTOM INPUT BUTTONS */
 .input-wrapper {
     display: flex;
     justify-content: space-between;
@@ -227,7 +207,8 @@ input:checked + label.prio-low {
 .input-wrapper :is(input, select) {
     width: 100%;
 }
-.input-wrapper .input-button-wrapper {
+.input-wrapper .input-button-wrapper,
+.input-button-wrapper:where(.custom-checkbox) {
     position: absolute;
     right: 16px;
 }
@@ -251,13 +232,16 @@ input:checked + label.prio-low {
     height: 24px;
 }
 .input-button-wrapper.custom-select {
-    background: white;
+    /* background: white; */
     pointer-events: none;
 }
 .input-button-wrapper img {
     height: 18px;
     width: auto;
     object-fit: contain;
+}
+.input-button-wrapper img.checkbox {
+    height: 16px;
 }
 .input-button-wrapper.custom-select img {
     height: 6px;
@@ -277,6 +261,30 @@ input:checked + label.prio-low {
 }
 
 
+
+/** INPUT CONTACTS */
+
+.profile-batches {
+    list-style: none;
+    display: flex;
+    gap: 12px;
+    margin-block: 0;
+    padding-inline: 0;
+}
+.profile-batch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 42px;
+    height: 42px;
+    color: white;
+    border: solid 2px white;
+    border-radius: 100%;
+    background-color: var(--profile-color);
+    font-size: 12px;
+}
+
+
 /** INPUT SUBTASKS */
 .subtask-listing {
     margin-block: 0;
@@ -290,7 +298,7 @@ input:checked + label.prio-low {
     align-items: center;
     padding: 4px 16px;
     min-height: 32px;
-    transition-duration: 125ms;
+    transition-duration: var(--transition-duration);
 }
 .subtask-edit {
     background-color: white;

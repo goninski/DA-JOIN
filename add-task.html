@@ -102,12 +102,14 @@
                                         animation-fill-mode: both;
                                     }
                                     .select li {
+                                        position: relative;
                                         display: flex;
                                         align-items: center;
                                         gap: 8px;
                                         height: 56px;
                                         transition: 0.3s;
                                         padding-inline: 16px;
+                                        border-bottom: solid 1px var(--clr-subtle);
                                     }
                                     .select label {
                                         width: 100%
@@ -134,7 +136,10 @@
                                             <li>
                                                 <div class="profile-batch" style="--profile-color: violet;">P1</div>
                                                 <label for="user-1">User 1</label>
-                                                <input type="checkbox" id="user-1" name="user-1" value="user-1">
+                                                <div class="input-button-wrapper custom-checkbox">
+                                                    <input type="checkbox" id="user-1" name="user-1" value="user-1">
+                                                    <button><img src="assets/icons/checkbox-checked.svg" alt="" class="checkbox"></button>
+                                                </div>
                                             </li>
                                             <li>
                                                 <div class="profile-batch" style="--profile-color: pink;">P2</div>
@@ -166,9 +171,8 @@
 
                                 <div class="field-wrapper">
                                     <label for="inputCategory" class="required">Category</label>
-                                    <div class="input-wrapper input-wrapper-select xshow-required-msg">
-                                        <select id="inputCategory" name="inputCategory" placeholder="Select task category" required>
-                                            <button><selectedcontent></selectedcontent></button>
+                                    <div class="input-wrapper custom-select xshow-required-msg">
+                                        <select id="inputCategory" name="inputCategory" placeholder="Select task category" class="custom-select" required>
                                             <option value="category-1">Categorie 1</option>
                                             <option value="category-2">Categorie 2</option>
                                             <option value="category-3">Categorie 3</option>
