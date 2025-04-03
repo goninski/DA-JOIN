@@ -5,18 +5,18 @@ let tasks = [];
 
 categories = [
     {
-        "id": 0,
+        "id": 1,
         "name": "Technical Task"
     },
     {
-        "id": 0,
+        "id": 2,
         "name": "User Story"
     }
 ];
 
 contacts = [
     {
-        "id": 0,
+        "id": 1,
         "name": "François Gonin",
         "email": "mail@goninski.dev",
         "phone": "+41 78 888 77 66",
@@ -24,7 +24,7 @@ contacts = [
         "color": "violet"
     },
     {
-        "id": 1,
+        "id": 2,
         "name": "Julian Kraske",
         "email": "",
         "phone": "",
@@ -32,7 +32,7 @@ contacts = [
         "color": "pink"
     },
     {
-        "id": 2,
+        "id": 3,
         "name": "Nico Hässler",
         "email": "",
         "phone": "",
@@ -40,7 +40,7 @@ contacts = [
         "color": "orange"
     },
     {
-        "id": 3,
+        "id": 4,
         "name": "Vivienne Wündisch",
         "email": "",
         "phone": "",
@@ -52,15 +52,62 @@ contacts = [
 
 tasks = [
     {
-        "id": 0,
-        "title": "Title ...",
-        "description": "Description...",
+        "id": 1,
+        "title": "Title Task 1...",
+        "description": "Description Task 1...",
+        "dueDate": 0,
+        "priority": "high",
+        "contactIds": [1, 2, 3],
+        "categoryId": 0,
+        "subtasks": [
+            {   
+                "title": "Subtask 1",
+                "status": 1
+            },
+            {   
+                "title": "Subtask 2",
+                "status": 0,
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "title": "Title Task 2...",
+        "description": "Description Task 2...",
+        "dueDate": 0,
+        "priority": "medium",
+        "contactIds": [2, 3],
+        "categoryId": 1,
+        "subtasks": [
+            {   
+                "title": "Subtask 1",
+                "status": 1
+            },
+            {   
+                "title": "Subtask 2",
+                "status": 0,
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "Title Task 3...",
+        "description": "Description Task 3...",
         "dueDate": 0,
         "priority": "low",
-        "assignedTo": [0, 1, 2],
-        "category": "Technical Task",
-        "subtasks": []
-    }
+        "contactIds": [3, 1],
+        "categoryId": 0,
+        "subtasks": [
+            {   
+                "title": "Subtask 1",
+                "status": 1
+            },
+            {   
+                "title": "Subtask 2",
+                "status": 0,
+            }
+        ]
+    },
 ];
 
 
