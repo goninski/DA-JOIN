@@ -347,6 +347,9 @@ input:checked + label.prio-low {
 .input-button-wrapper img.cancel {
     height: 13px;
 }
+.input-button-wrapper img.check {
+    height: 11px;
+}
 .input-button-wrapper .divider {
     border-left: solid 1px #A8A8A8;
     height: 100%;
