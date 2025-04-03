@@ -25,19 +25,19 @@ contacts = [
     },
     {
         "id": 2,
-        "name": "Julian Kraske",
-        "email": "",
-        "phone": "",
-        "initials": "JK",
-        "color": "pink"
-    },
-    {
-        "id": 3,
         "name": "Nico Hässler",
         "email": "",
         "phone": "",
         "initials": "NH",
         "color": "orange"
+    },
+    {
+        "id": 3,
+        "name": "Julian Kraske",
+        "email": "",
+        "phone": "",
+        "initials": "JK",
+        "color": "pink"
     },
     {
         "id": 4,
