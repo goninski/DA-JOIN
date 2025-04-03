@@ -125,6 +125,9 @@ function setDemoData() {
     categories = categoriesDemo;
     contacts = contactsDemo;
     tasks = tasksDemo;
+    lastCategoryId = categories.length;
+    lastContactId = contacts.length;
+    lastTaskId = tasks.length;
     saveCategoryDataLS();
     saveContactDataLS();
     saveTaskDataLS();
