@@ -138,10 +138,14 @@ function setDemoData() {
     saveTaskDataLS();
 }
 
+getAllDataLS();
 function getAllDataLS() {
     getCategoryDataLS();
     getContactDataLS();
     getTaskDataLS();
+    if(! contacts && ! tasks) {
+        setDemoData();
+    }
 }
 
 function getCategoryDataLS() {

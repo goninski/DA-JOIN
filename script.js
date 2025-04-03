@@ -1,6 +1,5 @@
 function init() {
     getMainTemplates();
-    getAllDataLS();   
 }
 
 function getMainTemplates() {
