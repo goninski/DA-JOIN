@@ -3,7 +3,12 @@ let categories = [];
 let contacts = [];
 let tasks = [];
 
-categories = [
+let lastCategoryId = 0;
+let lastContactsId = 0;
+let lastTaskId = 0;
+
+
+let categoriesDemo = [
     {
         "id": 1,
         "name": "Technical Task"
@@ -14,7 +19,8 @@ categories = [
     }
 ];
 
-contacts = [
+
+let contactsDemo = [
     {
         "id": 1,
         "name": "François Gonin",
@@ -50,7 +56,8 @@ contacts = [
 
 ];
 
-tasks = [
+
+let tasksDemo = [
     {
         "id": 1,
         "title": "Title Task 1...",
@@ -111,4 +118,48 @@ tasks = [
 ];
 
 
+// TEMPORARY LOCAL STORAGE HANDLING
+
+//setDemoData();
+function setDemoData() {
+    categories = categoriesDemo;
+    contacts = contactsDemo;
+    tasks = tasksDemo;
+    saveCategoryDataLS();
+    saveContactDataLS();
+    saveTaskDataLS();
+}
+
+function saveToLocalStorage(key, data){
+    localStorage.setItem(key, JSON.stringify(data));
+}
+
+function getFromLocalStorage(key){
+    return JSON.parse(localStorage.getItem(key));
+}
+
+function getContactDataLS() {
+    lastTaskId = getFromLocalStorage('lastContactId');
+    tasks = getFromLocalStorage('contacts');
+}
+
+function getTaskDataLS() {
+    lastTaskId = getFromLocalStorage('lastTaskId');
+    tasks = getFromLocalStorage('tasks');
+}
+
+function saveCategoryDataLS() {
+    saveToLocalStorage('categories', categories);
+    saveToLocalStorage('lastCategoryId', lastCategoryId);
+}
+
+function saveContactDataLS() {
+    saveToLocalStorage('contacts', contacts);
+    saveToLocalStorage('lastContactId', lastContactId);
+}
+
+function saveTaskDataLS() {
+    saveToLocalStorage('tasks', tasks);
+    saveToLocalStorage('lastTaskId', lastTaskId);
+}
 

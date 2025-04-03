@@ -27,7 +27,7 @@ function getSideMenuTemplate() {
             <a class="nav-button" href="board.html">
                 <img src="./assets/icons/Property 1=Board.svg">Board
             </a>
-            <a class="nav-button" href="contact.html">
+            <a class="nav-button" href="contacts.html">
                 <img src="./assets/icons/Property 1=Contacts.svg">Contacts
             </a>
         </div>
