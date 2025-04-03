@@ -114,9 +114,8 @@
 
                     <div class="field-wrapper">
                         <label for="inputCategory" class="required">Category (with custom select button)</label>
-                        <div class="input-wrapper input-wrapper-select xshow-required-msg">
-                            <select id="inputCategory" name="inputCategory" placeholder="Select task category" required>
-                                <button><selectedcontent></selectedcontent></button>
+                        <div class="input-wrapper custom-select xshow-required-msg">
+                            <select class="custom" id="inputCategory" name="inputCategory" placeholder="Select task category" required>
                                 <option value="category-1">Categorie 1</option>
                                 <option value="category-2">Categorie 2</option>
                                 <option value="category-3">Categorie 3</option>
@@ -184,6 +183,60 @@
                     <hr>
                 </div>
             </div>
+
+
+            <div class="ct-container gap">
+                <h2>Multiple Select for Contacts</h2>
+
+                <div class="field-wrapper">
+                    <label for="">Assigned to</label>
+                    <div class="select custom-select multiple">
+                        <div class="select-btn xopen focus">
+                            <span class="select-text">Select contacts to assign</span>
+                            <span class="input-button-wrapper custom-select"><img src="/assets/icons/arrow-drop-down.svg"></span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="profile-batch" style="--profile-color: violet;">P1</div>
+                                <label for="user-1">User 1</label>
+                                <div class="input-button-wrapper custom-checkbox">
+                                    <button>
+                                        <input type="checkbox" class="custom" id="user-1" name="user-1" value="user-1">
+                                        <img src="assets/icons/checkbox-checked.svg" alt="" id="test" class="checkbox">
+                                    </button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="profile-batch" style="--profile-color: pink;">P2</div>
+                                <label for="user-2">User 2</label>
+                                <div class="input-button-wrapper custom-checkbox">
+                                    <button>
+                                        <input type="checkbox" class="custom" id="user-2" name="user-2" value="user-2">
+                                        <img src="assets/icons/checkbox-checked.svg" alt="" id="test" class="checkbox">
+                                    </button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="profile-batch" style="--profile-color: orange;">P3</div>
+                                <label for="user-3">User 3</label>
+                                <div class="input-button-wrapper custom-checkbox">
+                                    <button>
+                                        <input type="checkbox" class="custom" id="user-3" name="user-3" value="user-3">
+                                        <img src="assets/icons/checkbox-checked.svg" alt="" id="test" class="checkbox">
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="margin-top: 150px;">
+                    <p><b>Dev: </b>François</p>
+                    <p>missing: dropdown functionality</p>
+                    <hr>
+                </div>
+            </div>
+
+
 
 
             <div class="ct-container gap">
