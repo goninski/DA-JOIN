@@ -31,6 +31,8 @@
             </div>
 
 
+
+
             <div class="ct-container gap">
                 <h2>Asset Block (copy this block to add a new asset group)</h2>
 
@@ -45,6 +47,8 @@
                     <hr>
                 </div>
             </div>
+
+
 
 
             <div class="ct-container gap">
@@ -86,7 +90,7 @@
 
 
             <div class="ct-container gap">
-                <h2>Inputs</h2>
+                <h2>Various Inputs</h2>
                 <form class="gap">
 
                     <div class="field-wrapper xshow-required-msg">
@@ -112,65 +116,6 @@
                         <div class="required-msg">This field is required</div>
                     </div>
 
-                    <div class="field-wrapper">
-                        <label for="inputCategory" class="required">Category (with custom select button)</label>
-                        <div class="input-wrapper custom-select xshow-required-msg">
-                            <select class="custom" id="inputCategory" name="inputCategory" placeholder="Select task category" required>
-                                <option value="category-1">Categorie 1</option>
-                                <option value="category-2">Categorie 2</option>
-                                <option value="category-3">Categorie 3</option>
-                            </select>
-                            <div class="input-button-wrapper custom-select">
-                                <img src="/assets/icons/arrow-drop-down.svg">
-                            </div>
-                        </div>
-                        <div class="required-msg">This field is required</div>
-                    </div>
-
-                    <div class="field-wrapper">
-                        <label for="priority">Priority</label>
-                        <div class="priority-input-wrapper flex-row justify-between align-center">
-                            <input type="radio" id="inputPrioHigh" name="priority" value="high">
-                            <label for="inputPrioHigh" id="labelPrioHigh" class="prio-high button btn-icon btn-radio"></label>
-
-                            <input type="radio" id="inputPrioMedium" name="priority" value="medium">
-                            <label for="inputPrioMedium" id="labelPrioMedium" class="prio-medium button btn-icon btn-radio"></label>
-
-                            <input type="radio" id="inputPrioLow" name="priority" value="low"">
-                            <label for="inputPrioLow" id="labelPrioLow" class="prio-low button btn-icon btn-radio"></label>
-                        </div>
-                    </div>
-
-                    <div class="field-wrapper subtask-wrapper">
-                        <label for="inputSubtasks">Subtasks</label>
-                        <div class="input-wrapper input-wrapper-subtasks">
-                            <input type="text" id="inputSubtasks" name="inputSubtasks" placeholder="Add new subtask">
-                            <div id="subtaskInputButtons" class="input-button-wrapper hide">
-                                <button onclick="cancelSubtaskInput()"><img src="/assets/icons/cancel.svg" class="cancel"></button>
-                                <div class="divider"></div>
-                                <button onclick="saveSubtaskInput()"><img src="/assets/icons/check.svg" class="check"></button>
-                            </div>
-                            <div id="subtaskInputButtonAdd" class="input-button-wrapper xhide">
-                                <button onclick="addSubtaskInput()"><img src="/assets/icons/add.svg" class="add"></button>
-                            </div>
-                        </div>
-                        <ul id="assignedSubtasks" class="subtask-listing">
-                            <li id="subtask-01"><span class="text">Subtask 1</span>
-                                <div class="input-button-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button></div>
-                            </li>
-                            <li id="subtask-02"><span class="text">Subtask 2</span>
-                                <div class="input-button-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button></div>
-                            </li>
-                        </ul>
-                        <div id="subtaskEdit" class="subtask-edit">Subtask XY
-                            <div id="subtaskEditButtons" class="input-button-wrapper">
-                                <button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button>
-                                <div class="divider"></div>
-                                <button onclick="saveSubtaskEdits()"><img src="/assets/icons/check.svg" class="check"></button>
-                            </div>
-                        </div>
-                    </div>
-
                     <p class="required-info">This field is required</p>
 
                 </form>
@@ -179,12 +124,65 @@
                     <p>for required inputs/selects add class 'show-required-msg' to the parent element with js, if empty on validation</p>
                     <p>Maybe some shadows are missing, need to check</p>
                     <p>Due date: active font color missing</p>
-                    <p>I'm also working on custom select fields for Contacts and Categories</p>
+                    <hr>
+                </div>
+            </div>
+
+            
+
+            <!-- PRIORITY BUTTONS -->
+            <div class="ct-container gap">
+                <h2>Priority Buttons</h2>
+                <div class="field-wrapper">
+                    <label for="priority">Priority</label>
+                    <div class="priority-input-wrapper flex-row justify-between align-center">
+                        <input type="radio" id="inputPrioHigh" name="priority" value="high">
+                        <label for="inputPrioHigh" id="labelPrioHigh" class="prio-high button btn-icon btn-radio"></label>
+
+                        <input type="radio" id="inputPrioMedium" name="priority" value="medium">
+                        <label for="inputPrioMedium" id="labelPrioMedium" class="prio-medium button btn-icon btn-radio"></label>
+
+                        <input type="radio" id="inputPrioLow" name="priority" value="low"">
+                        <label for="inputPrioLow" id="labelPrioLow" class="prio-low button btn-icon btn-radio"></label>
+                    </div>
+                </div>
+                <div>
+                    <p><b>Dev: </b>François</p>
                     <hr>
                 </div>
             </div>
 
 
+
+            <!-- CUSTOM SELECT, CATEGORY -->
+            <div class="ct-container gap">
+                <h2>Category Select</h2>
+
+                <div class="field-wrapper">
+                    <label for="inputCategory" class="required">Category</label>
+                    <div class="input-wrapper custom-select xshow-required-msg">
+                        <select class="custom" id="inputCategory" name="inputCategory" placeholder="Select task category" required>
+                            <option value="category-1">Categorie 1</option>
+                            <option value="category-2">Categorie 2</option>
+                            <option value="category-3">Categorie 3</option>
+                        </select>
+                        <div class="input-button-wrapper custom-select">
+                            <img src="/assets/icons/arrow-drop-down.svg">
+                        </div>
+                    </div>
+                    <div class="required-msg">This field is required</div>
+                </div>
+                <div>
+                    <p><b>Dev: </b>François</p>
+                    <p>missing: dropdown unfinished</p>
+                    <hr>
+                </div>
+            </div>
+
+
+
+
+            <!-- MULITIPLE SELECT, CONTACTS -->
             <div class="ct-container gap">
                 <h2>Multiple Select for Contacts</h2>
 
@@ -231,7 +229,7 @@
                 </div>
                 <div style="margin-top: 150px;">
                     <p><b>Dev: </b>François</p>
-                    <p>missing: search & dropdown functionality</p>
+                    <p>missing: open/close dropdown, search</p>
                     <hr>
                 </div>
             </div>
@@ -239,6 +237,7 @@
 
 
 
+            <!-- PROFILE BATCHES -->
             <div class="ct-container gap">
                 <h2>Contacts / Profiles</h2>
 
@@ -251,14 +250,56 @@
                     </ul>
                 </div>
 
-                <!-- <div>
+                <div>
                     <p><b>Dev: </b>François</p>
-                    <p>...</p>
                     <hr>
-                </div> -->
+                </div>
             </div>
 
 
+
+
+            <!-- SUBTASK INPUT -->
+            <div class="ct-container gap">
+                <h2>Subtask Input</h2>
+                <form class="gap">
+
+                    <div class="field-wrapper subtask-wrapper">
+                        <label for="inputSubtasks">Subtasks</label>
+                        <div class="input-wrapper input-wrapper-subtasks">
+                            <input type="text" id="inputSubtasks" name="inputSubtasks" placeholder="Add new subtask">
+                            <div id="subtaskInputButtons" class="input-button-wrapper hide">
+                                <button onclick="cancelSubtaskInput()"><img src="/assets/icons/cancel.svg" class="cancel"></button>
+                                <div class="divider"></div>
+                                <button onclick="saveSubtaskInput()"><img src="/assets/icons/check.svg" class="check"></button>
+                            </div>
+                            <div id="subtaskInputButtonAdd" class="input-button-wrapper xhide">
+                                <button onclick="addSubtaskInput()"><img src="/assets/icons/add.svg" class="add"></button>
+                            </div>
+                        </div>
+                        <ul id="assignedSubtasks" class="subtask-listing">
+                            <li id="subtask-01"><span class="text">Subtask 1</span>
+                                <div class="input-button-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button></div>
+                            </li>
+                            <li id="subtask-02"><span class="text">Subtask 2</span>
+                                <div class="input-button-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button></div>
+                            </li>
+                        </ul>
+                        <div id="subtaskEdit" class="subtask-edit">Subtask XY
+                            <div id="subtaskEditButtons" class="input-button-wrapper">
+                                <button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button>
+                                <div class="divider"></div>
+                                <button onclick="saveSubtaskEdits()"><img src="/assets/icons/check.svg" class="check"></button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+                <div>
+                    <p><b>Dev: </b>François</p>
+                    <hr>
+                </div>
+            </div>            
 
 
     
