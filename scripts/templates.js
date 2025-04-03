@@ -44,6 +44,16 @@ function getSideMenuMobTemplate() {
     `
 }
 
+function getCategorySelectOptionTemplate(category) {
+    return `
+        <option value="${category.id}">${category.name}</option>
+    `
+}
+
+
+
+
+
 function getIconTemplateCancel(text = "") {
     return `
         ${text}

@@ -1,6 +1,7 @@
 function initAddTask() {
     getMainTemplates();
     addIconsToAddTaskPage();
+    getCategorySelectOptions();
 }
 
 function addIconsToAddTaskPage() {
