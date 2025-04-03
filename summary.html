@@ -20,7 +20,7 @@
 
 
     <div class="page-title headline-summary">
-        <p>Join 360</p>
+        <p class="black">Join 360</p>
         <hr style="width: 3px; height: 59px; background-color: #29ABE2; border: none;">
         <h4 class="headline-key-metrics">Key Metrics at a Glance</h4>
     </div>
@@ -31,38 +31,52 @@
     </div>
 
     <div class="key-metrics">
-        <div class="to-do">
+        <div class="to-do black">
             <div class="icon"><img src="./assets/icons/ToDo Frame.png" alt=""></div>
-            <div class="number">1</div>
-            <div class="label">To-do</div>
-        </div>
-        <div class="done">
-            <div class="icon"><img src="./assets/icons/Done Frame.png" alt=""></div>
-            <div class="number">1</div>
-            <div class="label">Done</div>
-        </div>
-        <div class="urgent-deadline">
-            <div class="icon"><img src="./assets/icons/Urgent Frame.png" alt=""></div>
-            <div class="number">1</div>
-            <div class="deadline">
-                <span>October 16, 2022</span>
-                <span>Upcoming Deadline</span>
+            <div class="flex-direction-row">
+                <div class="number">1</div>
+                <div class="label">To-do</div>
             </div>
         </div>
-        <div class="tasks-in-board">
-            <div class="icon">✔️</div>
-            <div class="number">1</div>
-            <div class="label">Tasks in Board</div>
+        <div class="done black">
+            <div class="icon"><img src="./assets/icons/Done Frame.png" alt=""></div>
+            <div class="flex-direction-row">
+                <div class="number">1</div>
+                <div class="label">Done</div>
+            </div>
         </div>
-        <div class="tasks-in-progress">
-            <div class="icon">✔️</div>
-            <div class="number">1</div>
-            <div class="label">Tasks in Progress</div>
+        <div class="urgent-deadline black">
+            <div class="urgency">
+                <div class="icon"><img src="./assets/icons/Urgent Frame.png" alt=""></div>
+                <div class="number">1</div>
+            </div>
+            <hr style="width: 2px; margin:0;height: 102.02px; background-color: #D1D1D1; border: 2px;">
+            <div class="flex-direction-row">
+                <div class="deadline">
+                    <span class="date">October 16, 2022</span>
+                    <span>Upcoming Deadline</span>
+                </div>
+            </div>
         </div>
-        <div class="awaiting-feedback">
-            <div class="icon">✔️</div>
-            <div class="number">1</div>
-            <div class="label">Awaiting Feedback</div>
+        <div class="all-tasks">
+            <div class="tasks-in-board black">
+                <div class="flex-direction-row">
+                    <div class="number">1</div>
+                    <div class="label">Tasks in Board</div>
+                </div>
+            </div>
+            <div class="tasks-in-progress black">
+                <div class="flex-direction-row">
+                    <div class="number">1</div>
+                    <div class="label">Tasks in Progress</div>
+                </div>
+            </div>
+            <div class="awaiting-feedback black">
+                <div class="flex-direction-row">
+                    <div class="number">1</div>
+                    <div class="label">Awaiting Feedback</div>
+                </div>
+            </div>
         </div>
     </div>
 
