@@ -26,6 +26,10 @@ function resetInput(event, id) {
     event.preventDefault();
 }
 
+function setRequiredClass(element) {
+    element.parentNode.classList.add('show-required-msg');
+}
+
 
 
 

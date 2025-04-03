@@ -22,7 +22,6 @@ function createTask() {
     tasks.push(task);
     console.log(tasks);
     saveTaskDataLS();
-
 }
 
 function setTaskObject() {
@@ -30,18 +29,33 @@ function setTaskObject() {
     let id = lastTaskId;
     let title = getTitleInput();
     let description = document.getElementById('inputDescription').value;
+    let dueDate = getDueDateInput();
     let priority = getPriorityInput();
-    return {"id": id, "title": title, "description": description, "priority": priority};
+    let category = getCategoryInput();
+    return {"id": id, "title": title, "description": description, "dueDate": dueDate, "priority": priority, "category": category};
 }
 
 function getTitleInput() {
     let titleRef = document.getElementById('inputTitle');
     let title = titleRef.value;
     if(! title) {
-        titleRef.parentNode.classList.add('show-required-msg');
+        setRequiredClass(titleRef);
         titleRef.focus();
     }
     return title;
+}
+
+function onFocusOutDueDateInput() {
+    let dueDateRef = document.getElementById('inputDueDate').value;
+}
+
+function getDueDateInput() {
+    let dueDateRef = document.getElementById('inputDueDate');
+    let dueDate = dueDateRef.value;
+    if(! dueDate) {
+        setRequiredClass(dueDateRef);
+    }
+    return dueDate;
 }
 
 function getPriorityInput() {
@@ -53,5 +67,14 @@ function getPriorityInput() {
         }
         return '';
     }
+}
+
+function getCategoryInput() {
+    let categoryRef = document.getElementById('inputCategory');
+    let category = categoryRef.value;
+    if(! category) {
+        setRequiredClass(categoryRef);
+    }
+    return category;
 }
 

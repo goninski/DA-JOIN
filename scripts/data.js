@@ -10,6 +10,10 @@ let lastTaskId = 0;
 
 let categoriesDemo = [
     {
+        "id": 0,
+        "name": "Select Task Category"
+    },
+    {
         "id": 1,
         "name": "Technical Task"
     },
@@ -18,7 +22,8 @@ let categoriesDemo = [
         "name": "User Story"
     }
 ];
-
+categories = categoriesDemo;
+lastCategoryId = categories.length - 1;
 
 let contactsDemo = [
     {
@@ -125,7 +130,7 @@ function setDemoData() {
     categories = categoriesDemo;
     contacts = contactsDemo;
     tasks = tasksDemo;
-    lastCategoryId = categories.length;
+    lastCategoryId = categories.length - 1;
     lastContactId = contacts.length;
     lastTaskId = tasks.length;
     saveCategoryDataLS();
