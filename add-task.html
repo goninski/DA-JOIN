@@ -32,7 +32,7 @@
                             <div class="field-col flex-col flex-grow gap">
                                 <div class="field-wrapper xshow-required-msg">
                                     <label for="title" class="required">Title</label>
-                                    <input type="text" id="inputTitle" name="title" placeholder="Enter a title" required>
+                                    <input type="text" id="inputTitle" name="title" placeholder="Enter a title" maxlength="10" required>
                                     <div class="required-msg">This field is required</div>
                                 </div>
                                 <div class="field-wrapper">
@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="field-wrapper xshow-required-msg">
                                     <label for="date" class="required">Due date</label>
-                                    <input type="date" id="inputDate" name="date" class="placeholder" required>
+                                    <input type="date" id="inputDate" name="date" class="placeholder" xrequired>
                                     <div class="required-msg">This field is required</div>
                                 </div>
                             </div>
@@ -54,13 +54,13 @@
                                     <label for="priority">Priority</label>
                                     <div class="priority-input-wrapper flex-row justify-between align-center">
                                         <input type="radio" id="inputPrioHigh" name="priority" value="high">
-                                        <label for="inputPrioHigh" id="labelPrioHigh" class="prio-high button btn-icon btn-radio"></label>
+                                        <label for="inputPrioHigh" id="labelPrioHigh" class="prio-high button btn-icon btn-radio" value="high"></label>
 
                                         <input type="radio" id="inputPrioMedium" name="priority" value="medium">
-                                        <label for="inputPrioMedium" id="labelPrioMedium" class="prio-medium button btn-icon btn-radio"></label>
+                                        <label for="inputPrioMedium" id="labelPrioMedium" class="prio-medium button btn-icon btn-radio" value="medium"></label>
 
                                         <input type="radio" id="inputPrioLow" name="priority" value="low"">
-                                        <label for="inputPrioLow" id="labelPrioLow" class="prio-low button btn-icon btn-radio"></label>
+                                        <label for="inputPrioLow" id="labelPrioLow" class="prio-low button btn-icon btn-radio" value="low"></label>
                                     </div>
                                 </div>
 
@@ -79,7 +79,7 @@
                                 <div class="field-wrapper">
                                     <label for="inputCategory" class="required">Category</label>
                                     <div class="input-wrapper custom-select xshow-required-msg">
-                                        <select class="custom" id="inputCategory" name="inputCategory" placeholder="Select task category" required>
+                                        <select class="custom" id="inputCategory" name="inputCategory" placeholder="Select task category" xrequired>
                                         </select>
                                         <div class="input-button-wrapper custom-select">
                                             <img src="/assets/icons/arrow-drop-down.svg">
@@ -93,12 +93,12 @@
                                     <div class="input-wrapper input-wrapper-subtasks">
                                         <input type="text" id="inputSubtasks" name="inputSubtasks" placeholder="Add new subtask">
                                         <div id="subtaskInputButtons" class="input-button-wrapper hide">
-                                            <button onclick="cancelSubtaskInput()"><img src="/assets/icons/cancel.svg" class="cancel"></button>
+                                            <button xonclick="cancelSubtaskInput()"><img src="/assets/icons/cancel.svg" class="cancel"></button>
                                             <div class="divider"></div>
-                                            <button onclick="saveSubtaskInput()"><img src="/assets/icons/check.svg" class="check"></button>
+                                            <button xonclick="saveSubtaskInput()"><img src="/assets/icons/check.svg" class="check"></button>
                                         </div>
                                         <div id="subtaskInputButtonAdd" class="input-button-wrapper xhide">
-                                            <button onclick="addSubtaskInput()"><img src="/assets/icons/add.svg" class="add"></button>
+                                            <button xonclick="addSubtaskInput()"><img src="/assets/icons/add.svg" class="add"></button>
                                         </div>
                                     </div>
                                     <ul id="assignedSubtasks" class="subtask-listing">

@@ -4,7 +4,7 @@ let contacts = [];
 let tasks = [];
 
 let lastCategoryId = 0;
-let lastContactsId = 0;
+let lastContactId = 0;
 let lastTaskId = 0;
 
 
@@ -139,8 +139,8 @@ function getFromLocalStorage(key){
 }
 
 function getContactDataLS() {
-    lastTaskId = getFromLocalStorage('lastContactId');
-    tasks = getFromLocalStorage('contacts');
+    lastContactId = getFromLocalStorage('lastContactId');
+    contacts = getFromLocalStorage('contacts');
 }
 
 function getTaskDataLS() {
