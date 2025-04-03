@@ -143,6 +143,12 @@ main, header, footer {
     cursor: pointer;
 }
 
+.nav-button:hover {
+    background-color: #091931;
+    color: white;
+    text-decoration: none;
+}
+
 @media(max-width: 719px) {
     :root {
         --px-sec: 16px;
