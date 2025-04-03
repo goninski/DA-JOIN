@@ -1,6 +1,8 @@
 function initAssetLibrary() {
     getMainTemplates();
     addIconsToAssetLibraryPage();
+    getContactSelectOptions();
+    getCategorySelectOptions();
 }
 
 function addIconsToAssetLibraryPage() {

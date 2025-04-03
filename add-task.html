@@ -63,138 +63,21 @@
                                     </div>
                                 </div>
 
-                                <!-- <div class="field-wrapper">
-                                    <div class="checkbox-wrapper flex-row align-center gap-05">
-                                        <input type="checkbox" id="checkbox-01" name="checkbox-01" value="val-1">
-                                        <label for="checkbox-01">Test Checkbox</label>
-                                    </div>
-                                </div> -->
-
-                                <!-- <style>
-                                    .select.custom-select {
-                                        position: relative;
-                                        width: 100%;
-                                    }
-                                    .select.custom-select .select-btn {
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: space-between;
-                                        height: 50px;
-                                        padding: 0 16px;
-                                        border-radius: 10px;
-                                        cursor: pointer;
-                                        background-color: white;
-                                        position: relative;
-                                        z-index: 2;
-                                    }
-                                    .select.custom-select ul {
-                                        list-style: none;
-                                        padding-top: 8px;
-                                        padding-inline: 0;
-                                        margin-block: -8px;
-                                        border-bottom-left-radius: 10px;
-                                        border-bottom-right-radius: 10px;
-                                        overflow: hidden;
-                                        background-color: white;
-                                        width: 100%;
-                                        position: absolute;
-                                        animation-name: fadeinUp;
-                                        animation-duration: 0.4s;
-                                        animation-fill-mode: both;
-                                        max-height: 288px;
-                                        overflow-y: auto;
-                                    }
-                                    .select.custom-select li {
-                                        position: relative;
-                                        display: flex;
-                                        align-items: center;
-                                        gap: 8px;
-                                        height: 56px;
-                                        transition: 0.3s;
-                                        padding-inline: 16px;
-                                        border-bottom: solid 1px var(--clr-subtle);
-                                        border-radius: 10px;
-                                        cursor: pointer;
-                                    }
-                                    .select.custom-select label {
-                                        width: 100%;
-                                        cursor: pointer;
-                                    }
-                                    .select.custom-select li:hover,
-                                    .select.custom-select li:has( input:focus) {
-                                        background-color: var(--clr-subtle);
-                                        background-color: #eee;
-                                    }
-                                    .select.custom-select .select-btn.open ~ ul {
-                                        opacity: 0;
-                                        animation-name: fadeInUp;
-                                        animation-duration: 0.4s;
-                                        animation-fill-mode: both;
-                                    }
-                                </style> -->
-
-                                <div class="field-wrapper">
+                                <div class="field-wrapper"style="margin-bottom: 180px;">
                                     <label for="">Assigned to</label>
                                     <div class="select custom-select multiple">
                                         <div class="select-btn xopen focus">
                                             <span class="select-text">Select contacts to assign</span>
                                             <span class="input-button-wrapper custom-select"><img src="/assets/icons/arrow-drop-down.svg"></span>
                                         </div>
-                                        <ul>
-                                            <li>
-                                                <div class="profile-batch" style="--profile-color: violet;">P1</div>
-                                                <label for="user-1">User 1</label>
-                                                <div class="input-button-wrapper custom-checkbox">
-                                                    <button>
-                                                        <input type="checkbox" class="custom" id="user-1" name="user-1" value="user-1">
-                                                        <img src="assets/icons/checkbox-checked.svg" alt="" id="test" class="checkbox">
-                                                    </button>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="profile-batch" style="--profile-color: pink;">P2</div>
-                                                <label for="user-2">User 2</label>
-                                                <div class="input-button-wrapper custom-checkbox">
-                                                    <button>
-                                                        <input type="checkbox" class="custom" id="user-2" name="user-2" value="user-2">
-                                                        <img src="assets/icons/checkbox-checked.svg" alt="" id="test" class="checkbox">
-                                                    </button>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="profile-batch" style="--profile-color: orange;">P3</div>
-                                                <label for="user-3">User 3</label>
-                                                <div class="input-button-wrapper custom-checkbox">
-                                                    <button>
-                                                        <input type="checkbox" class="custom" id="user-3" name="user-3" value="user-3">
-                                                        <img src="assets/icons/checkbox-checked.svg" alt="" id="test" class="checkbox">
-                                                    </button>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                        <ul id="inputContacts"></ul>
                                     </div>
-                                </div>
-
-                                <div class="field-wrapper">
-                                    <label for="inputAassigned2">Assigned to</label>
-                                    <select id="inputAssigned2" name="inputAssigned2" placeholder="Select contacts to assign">
-                                        <option value="user-1">User 1</option>
-                                        <option value="user-2">User 2</option>
-                                        <option value="user-3">User 3</option>
-                                    </select>
-                                    <ul id="assignedContactBatches" class="profile-batches">
-                                        <li class="profile-batch" style="--profile-color: violet;">P1</li>
-                                        <li class="profile-batch" style="--profile-color: pink;">P2</li>
-                                        <li class="profile-batch" style="--profile-color: orange;">P3</li>
-                                    </ul>
                                 </div>
 
                                 <div class="field-wrapper">
                                     <label for="inputCategory" class="required">Category</label>
                                     <div class="input-wrapper custom-select xshow-required-msg">
                                         <select class="custom" id="inputCategory" name="inputCategory" placeholder="Select task category" required>
-                                            <!-- <option value="technical-task">Technical Task</option>
-                                            <option value="user-story">User Story</option> -->
                                         </select>
                                         <div class="input-button-wrapper custom-select">
                                             <img src="/assets/icons/arrow-drop-down.svg">

@@ -33,24 +33,32 @@ contacts = [
         "name": "François Gonin",
         "email": "mail@goninski.dev",
         "phone": "+41 78 888 77 66",
+        "initials": "FG",
+        "color": "violet"
     },
     {
         "id": 1,
         "name": "Julian Kraske",
         "email": "",
         "phone": "",
+        "initials": "JK",
+        "color": "pink"
     },
     {
         "id": 2,
         "name": "Nico Hässler",
         "email": "",
         "phone": "",
+        "initials": "NH",
+        "color": "orange"
     },
     {
         "id": 3,
         "name": "Vivienne Wündisch",
         "email": "",
         "phone": "",
+        "initials": "VW",
+        "color": "lightblue"
     }
 
 ];
@@ -88,6 +96,18 @@ function resetInput(event, id) {
     event.preventDefault();
 }
 
+
+
+
+// TEMPLATE CALLS FOR TASK INPUTS
+function getContactSelectOptions(id = 'inputContacts') {
+    let selectInput = document.getElementById(id);
+    selectInput.innerHTML = '';
+    for (let index = 0; index < contacts.length; index++) {
+        selectInput.innerHTML += getContactSelectOptionTemplate(contacts[index]);
+    }
+}
+
 function getCategorySelectOptions(id = 'inputCategory') {
     let selectInput = document.getElementById(id);
     selectInput.innerHTML = '';
@@ -95,4 +115,5 @@ function getCategorySelectOptions(id = 'inputCategory') {
         selectInput.innerHTML += getCategorySelectOptionTemplate(categories[index]);
     }
 }
+
 
