@@ -133,7 +133,7 @@ function setDemoData() {
     saveTaskDataLS();
 }
 
-function getDataLS() {
+function getAllDataLS() {
     getCategoryDataLS();
     getContactDataLS();
     getTaskDataLS();

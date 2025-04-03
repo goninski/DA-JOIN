@@ -1,7 +1,7 @@
 function initAssetLibrary() {
     getMainTemplates();
     addIconsToAssetLibraryPage();
-    getDataLS();   
+    getAllDataLS();   
     getContactSelectOptions();
     getProfileBatches();
     getCategorySelectOptions();
