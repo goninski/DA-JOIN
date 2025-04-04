@@ -138,8 +138,7 @@ header {
     justify-content: center;
 }
 
-.flex-direction-row {
-    flex-direction: row;
+.flex-direction {
     justify-items: center;
 }
 
@@ -168,4 +167,25 @@ header {
     display: flex;
     gap: 18px;
     align-items: center;
+}
+
+.all-tasks {
+    display: flex;
+    gap: 28px;
+}
+
+.all-todos {
+    display: flex;
+    gap: 32px;
+}
+
+.label {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.label-tasks {
+    width: 83px;
+    height: 48px;
+    text-align: center;
 }
