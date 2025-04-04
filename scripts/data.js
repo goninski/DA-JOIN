@@ -123,9 +123,43 @@ let tasksDemo = [
 ];
 
 
-// TEMPORARY LOCAL STORAGE HANDLING
 
-//setDemoData();
+// GET & SAVE DATA
+
+getAllData();
+function getAllData() {
+    getCategoryData();
+    getContactData();
+    getTaskData();
+    if(! contacts || ! tasks) {
+        setDemoData();
+    }
+}
+
+function getCategoryData() {
+    getCategoryDataLS();
+}
+
+function getContactData() {
+    getContactDataLS();
+}
+
+function getTaskData() {
+    getTaskDataLS();
+}
+
+function saveCategoryData() {
+    saveCategoryDataLS();
+}
+
+function saveContactData() {
+    saveContactDataLS();
+}
+
+function saveTaskData() {
+    saveTaskDataLS();
+}
+
 function setDemoData() {
     categories = categoriesDemo;
     contacts = contactsDemo;
@@ -133,20 +167,13 @@ function setDemoData() {
     lastCategoryId = categories.length - 1;
     lastContactId = contacts.length;
     lastTaskId = tasks.length;
-    saveCategoryDataLS();
-    saveContactDataLS();
-    saveTaskDataLS();
+    saveCategoryData();
+    saveContactData();
+    saveTaskData();
 }
 
-getAllDataLS();
-function getAllDataLS() {
-    getCategoryDataLS();
-    getContactDataLS();
-    getTaskDataLS();
-    if(! contacts && ! tasks) {
-        setDemoData();
-    }
-}
+
+// TEMPORARY LOCAL STORAGE HANDLING
 
 function getCategoryDataLS() {
     categories = getFromLocalStorage('categories');
@@ -163,12 +190,13 @@ function getTaskDataLS() {
     lastTaskId = getFromLocalStorage('lastTaskId');
 }
 
+
 function saveCategoryDataLS() {
     saveToLocalStorage('categories', categories);
     saveToLocalStorage('lastCategoryId', lastCategoryId);
 }
 
-function saveContactDataLS() {
+function saveContactDatals() {
     saveToLocalStorage('contacts', contacts);
     saveToLocalStorage('lastContactId', lastContactId);
 }
