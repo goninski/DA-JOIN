@@ -2,8 +2,10 @@
     width: 100.03px;
     height: 121.97px;
     position: absolute;
-    top: 80px;
-    left: 77px;
+    left: 5.35%;
+    right: 87.71%;
+    top: 7.81%;
+    bottom: 80.28%;
 }
 
 .gap_16px {
@@ -13,16 +15,16 @@
 .btn-third {
     color: rgba(42, 54, 71, 1);
     background-color: white;
-    border-color: rgba(42, 54, 71, 1);
-    border: 1px;
+    border: solid 1px rgba(42, 54, 71, 1);
     gap: 10px;
 }
 
 .btn-third:hover {
     color: var(--clr-light-blue);
-    border-color: var(--clr-light-blue);
-    border-width: 2px;
+    border: solid 2px var(--clr-light-blue);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
+
 
 .btn-login-size {
     border: solid 1px var(--clr-main);
@@ -59,8 +61,26 @@
 }
 
 .login-privacy-policy {
+    position: absolute;
     width: 246px;
     height: 35px;
+    left: calc(50% - 246px/2);
+    bottom: 40px;
+    padding: 8px;
+    gap: 8px;
+}
+
+a.login-privacy-policy-color {
+    color: rgba(168, 168, 168, 1);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 120%;
+}
+
+a.login-privacy-policy-color:hover {
+    color: rgba(41, 171, 226, 1);
+    font-weight: 700;
+    text-decoration: none;
 }
 
 .gap-35 {
@@ -136,12 +156,12 @@
     font-size: 21px;
 }
 
-.btn-size-guest-and-normal-login{
+.btn-size-guest-and-normal-login {
     width: 322px;
     height: 48px;
 }
 
-.btn-fourth{
+.btn-fourth {
     color: white;
     --icon-color: white;
     font-weight: var(--fw-bold);
@@ -150,5 +170,45 @@
 }
 
 .btn-fourth:hover {
-    background-color: var(--clr-light-blue);
+    background-color: rgba(41, 171, 226, 1);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.input-wrapper {
+    position: relative;
+    width: 422px;
+    height: 48px;
+}
+
+
+.input-wrapper input {
+    width: 100%;
+    height: 100%;
+    padding: 0 21px;
+    font-size: 20px;
+    box-sizing: border-box;
+}
+
+.input-inner {
+    position: absolute;
+    height: 50%;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 21px;
+    pointer-events: none;
+}
+
+.input-inner img {
+    height: 24px;
+    width: 24px;
+}
+
+.placeholder-text {
+    color: rgba(168, 168, 168, 1);
+    font-size: 20px;
 }

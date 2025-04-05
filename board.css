@@ -1,0 +1,13 @@
+.headline-board {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    left: 328px;
+    top: 206px;
+    gap: 30px;
+}
+
+.black {
+    color: #000000;
+    margin: 0;
+}
