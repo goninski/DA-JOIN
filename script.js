@@ -25,17 +25,20 @@ function getSidemenu() {
 
 
 
+
 // GENERAL INPUT VALIDATIONS
 
 function setInitalFormState(requiredFields) {
     invalidFields = requiredFields;
     let element = document.getElementById(invalidFields[0]);
+    element.focus();
     setSubmitBtnState(element);
 }
 
 function resetForm(event, formId) {
     document.getElementById(formId).reset()
     event.preventDefault();
+    location.href = location.pathname;
 }
 
 function validateInput(id, parent = false) {
@@ -57,10 +60,6 @@ function validateInput(id, parent = false) {
 
 function resetInputValidation(id, parent = false) {
     let element = document.getElementById(id);
-    // let index = invalidFields.findIndex(item => item == id);
-    // if(index >= 0) {
-    //     invalidFields.splice(index, 1);
-    // }
     resetValidationStyles(element, parent);
 }
 
@@ -97,7 +96,20 @@ function setSubmitBtnState(element) {
     } else {
         submitBtn.removeAttribute('disabled');
     }
-    console.log(invalidFields);
+    // console.log(invalidFields);
+}
+
+function getAllInputs(event, formId) {
+    let form = document.getElementById(formId);
+    event.preventDefault();
+    let formData = new FormData(form);
+    formInputObj = Object.fromEntries(formData);
+    console.log(formInputObj);
+    return formInputObj;
+   }
+
+function setTodayAsDateValue(id) {
+    document.getElementById(id).valueAsDate = new Date();
 }
 
 

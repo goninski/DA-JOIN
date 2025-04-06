@@ -1,13 +1,14 @@
-let addTaskValidationErrors = 0;
+let requiredTaskFields = ['inputTitle', 'inputDueDate', 'inputCategory'];
 let taskDraft = {};
 
 function initAddTask() {
     getMainTemplates();
     addIconsToAddTaskPage();
-    setInitalFormStateAddTask();
     getContactSelectOptions();
     getProfileBatches();
     getCategorySelectOptions();
+    setInitalFormStateAddTask();
+    // addTestDataToAddTaskForm();
 }
 
 function addIconsToAddTaskPage() {
@@ -18,9 +19,16 @@ function addIconsToAddTaskPage() {
     document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Create Task');
 }
 
-function setInitalFormStateAddTask() {
-    requiredFields = ['inputTitle', 'inputDueDate', 'inputCategory'];
-    setInitalFormState(requiredFields);
+function addTestDataToAddTaskForm() {
+    document.getElementById('inputTitle').value = 'Tasktitle autogen.';
+    document.getElementById('inputDueDate').value = "2025-04-06";
+    document.getElementById('inputCategory').value = 1;
+    for (let index = 0; index < requiredTaskFields.length; index++) {
+        element = document.getElementById(requiredTaskFields[index]);
+        element.onfocusout = validateInput(requiredTaskFields[index]);
+    }
+    document.getElementById('inputDueDate').focus();
+    // document.getElementById('btnSubmit').focus();
 }
 
 function resetFormAddTask(event) {
@@ -28,16 +36,22 @@ function resetFormAddTask(event) {
     setInitalFormStateAddTask();
 }
 
-function createTask() {
-    validateAddTaskForm();
-    let task = setTaskObject();
+function setInitalFormStateAddTask() {
+    setInitalFormState(requiredTaskFields);
+}
+
+function createTask(event) {
+    task = getAllInputs(event, 'addTaskForm');
+    lastTaskId++;
+    task.id = lastTaskId;
+    task.categoryId = Number(task.categoryId)   ;
+    // console.log(task);
     tasks.push(task);
-    console.log(tasks);
-    saveTaskDataLS();
+    // console.log(tasks);
+    saveTaskData();
 }
 
 function validateAddTaskForm() {
-
     lastTaskId++;
     let id = lastTaskId;
     let title = validateTitleInput();

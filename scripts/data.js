@@ -10,15 +10,15 @@ let lastTaskId = 0;
 
 let categoriesDemo = [
     {
-        "id": 0,
+        "id": "0",
         "name": "Select Task Category"
     },
     {
-        "id": 1,
+        "id": "1",
         "name": "Technical Task"
     },
     {
-        "id": 2,
+        "id": "2",
         "name": "User Story"
     }
 ];
@@ -196,7 +196,7 @@ function saveCategoryDataLS() {
     saveToLocalStorage('lastCategoryId', lastCategoryId);
 }
 
-function saveContactDatals() {
+function saveContactDataLS() {
     saveToLocalStorage('contacts', contacts);
     saveToLocalStorage('lastContactId', lastContactId);
 }
