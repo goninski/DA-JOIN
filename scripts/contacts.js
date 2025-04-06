@@ -12,9 +12,14 @@ function getContactIndexFromID(contactId) {
 function renderContactList() {
     contactListRef = document.getElementById('contactList');
     contactListRef.innerHTML = '';
-    for (let index = 0; index < contacts.length; index++) {
-        contactListRef.innerHTML += getContactListTemplate(contacts[index]);
+    let contactsSorted = sortContacts(contacts);
+    for (let index = 0; index < contactsSorted.length; index++) {
+        contactListRef.innerHTML += getContactListTemplate(contactsSorted[index]);
     }
+}
+
+function sortContacts(contacts) {
+    return contacts.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 function renderContactDetail(contactId) {
@@ -46,7 +51,7 @@ function addDemoContact(event) {
     lastContactId++;
     contact = {};
     contact.id = lastContactId;
-    contact.name = 'Vorname Name #' + contact.id;
+    contact.name = 'P' + contact.id + ' | Vorname Name';
     contact.email = 'mail@domain.com';
     contact.phone = '+49 111 222 33 44';
     contact.initials = 'P'+ contact.id;

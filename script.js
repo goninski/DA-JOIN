@@ -116,16 +116,24 @@ function setTodayAsDateValue(id) {
     document.getElementById(id).valueAsDate = new Date();
 }
 
-function getInitialsOfFirstAndLastWord(string) {
+function getNWord(string, index = 0) {
     let array = string.split(" ");
-    let firstWord = array[0];
-    let lastWord = array[array.length - 1];
+    return array[index];
+}
+
+function getLastWord(string) {
+    let array = string.split(" ");
+    return array[array.length - 1];
+}
+
+function getInitialsOfFirstAndLastWord(string) {
+    let firstWord = getNWord(string);
+    let lastWord = getLastWord(string);
     return (firstWord[0] + lastWord[0]).toUpperCase();
 }
 
 function getInitialOfLastWord(string) {
-    let array = string.split(" ");
-    let lastWord = array[array.length - 1];
+    let lastWord = getLastWord(string);
     return lastWord[0].toUpperCase();
 }
 
