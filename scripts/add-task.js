@@ -50,61 +50,27 @@ function createTask(event) {
     saveTaskData();
 }
 
-function validateAddTaskForm() {
-    lastTaskId++;
-    let id = lastTaskId;
-    let title = validateTitleInput();
-    let description = document.getElementById('inputDescription').value;
-    let dueDate = validateDueDateInput();
-    let priority = validatePriorityInput();
-    let category = validateCategoryInput();
-    return {"id": id, "title": title, "description": description, "dueDate": dueDate, "priority": priority, "category": category};
-}
-
-
-function validateTitleInput() {
-    let titleRef = document.getElementById('inputTitle');
-    let title = titleRef.value;
-    if(! title) {
-        showValidationMsg(titleRef);
-        titleRef.focus();
-    }
-    return title;
-}
-
-
-
-
-function onFocusOutDueDateInput() {
-    let dueDateRef = document.getElementById('inputDueDate').value;
-}
-
-function validateDueDateInput() {
-    let dueDateRef = document.getElementById('inputDueDate');
-    let dueDate = dueDateRef.value;
-    if(! dueDate) {
-        setRequiredClass(dueDateRef);
-    }
-    return dueDate;
-}
-
-function validatePriorityInput() {
-    let inputs = ['High', 'Medium', 'Low'];
-    for (let index = 0; index < inputs.length; index++) {
-        let input = document.getElementById('inputPrio' + inputs[index]);
-        if(input.checked) {
-            return input.value;
-        }
-        return '';
+function getContactSelectOptions(id = 'inputContacts') {
+    let selectInput = document.getElementById(id);
+    selectInput.innerHTML = '';
+    for (let index = 0; index < contacts.length; index++) {
+        selectInput.innerHTML += getContactSelectOptionTemplate(contacts[index]);
     }
 }
 
-function validateCategoryInput() {
-    let categoryRef = document.getElementById('inputCategory');
-    let category = categoryRef.value;
-    if(! category) {
-        setRequiredClass(categoryRef);
+function getProfileBatches(id = 'profileBatches') {
+    let selectInput = document.getElementById(id);
+    selectInput.innerHTML = '';
+    for (let index = 0; index < contacts.length; index++) {
+        selectInput.innerHTML += getProfileBatchTemplate(contacts[index]);
     }
-    return category;
+}
+
+function getCategorySelectOptions(id = 'inputCategory') {
+    let selectInput = document.getElementById(id);
+    selectInput.innerHTML = '';
+    for (let index = 0; index < categories.length; index++) {
+        selectInput.innerHTML += getCategorySelectOptionTemplate(categories[index]);
+    }
 }
 

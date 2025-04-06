@@ -24,7 +24,9 @@
 
         <div class="contact-list-sidebar flex-col">
             <div class="contact-list-sidebar-inner">
-                <button class="button btn-icon btn-primary add-contact">Add new Contact<img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button>
+                <button class="button btn-icon btn-primary add-contact" onclick="addContact()">Add new Contact<img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button>
+                <button class="button btn-icon btn-secondary add-contact mt-05" onclick="addDemoContact(event)">Add Demo Contact<img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button>
+
                 <ul id="contactList" class="contact-list">
                     <!-- <h3 class="contact-letter flex-row align-center">A</h3>
                     <li class="contact-item flex-row align-center">

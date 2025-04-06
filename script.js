@@ -129,31 +129,7 @@ function getInitialOfLastWord(string) {
     return lastWord[0].toUpperCase();
 }
 
-
-
-// TEMPLATE CALLS FOR TASK INPUTS
-function getContactSelectOptions(id = 'inputContacts') {
-    let selectInput = document.getElementById(id);
-    selectInput.innerHTML = '';
-    for (let index = 0; index < contacts.length; index++) {
-        selectInput.innerHTML += getContactSelectOptionTemplate(contacts[index]);
-    }
+function getRandomColor(format = 'hex') {
+    return '#' + Math.floor(Math.random()*16777215).toString(16);
 }
-
-function getProfileBatches(id = 'profileBatches') {
-    let selectInput = document.getElementById(id);
-    selectInput.innerHTML = '';
-    for (let index = 0; index < contacts.length; index++) {
-        selectInput.innerHTML += getProfileBatchTemplate(contacts[index]);
-    }
-}
-
-function getCategorySelectOptions(id = 'inputCategory') {
-    let selectInput = document.getElementById(id);
-    selectInput.innerHTML = '';
-    for (let index = 0; index < categories.length; index++) {
-        selectInput.innerHTML += getCategorySelectOptionTemplate(categories[index]);
-    }
-}
-
 

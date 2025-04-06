@@ -5,17 +5,6 @@ function initContacts() {
     renderContactList();
 }
 
-// let contactList = contacts.reduce(testovic(accum, element));
-
-// function testovic(accum, element) {
-//     let groupLetter = element.name[0];
-//     if( !accum[groupLetter] ) {
-//         accum[groupLetter] = { "groupLetter", "record": [element]};
-//     }
-// }
-
-// console.log(contactList);
-
 function getContactIndexFromID(contactId) {
     return contacts.findIndex(contact => contact.id == contactId);
 }
@@ -37,6 +26,35 @@ function renderContactDetail(contactId) {
     let contact = contacts[getContactIndexFromID(contactId)];
     document.getElementById('floatingContact').innerHTML = getContactDetailProfileBatchTemplate(contact);
     document.getElementById('contactInfo').innerHTML = getContactDetailInfoTemplate(contact);
+}
+
+function addContact() {
+}
+
+function createContact(event) {
+    lastContactId++;
+    contact = getAllInputs(event, 'addContactForm');
+    contact.id = lastContactId;
+    contact.initials = getInitialsOfFirstAndLastWord(contact.name);
+    contact.color = getRandomColor();
+    contacts.push(contact);
+    // console.log(contact);
+    saveContactData();
+}
+
+function addDemoContact(event) {
+    lastContactId++;
+    contact = {};
+    contact.id = lastContactId;
+    contact.name = 'Vorname Name #' + contact.id;
+    contact.email = 'mail@domain.com';
+    contact.phone = '+49 111 222 33 44';
+    contact.initials = 'P'+ contact.id;
+    contact.color = getRandomColor();
+    contacts.push(contact);
+    // console.log(contact);
+    saveContactData();
+    reloadPage(event);
 }
 
 function deleteContact(contactId, event) {

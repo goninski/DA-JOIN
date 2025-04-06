@@ -12,6 +12,8 @@
     max-width: 456px;
     padding: 32px 24px;
     flex-shrink: 1.1;
+    height: var(--height-full-ex-header);
+    overflow: auto;
 }
 .contact-list-inner {
     padding-block: 32px;
