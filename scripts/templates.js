@@ -32,8 +32,9 @@ function getSideMenuTemplate() {
             </a>
         </div>
         <div class="sidebar-footer">
-            <a href="privacy-policy.html">Privacy Policy</button>
-            <a href="legal-notice.html">Legal notice</button>
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="legal-notice.html">Legal notice</a>
+            <button onclick="setDemoData()" style="text-align: left; margin-top: 12px;color: #ccc;">Testdata Reset</button>
         </div>
     `
 }
@@ -43,6 +44,53 @@ function getSideMenuMobTemplate() {
         <a href="./">Home</a>
     `
 }
+
+
+
+
+
+function getContactListTemplate(contact) {
+    let letter = ' ' + ' ' + '&ensp;' + getInitialOfLastWord(contact.name);
+    return `
+        <h3 class="contact-letter flex-row align-center">${letter}</h3>
+        <li id="${contact.id}" class="contact-item flex-row align-center" onclick="renderContactDetail(${contact.id})">
+            <div class="profile-batch" style="--profile-color: ${contact.color};">${contact.initials}</div>
+            <div class="contact-details flex-col">
+                <div class="name">${contact.name}</div>
+                <div class="email">${contact.email}</div>
+            </div>
+        </li>
+    `
+}
+
+function getContactDetailProfileBatchTemplate(contact) {
+    return `
+        <div class="profile-batch profile-batch-large" style="--profile-color: ${contact.color};">${contact.initials}</div>
+        <div class="profile-title flex-col">
+            <h2 class="">${contact.name}</h2>                        
+            <div class="edit-buttons flex-row align-center">
+                <button onclick="editContact(${contact.id})"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
+                <button onclick="deleteContact(${contact.id}, event)"><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
+            </div>
+        </div>
+    `
+}
+
+function getContactDetailInfoTemplate(contact) {
+    return `
+        <h3 class="flex-col justifiy-center">Contact Information</h3>                        
+        <div class="contact-property flex-col">
+            <div class="fw-bold" >Email</div>
+            <div>${contact.email}</div>
+        </div>
+        <div class="contact-property flex-col">
+            <div class="fw-bold">Phone</div>
+            <div>${contact.phone}</div>
+        </div>
+    `
+}
+
+
 
 function getContactSelectOptionTemplate(contact) {
     return `
@@ -64,8 +112,6 @@ function getProfileBatchTemplate(contact) {
         <li class="profile-batch" style="--profile-color: ${contact.color};">${contact.initials}</li>
     `
 }
-
-
 
 function getCategorySelectOptionTemplate(category) {
     return `

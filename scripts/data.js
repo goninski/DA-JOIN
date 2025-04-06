@@ -161,6 +161,7 @@ function saveTaskData() {
 }
 
 function setDemoData() {
+    clearLocalStorage();
     categories = categoriesDemo;
     contacts = contactsDemo;
     tasks = tasksDemo;
@@ -214,3 +215,6 @@ function getFromLocalStorage(key){
     return JSON.parse(localStorage.getItem(key));
 }
 
+function clearLocalStorage(){
+    localStorage.clear();
+}

@@ -35,10 +35,14 @@ function setInitalFormState(requiredFields) {
     setSubmitBtnState(element);
 }
 
-function resetForm(event, formId) {
-    document.getElementById(formId).reset()
+function reloadPage(event) {
     event.preventDefault();
     location.href = location.pathname;
+}
+
+function resetForm(event, formId) {
+    document.getElementById(formId).reset();
+    reloadPage(event);
 }
 
 function validateInput(id, parent = false) {
@@ -112,6 +116,18 @@ function setTodayAsDateValue(id) {
     document.getElementById(id).valueAsDate = new Date();
 }
 
+function getInitialsOfFirstAndLastWord(string) {
+    let array = string.split(" ");
+    let firstWord = array[0];
+    let lastWord = array[array.length - 1];
+    return (firstWord[0] + lastWord[0]).toUpperCase();
+}
+
+function getInitialOfLastWord(string) {
+    let array = string.split(" ");
+    let lastWord = array[array.length - 1];
+    return lastWord[0].toUpperCase();
+}
 
 
 

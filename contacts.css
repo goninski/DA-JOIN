@@ -2,28 +2,38 @@
     display: flex;
     flex-direction: row;
 }
-.contact-page .contact-list {
+.contact-detail-section {
+    flex-shrink: 1;
+}
+
+.contact-list-sidebar {
     background-color: white;
     width: 100%;
     max-width: 456px;
     padding: 32px 24px;
+    flex-shrink: 1.1;
 }
 .contact-list-inner {
     padding-block: 32px;
 }
-.contact-list-inner button.add-contact {
+.contact-list-sidebar button.add-contact {
     width: 100%;
     justify-content: center;
     gap: 16px;
 }
-.contact-list-inner button.add-contact img {
+.contact-list-sidebar button.add-contact img {
     height: 21px;
     width: auto;
     object-fit: contain;
 }
-.contact-list-inner .contact-letter {
+.contact-list-sidebar ul {
+    padding-inline: 0;
+    margin-block: 0;
+}
+.contact-list-sidebar .contact-letter {
     padding: 36px 17px 36px 25px ;
     font-size: var(--fs-lg);
+    font-weight: var(--fw-regular);
     border-bottom: solid 1px var(--clr-subtle);
     margin-bottom: 8px;
     height: 66px;
@@ -33,24 +43,29 @@
     min-height: 87px;
     gap: 35px;
 }
-.contact-item.edit {
+.contact-item:where(.active, :hover, :focus) {
     background-color: var(--clr-main);
     color: white;
 }
-.contact-list .contact-details {
+.contact-item .contact-details {
     gap: 5px;
 }
-.contact-list .name {
+.contact-item .name {
     font-size: var(--fs-lg);
 }
-.contact-list .email {
+.contact-item .email {
     color: var(--clr-light-blue);
 }
-.contact-list .contact-item {
+.contact-item {
     padding: 15px 24px;
     gap: 35px;
+    cursor: pointer;
 }
 
+
+.contact-detail-section {
+
+}
 
 .floating-contact {
     display: flex;
@@ -78,22 +93,26 @@
     width: auto;
     object-fit: contain;
 }
-.contact-details .contact-info {
+.contact-info {
     margin-top: 21px;
     gap: 22px;
 }
-.contact-details .contact-info h3 {
+.contact-info h3 {
     height: 74px;
     justify-content: center;
 }
-.contact-details .contact-property {
+.contact-property {
     gap: 15px;
 }
 
 
-@media(max-width: 719px) {
-    .contact-page main {
+
+@media(max-width: 1180px) {
+    .contact-page main .contact-detail-section {
+        display: none;
         flex-direction: column;
     }
-    
+    .contact-list-sidebar {
+        max-width: 100%;
+    }
 }

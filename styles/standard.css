@@ -18,6 +18,9 @@ body {
     min-height: 100svh;
     position: relative;
 }
+main {
+    position: relative;
+}
 header {
     z-index: 1;
 }

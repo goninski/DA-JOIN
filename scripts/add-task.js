@@ -1,5 +1,4 @@
 let requiredTaskFields = ['inputTitle', 'inputDueDate', 'inputCategory'];
-let taskDraft = {};
 
 function initAddTask() {
     getMainTemplates();

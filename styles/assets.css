@@ -11,6 +11,7 @@
 .page-subtitle {
     font-size: 27px;
     font-weight: var(--fw-regular);
+    min-width: 150px;
 }
 .page-title-wrapper .divider {
     height: 58px;
@@ -453,7 +454,7 @@ input:checked + label.prio-low {
 
 /** BREAKPOINTS */
 
-@media(max-width: 1339px) {
+@media(max-width: 1345px) {
     .field-row {
         flex-direction: column;
     }
@@ -470,6 +471,5 @@ input:checked + label.prio-low {
         margin-bottom: 100px;
     }
 }
-
 
 
