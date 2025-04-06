@@ -7,14 +7,14 @@
     <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
     <title>Contacts | Join</title>
     <link rel="stylesheet" href="style.css">
-    <!-- <link rel="stylesheet" href="./styles/page-xy"> -->
+    <link rel="stylesheet" href="contacts.css">
     <script src="scripts/data.js"></script>
     <script src="scripts/templates.js"></script>
     <script src="script.js"></script>
     <!-- <script src="./scripts/page-xy.js"></script> -->
 </head>
 
-<body onload="init()">
+<body onload="init()" class="contact-page">
 
     <header id="header" class="section"></header>
     <div id="sideMenu" class="side-menu"></div>
@@ -22,11 +22,63 @@
 
     <main>
 
-        <section class="section">
-            <div class="ct-container">
+        <div class="contact-list">
 
-                <h1 class="page-title ">Contacts</h1>
+            <div id="contactListInner" class="contact-list-inner">
+                <button class="button btn-icon btn-primary add-contact">Add new Contact<img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button>
+                <div class="contact-letter flex-row align-center">A</div>
+                <div class="contact-item flex-row align-center">
+                    <div class="profile-batch" style="--profile-color: violet;">P1</div>
+                    <div class="contact-details flex-col">
+                        <div class="name">Vorname Name</div>
+                        <div class="email">mail@domain.ch</div>
+                    </div>
+                </div>
+                <div class="contact-item edit flex-row align-center">
+                    <div class="profile-batch" style="--profile-color: orange;">P2</div>
+                    <div class="contact-details flex-col">
+                        <div class="name">Vorname Name</div>
+                        <div class="email">mail@domain.ch</div>
+                    </div>
+                </div>
 
+            </div>
+
+        </div>
+
+
+
+        <section class="section contact-details" style="--ct-w: 752px;">
+            <div class="ct-container full-width">
+
+                <div class="page-title-wrapper">
+                    <h1 class="page-title ">Contacts</h1>
+                    <div class="divider"></div>
+                    <div class="page-subtitle">Better with a Team</div>
+                </div>
+
+                <div class="floating-contact">
+                    <div class="profile-batch profile-batch-large" style="--profile-color: violet;">P1</div>
+                    <div class="profile-title flex-col">
+                        <h2 class="">Name</h2>                        
+                        <div class="edit-buttons flex-row align-center">
+                            <button><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
+                            <button><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="contactInfo" class="contact-info flex-col">
+                    <h3 class="flex-col justifiy-center">Contact Information</h3>                        
+                    <div class="contact-property flex-col">
+                        <div class="fw-bold" >Email</div>
+                        <div>mail@domain.ch</div>
+                    </div>
+                    <div class="contact-property flex-col">
+                        <div class="fw-bold">Phone</div>
+                        <div>+49 1111 111 11 1</div>
+                    </div>
+                </div>
 
             </div>
         </section>

@@ -38,6 +38,7 @@ footer {
     background-color: transparent;
     cursor: pointer;
     transition-duration: var(--transition-duration);
+    font-size: var(--fs-base);
 }
 button:disabled {
     cursor: auto;

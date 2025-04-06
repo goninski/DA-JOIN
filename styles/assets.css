@@ -1,10 +1,20 @@
+.page-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 48px;
+}
 .page-title {
     font-size: 61px;
     font-weight: var(--fw-bold);
-    margin-bottom: 48px;
 }
-.subtitle {
+.page-subtitle {
     font-size: 27px;
+    font-weight: var(--fw-regular);
+}
+.page-title-wrapper .divider {
+    height: 58px;
+    border: solid 3px var(--clr-light-blue);
 }
 a:hover {
     text-decoration: underline;
@@ -432,6 +442,11 @@ input:checked + label.prio-low {
     border-radius: 100%;
     background-color: var(--profile-color);
     font-size: 12px;
+}
+.profile-batch-large {
+    width: 120px;
+    height: 120px;
+    font-size: 47px;
 }
 
 

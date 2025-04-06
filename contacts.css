@@ -1,0 +1,99 @@
+.contact-page main {
+    display: flex;
+    flex-direction: row;
+}
+.contact-page .contact-list {
+    background-color: white;
+    width: 100%;
+    max-width: 456px;
+    padding: 32px 24px;
+}
+.contact-list-inner {
+    padding-block: 32px;
+}
+.contact-list-inner button.add-contact {
+    width: 100%;
+    justify-content: center;
+    gap: 16px;
+}
+.contact-list-inner button.add-contact img {
+    height: 21px;
+    width: auto;
+    object-fit: contain;
+}
+.contact-list-inner .contact-letter {
+    padding: 36px 17px 36px 25px ;
+    font-size: var(--fs-lg);
+    border-bottom: solid 1px var(--clr-subtle);
+    margin-bottom: 8px;
+    height: 66px;
+}
+.contact-item {
+    border-radius: 10px;
+    min-height: 87px;
+    gap: 35px;
+}
+.contact-item.edit {
+    background-color: var(--clr-main);
+    color: white;
+}
+.contact-list .contact-details {
+    gap: 5px;
+}
+.contact-list .name {
+    font-size: var(--fs-lg);
+}
+.contact-list .email {
+    color: var(--clr-light-blue);
+}
+.contact-list .contact-item {
+    padding: 15px 24px;
+    gap: 35px;
+}
+
+
+.floating-contact {
+    display: flex;
+    gap: 54px;
+    align-items: center;
+}
+.floating-contact .profile-title {
+    gap: 8px;
+}
+.floating-contact .profile-title h3 {
+    font-size: var(--fs-xl);
+    font-weight: 500;
+}
+.floating-contact .edit-buttons {
+    gap: 24px;
+}
+.floating-contact .edit-buttons button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 24px;
+}
+.floating-contact .edit-buttons button img {
+    height: 18px;
+    width: auto;
+    object-fit: contain;
+}
+.contact-details .contact-info {
+    margin-top: 21px;
+    gap: 22px;
+}
+.contact-details .contact-info h3 {
+    height: 74px;
+    justify-content: center;
+}
+.contact-details .contact-property {
+    gap: 15px;
+}
+
+
+@media(max-width: 719px) {
+    .contact-page main {
+        flex-direction: column;
+    }
+    
+}
