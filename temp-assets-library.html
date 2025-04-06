@@ -97,16 +97,16 @@
                 <h2>Various Inputs</h2>
                 <form class="gap">
 
-                    <div class="field-wrapper xshow-required-msg">
+                    <div class="field-wrapper xshow-validation-msg">
                         <label for="title" class="required">Title</label>
-                        <input type="text" id="inputTitle" name="title" placeholder="Enter a title" required>
-                        <div class="required-msg">This field is required</div>
+                        <input type="text" id="inputTitle" name="title" placeholder="Enter a title" required maxlength="10" onfocus="resetInputValidation('inputTitle')" onfocusout="validateInput('inputTitle')">
+                        <div class="validation-msg">This field is required</div>
                     </div>
 
-                    <div class="field-wrapper show-required-msg">
+                    <div class="field-wrapper show-validation-msg">
                         <label for="title" class="required">Title</label>
-                        <input type="text" id="inputTitlex" name="title" placeholder="Enter a title" required>
-                        <div class="required-msg">This field is required</div>
+                        <input type="text" id="inputTitle" name="title" placeholder="Enter a title" required maxlength="10" onfocus="resetInputValidation('inputTitle')" onfocusout="validateInput('inputTitle')">
+                        <div class="validation-msg">This field is required</div>
                     </div>
 
                     <div class="field-wrapper">
@@ -114,10 +114,10 @@
                         <textarea id="inputDescription" name="description" placeholder="Enter a description"></textarea>
                     </div>
 
-                    <div class="field-wrapper xshow-required-msg">
+                    <div class="field-wrapper xshow-validation-msg">
                         <label for="dueDate" class="required">Due date</label>
-                        <input type="date" id="inputDueDate" name="dueDate" class="placeholder" min="2000-01-01" max="2099-12-31" required>
-                        <div class="required-msg">This field is required</div>
+                        <input type="date" id="inputDueDate" name="dueDate" class="placeholder" required min="2000-01-01" max="2099-12-31" onfocus="resetInputValidation('inputDueDate')" onfocusout="validateInput('inputDueDate')">
+                        <div class="validation-msg">Please enter a valid date</div>
                     </div>
 
                     <p class="required-info">This field is required</p>
@@ -164,16 +164,13 @@
 
                 <div class="field-wrapper">
                     <label for="inputCategory" class="required">Category</label>
-                    <div class="input-wrapper custom-select xshow-required-msg">
-                        <select class="custom" id="inputCategory" name="inputCategory" placeholder="Select task category" required>
-                            <option value="id-x">Technical Task</option>
-                            <option value="id-x">User Story</option>
-                        </select>
+                    <div class="input-wrapper custom-select xshow-validation-msg">
+                        <select class="custom placeholder" id="inputCategory" name="inputCategory"  required onfocus="resetInputValidation('inputCategory')" onfocusout="validateInput('inputCategory')"></select>
                         <div class="input-button-wrapper custom-select">
                             <img src="/assets/icons/arrow-drop-down.svg">
                         </div>
                     </div>
-                    <div class="required-msg">This field is required</div>
+                    <div class="validation-msg">This field is required</div>
                 </div>
                 <div>
                     <p>Dev: François</p>

@@ -21,13 +21,34 @@ function getSidemenu() {
     sideMenuMobRef.classList.add('show--ss-mob');
 }
 
+
+
+
 function resetInput(event, id) {
     document.getElementById(id).reset()
     event.preventDefault();
 }
 
+function validateInput(id) {
+    let element = document.getElementById(id);
+    if (! element.checkValidity() || element.value == 0) {
+        setRequiredClass(element);
+        return false;
+    }
+    return element.value;
+}
+
+function resetInputValidation(id) {
+    let element = document.getElementById(id);
+    removeRequiredClass(element);
+}
+
 function setRequiredClass(element) {
-    element.parentNode.classList.add('show-required-msg');
+    element.parentNode.classList.add('show-validation-msg');
+}
+
+function removeRequiredClass(element) {
+    element.parentNode.classList.remove('show-validation-msg');
 }
 
 

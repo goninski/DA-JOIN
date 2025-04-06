@@ -1,3 +1,6 @@
+let addTaskValidationErrors = 0;
+let taskDraft = {};
+
 function initAddTask() {
     getMainTemplates();
     addIconsToAddTaskPage();
@@ -17,24 +20,26 @@ function addIconsToAddTaskPage() {
 
 //setDemoData();
 function createTask() {
+    validateAddTaskForm();
     let task = setTaskObject();
     tasks.push(task);
     console.log(tasks);
     saveTaskDataLS();
 }
 
-function setTaskObject() {
+function validateAddTaskForm() {
     lastTaskId++;
     let id = lastTaskId;
-    let title = getTitleInput();
+    let title = validateTitleInput();
     let description = document.getElementById('inputDescription').value;
-    let dueDate = getDueDateInput();
-    let priority = getPriorityInput();
-    let category = getCategoryInput();
+    let dueDate = validateDueDateInput();
+    let priority = validatePriorityInput();
+    let category = validateCategoryInput();
     return {"id": id, "title": title, "description": description, "dueDate": dueDate, "priority": priority, "category": category};
 }
 
-function getTitleInput() {
+
+function validateTitleInput() {
     let titleRef = document.getElementById('inputTitle');
     let title = titleRef.value;
     if(! title) {
@@ -44,11 +49,14 @@ function getTitleInput() {
     return title;
 }
 
+
+
+
 function onFocusOutDueDateInput() {
     let dueDateRef = document.getElementById('inputDueDate').value;
 }
 
-function getDueDateInput() {
+function validateDueDateInput() {
     let dueDateRef = document.getElementById('inputDueDate');
     let dueDate = dueDateRef.value;
     if(! dueDate) {
@@ -57,7 +65,7 @@ function getDueDateInput() {
     return dueDate;
 }
 
-function getPriorityInput() {
+function validatePriorityInput() {
     let inputs = ['High', 'Medium', 'Low'];
     for (let index = 0; index < inputs.length; index++) {
         let input = document.getElementById('inputPrio' + inputs[index]);
@@ -68,7 +76,7 @@ function getPriorityInput() {
     }
 }
 
-function getCategoryInput() {
+function validateCategoryInput() {
     let categoryRef = document.getElementById('inputCategory');
     let category = categoryRef.value;
     if(! category) {

@@ -71,15 +71,18 @@ form {
 .field-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    padding-bottom: 16px;
+    position: relative;
 }
 .field-col {
     min-width: var(--field-width);
     max-width: var(--field-width);
+    gap: 24px;
 }
 
 label {
     font-size: 20px;
+    margin-bottom: 8px;
 }
 label.required::after,
 .required-info::before {
@@ -111,17 +114,20 @@ select.custom {
     justify-content: center;
     padding: 16px 10px;
 }
-.show-required-msg :is(input, select) {
+.show-validation-msg :is(input, select) {
     border-color: var(--clr-warning);
 }
-.required-msg {
-    display: none;
-}
-.show-required-msg .required-msg,
-.show-required-msg + .required-msg {
-    display: block;
-    color: var(--clr-warning);
+.validation-msg {
+    opacity: 0;
+    position: absolute;
+    bottom: 0;
+    height: 12px;
     font-size: 12px;
+    color: var(--clr-warning);
+}
+.show-validation-msg .validation-msg,
+.show-validation-msg + .validation-msg {
+    opacity: 1;
 }
 .required-info {
     position: relative;
@@ -142,16 +148,17 @@ select.custom {
     border-left: solid 1px var(--clr-subtle);
 }
 
-::placeholder,
-.placeholder {
-    color: var(--clr-subtle);
+.select-text,
+::placeholder {
     font-size: 20px;
+}
+::placeholder,
+.placeholder,
+.placeholder option[value="0"] {
+    color: var(--clr-subtle);
 }
 .placeholder:focus {
     color: var(--clr-main);
-}
-.select-text {
-    font-size: 20px;
 }
 
 
