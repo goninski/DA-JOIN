@@ -97,15 +97,15 @@
                 <h2>Various Inputs</h2>
                 <form class="gap">
 
-                    <div class="field-wrapper xshow-validation-msg">
+                    <div class="field-wrapper">
                         <label for="title" class="required">Title</label>
-                        <input type="text" id="inputTitle" name="title" placeholder="Enter a title" required maxlength="10" onfocus="resetInputValidation('inputTitle')" onfocusout="validateInput('inputTitle')">
+                        <input type="text" id="inputTitle" class="xinvalid" name="title" placeholder="Enter a title" required maxlength="10" onfocus="resetInputValidation('inputTitle')" onfocusout="validateInput('inputTitle')">
                         <div class="validation-msg">This field is required</div>
                     </div>
 
-                    <div class="field-wrapper show-validation-msg">
+                    <div class="field-wrapper">
                         <label for="title" class="required">Title</label>
-                        <input type="text" id="inputTitle" name="title" placeholder="Enter a title" required maxlength="10" onfocus="resetInputValidation('inputTitle')" onfocusout="validateInput('inputTitle')">
+                        <input type="text" id="inputTitle" class="invalid" name="title" placeholder="Enter a title" required maxlength="10" onfocus="resetInputValidation('inputTitle')" onfocusout="validateInput('inputTitle')">
                         <div class="validation-msg">This field is required</div>
                     </div>
 
@@ -114,9 +114,9 @@
                         <textarea id="inputDescription" name="description" placeholder="Enter a description"></textarea>
                     </div>
 
-                    <div class="field-wrapper xshow-validation-msg">
+                    <div class="field-wrapper">
                         <label for="dueDate" class="required">Due date</label>
-                        <input type="date" id="inputDueDate" name="dueDate" class="placeholder" required min="2000-01-01" max="2099-12-31" onfocus="resetInputValidation('inputDueDate')" onfocusout="validateInput('inputDueDate')">
+                        <input type="date" id="inputDueDate" name="dueDate" class="placeholder xinvalid xvalid" required min="2000-01-01" max="2099-12-31" onfocus="resetInputValidation('inputDueDate')" onfocusout="validateInput('inputDueDate')">
                         <div class="validation-msg">Please enter a valid date</div>
                     </div>
 
@@ -125,7 +125,6 @@
                 </form>
                 <div>
                     <p>Dev: François</p>
-                    <p>for required inputs if empty on validation call 'setRequiredClass(element)' (see scripts.js)</p>
                     <p>Maybe some shadows are missing, need to check</p>
                     <p>Due date: active font color missing</p>
                     <hr>
@@ -164,14 +163,13 @@
 
                 <div class="field-wrapper">
                     <label for="inputCategory" class="required">Category</label>
-                    <div class="input-wrapper custom-select xshow-validation-msg">
-                        <select class="custom placeholder" id="inputCategory" name="inputCategory"  required onfocus="resetInputValidation('inputCategory')" onfocusout="validateInput('inputCategory')"></select>
+                    <div class="input-wrapper custom-select xinvalid">
+                        <select class="custom placeholder xinvalid" id="inputCategory" name="inputCategory"  required onfocus="resetInputValidation('inputCategory', true)" onfocusout="validateInput('inputCategory', true)"></select>
                         <div class="input-button-wrapper custom-select">
                             <img src="/assets/icons/arrow-drop-down.svg">
                         </div>
                     </div>
                     <div class="validation-msg">This field is required</div>
-                </div>
                 <div>
                     <p>Dev: François</p>
                     <p>JS-Template: getCategorySelectOptionTemplate (call via getCategorySelectOptions(wrapper id))</p>

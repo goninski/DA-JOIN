@@ -3,6 +3,7 @@ let taskDraft = {};
 
 function initAddTask() {
     getMainTemplates();
+    setRequiredFieldsArrayAddTask();
     addIconsToAddTaskPage();
     getContactSelectOptions();
     getProfileBatches();
@@ -14,11 +15,15 @@ function addIconsToAddTaskPage() {
     document.getElementById('labelPrioMedium').innerHTML = getIconTemplatePrioMedium();
     document.getElementById('labelPrioLow').innerHTML = getIconTemplatePrioLow();
     document.getElementById('btnCancel').innerHTML = getIconTemplateCancel('Clear');
-    document.getElementById('btnCheck').innerHTML = getIconTemplateCheck('Create Task');
+    document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Create Task');
 }
 
+function setRequiredFieldsArrayAddTask() {
+    invalidFields = ['inputTitle', 'inputDueDate', 'inputCategory'];
+    let element = document.getElementById(invalidFields[0]);
+    setSubmitBtnState(element);
+}
 
-//setDemoData();
 function createTask() {
     validateAddTaskForm();
     let task = setTaskObject();
@@ -28,6 +33,7 @@ function createTask() {
 }
 
 function validateAddTaskForm() {
+
     lastTaskId++;
     let id = lastTaskId;
     let title = validateTitleInput();
@@ -43,7 +49,7 @@ function validateTitleInput() {
     let titleRef = document.getElementById('inputTitle');
     let title = titleRef.value;
     if(! title) {
-        setRequiredClass(titleRef);
+        showValidationMsg(titleRef);
         titleRef.focus();
     }
     return title;

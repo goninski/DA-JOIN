@@ -114,8 +114,8 @@ select.custom {
     justify-content: center;
     padding: 16px 10px;
 }
-.show-validation-msg :is(input, select) {
-    border-color: var(--clr-warning);
+.invalid {
+    border-color: var(--clr-warning) !important;
 }
 .validation-msg {
     opacity: 0;
@@ -125,8 +125,7 @@ select.custom {
     font-size: 12px;
     color: var(--clr-warning);
 }
-.show-validation-msg .validation-msg,
-.show-validation-msg + .validation-msg {
+.invalid ~ .validation-msg {
     opacity: 1;
 }
 .required-info {
@@ -153,7 +152,7 @@ select.custom {
     font-size: 20px;
 }
 ::placeholder,
-.placeholder,
+.placeholder:not(.valid),
 .placeholder option[value="0"] {
     color: var(--clr-subtle);
 }

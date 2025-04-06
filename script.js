@@ -1,3 +1,5 @@
+let invalidFields = [];
+
 function init() {
     getMainTemplates();
 }
@@ -23,32 +25,69 @@ function getSidemenu() {
 
 
 
+// GENERAL INPUT VALIDATIONS
 
 function resetInput(event, id) {
     document.getElementById(id).reset()
     event.preventDefault();
 }
 
-function validateInput(id) {
+function validateInput(id, parent = false) {
     let element = document.getElementById(id);
     if (! element.checkValidity() || element.value == 0) {
-        setRequiredClass(element);
-        return false;
+        if(! invalidFields.includes(id)) {
+            invalidFields.push(id);
+        }
+        setInvalidStyles(element, parent);
+    } else {
+        setValidStyles(element);
+        return element.value;
     }
-    return element.value;
 }
 
-function resetInputValidation(id) {
+function resetInputValidation(id, parent = false) {
     let element = document.getElementById(id);
-    removeRequiredClass(element);
+    let index = invalidFields.findIndex(item => item == id);
+    if(index >= 0) {
+        invalidFields.splice(index, 1);
+    }
+    resetValidationStyles(element, parent);
 }
 
-function setRequiredClass(element) {
-    element.parentNode.classList.add('show-validation-msg');
+function setInvalidStyles(element, parent) {
+    element.classList.add('invalid');
+    if(parent) {
+        element.parentNode.classList.add('invalid');
+    }
+    setSubmitBtnState(element);
 }
 
-function removeRequiredClass(element) {
-    element.parentNode.classList.remove('show-validation-msg');
+function resetValidationStyles(element, parent) {
+    element.classList.remove('invalid');
+    element.classList.remove('valid');
+    if(parent) {
+        element.parentNode.classList.remove('invalid');
+    }
+    setSubmitBtnState(element);
+}
+
+function setValidStyles(element) {
+    if(element.classList.contains('placeholder')) {
+        element.classList.add('valid');
+    }
+    setSubmitBtnState(element);
+}
+
+function setSubmitBtnState(element) {
+    let submitBtnId = element.form.dataset.submitBtnId;
+    let submitBtn = document.getElementById(submitBtnId);
+    submitBtn.setAttribute('disabled', '');
+    if(invalidFields.length > 0) {
+        submitBtn.setAttribute('disabled', '');
+    } else {
+        submitBtn.removeAttribute('disabled');
+    }
+    // console.log(invalidFields);
 }
 
 
