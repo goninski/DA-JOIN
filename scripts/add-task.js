@@ -3,8 +3,8 @@ let taskDraft = {};
 
 function initAddTask() {
     getMainTemplates();
-    setRequiredFieldsArrayAddTask();
     addIconsToAddTaskPage();
+    setInitalFormStateAddTask();
     getContactSelectOptions();
     getProfileBatches();
     getCategorySelectOptions();
@@ -14,14 +14,18 @@ function addIconsToAddTaskPage() {
     document.getElementById('labelPrioHigh').innerHTML = getIconTemplatePrioHigh();
     document.getElementById('labelPrioMedium').innerHTML = getIconTemplatePrioMedium();
     document.getElementById('labelPrioLow').innerHTML = getIconTemplatePrioLow();
-    document.getElementById('btnCancel').innerHTML = getIconTemplateCancel('Clear');
+    document.getElementById('btnReset').innerHTML = getIconTemplateCancel('Clear');
     document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Create Task');
 }
 
-function setRequiredFieldsArrayAddTask() {
-    invalidFields = ['inputTitle', 'inputDueDate', 'inputCategory'];
-    let element = document.getElementById(invalidFields[0]);
-    setSubmitBtnState(element);
+function setInitalFormStateAddTask() {
+    requiredFields = ['inputTitle', 'inputDueDate', 'inputCategory'];
+    setInitalFormState(requiredFields);
+}
+
+function resetFormAddTask(event) {
+    resetForm(event, 'addTaskForm');
+    setInitalFormStateAddTask();
 }
 
 function createTask() {

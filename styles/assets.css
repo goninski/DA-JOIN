@@ -44,6 +44,9 @@ a:hover {
 .btn-primary:hover {
     background-color: var(--clr-light-blue);
 }
+.btn-primary:disabled {
+    background-color: var(--clr-main);
+}
 .btn-secondary {
     color: var(--clr-main);
     border: solid 1px var(--clr-main);
@@ -53,6 +56,8 @@ a:hover {
     --icon-color: var(--clr-light-blue);
     border-color: var(--clr-light-blue);
     border-width: 2px;
+}
+.btn-secondary:disabled {
 }
 .button img {
     height: 12px;

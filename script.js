@@ -27,19 +27,29 @@ function getSidemenu() {
 
 // GENERAL INPUT VALIDATIONS
 
-function resetInput(event, id) {
-    document.getElementById(id).reset()
+function setInitalFormState(requiredFields) {
+    invalidFields = requiredFields;
+    let element = document.getElementById(invalidFields[0]);
+    setSubmitBtnState(element);
+}
+
+function resetForm(event, formId) {
+    document.getElementById(formId).reset()
     event.preventDefault();
 }
 
 function validateInput(id, parent = false) {
     let element = document.getElementById(id);
+    let index = invalidFields.findIndex(item => item == id);
     if (! element.checkValidity() || element.value == 0) {
-        if(! invalidFields.includes(id)) {
+        if(index < 0) {
             invalidFields.push(id);
         }
         setInvalidStyles(element, parent);
     } else {
+        if(index >= 0) {
+            invalidFields.splice(index, 1);
+        }
         setValidStyles(element);
         return element.value;
     }
@@ -47,10 +57,10 @@ function validateInput(id, parent = false) {
 
 function resetInputValidation(id, parent = false) {
     let element = document.getElementById(id);
-    let index = invalidFields.findIndex(item => item == id);
-    if(index >= 0) {
-        invalidFields.splice(index, 1);
-    }
+    // let index = invalidFields.findIndex(item => item == id);
+    // if(index >= 0) {
+    //     invalidFields.splice(index, 1);
+    // }
     resetValidationStyles(element, parent);
 }
 
@@ -87,7 +97,7 @@ function setSubmitBtnState(element) {
     } else {
         submitBtn.removeAttribute('disabled');
     }
-    // console.log(invalidFields);
+    console.log(invalidFields);
 }
 
 

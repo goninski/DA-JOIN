@@ -78,8 +78,8 @@
                     <img src="assets/icons/icon-ipsum-black.svg" alt="" class="">
                 </button>
                 <div class="submit-button-wrapper flex-row gap justify-end">
-                    <button id="btnCancel" class="button btn-cancel btn-icon btn-secondary" onclick="resetInput(event, 'addTaskForm')"></button>
-                    <button type="submit" id="btnCheck" class="button btn-check btn-icon btn-primary" disabled></button>
+                    <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetFormXY(event)"></button>
+                    <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled></button>
                 </div>
 
                 <div>
@@ -95,7 +95,7 @@
             <!-- VARIOUS INPUTS -->
             <div class="ct-container gap">
                 <h2>Various Inputs</h2>
-                <form class="gap">
+                <form id="xyForm" onsubmit="submitFunction()" class="flex-col xy-form gap" data-submit-btn-id="btnSubmit">
 
                     <div class="field-wrapper">
                         <label for="title" class="required">Title</label>

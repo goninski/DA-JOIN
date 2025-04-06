@@ -39,6 +39,9 @@ footer {
     cursor: pointer;
     transition-duration: var(--transition-duration);
 }
+button:disabled {
+    cursor: auto;
+}
 :where(figure) {
     margin-block-start: 0;
     margin-block-end: 0;
