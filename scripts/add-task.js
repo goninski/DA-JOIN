@@ -18,20 +18,21 @@ function addIconsToAddTaskPage() {
     document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Create Task');
 }
 
-function addTestDataToAddTaskForm() {
-    document.getElementById('inputTitle').value = 'Tasktitle autogen.';
-    document.getElementById('inputDueDate').value = "2025-04-06";
-    document.getElementById('inputCategory').value = 1;
-    for (let index = 0; index < requiredTaskFields.length; index++) {
-        element = document.getElementById(requiredTaskFields[index]);
-        element.onfocusout = validateInput(requiredTaskFields[index]);
-    }
-    document.getElementById('inputDueDate').focus();
-    // document.getElementById('btnSubmit').focus();
-}
+// function addTestDataToAddTaskForm() {
+//     document.getElementById('inputTitle').value = 'Tasktitle autogen.';
+//     document.getElementById('inputDueDate').value = "2025-04-06";
+//     document.getElementById('inputCategory').value = 1;
+//     for (let index = 0; index < requiredTaskFields.length; index++) {
+//         element = document.getElementById(requiredTaskFields[index]);
+//         element.onfocusout = validateInput(requiredTaskFields[index]);
+//     }
+//     document.getElementById('inputDueDate').focus();
+//     // document.getElementById('btnSubmit').focus();
+// }
 
 function resetFormAddTask(event) {
-    resetForm(event, 'addTaskForm');
+    resetForm('addTaskForm');
+    reloadPage(event);
     setInitalFormStateAddTask();
 }
 

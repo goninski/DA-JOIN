@@ -40,9 +40,8 @@ function reloadPage(event) {
     location.href = location.pathname;
 }
 
-function resetForm(event, formId) {
+function resetForm(formId) {
     document.getElementById(formId).reset();
-    reloadPage(event);
 }
 
 function validateInput(id, parent = false) {

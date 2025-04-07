@@ -461,21 +461,29 @@ input:checked + label.prio-low {
 /** BREAKPOINTS */
 
 @media(max-width: 1345px) {
-    .field-row {
+    .add-task-form .field-groups {
         flex-direction: column;
     }
-    .field-col {
+    .add-task-form .field-group {
         min-width: 100%;
-        max-width: var(--field-width);
+        max-width: unset;
     }
-    .priority-input-wrapper {
+    .add-task-form .priority-input-wrapper {
         justify-content: start;
         flex-wrap: wrap;
     }
-    .add-task-form .required-info {
+    .add-task-form .add-task-form .required-info {
         margin-top: 32px;
         margin-bottom: 100px;
     }
 }
-
+@media(max-width: 719px) {
+    .field-groups {
+        flex-direction: column;
+    }
+    .field-group {
+        min-width: 100%;
+        max-width: unset;
+    }
+}
 

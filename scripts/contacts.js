@@ -46,16 +46,20 @@ function renderContactDetail(contactId) {
 function openAddContactDialogue() {
     document.getElementById('addContactDialogue').style = '';
     document.body.style = 'overflow: hidden;';
+    setInitalFormStateAddContact();
 }
 
-function closeAddContactDialogue() {
+function closeAddContactDialogue(event) {
+    event.stopPropagation();
     document.getElementById('addContactDialogue').style = 'display: none;';
     document.body.style = '';
+    reloadPage(event);
 }
 
 function resetFormAddContact(event) {
-    resetForm(event, 'addContactForm');
-    setInitalFormStateAddContact();
+    event.stopPropagation();
+    resetForm('addContactForm');
+    event.preventDefault();
 }
 
 function setInitalFormStateAddContact() {
@@ -63,6 +67,7 @@ function setInitalFormStateAddContact() {
 }
 
 function createContact(event) {
+    event.stopPropagation();
     lastContactId++;
     contact = getAllInputs(event, 'addContactForm');
     contact.id = lastContactId;
