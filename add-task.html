@@ -71,7 +71,7 @@
                                     <div class="select custom-select multiple">
                                         <div class="select-btn xopen focus">
                                             <span class="select-text">Select contacts to assign</span>
-                                            <span class="input-button-wrapper custom-select"><img src="/assets/icons/arrow-drop-down.svg"></span>
+                                            <span class="input-icon-wrapper custom-select"><img src="/assets/icons/arrow-drop-down.svg" class="icon-6"></span>
                                         </div>
                                         <ul id="inputContacts"></ul>
                                     </div>
@@ -82,8 +82,8 @@
                                     <label for="categoryId" class="required">Category</label>
                                     <div class="input-wrapper custom-select xinvalid">
                                         <select class="custom placeholder xinvalid" id="inputCategory" name="categoryId"  required onfocus="resetInputValidation('inputCategory', true)" onfocusout="validateInput('inputCategory', true)"></select>
-                                        <div class="input-button-wrapper custom-select">
-                                            <img src="/assets/icons/arrow-drop-down.svg">
+                                        <div class="input-icon-wrapper custom-select">
+                                            <img src="/assets/icons/arrow-drop-down.svg" class="icon-6">
                                         </div>
                                     </div>
                                     <div class="validation-msg">This field is required</div>
@@ -93,28 +93,28 @@
                                     <label for="subtasks">Subtasks</label>
                                     <div class="input-wrapper input-wrapper-subtasks">
                                         <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask">
-                                        <div id="subtaskInputButtons" class="input-button-wrapper hide">
-                                            <button xonclick="cancelSubtaskInput()"><img src="/assets/icons/cancel.svg" class="cancel"></button>
+                                        <div id="subtaskInputButtons" class="input-icon-wrapper hide">
+                                            <button xonclick="cancelSubtaskInput()"><img src="/assets/icons/cancel.svg" class="icon-13"></button>
                                             <div class="divider"></div>
-                                            <button xonclick="saveSubtaskInput()"><img src="/assets/icons/check.svg" class="check"></button>
+                                            <button xonclick="saveSubtaskInput()"><img src="/assets/icons/check.svg" class="icon-11"></button>
                                         </div>
-                                        <div id="subtaskInputButtonAdd" class="input-button-wrapper xhide">
-                                            <button xonclick="addSubtaskInput()"><img src="/assets/icons/add.svg" class="add"></button>
+                                        <div id="subtaskInputButtonAdd" class="input-icon-wrapper xhide">
+                                            <button xonclick="addSubtaskInput()"><img src="/assets/icons/add.svg" class="icon-14"></button>
                                         </div>
                                     </div>
                                     <ul id="assignedSubtasks" class="subtask-listing">
                                         <li id="subtask-01"><span class="text">Subtask 1</span>
-                                            <div class="input-button-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button></div>
+                                            <div class="input-icon-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg" class="icon-18"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-18"></button></div>
                                         </li>
                                         <li id="subtask-02"><span class="text">Subtask 2</span>
-                                            <div class="input-button-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button></div>
+                                            <div class="input-icon-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg" class="icon-18"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-18"></button></div>
                                         </li>
                                     </ul>
                                     <div id="subtaskEdit" class="subtask-edit">Subtask XY
-                                        <div id="subtaskEditButtons" class="input-button-wrapper">
-                                            <button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg"></button>
+                                        <div id="subtaskEditButtons" class="input-icon-wrapper">
+                                            <button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-18"></button>
                                             <div class="divider"></div>
-                                            <button onclick="saveSubtaskEdits()"><img src="/assets/icons/check.svg" class="check"></button>
+                                            <button onclick="saveSubtaskEdits()"><img src="/assets/icons/check.svg" class="icon-11"></button>
                                         </div>
                                     </div>
                                 </div>
@@ -123,7 +123,7 @@
                         </div>
 
                         <p class="required-info">This field is required</p>
-                        <div class="submit-input-button-wrapper flex-row gap justify-end">
+                        <div class="submit-input-icon-wrapper flex-row gap justify-end">
                             <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetFormAddTask(event)"></button>
                             <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled></button>
                         </div>

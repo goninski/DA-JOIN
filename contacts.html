@@ -119,17 +119,32 @@
                         <div class="field-group flex-col flex-grow">
                             <div class="field-wrapper">
                                 <!-- <label for="name" class="xrequired">Name</label> -->
-                                <input type="text" id="inputName" class="x-invalid" name="name" placeholder="Name" required maxlength="64" onfocus="resetInputValidation('inputName')" onfocusout="validateInput('inputName')">
+                                <div class="input-wrapper">
+                                    <input type="text" id="inputName" class="x-invalid" name="name" placeholder="Name" required maxlength="64" onfocus="resetInputValidation('inputName', true)" onfocusout="validateInput('inputName', true)">
+                                    <div class="input-icon-wrapper simple">
+                                        <img src="/assets/icons/input-name.svg" alt="person-icon" class="icon-24">
+                                    </div>
+                                </div>
                                 <div class="validation-msg">This field is required</div>
                             </div>
                             <div class="field-wrapper">
                                 <!-- <label for="email" class="required">Email</label> -->
-                                <input type="email" id="inputEmail" class="x-invalid" name="email" placeholder="Email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required maxlength="64" onfocus="resetInputValidation('inputEmail')" onfocusout="validateInput('inputEmail')">
-                                <div class="validation-msg">Please enter a valid email address</div>
+                                <div class="input-wrapper">
+                                    <input type="email" id="inputEmail" class="x-invalid" name="email" placeholder="Email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required maxlength="64" onfocus="resetInputValidation('inputEmail', true)" onfocusout="validateInput('inputEmail', true)">
+                                <div class="input-icon-wrapper simple">
+                                    <img src="/assets/icons/input-email.svg" alt="email-icon" class="icon-20">
+                                </div>
+                            </div>
+                            <div class="validation-msg">Please enter a valid email address</div>
                             </div>
                             <div class="field-wrapper">
                                 <!-- <label for="phone" class="xrequired">Phone</label> -->
-                                <input type="tel" id="inputPhone" class="x-invalid" name="phone" placeholder="Phone" maxlength="64">
+                                <div class="input-wrapper">
+                                    <input type="tel" id="inputPhone" class="x-invalid" name="phone" placeholder="Phone" maxlength="64">
+                                    <div class="input-icon-wrapper simple">
+                                        <img src="/assets/icons/input-phone.svg" alt="phone-icon" class="icon-22">
+                                    </div>
+                                </div>
                                 <!-- <div class="validation-msg">Please enter a valid phone number</div> -->
                             </div>
                             <div class="submit-input-button-wrapper flex-row gap">

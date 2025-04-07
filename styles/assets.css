@@ -304,7 +304,7 @@ input:checked + label.prio-low {
 .input-wrapper :is(input, select) {
     width: 100%;
 }
-.input-button-wrapper {
+.input-icon-wrapper {
     position: relative;
     display: flex;
     justify-content: center;
@@ -314,29 +314,34 @@ input:checked + label.prio-low {
     height: 24px;
     margin-left: 12px;
 }
-.input-wrapper .input-button-wrapper,
-.input-button-wrapper:where(.custom-checkbox) {
+.input-icon-wrapper.simple,
+.input-wrapper .input-icon-wrapper,
+.input-icon-wrapper:where(.custom-checkbox) {
     position: absolute;
     right: 16px;
 }
-.input-button-wrapper button,
-.input-button-wrapper.custom-select {
+.input-icon-wrapper.simple,
+.input-icon-wrapper.custom-select,
+.input-icon-wrapper button {
     width: 24px;
     height: 24px;
 }
-.input-button-wrapper:where(.custom-select, .custom-checkbox) {
+.input-icon-wrapper:where(.custom-select, .custom-checkbox) {
     /* background: white; */
     pointer-events: none;
 }
-.input-button-wrapper img {
-    height: 18px;
+input:has(+ .input-icon-wrapper.simple) {
+    padding-right: 56px;
+}
+.input-icon-wrapper :is(img, .icon) {
+    height: 100%;
     width: auto;
     object-fit: contain;
 }
-.input-button-wrapper.custom-checkbox input:checked {
+.input-icon-wrapper.custom-checkbox input:checked {
     opacity: 0;
 }
-.input-button-wrapper.custom-checkbox input {
+.input-icon-wrapper.custom-checkbox input {
     position: absolute;
     appearance: none;
     box-sizing: content-box;
@@ -348,38 +353,50 @@ input:checked + label.prio-low {
     bottom: 2px;
     transition-duration: var(--transition-duration);
 }
-.input-button-wrapper.custom-checkbox input + img {
+.input-icon-wrapper.custom-checkbox input + img {
     opacity: 0;
     height: 11px;
 }
-.input-button-wrapper.custom-checkbox input:checked + img {
+.input-icon-wrapper.custom-checkbox input:checked + img {
     opacity: 1;
     margin-top: 1px;
     margin-left: -1px;
     height: 16px;
 }
-.input-button-wrapper.custom-checkbox input:hover,
-.input-button-wrapper.custom-checkbox input:hover + img {
+.input-icon-wrapper.custom-checkbox input:hover,
+.input-icon-wrapper.custom-checkbox input:hover + img {
     border-radius: 3px;
     background-color: var(--clr-subtle);
 }
-.input-button-wrapper.custom-checkbox input:focus {
+.input-icon-wrapper.custom-checkbox input:focus {
     box-shadow: none;
 }
 
-.input-button-wrapper.custom-select img {
-    height: 6px;
+.input-icon-wrapper .icon-22 {
+    height: 22px;
 }
-.input-button-wrapper img.add {
+.input-icon-wrapper .icon-20 {
+    height: 20px;
+}
+.input-icon-wrapper .icon-18 {
+    height: 18px;
+}
+.input-icon-wrapper .icon-16 {
+    height: 16px;
+}
+.input-icon-wrapper .icon-14 {
     height: 14px;
 }
-.input-button-wrapper img.cancel {
+.input-icon-wrapper .icon-13 {
     height: 13px;
 }
-.input-button-wrapper img.check {
+.input-icon-wrapper .icon-11 {
     height: 11px;
 }
-.input-button-wrapper .divider {
+.input-icon-wrapper .icon-6 {
+    height: 6px;
+}
+.input-icon-wrapper .divider {
     border-left: solid 1px #A8A8A8;
     height: 100%;
 }
@@ -411,17 +428,17 @@ input:checked + label.prio-low {
     margin-left: 28px;
     width: 100%;
 }
-.subtask-listing .input-button-wrapper {
+.subtask-listing .input-icon-wrapper {
     display: none;
 }
-.subtask-listing:hover .input-button-wrapper {
+.subtask-listing:hover .input-icon-wrapper {
     display: flex;
 }
 .subtask-listing li:hover {
     background-color: #EEEEEE;
     border-radius: 10px;
 }
-.subtask-wrapper .input-button-wrapper button:hover {
+.subtask-wrapper .input-icon-wrapper button:hover {
     background-color: #EEEEEE;
     transform: scale(1.05);
     border-radius: 100%;
@@ -434,9 +451,12 @@ input:checked + label.prio-low {
 .profile-batches {
     list-style: none;
     display: flex;
+    flex-wrap: wrap;
     gap: 12px;
     margin-block: 0;
     padding-inline: 0;
+    max-width: 100%;
+
 }
 .profile-batch {
     display: flex;

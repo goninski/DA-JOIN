@@ -122,7 +122,7 @@ button.add-contact img {
     align-items: center;
     justify-content: center;
     padding: 4vw;
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0,0,0,0.4);
     z-index: 1000;
 }
 
@@ -184,7 +184,7 @@ button.close-dialogue .light {
     margin-top: -117px;
 }
 
-.dialogue .submit-input-button-wrapper {
+.dialogue .submit-input-icon-wrapper {
     margin-top: 18px;
 }
 
