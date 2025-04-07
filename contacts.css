@@ -10,20 +10,26 @@
     background-color: white;
     width: 100%;
     max-width: 456px;
-    padding: 32px 24px;
+    padding: 0 24px 32px 24px;
     flex-shrink: 1.1;
-    height: var(--height-full-ex-header);
+    max-height: var(--height-full-ex-header);
     overflow: auto;
 }
-.contact-list-inner {
-    padding-block: 32px;
+.contact-list-sidebar-inner {
+    position: relative;
 }
-.contact-list-sidebar button.add-contact {
+.contact-list-sidebar .sticky-button-wrapper {
+    position: sticky;
+    top: 0;
     width: 100%;
+    background-color: white;
+    padding-block: 22px;
+}
+button.add-contact {
     justify-content: center;
     gap: 16px;
 }
-.contact-list-sidebar button.add-contact img {
+button.add-contact img {
     height: 21px;
     width: auto;
     object-fit: contain;
