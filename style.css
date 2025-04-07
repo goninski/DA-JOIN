@@ -23,6 +23,7 @@
     --fs-base: 16px;
     --fs-lg: 20px;
     --fs-xl: 27px;
+    --fs-main-title: 61px;
     --lh-base: 1.2;
     --fw-regular: 400;
     --fw-medium: 500;
@@ -155,6 +156,8 @@ main, header, footer {
     color: white;
     text-decoration: none;
 }
+
+
 
 
 @media(max-width: 719px) {

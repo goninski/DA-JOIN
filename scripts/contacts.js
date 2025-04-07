@@ -1,8 +1,16 @@
 let activeContactId = 0;
+let requiredContactFields = ['inputName', 'inputEmail'];
 
 function initContacts() {
     getMainTemplates();
     renderContactList();
+    addIconsToContactPage();
+    // openAddContactDialogue();
+}
+
+function addIconsToContactPage() {
+    document.getElementById('btnReset').innerHTML = getIconTemplateCancel('Clear');
+    document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Create Contact');
 }
 
 function getContactIndexFromID(contactId) {
@@ -33,7 +41,25 @@ function renderContactDetail(contactId) {
     document.getElementById('contactInfo').innerHTML = getContactDetailInfoTemplate(contact);
 }
 
-function addContact() {
+
+
+function openAddContactDialogue() {
+    document.getElementById('addContactDialogue').style = '';
+    document.body.style = 'overflow: hidden;';
+}
+
+function closeAddContactDialogue() {
+    document.getElementById('addContactDialogue').style = 'display: none;';
+    document.body.style = '';
+}
+
+function resetFormAddContact(event) {
+    resetForm(event, 'addContactForm');
+    setInitalFormStateAddContact();
+}
+
+function setInitalFormStateAddContact() {
+    setInitalFormState(requiredContactFields);
 }
 
 function createContact(event) {

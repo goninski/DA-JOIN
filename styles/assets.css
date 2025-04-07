@@ -5,11 +5,11 @@
     margin-bottom: 48px;
 }
 .page-title {
-    font-size: 61px;
+    font-size: var(--fs-main-title);
     font-weight: var(--fw-bold);
 }
 .page-subtitle {
-    font-size: 27px;
+    font-size: var(--fs-xl);
     font-weight: var(--fw-regular);
     min-width: 150px;
 }
@@ -19,6 +19,12 @@
 }
 a:hover {
     text-decoration: underline;
+}
+
+.logo-join-small {
+    height: 66px;
+    width: auto;
+    object-fit: contain;
 }
 
 
@@ -91,7 +97,7 @@ form {
     padding-bottom: 16px;
     position: relative;
 }
-.field-col {
+.field-group {
     min-width: var(--field-width);
     max-width: var(--field-width);
     gap: 24px;

@@ -26,7 +26,7 @@
             <!-- <div class="contact-list-sidebar-inner"> -->
 
                 <div class="sticky-button-wrapper flex-col">
-                    <button class="button btn-icon btn-primary add-contact" onclick="addContact()">Add new Contact<img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button>
+                    <button class="button btn-icon btn-primary add-contact" onclick="openAddContactDialogue()">Add new Contact<img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button>
                     <button class="button btn-icon btn-secondary add-contact mt-05" onclick="addDemoContact(event)">Add Demo Contact<img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button>
                 </div>
 
@@ -89,6 +89,60 @@
         </section>
 
     </main>
+
+
+    <div id="addContactDialogue" class="add-contact-dialogue dialogue" style="display: none;">
+
+        <div class="dialogue-inner flex-row align-center pos-relative">
+
+            <div class="dialogue-sidebar flex-col justifiy-center flex-grow">
+                <img src="/assets/img/logo-join-white.svg" alt="logo-join" class="logo-join-small">
+                <h3 class="page-title">Add Contact</h3>
+                <div class="teaser">Tasks are better with a Team</div>
+            </div>
+    
+            <div class="dialogue-main flex-col justifiy-center align-center pos-relative">
+
+                <button class="close-dialogue" onclick="closeAddContactDialogue(event)" title="close dialogue"> <img src="assets/icons/close.svg" alt="close-icon"></button>
+
+                <form id="addContactForm" onsubmit="createContact(event), closeAddContactDialogue(event)" class="flex-col add-contact-form" data-submit-btn-id="btnSubmit">
+                    <div class="field-groups flex-row align-center justify-between">
+ 
+                        <div class="xfield-group batch-wrapper flex-col">
+                            <!-- <div class="profile-batch profile-batch-large" style="--profile-color: violet;">P1</div> -->
+                            <div class="profile-batch profile-batch-large" style="--profile-color: violet;"><img src="/assets/icons/profile-placeholder.svg" alt="profile-placeholder"></div>
+                        </div>
+
+                        <div class="field-group flex-col flex-grow">
+                            <div class="field-wrapper">
+                                <!-- <label for="name" class="xrequired">Name</label> -->
+                                <input type="text" id="inputName" class="x-invalid" name="name" placeholder="Name" required maxlength="64" onfocus="resetInputValidation('inputName')" onfocusout="validateInput('inputName')">
+                                <div class="validation-msg">This field is required</div>
+                            </div>
+                            <div class="field-wrapper">
+                                <!-- <label for="email" class="required">Email</label> -->
+                                <input type="email" id="inputEmail" class="x-invalid" name="email" placeholder="Email" required maxlength="64" onfocus="resetInputValidation('inputEmail')" onfocusout="validateInput('inputEmail')">
+                                <div class="validation-msg">This field is required</div>
+                            </div>
+                            <div class="field-wrapper">
+                                <!-- <label for="phone" class="xrequired">Phone</label> -->
+                                <input type="phone" id="inputPhone" class="x-invalid" name="phone" placeholder="Phone" maxlength="20" onfocus="resetInputValidation('inputPhone')" onfocusout="validateInput('inputPhone')">
+                                <!-- <div class="validation-msg">This field is required</div> -->
+                            </div>
+                            <div class="submit-input-button-wrapper flex-row gap">
+                                <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetFormAddContact(event)"></button>
+                                <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled></button>
+                            </div>
+                        </div>
+ 
+                    </div>
+
+            </form>
+            </div>
+    
+        </div>
+    </div>
+
 
 </body>
 </html>

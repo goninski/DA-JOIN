@@ -71,10 +71,6 @@ button.add-contact img {
 }
 
 
-.contact-detail-section {
-
-}
-
 .floating-contact {
     display: flex;
     gap: 54px;
@@ -115,6 +111,79 @@ button.add-contact img {
 
 
 
+.dialogue {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4vw;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 1000;
+}
+
+.dialogue-inner {
+    background-color: white;
+    border-radius: 30px;
+    min-height: 594px;
+    width: 100%;
+    max-width: 1212px;
+    overflow: hidden;
+    align-items: stretch;
+}
+
+.dialogue-inner > * {
+    padding: 66px 48px;
+    justify-content: center;
+}
+
+.dialogue-sidebar {
+    background-color: var(--clr-main);
+    color: white;
+    font-size: var(--fs-xl);
+    justify-content: center;
+    gap: 12px;
+    align-items: start;
+    width: 100%;
+    max-width: 467px;
+    flex-shrink: 1.1;
+}
+
+.dialogue-main {
+    flex-grow: 1;
+}
+
+button.close-dialogue {
+    position: absolute;
+    top: 66px;
+    right: 48px;
+    width: 32px;
+    height: 32px;
+}
+
+.dialogue .field-groups {
+    gap: 72px;
+}
+
+.dialogue .field-group {
+    gap: 19px;
+}
+
+.dialogue .batch-wrapper {
+    margin-top: -117px;
+}
+
+.dialogue .submit-input-button-wrapper {
+    margin-top: 18px;
+}
+
+
+
+
 @media(max-width: 1180px) {
     .contact-page main .contact-detail-section {
         display: none;
@@ -122,5 +191,10 @@ button.add-contact img {
     }
     .contact-list-sidebar {
         max-width: 100%;
+    }
+}
+@media(max-width: 939px) {
+    .dialogue-inner {
+        flex-direction: column;
     }
 }
