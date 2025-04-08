@@ -100,7 +100,7 @@ function getContactSelectOptionTemplate(contact) {
             <div class="input-icon-wrapper custom-checkbox">
                 <button>
                     <input type="checkbox" class="custom" id="${contact.id}" name="${contact.id}" value="${contact.id}">
-                    <img src="assets/icons/checkbox-checked.svg" alt="checkbox-checked" class="icon-18 checkbox">
+                    <img src="assets/icons/checkbox-checked.svg" alt="checkbox-checked" class="icon-checkbox">
                 </button>
             </div>
         </li>

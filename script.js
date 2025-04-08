@@ -61,6 +61,19 @@ function validateInput(id, parent = false) {
     }
 }
 
+function formatPhoneInput(id) {
+    let element = document.getElementById(id);
+    let inputValue = element.value;
+    let formattedValue = inputValue;
+    // let rawValue = inputValue.replaceAll(' ', '');
+    // let containsSpaces = inputValue.length > rawValue.length;
+    if(! inputValue.startsWith("+")) {
+        formattedValue = "+49 " + inputValue;
+    }
+    element.value = formattedValue;
+}
+
+
 function resetInputValidation(id, parent = false) {
     let element = document.getElementById(id);
     resetValidationStyles(element, parent);

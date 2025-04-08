@@ -71,7 +71,7 @@
                                     <div class="select custom-select multiple">
                                         <div class="select-btn xopen focus">
                                             <span class="select-text">Select contacts to assign</span>
-                                            <span class="input-icon-wrapper custom-select"><img src="/assets/icons/arrow-drop-down.svg" class="icon-6"></span>
+                                            <span class="input-icon-wrapper custom-select"><img src="/assets/icons/arrow-drop-down.svg" class="icon"></span>
                                         </div>
                                         <ul id="inputContacts"></ul>
                                     </div>
@@ -83,7 +83,7 @@
                                     <div class="input-wrapper custom-select xinvalid">
                                         <select class="custom placeholder xinvalid" id="inputCategory" name="categoryId"  required onfocus="resetInputValidation('inputCategory', true)" onfocusout="validateInput('inputCategory', true)"></select>
                                         <div class="input-icon-wrapper custom-select">
-                                            <img src="/assets/icons/arrow-drop-down.svg" class="icon-6">
+                                            <img src="/assets/icons/arrow-drop-down.svg" class="icon">
                                         </div>
                                     </div>
                                     <div class="validation-msg">This field is required</div>
@@ -94,27 +94,27 @@
                                     <div class="input-wrapper input-wrapper-subtasks">
                                         <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask">
                                         <div id="subtaskInputButtons" class="input-icon-wrapper hide">
-                                            <button xonclick="cancelSubtaskInput()"><img src="/assets/icons/cancel.svg" class="icon-13"></button>
+                                            <button xonclick="cancelSubtaskInput()"><img src="/assets/icons/cancel.svg" class="icon-cancel"></button>
                                             <div class="divider"></div>
-                                            <button xonclick="saveSubtaskInput()"><img src="/assets/icons/check.svg" class="icon-11"></button>
+                                            <button xonclick="saveSubtaskInput()"><img src="/assets/icons/check.svg" class="icon-check"></button>
                                         </div>
                                         <div id="subtaskInputButtonAdd" class="input-icon-wrapper xhide">
-                                            <button xonclick="addSubtaskInput()"><img src="/assets/icons/add.svg" class="icon-14"></button>
+                                            <button xonclick="addSubtaskInput()"><img src="/assets/icons/add.svg" class="icon-add"></button>
                                         </div>
                                     </div>
                                     <ul id="assignedSubtasks" class="subtask-listing">
                                         <li id="subtask-01"><span class="text">Subtask 1</span>
-                                            <div class="input-icon-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg" class="icon-18"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-18"></button></div>
+                                            <div class="input-icon-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-delete"></button></div>
                                         </li>
                                         <li id="subtask-02"><span class="text">Subtask 2</span>
-                                            <div class="input-icon-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg" class="icon-18"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-18"></button></div>
+                                            <div class="input-icon-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-delete"></button></div>
                                         </li>
                                     </ul>
                                     <div id="subtaskEdit" class="subtask-edit">Subtask XY
                                         <div id="subtaskEditButtons" class="input-icon-wrapper">
-                                            <button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-18"></button>
+                                            <button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-delete"></button>
                                             <div class="divider"></div>
-                                            <button onclick="saveSubtaskEdits()"><img src="/assets/icons/check.svg" class="icon-11"></button>
+                                            <button onclick="saveSubtaskEdits()"><img src="/assets/icons/check.svg" class="icon-check"></button>
                                         </div>
                                     </div>
                                 </div>

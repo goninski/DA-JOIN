@@ -372,27 +372,28 @@ input:has(+ .input-icon-wrapper.simple) {
     box-shadow: none;
 }
 
-.input-icon-wrapper .icon-22 {
+.input-icon-wrapper :is(.icon-24) {
+    height: 24px;
+}
+.input-icon-wrapper :is(.icon-22, .icon-phone-input) {
     height: 22px;
 }
-.input-icon-wrapper .icon-20 {
+.input-icon-wrapper :is(.icon-20, .icon-email-input) {
     height: 20px;
 }
-.input-icon-wrapper .icon-18 {
+.input-icon-wrapper :is(.icon-18, .icon-edit, .icon-delete, .icon-checkbox) {
     height: 18px;
 }
-.input-icon-wrapper .icon-16 {
-    height: 16px;
-}
-.input-icon-wrapper .icon-14 {
+.input-icon-wrapper :is(.icon-14, .icon-add) {
     height: 14px;
 }
-.input-icon-wrapper .icon-13 {
+.input-icon-wrapper :is(.icon-13, .icon-cancel) {
     height: 13px;
 }
-.input-icon-wrapper .icon-11 {
+.input-icon-wrapper :is(.icon-11, .icon-check) {
     height: 11px;
 }
+.input-icon-wrapper.custom-select .icon,
 .input-icon-wrapper .icon-6 {
     height: 6px;
 }
