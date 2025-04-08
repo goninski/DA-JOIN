@@ -26,11 +26,10 @@
     <main>
         <section class="section gap-40" style="--ct-w: 440px;">
 
-            <div class="ct-container mb-30">
-                <h1 class="page-title">Asset Library</h1>
-                <p style="margin-top: -32px;">For details inspect the html in the Browser Dev Tools</p>
+            <div class="ct-container">
+                <h1 class="page-title ">Asset Library</h1>
+                <p style="margin-top: 24px;">For details inspect the html in the Browser Dev Tools</p>
             </div>
-
 
 
             <!-- ASSET BLOCK TEMPLATE -->
@@ -131,7 +130,33 @@
                 </div>
             </div>
 
+
             
+            <!-- VARIOUS INPUTS -->
+            <div class="ct-container gap">
+                <h2>No-Label Inputs</h2>
+                <form id="xyzForm" onsubmit="submitFunction()" class="flex-col xy-form gap" data-submit-btn-id="btnSubmit">
+
+                    <div class="field-wrapper">
+                        <!-- <label for="email" class="required">Email</label> -->
+                        <div class="input-wrapper">
+                            <input type="email" id="inputEmail" class="x-invalid" name="email" placeholder="Email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required maxlength="64" onfocus="resetInputValidation('inputEmail', true)" onfocusout="validateInput('inputEmail', true)">
+                            <div class="input-icon-wrapper simple">
+                                <img src="/assets/icons/input-email.svg" alt="email-icon" class="icon-email-input">
+                            </div>
+                        </div>
+                        <div class="validation-msg">Please enter a valid email address</div>
+                    </div>
+
+                </form>
+                <div>
+                    <p>Dev: François</p>
+                    <p>no-label inputs, for dialogues etc.</p>
+                    <p>email-pattern: checks also if a domain is provided</p>
+                    <hr>
+                </div>
+            </div>
+
 
             <!-- PRIORITY BUTTONS -->
             <div class="ct-container gap">
@@ -206,7 +231,7 @@
                         </ul>
                     </div>
                 </div>
-                <div style="margin-top: 210px;">
+                <div style="margin-top: 250px;">
                     <p>Dev: François</p>
                     <p>JS-Template: getContactSelectOptionTemplate (call via getContactSelectOptions(wrapper id))</p>
                     <p>missing: search, open/close dropdown</p>

@@ -34,7 +34,10 @@ function getSideMenuTemplate() {
         <div class="sidebar-footer">
             <a href="privacy-policy.html">Privacy Policy</a>
             <a href="legal-notice.html">Legal notice</a>
-            <button onclick="setDemoData()" style="text-align: left; margin-top: 12px;color: #ccc;">Testdata Reset</button>
+            <div class="flex-col gap-05 mt-10"> 
+                <a href="temp-assets-library.html" style="color: #ccc;">Asset Library</a>
+                <button onclick="setDemoData()" style="text-align: left; color: #ccc";>Testdata Reset</button>
+            </div>
         </div>
     `
 }
