@@ -6,6 +6,7 @@
     right: 87.71%;
     top: 7.81%;
     bottom: 80.28%;
+    z-index: 2;
 }
 
 .gap_16px {
@@ -212,4 +213,8 @@ a.login-privacy-policy-color:hover {
 .placeholder-text {
     color: rgba(168, 168, 168, 1);
     font-size: 20px;
+}
+
+.gap_32px{
+    gap: 32px;
 }

@@ -12,63 +12,69 @@
     <script src="script.js"></script>
 </head>
 
-<body class="bg-grey flex justify-center"">
+<body class="bg-grey flex justify-center">
     <section>
         <img class=" logo_login" src="./assets/img/Capa 2.png" alt="Logo">
     </section>
 
     <section class="flex justify-center">
-        <div class="flex-col bg-white sign-up-div-size flex center">
+        <div class="flex-col bg-white sign-up-div-size flex center gap_32px">
             <div class="arrow_left_icon_position">
                 <a href="./login.html">
                     <img src="./assets/img/arrow-left-line.png" alt="Arrow Left Icon" class="arrow_left_icon">
                 </a>
             </div>
 
-            <div class="headline_login flex-col align-center">
-                <h1 class="gap_16px login_title">Sign up</h1>
+            <div class="headline_login flex-col align-center gap_16px">
+                <h1 class="login_title">Sign up</h1>
                 <div class="login_border"></div>
             </div>
 
-            <div class="flex-col gap-20 login-email-part center">
-                <div class="input-wrapper">
-                    <input type="name" minlength="3">
-                    <div class="input-inner">
-                        <div class="placeholder-text">Name</div>
-                        <img src="./assets/img/person.png" alt="Person Icon" class="input-icon">
+            <div class="flex-col login-email-part-sign-up center gap_16px">
+                <div class="flex-col">
+                    <div class="input-wrapper margin-bottom-24px">
+                        <input type="text" minlength="3">
+                        <div class="input-inner">
+                            <div class="placeholder-text">Name</div>
+                            <img src="./assets/img/person.png" alt="Person Icon" class="input-icon">
+                        </div>
+                    </div>
+
+                    <div class="input-wrapper margin-bottom-24px">
+                        <input type="email" name="email" id="email">
+                        <div class="input-inner">
+                            <div class="placeholder-text">Email</div>
+                            <img src="./assets/img/mail.png" alt="Mail Icon" class="input-icon">
+                        </div>
+                    </div>
+
+                    <div class="input-wrapper margin-bottom-24px">
+                        <input type="password" id="pwd" name="pwd" minlength="8">
+                        <div class="input-inner">
+                            <div class="placeholder-text">Password</div>
+                            <img src="./assets/img/lock.png" alt="Lock Icon">
+                        </div>
+                    </div>
+
+                    <div class="input-wrapper margin-bottom-24px">
+                        <input type="password" id="confirm_pwd" name="pwd" minlength="8">
+                        <div class="input-inner">
+                            <div class="placeholder-text">Confirm Password</div>
+                            <img src="./assets/img/lock.png" alt="Lock Icon">
+                        </div>
                     </div>
                 </div>
 
-                <div class="input-wrapper">
-                    <input type="email" name="email" id="email">
-                    <div class="input-inner">
-                        <div class="placeholder-text">Email</div>
-                        <img src="./assets/img/mail.png" alt="Mail Icon" class="input-icon">
+                <div class="checkbox-wrapper flex-row align-center gap-10px" onclick="">
+                    <input type="checkbox" id="privacy_policy" class="custom-checkbox">
+                    <div class="flex-row center">
+                        <div class="div-i-accept">I accept the <a class="a-privacy-policy">Privacy policy</a></div>
+                        
                     </div>
                 </div>
 
-                <div class="input-wrapper">
-                    <input type="password" id="pwd" name="pwd" minlength="8">
-                    <div class="input-inner">
-                        <div class="placeholder-text">Password</div>
-                        <img src="./assets/img/lock.png" alt="Lock Icon">
-                    </div>
-                </div>
-
-                <div class="input-wrapper">
-                    <input type="password" id="pwd" name="pwd" minlength="8">
-                    <div class="input-inner">
-                        <div class="placeholder-text">Password</div>
-                        <img src="./assets/img/lock.png" alt="Lock Icon">
-                    </div>
-                </div>
             </div>
 
-            <div>
-                <input type="checkbox" id="privacy_policy" name="privacy_policy" value="Bike">
-                <label for="privacy_policy">I accept the Privacy policy</label><br>
-            </div>
-            
             <div class="flex-row align-end justify-center gap-35">
                 <button type="submit" value="Sign up" class="button btn-login-size btn-fourth">Sign up</button>
             </div>
