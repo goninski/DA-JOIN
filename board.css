@@ -11,3 +11,31 @@
     color: #000000;
     margin: 0;
 }
+
+.add-task-button {
+    background-color: #2A3647;
+    color: white;
+    border-radius: 10px;
+    border: 1px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+    gap: 4px;
+    display: flex;
+    align-items: center;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.board-input {
+    border: 1px;
+    border-radius: 10px;
+    width: 312px;
+    height: 48px;
+    gap: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
