@@ -2,20 +2,7 @@ let requiredTaskFields = ['inputTitle', 'inputDueDate', 'inputCategory'];
 
 function initAddTask() {
     getMainTemplates();
-    addIconsToAddTaskPage();
-    getContactSelectOptions();
-    getProfileBatches();
-    getCategorySelectOptions();
-    setInitalFormStateAddTask();
-    // addTestDataToAddTaskForm();
-}
-
-function addIconsToAddTaskPage() {
-    document.getElementById('labelPrioHigh').innerHTML = getIconTemplatePrioHigh();
-    document.getElementById('labelPrioMedium').innerHTML = getIconTemplatePrioMedium();
-    document.getElementById('labelPrioLow').innerHTML = getIconTemplatePrioLow();
-    document.getElementById('btnReset').innerHTML = getIconTemplateCancel('Clear');
-    document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Create Task');
+    addTask();
 }
 
 // function addTestDataToAddTaskForm() {
@@ -30,14 +17,33 @@ function addIconsToAddTaskPage() {
 //     // document.getElementById('btnSubmit').focus();
 // }
 
-function resetFormAddTask(event) {
-    resetForm('addTaskForm');
-    reloadPage(event);
-    setInitalFormStateAddTask();
+
+function addTask() {
+    openAddTaskForm();
 }
 
-function setInitalFormStateAddTask() {
-    setInitalFormState(requiredTaskFields);
+function openAddTaskForm() {
+    addIconsToAddTaskPage();
+    getContactSelectOptions();
+    getProfileBatches();
+    getCategorySelectOptions();
+    setInitalFormState(requiredTaskFields, 'inputTitle');
+    // addTestDataToAddTaskForm();
+}
+
+function addIconsToAddTaskPage() {
+    document.getElementById('labelPrioHigh').innerHTML = getIconTemplatePrioHigh();
+    document.getElementById('labelPrioMedium').innerHTML = getIconTemplatePrioMedium();
+    document.getElementById('labelPrioLow').innerHTML = getIconTemplatePrioLow();
+    document.getElementById('btnReset').innerHTML = getIconTemplateCancel('Clear');
+    document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Create Task');
+}
+
+function resetFormAddTask(event) {
+    // event.stopPropagation();
+    resetForm('addTaskForm');
+    setInitalFormState(requiredTaskFields, 'inputTitle', 'add');
+    event.preventDefault();
 }
 
 function createTask(event) {
@@ -45,10 +51,11 @@ function createTask(event) {
     lastTaskId++;
     task.id = lastTaskId;
     task.categoryId = Number(task.categoryId)   ;
-    // console.log(task);
     tasks.push(task);
-    // console.log(tasks);
     saveTaskData();
+    alert('new task created');
+    console.log(tasks);
+    resetFormAddTask(event);
 }
 
 

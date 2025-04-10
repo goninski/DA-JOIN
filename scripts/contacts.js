@@ -42,11 +42,25 @@ function renderContactDetail(contactId) {
 }
 
 
+function addNewContact() {
+    let editMode = 'add';
+    openAddContactForm(editMode);
+}
 
-function openAddContactDialogue() {
+function editContact(contactId) {
+    let editMode = 'edit';
+    openAddContactForm(editMode, contactId);
+}
+
+function openAddContactForm(editMode, contactId = 0) {
     document.getElementById('addContactDialogue').style = '';
     document.body.style = 'overflow: hidden;';
-    setInitalFormStateAddContact();
+    setInitalFormState(requiredContactFields, 'inputName', editMode);
+    if(editMode == 'add'){
+        setAddContactValues();
+    } else {
+        setEditContactValues(contactId);
+    }
 }
 
 function closeAddContactDialogue(event) {
@@ -59,38 +73,86 @@ function closeAddContactDialogue(event) {
 function resetFormAddContact(event) {
     event.stopPropagation();
     resetForm('addContactForm');
+    setInitalFormState(requiredContactFields, 'inputName', 'add');
     event.preventDefault();
 }
 
-function setInitalFormStateAddContact() {
-    setInitalFormState(requiredContactFields);
+function setAddContactValues() {
+    document.getElementById('dialogueProfileBatch').innerHTML = '<img src="/assets/icons/profile-placeholder.svg" alt="profile-placeholder">';
+    document.getElementById('dialogueTeaser').style = '';
+    document.getElementById('dialogueTitle').innerHTML = 'Add Contact';
+    document.getElementById('btnReset').innerHTML = getIconTemplateCancel('Clear');
+    document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Create Contact');
+    addEventsToAddContactForm();
+}
+
+function setEditContactValues(contactId) {
+    document.getElementById('dialogueTeaser').style = 'display: none;';
+    document.getElementById('dialogueTitle').innerHTML = 'Edit Contact';
+    document.getElementById('btnReset').innerHTML = 'Delete';
+    document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Save');
+    let contact = contacts[getContactIndexFromID(contactId)];
+    document.getElementById('dialogueProfileBatch').innerHTML = contact.initials;
+    document.getElementById('dialogueProfileBatch').style = '--profile-color: violet;';
+    document.getElementById('inputName').value = contact.name;
+    document.getElementById('inputEmail').value = contact.email;
+    document.getElementById('inputPhone').value = contact.phone;
+    addEventsToEditContactForm(contactId);
+}
+
+function addEventsToAddContactForm() {
+    document.getElementById('btnReset').addEventListener('click', function(event) {
+        // event.preventDefault();
+        event.stopPropagation();
+        resetFormAddContact(event);
+    });
+    document.getElementById('addContactForm').addEventListener('submit', function (event) {
+        event.stopPropagation();
+        createContact(event)
+    });
+}
+
+function addEventsToEditContactForm(contactId) {
+    contactId = contactId;
+    document.getElementById('btnReset').addEventListener('click', function(event, contactId) {
+        event.stopPropagation();
+        deleteContact(contactId, event);
+    });
+    document.getElementById('addContactForm').addEventListener('submit', function(event) {
+        event.stopPropagation();
+        saveContact(contactId, event)
+    });
 }
 
 function createContact(event) {
-    event.stopPropagation();
+    let contact = getAllInputs(event, 'addContactForm');
+    console.log(contact);
+    if(contact.name.length <= 0) {
+        return;
+    }
     lastContactId++;
-    contact = getAllInputs(event, 'addContactForm');
     contact.id = lastContactId;
     contact.initials = getInitialsOfFirstAndLastWord(contact.name);
     contact.color = getRandomColor();
     contacts.push(contact);
     // console.log(contact);
     saveContactData();
+    alert('New contact added');
 }
 
-function addDemoContact(event) {
-    lastContactId++;
-    contact = {};
-    contact.id = lastContactId;
-    contact.name = 'P' + contact.id + ' | Vorname Name';
-    contact.email = 'mail@domain.com';
-    contact.phone = '+49 111 222 33 44';
-    contact.initials = 'P'+ contact.id;
-    contact.color = getRandomColor();
-    contacts.push(contact);
-    // console.log(contact);
+function saveContact(contactId, event) {
+    let contact = getAllInputs(event, 'addContactForm');
+    if(contact.name.length <= 0) {
+        return;
+    }
+    let index = getContactIndexFromID(contactId);
+    contacts[index].name = contact.name;
+    contacts[index].email = contact.email;
+    contacts[index].phone = contact.phone;
+    contacts[index].initials = getInitialsOfFirstAndLastWord(contact.name);
+    // console.log(contacts[index]);
     saveContactData();
-    reloadPage(event);
+    alert('All changes saved');
 }
 
 function deleteContact(contactId, event) {
