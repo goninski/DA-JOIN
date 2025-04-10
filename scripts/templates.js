@@ -93,6 +93,20 @@ function getContactDetailInfoTemplate(contact) {
     `
 }
 
+// function getAddContactSubmitButtonsTemplate() {
+//     return `
+//         <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetFormAddContact(event)"></button>
+//         <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled></button>
+//     `
+// }
+
+// function getEditContactSubmitButtonsTemplate() {
+//     return `
+//         <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetFormAddContact(event)"></button>
+//         <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled></button>
+//     `
+// }
+
 
 
 function getContactSelectOptionTemplate(contact) {

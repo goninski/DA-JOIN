@@ -26,7 +26,7 @@
             <!-- <div class="contact-list-sidebar-inner"> -->
 
                 <div class="sticky-button-wrapper flex-col">
-                    <button class="button btn-icon btn-primary add-contact" onclick="openAddContactDialogue()">Add new Contact<img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button>
+                    <button class="button btn-icon btn-primary add-contact" onclick="addNewContact()">Add new Contact<img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button>
                     <!-- <button class="button btn-icon btn-secondary add-contact mt-05" onclick="addDemoContact(event)">Add Demo Contact<img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button> -->
                 </div>
 
@@ -102,18 +102,19 @@
 
             <div class="dialogue-sidebar flex-col justifiy-center">
                 <img src="/assets/img/logo-join-white.svg" alt="logo-join" class="logo-join-small">
-                <h3 class="page-title">Add Contact</h3>
-                <div class="teaser">Tasks are better with&nbsp;a&nbsp;Team</div>
+                <h3 id="dialogueTitle" class="page-title">Add Contact</h3>
+                <div id="dialogueTeaser" class="teaser">Tasks are better with&nbsp;a&nbsp;Team</div>
+                <div class="dialogue-title-deco"></div>
             </div>
     
             <div class="dialogue-main flex-col justifiy-center align-center pos-relative">
 
-                <form id="addContactForm" onsubmit="createContact(event), closeAddContactDialogue(event)" class="flex-col add-contact-form" data-submit-btn-id="btnSubmit">
+                <form id="addContactForm" class="flex-col add-contact-form" data-submit-btn-id="btnSubmit">
                     <div class="field-groups flex-row align-center justify-between">
  
                         <div class="xfield-group batch-wrapper flex-col">
                             <!-- <div class="profile-batch profile-batch-large" style="--profile-color: violet;">P1</div> -->
-                            <div class="profile-batch profile-batch-large" style="--profile-color: violet;"><img src="/assets/icons/profile-placeholder.svg" alt="profile-placeholder"></div>
+                            <div id="dialogueProfileBatch" class="profile-batch profile-batch-large" style="--profile-color: violet;"><img src="/assets/icons/profile-placeholder.svg" alt="profile-placeholder"></div>
                         </div>
 
                         <div class="field-group flex-col flex-grow">
@@ -140,14 +141,15 @@
                             <div class="field-wrapper">
                                 <!-- <label for="phone" class="xrequired">Phone</label> -->
                                 <div class="input-wrapper">
-                                    <input type="tel" id="inputPhone" class="x-invalid" name="phone" placeholder="Phone" minlength="10" maxlength="64" onfocus="resetInputValidation('inputPhone', true)" onfocusout="formatPhoneInput('inputPhone'), validateInput('inputPhone', true)">
+                                    <input type="tel" id="inputPhone" class="x-invalid" name="phone" placeholder="Phone" minlength="10" maxlength="64" onfocus="resetInputValidation('inputPhone', true)" onfocusout="validatePhoneInput('inputPhone', true)">
                                     <div class="input-icon-wrapper simple">
                                         <img src="/assets/icons/input-phone.svg" alt="phone-icon" class="icon-phone-input">
                                     </div>
                                 </div>
                                 <div class="validation-msg">Please enter a valid phone number (min. 10 digits)</div>
                             </div>
-                            <div class="submit-input-button-wrapper flex-row gap">
+                            <div id="submitBtnWrapper" class="submit-input-button-wrapper flex-row gap">
+                                <!-- <button id="btnReset" class="button btn-icon btn-secondary"></button> -->
                                 <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetFormAddContact(event)"></button>
                                 <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled></button>
                             </div>

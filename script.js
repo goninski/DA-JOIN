@@ -1,4 +1,5 @@
 let invalidFields = [];
+let requiredFields = [];
 
 function init() {
     getMainTemplates();
@@ -28,9 +29,14 @@ function getSidemenu() {
 
 // GENERAL INPUT VALIDATIONS
 
-function setInitalFormState(requiredFields) {
-    invalidFields = requiredFields;
-    let element = document.getElementById(invalidFields[0]);
+function setInitalFormState(requiredFields, firstElementId, editMode = 'add') {
+    requiredFields = requiredFields;
+    invalidFields = [];
+    if(editMode == 'add') {
+        invalidFields = Array.from(requiredFields);
+    }
+    resetAllInputValidations();
+    let element = document.getElementById(firstElementId);
     element.focus();
     setSubmitBtnState(element);
 }
@@ -47,7 +53,7 @@ function resetForm(formId) {
 function validateInput(id, parent = false) {
     let element = document.getElementById(id);
     let index = invalidFields.findIndex(item => item == id);
-    if (! element.checkValidity() || element.value == 0) {
+    if (! element.checkValidity()) {
         if(index < 0) {
             invalidFields.push(id);
         }
@@ -61,18 +67,26 @@ function validateInput(id, parent = false) {
     }
 }
 
-function formatPhoneInput(id) {
+function validatePhoneInput(id, parent = false) {
+    validateInput(id, parent);
     let element = document.getElementById(id);
     let inputValue = element.value;
     let formattedValue = inputValue;
-    // let rawValue = inputValue.replaceAll(' ', '');
-    // let containsSpaces = inputValue.length > rawValue.length;
-    if(! inputValue.startsWith("+")) {
-        formattedValue = "+49 " + inputValue;
+    let rawValue = inputValue.replaceAll(' ', '');
+    if(rawValue.length >= 10){
+        if(! inputValue.startsWith("+")) {
+            formattedValue = "+49 " + inputValue;
+        }
     }
     element.value = formattedValue;
 }
 
+function resetAllInputValidations() {
+    for (let index = 0; index < invalidFields.length; index++) {
+        fieldId = invalidFields[index];
+        resetInputValidation(fieldId, true);
+    }
+}
 
 function resetInputValidation(id, parent = false) {
     let element = document.getElementById(id);
@@ -119,6 +133,7 @@ function getAllInputs(event, formId) {
     let form = document.getElementById(formId);
     event.preventDefault();
     let formData = new FormData(form);
+    console.log(formData);
     formInputObj = Object.fromEntries(formData);
     console.log(formInputObj);
     return formInputObj;
