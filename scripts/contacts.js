@@ -18,7 +18,38 @@ function getContactIndexFromID(contactId) {
     return contacts.findIndex(contact => contact.id == contactId);
 }
 
+
 function renderContactList() {
+    contactListRef = document.getElementById('contactList');
+    contactListRef.innerHTML = '';
+    let contactsGrouped = groupContacts(contacts);
+    for (let index = 0; index < contactsGrouped.length; index++) {
+        let contactGroupObj = contactsGrouped[index];
+        // console.log(contactGroupObj);
+        let groupName = contactGroupObj[0];
+        let contactGroup = contactGroupObj[1];
+        contactListRef.innerHTML += getContactListTemplate(groupName);
+        renderContactGroupItems(contactGroup, groupName);
+    }
+}
+
+function renderContactGroupItems(contactGroup, groupName) {
+    let contactListGroupRef = document.getElementById('contactListGroup-' + groupName);
+    contactListGroupRef.innerHTML = '';
+    for (let index = 0; index < contactGroup.length; index++) {
+        let contact = contactGroup[index];
+        // console.log(contact);
+        contactListGroupRef.innerHTML += getContactListGroupTemplate(contact);
+    }
+}
+
+function groupContacts(contacts) {
+    let contactsGrouped = Array.from(Map.groupBy(contacts, contact => contact.name[0]));
+    // console.log(contactsGrouped);
+    return contactsGrouped;
+}
+
+function xrenderContactList() {
     contactListRef = document.getElementById('contactList');
     contactListRef.innerHTML = '';
     let contactsSorted = sortContacts(contacts);
@@ -32,7 +63,7 @@ function sortContacts(contacts) {
 }
 
 function showContactDetail(contactId) {
-    console.log(activeContactId);
+    // console.log(activeContactId);
     if(activeContactId > 0 && activeContactId != contactId){
         document.getElementById('listContactId-' + activeContactId).classList.remove('active');
     }

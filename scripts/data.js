@@ -57,7 +57,15 @@ let contactsDemo = [
         "phone": "",
         "initials": "VW",
         "color": "lightblue"
-    }
+    },
+    {
+        "id": 5,
+        "name": "François Gonin II",
+        "email": "mail@goninski.dev",
+        "phone": "+41 78 888 77 66",
+        "initials": "FG",
+        "color": "lightgreen"
+    },
 
 ];
 

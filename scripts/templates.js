@@ -52,7 +52,26 @@ function getSideMenuMobTemplate() {
 
 
 
-function getContactListTemplate(contact) {
+function getContactListTemplate(groupName) {
+    return `
+        <h3 class="contact-letter flex-row align-center">${groupName}</h3>
+        <ul id="contactListGroup-${groupName}"></ul>
+    `
+}
+
+function getContactListGroupTemplate(contact) {
+    return `
+        <li id="listContactId-${contact.id}" class="contact-item flex-row align-center" onclick="showContactDetail(${contact.id})">
+            <div class="profile-batch" style="--profile-color: ${contact.color};">${contact.initials}</div>
+            <div class="contact-details flex-col">
+                <div class="name">${contact.name}</div>
+                <div class="email">${contact.email}</div>
+            </div>
+        </li>
+    `
+}
+
+function xgetContactListTemplate(contact) {
     let letter = ' ' + ' ' + '&ensp;' + getInitialOfLastWord(contact.name);
     return `
         <h3 class="contact-letter flex-row align-center">${letter}</h3>
