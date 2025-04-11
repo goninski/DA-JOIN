@@ -56,7 +56,7 @@ function getContactListTemplate(contact) {
     let letter = ' ' + ' ' + '&ensp;' + getInitialOfLastWord(contact.name);
     return `
         <h3 class="contact-letter flex-row align-center">${letter}</h3>
-        <li id="${contact.id}" class="contact-item flex-row align-center" onclick="renderContactDetail(${contact.id})">
+        <li id="listContactId-${contact.id}" class="contact-item flex-row align-center" onclick="showContactDetail(${contact.id})">
             <div class="profile-batch" style="--profile-color: ${contact.color};">${contact.initials}</div>
             <div class="contact-details flex-col">
                 <div class="name">${contact.name}</div>
@@ -81,7 +81,7 @@ function getContactDetailProfileBatchTemplate(contact) {
 
 function getContactDetailInfoTemplate(contact) {
     return `
-        <h3 class="flex-col justifiy-center">Contact Information</h3>                        
+        <h3 class="fs-lg fw-regular flex-col justifiy-center">Contact Information</h3>                        
         <div class="contact-property flex-col">
             <div class="fw-bold" >Email</div>
             <div>${contact.email}</div>

@@ -20,11 +20,12 @@
     <div id="sideMenu" class="side-menu"></div>
     <div id="sideMenuMob" class="side-menu"></div>
 
-    <main>
+    <main id="contactsMainWrapper">
 
         <div class="contact-list-sidebar flex-col">
             <!-- <div class="contact-list-sidebar-inner"> -->
 
+                <button class="floating-button bottom add-contact" onclick="addNewContact()"><img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button>
                 <div class="sticky-button-wrapper flex-col">
                     <button class="button btn-icon btn-primary add-contact" onclick="addNewContact()">Add new Contact<img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button>
                     <!-- <button class="button btn-icon btn-secondary add-contact mt-05" onclick="addDemoContact(event)">Add Demo Contact<img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button> -->
@@ -54,11 +55,14 @@
 
 
         <section class="section contact-detail-section" style="--ct-w: 752px;">
+
+            <button id="btnCloseContactDetails" title="back to contact list"><img src="/assets/icons/arrow-left-blue.svg" alt="arrow-left-icon"></button>
+
             <div class="ct-container full-width">
 
                 <div class="page-title-wrapper">
                     <h1 class="page-title ">Contacts</h1>
-                    <div class="divider"></div>
+                    <div class="title-deco-divider"></div>
                     <div class="page-subtitle">Better&nbsp;with a&nbsp;Team</div>
                 </div>
 
@@ -104,7 +108,7 @@
                 <img src="/assets/img/logo-join-white.svg" alt="logo-join" class="logo-join-small">
                 <h3 id="dialogueTitle" class="page-title">Add Contact</h3>
                 <div id="dialogueTeaser" class="teaser">Tasks are better with&nbsp;a&nbsp;Team</div>
-                <div class="dialogue-title-deco"></div>
+                <div class="title-deco-divider"></div>
             </div>
     
             <div class="dialogue-main flex-col justifiy-center align-center pos-relative">

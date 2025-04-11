@@ -4,12 +4,13 @@ let requiredContactFields = ['inputName', 'inputEmail'];
 function initContacts() {
     getMainTemplates();
     renderContactList();
-    addIconsToContactPage();
+    addAssetPartsToContactPage();
     // openAddContactDialogue();
 }
 
-function addIconsToContactPage() {
+function addAssetPartsToContactPage() {
     document.getElementById('btnReset').innerHTML = getIconTemplateCancel('Clear');
+    document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Create Contact');
     document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Create Contact');
 }
 
@@ -30,20 +31,41 @@ function sortContacts(contacts) {
     return contacts.sort((a, b) => a.name.localeCompare(b.name));
 }
 
-function renderContactDetail(contactId) {
-    if(activeContactId > 0) {
-        document.getElementById(activeContactId).classList.remove('active');
+function showContactDetail(contactId) {
+    console.log(activeContactId);
+    if(activeContactId > 0 && activeContactId != contactId){
+        document.getElementById('listContactId-' + activeContactId).classList.remove('active');
+    }
+    if(contactId == 0) {
+        closeContactDetail(contactId);
+        return;
     }
     activeContactId = contactId;
-    document.getElementById(contactId).classList.add('active');
+    console.log(activeContactId);
+    document.getElementById('contactsMainWrapper').classList.add('show-contact-detail');
+    document.getElementById('listContactId-' + contactId).classList.add('active');
+    document.getElementById('btnCloseContactDetails').addEventListener('click', function(event) {
+        event.stopPropagation();
+        closeContactDetail();
+    });
     let contact = contacts[getContactIndexFromID(contactId)];
     document.getElementById('floatingContact').innerHTML = getContactDetailProfileBatchTemplate(contact);
     document.getElementById('contactInfo').innerHTML = getContactDetailInfoTemplate(contact);
 }
 
+function closeContactDetail(contactId) {
+    document.getElementById('contactsMainWrapper').classList.remove('show-contact-detail');
+    document.getElementById('floatingContact').innerHTML = '';
+    document.getElementById('contactInfo').innerHTML = '';
+    if(contactId > 0) {
+        document.getElementById('listContactId-' + contactId).classList.remove('active');
+    }
+}
+
 
 function addNewContact() {
     let editMode = 'add';
+    activeContactId = 0;
     openAddContactForm(editMode);
 }
 
@@ -67,7 +89,9 @@ function closeAddContactDialogue(event) {
     event.stopPropagation();
     document.getElementById('addContactDialogue').style = 'display: none;';
     document.body.style = '';
-    reloadPage(event);
+    renderContactList();
+    showContactDetail(activeContactId);
+    // reloadPage(event);
 }
 
 function resetFormAddContact(event) {
@@ -132,12 +156,13 @@ function createContact(event) {
     }
     lastContactId++;
     contact.id = lastContactId;
+    activeContactId = lastContactId;
     contact.initials = getInitialsOfFirstAndLastWord(contact.name);
     contact.color = getRandomColor();
     contacts.push(contact);
     // console.log(contact);
     saveContactData();
-    alert('New contact added');
+    showAlert('New contact added');
 }
 
 function saveContact(contactId, event) {
@@ -152,13 +177,17 @@ function saveContact(contactId, event) {
     contacts[index].initials = getInitialsOfFirstAndLastWord(contact.name);
     // console.log(contacts[index]);
     saveContactData();
-    alert('All changes saved');
+    closeAddContactDialogue(event);
+    showAlert('All changes saved');
 }
 
 function deleteContact(contactId, event) {
     contacts.splice(getContactIndexFromID(contactId), 1);
     // console.log(contacts);
     saveContactData();
-    reloadPage(event);
-    alert('Contact deleted');
+    activeContactId = 0;
+    closeAddContactDialogue(event);
+    // reloadPage(event);
+    showAlert('Contact deleted');
 }
+

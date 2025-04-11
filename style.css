@@ -159,11 +159,12 @@ main, header, footer {
 
 
 
-
 @media(max-width: 719px) {
     :root {
         --px-sec: 16px;
         --height-footer: 80px;
+        --fs-main-title: 47px;
+        --fs-xl: 20px;
     }
     main {
         position: fixed;

@@ -4,6 +4,7 @@
 }
 .contact-detail-section {
     flex-shrink: 1;
+    background-color: var(--bg-page);
 }
 
 .contact-list-sidebar {
@@ -11,7 +12,7 @@
     width: 100%;
     max-width: 456px;
     padding: 0 24px 32px 24px;
-    flex-shrink: 1.1;
+    flex-shrink: 1.5;
     max-height: var(--height-full-ex-header);
     overflow: auto;
 }
@@ -33,6 +34,9 @@ button.add-contact img {
     height: 21px;
     width: auto;
     object-fit: contain;
+}
+.floating-button.add-contact {
+    display: none;
 }
 .contact-list-sidebar ul {
     padding-inline: 0;
@@ -107,6 +111,20 @@ button.add-contact img {
 }
 .contact-property {
     gap: 15px;
+}
+#btnCloseContactDetails {
+    display: none;
+    position: absolute;
+    top: 58px;
+    right: 20px;
+    width: 32px;
+    height: 32px;
+    z-index: 1;
+}
+#btnCloseContactDetails img {
+    height: 24px;
+    width: auto;
+    object-fit: contain;
 }
 
 
@@ -191,13 +209,46 @@ button.close-dialogue .light {
 
 
 
-@media(max-width: 1180px) {
-    .contact-page main .contact-detail-section {
-        display: none;
+
+@media(max-width: 1345px) {
+    .page-title-wrapper {
         flex-direction: column;
+        align-items: start;
     }
+    .title-deco-divider {
+        order: 99;
+        width: 90px;
+        height: 3px;
+    }
+}
+@media(max-width: 1259px) {
+    .contact-list-sidebar {
+        flex-shrink: 1;
+    }
+}
+@media(max-width: 1179px) {
     .contact-list-sidebar {
         max-width: 100%;
+    }
+    main:not(.show-contact-detail) .contact-detail-section {
+        display: none;
+    }
+    main:not(.show-contact-detail) .floating-button.add-contact {
+        display: unset;
+    }
+    main.show-contact-detail .contact-detail-section {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: auto;
+    }
+    #btnCloseContactDetails {
+        display: unset;
+    }    
+    .sticky-button-wrapper {
+        display: none;
     }
     .dialogue-inner {
         flex-direction: column;
@@ -206,7 +257,6 @@ button.close-dialogue .light {
         overflow: auto;
     }
     .dialogue-sidebar {
-        align-items: center;
         max-width: unset;
     }
     .dialogue-main {
@@ -219,7 +269,7 @@ button.close-dialogue .light {
         display: unset;
     }
 }
-@media(max-width: 799px) {
+@media(max-width: 719px) {
     .dialogue {
         padding: 0;
     }
@@ -243,3 +293,4 @@ button.close-dialogue .light {
     }
     
 }
+
