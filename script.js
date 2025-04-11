@@ -1,5 +1,10 @@
+let contactsFormMode = '';
+let taskFormMode = '';
 let invalidFields = [];
 let requiredFields = [];
+let requiredContactFields = ['inputName', 'inputEmail'];
+let requiredTaskFields = ['inputTitle', 'inputDueDate', 'inputCategory'];
+let activeContactId = 0;
 
 function init() {
     getMainTemplates();

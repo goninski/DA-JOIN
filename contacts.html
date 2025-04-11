@@ -61,7 +61,7 @@
 
         <div class="dialogue-inner flex-row align-center pos-relative">
 
-            <button class="close-dialogue" onclick="closeAddContactDialogue(event)" title="close dialogue">
+            <button class="close-dialogue" onclick="closeContactsFormDialogue(event)" title="close dialogue">
                 <img src="assets/icons/close.svg" alt="close-icon" class="close-icon dark">
                 <img src="assets/icons/close-white.svg" alt="close-icon" class="close-icon light">
             </button>
@@ -75,7 +75,7 @@
     
             <div class="dialogue-main flex-col justifiy-center align-center pos-relative">
 
-                <form id="addContactForm" class="flex-col add-contact-form" data-submit-btn-id="btnSubmit">
+                <form id="contactsForm" onsubmit="submitContactsForm(event, activeContactId)" class="flex-col add-contact-form" data-submit-btn-id="btnSubmit">
                     <div class="field-groups flex-row align-center justify-between">
  
                         <div class="xfield-group batch-wrapper flex-col">
@@ -115,9 +115,7 @@
                                 <div class="validation-msg">Please enter a valid phone number (min. 10 digits)</div>
                             </div>
                             <div id="submitBtnWrapper" class="submit-input-button-wrapper flex-row gap">
-                                <!-- <button id="btnReset" class="button btn-icon btn-secondary"></button> -->
-                                <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetFormAddContact(event)"></button>
-                                <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled></button>
+                                <button id="btnSubmit"></button>
                             </div>
                         </div>
  

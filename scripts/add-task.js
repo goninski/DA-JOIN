@@ -1,5 +1,3 @@
-let requiredTaskFields = ['inputTitle', 'inputDueDate', 'inputCategory'];
-
 function initAddTask() {
     getMainTemplates();
     addTask();

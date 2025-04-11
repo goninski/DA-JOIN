@@ -64,7 +64,7 @@ function getContactListGroupTemplate(contact) {
         <li id="listContactId-${contact.id}" class="contact-item flex-row align-center" onclick="showContactDetail(${contact.id})">
             <div class="profile-batch" style="--profile-color: ${contact.color};">${contact.initials}</div>
             <div class="contact-details flex-col">
-                <div class="name">${contact.name}</div>
+                <div class="name">${contact.name}&ensp;#${contact.id}</div>
                 <div class="email">${contact.email}</div>
             </div>
         </li>
@@ -98,19 +98,19 @@ function getContactDetailInfoTemplate(contact) {
     `
 }
 
-// function getAddContactSubmitButtonsTemplate() {
-//     return `
-//         <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetFormAddContact(event)"></button>
-//         <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled></button>
-//     `
-// }
+function getAddContactSubmitButtonsTemplate() {
+    return `
+        <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetContactsForm(event)">Cancel</button>
+        <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled>Create Contact</button>
+    `
+}
 
-// function getEditContactSubmitButtonsTemplate() {
-//     return `
-//         <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetFormAddContact(event)"></button>
-//         <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled></button>
-//     `
-// }
+function getEditContactSubmitButtonsTemplate(contactId) {
+    return `
+        <button id="btnReset" class="button btn-delete btn-icon btn-secondary" onclick="deleteContact(${contactId}, event)">Delete</button>
+        <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled>Save</button>
+    `
+}
 
 
 
