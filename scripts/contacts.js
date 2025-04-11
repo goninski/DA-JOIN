@@ -44,22 +44,12 @@ function renderContactGroupItems(contactGroup, groupName) {
 }
 
 function groupContacts(contacts) {
-    let contactsGrouped = Array.from(Map.groupBy(contacts, contact => contact.name[0]));
+    contacts.sort((a, b) => a.name.localeCompare(b.name));
+    let contactsGroupedObj = Map.groupBy(contacts, contact => contact.name[0]);
+    // console.log(contactsGroupedObj);
+    let contactsGrouped = Array.from(contactsGroupedObj);
     // console.log(contactsGrouped);
     return contactsGrouped;
-}
-
-function xrenderContactList() {
-    contactListRef = document.getElementById('contactList');
-    contactListRef.innerHTML = '';
-    let contactsSorted = sortContacts(contacts);
-    for (let index = 0; index < contactsSorted.length; index++) {
-        contactListRef.innerHTML += getContactListTemplate(contactsSorted[index]);
-    }
-}
-
-function sortContacts(contacts) {
-    return contacts.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 function showContactDetail(contactId) {
@@ -68,17 +58,16 @@ function showContactDetail(contactId) {
         document.getElementById('listContactId-' + activeContactId).classList.remove('active');
     }
     if(contactId == 0) {
-        closeContactDetail(contactId);
-        return;
+        return closeContactDetail(contactId);
     }
-    activeContactId = contactId;
-    console.log(activeContactId);
     document.getElementById('contactsMainWrapper').classList.add('show-contact-detail');
     document.getElementById('listContactId-' + contactId).classList.add('active');
     document.getElementById('btnCloseContactDetails').addEventListener('click', function(event) {
         event.stopPropagation();
         closeContactDetail();
     });
+    activeContactId = contactId;
+    // console.log(activeContactId);
     let contact = contacts[getContactIndexFromID(contactId)];
     document.getElementById('floatingContact').innerHTML = getContactDetailProfileBatchTemplate(contact);
     document.getElementById('contactInfo').innerHTML = getContactDetailInfoTemplate(contact);

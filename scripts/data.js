@@ -60,11 +60,11 @@ let contactsDemo = [
     },
     {
         "id": 5,
-        "name": "François Gonin II",
-        "email": "mail@goninski.dev",
-        "phone": "+41 78 888 77 66",
-        "initials": "FG",
-        "color": "lightgreen"
+        "name": "Viva Müller",
+        "email": "mail@domain.com",
+        "phone": "",
+        "initials": "WM",
+        "color": "#806000"
     },
 
 ];

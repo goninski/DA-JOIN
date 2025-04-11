@@ -38,7 +38,7 @@ button.add-contact img {
 .floating-button.add-contact {
     display: none;
 }
-.contact-list-sidebar ul {
+.contact-list-sidebar :where(ul, ol) {
     padding-inline: 0;
     margin-block: 0;
 }

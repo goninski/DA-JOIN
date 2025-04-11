@@ -20,38 +20,19 @@
     <div id="sideMenu" class="side-menu"></div>
     <div id="sideMenuMob" class="side-menu"></div>
 
+
+
     <main id="contactsMainWrapper">
 
+
         <div class="contact-list-sidebar flex-col">
-            <!-- <div class="contact-list-sidebar-inner"> -->
-
-                <button class="floating-button bottom add-contact" onclick="addNewContact()"><img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button>
-                <div class="sticky-button-wrapper flex-col">
-                    <button class="button btn-icon btn-primary add-contact" onclick="addNewContact()">Add new Contact<img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button>
-                    <!-- <button class="button btn-icon btn-secondary add-contact mt-05" onclick="addDemoContact(event)">Add Demo Contact<img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button> -->
-                </div>
-
-                <ul id="contactList" class="contact-list">
-                    <!-- <h3 class="contact-letter flex-row align-center">A</h3>
-                    <li class="contact-item flex-row align-center">
-                        <div class="profile-batch" style="--profile-color: violet;">P1</div>
-                        <div class="contact-details flex-col">
-                            <div class="name">Vorname Name</div>
-                            <div class="email">mail@domain.ch</div>
-                        </div>
-                    </li>
-                    <li class="contact-item active flex-row align-center">
-                        <div class="profile-batch" style="--profile-color: orange;">P2</div>
-                        <div class="contact-details flex-col">
-                            <div class="name">Vorname Name</div>
-                            <div class="email">mail@domain.ch</div>
-                        </div>
-                    </li> -->
-                </ul>
-
-            <!-- </div> -->
+            <button class="floating-button bottom add-contact" onclick="addNewContact()"><img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button>
+            <div class="sticky-button-wrapper flex-col">
+                <button class="button btn-icon btn-primary add-contact" onclick="addNewContact()">Add new Contact<img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button>
+                <!-- <button class="button btn-icon btn-secondary add-contact mt-05" onclick="addDemoContact(event)">Add Demo Contact<img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button> -->
+            </div>
+            <ol id="contactList" class="contact-list"></ol>
         </div>
-
 
 
         <section class="section contact-detail-section" style="--ct-w: 752px;">
@@ -66,28 +47,9 @@
                     <div class="page-subtitle">Better&nbsp;with a&nbsp;Team</div>
                 </div>
 
-                <div id="floatingContact" class="floating-contact">
-                    <!-- <div class="profile-batch profile-batch-large" style="--profile-color: violet;">P1</div>
-                    <div class="profile-title flex-col">
-                        <h2 class="">Name</h2>                        
-                        <div class="edit-buttons flex-row align-center">
-                            <button><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
-                            <button><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
-                        </div>
-                    </div> -->
-                </div>
+                <div id="floatingContact" class="floating-contact"></div>
 
-                <div id="contactInfo" class="contact-info flex-col">
-                    <!-- <h3 class="flex-col justifiy-center">Contact Information</h3>                        
-                    <div class="contact-property flex-col">
-                        <div class="fw-bold" >Email</div>
-                        <div>mail@domain.ch</div>
-                    </div>
-                    <div class="contact-property flex-col">
-                        <div class="fw-bold">Phone</div>
-                        <div>+49 1111 111 11 1</div>
-                    </div> -->
-                </div>
+                <div id="contactInfo" class="contact-info flex-col"></div>
 
             </div>
         </section>
