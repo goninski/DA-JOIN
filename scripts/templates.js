@@ -35,8 +35,9 @@ function getSideMenuTemplate() {
             <a href="privacy-policy.html">Privacy Policy</a>
             <a href="legal-notice.html">Legal notice</a>
             <div class="flex-col gap-05 mt-10"> 
-                <a href="temp-assets-library.html" style="color: #ccc;">Asset Library</a>
                 <button onclick="setDemoData()" style="text-align: left; color: #ccc";>Testdata Reset</button>
+                <a href="temp-assets-library.html" style="color: #ccc;">Asset Library</a>
+                <a href="board-fg-temp.html" style="color: #ccc;">Board FG Temp</a>
             </div>
         </div>
     `
@@ -44,7 +45,12 @@ function getSideMenuTemplate() {
 
 function getSideMenuMobTemplate() {
     return `
-        <a href="./">Home</a>
+        <div class="link-wrapper temp flex-row flex-grow gap-05 justify-around align-center"> 
+            <a href="summary.html">Summary</a>
+            <a href="board.html">Board</a>
+            <a href="add-task.html">Add Task</a>
+            <a href="contacts.html">Contacts</a>
+        </div>
     `
 }
 
@@ -140,6 +146,7 @@ function getCategorySelectOptionTemplate(category) {
         <option value="${category.id}">${category.name}</option>
     `
 }
+
 
 
 

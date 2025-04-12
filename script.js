@@ -1,9 +1,10 @@
-let contactsFormMode = '';
 let taskFormMode = '';
+let contactsFormMode = '';
 let invalidFields = [];
 let requiredFields = [];
 let requiredContactFields = ['inputName', 'inputEmail'];
 let requiredTaskFields = ['inputTitle', 'inputDueDate', 'inputCategory'];
+let activeTaskId = 0;
 let activeContactId = 0;
 
 function init() {

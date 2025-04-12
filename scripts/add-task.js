@@ -16,8 +16,12 @@ function initAddTask() {
 // }
 
 
-function addTask() {
-    openAddTaskForm();
+function addTask(source = 'addTask') {
+    if(source == 'board') {
+        openAddTaskFormBoard();
+    } else {
+        openAddTaskForm();
+    }
 }
 
 function openAddTaskForm() {
@@ -28,6 +32,10 @@ function openAddTaskForm() {
     setInitalFormState(requiredTaskFields, 'inputTitle');
     // addTestDataToAddTaskForm();
 }
+
+function openAddTaskFormBoard() {
+}
+
 
 function addIconsToAddTaskPage() {
     document.getElementById('labelPrioHigh').innerHTML = getIconTemplatePrioHigh();
@@ -56,4 +64,18 @@ function createTask(event) {
     resetFormAddTask(event);
 }
 
+function deleteTask(taskId, event) {
+    tasks.splice(getTaskIndexFromId(taskId), 1);
+    saveTaskData();
+    activeTaskId = 0;
+    if(taskFormMode == 'board-listing-temp') {
+        renderTaskListBoardFg();
+    } else {
+        // closeTaskFormDialogue(event);
+    };
+    showAlert('Task deleted');
+}
 
+function getTaskIndexFromId(taskId) {
+    return tasks.findIndex(task => task.id == taskId);
+}

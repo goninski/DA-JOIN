@@ -179,6 +179,7 @@ function setDemoData() {
     saveCategoryData();
     saveContactData();
     saveTaskData();
+    reloadPage(event);
 }
 
 

@@ -3,7 +3,7 @@ function initContacts() {
     renderContactList();
 }
 
-function getContactIndexFromID(contactId) {
+function getContactIndexFromId(contactId) {
     return contacts.findIndex(contact => contact.id == contactId);
 }
 
@@ -57,7 +57,7 @@ function showContactDetail(contactId) {
     });
     activeContactId = contactId;
     // console.log(activeContactId);
-    let contact = contacts[getContactIndexFromID(contactId)];
+    let contact = contacts[getContactIndexFromId(contactId)];
     document.getElementById('floatingContact').innerHTML = getContactDetailProfileBatchTemplate(contact);
     document.getElementById('contactInfo').innerHTML = getContactDetailInfoTemplate(contact);
 }
@@ -125,7 +125,7 @@ function setAddContactValues() {
 function setEditContactValues(contactId) {
     document.getElementById('dialogueTeaser').style = 'display: none;';
     document.getElementById('dialogueTitle').innerHTML = 'Edit Contact';
-    let contact = contacts[getContactIndexFromID(contactId)];
+    let contact = contacts[getContactIndexFromId(contactId)];
     document.getElementById('dialogueProfileBatch').innerHTML = contact.initials;
     document.getElementById('dialogueProfileBatch').style = '--profile-color: violet;';
     document.getElementById('inputName').value = contact.name;
@@ -167,7 +167,7 @@ function saveContact(contactId, event) {
     if(contact.name.length <= 0) {
         return;
     }
-    let index = getContactIndexFromID(contactId);
+    let index = getContactIndexFromId(contactId);
     contacts[index].name = contact.name;
     contacts[index].email = contact.email;
     contacts[index].phone = contact.phone;
@@ -179,7 +179,7 @@ function saveContact(contactId, event) {
 }
 
 function deleteContact(contactId, event) {
-    contacts.splice(getContactIndexFromID(contactId), 1);
+    contacts.splice(getContactIndexFromId(contactId), 1);
     // console.log(contacts);
     saveContactData();
     activeContactId = 0;

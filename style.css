@@ -109,6 +109,7 @@ main, header, footer {
     width: 100%;
     padding: 8px var(--px-sec);
     height: var(--height-footer);
+    font-size: 14px;
 }
 .side-menu {
     position: fixed;
