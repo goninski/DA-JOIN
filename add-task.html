@@ -22,7 +22,7 @@
 
     <main class="fixed">
  
-        <div class="section add-task-section" style="--ct-w: 987px;">
+        <div class="section add-task-section" style="--ct-w: 976px;">
 
             <div class="ct-container">
                 <div class="page-title-wrapper">
@@ -31,9 +31,9 @@
             </div>
 
             <div class="ct-container">
-                <form id="addTaskForm" onsubmit="createTask(event)" class="flex-col add-task-form" data-submit-btn-id="btnSubmit">
-                    <div class="field-groups flex-row gap-40">
-                        <div class="field-group flex-col flex-grow">
+                <form id="addTaskForm" onsubmit="createTask(event)" class="flex-col task-form add-task-form" data-submit-btn-id="btnSubmit">
+                    <div id="addTaskFieldGroups" class="field-groups flex-row gap-40">
+                        <!-- <div class="field-group flex-col flex-grow">
                             <div class="field-wrapper">
                                 <label for="title" class="required">Title</label>
                                 <input type="text" id="inputTitle" class="x-invalid" name="title" placeholder="Enter a title" required maxlength="128" onfocus="resetInputValidation('inputTitle')" onfocusout="validateInput('inputTitle')">
@@ -50,7 +50,7 @@
                             </div>
                         </div>
 
-                        <div class="v-divider hide--ss-mob"></div>
+                        <div class="field-group-divider"></div>
 
                         <div class="field-group flex-col flex-grow gap">
 
@@ -121,7 +121,7 @@
                                 </div>
                             </div>
 
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="submit-button-wrapper flex-row gap justify-end">

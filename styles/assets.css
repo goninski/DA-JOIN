@@ -189,7 +189,7 @@ select.custom {
     font-size: 20px;
 }
 
-.v-divider {
+.field-group-divider {
     border-left: solid 1px var(--clr-subtle);
 }
 
@@ -613,24 +613,27 @@ button.close-dialogue .light {
 /** BREAKPOINTS */
 
 @media(max-width: 1345px) {
-    .add-task-form {
+    .add-task-page .task-form {
         --height-submit-area: 150px !important;
     }
-    .add-task-form .field-groups {
+    .task-form .field-groups {
         flex-direction: column;
     }
-    .add-task-form .field-group {
+    .task-form .field-group {
         min-width: 100%;
         max-width: unset;
     }
-    .add-task-form .priority-input-wrapper {
+    .task-form .field-group-divider {
+        display: none;
+    }
+    .task-form .priority-input-wrapper {
         justify-content: start;
         flex-wrap: wrap;
     }
-    .add-task-form .submit-button-wrapper {
+    .add-task-page .task-form .submit-button-wrapper {
         max-width: var(--field-width) !important;
     }
-    .add-task-form .required-info {
+    .task-form .required-info {
         top: -32px !important;
     }
 }

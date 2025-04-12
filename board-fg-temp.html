@@ -15,7 +15,7 @@
     <script src="./scripts/board-fg-temp.js"></script>
 </head>
 
-<body onload="initBoardFg()">
+<body onload="initBoardFg()" class="board-page board-page-fg">
 
     <header id="header" class="section"></header>
     <div id="sideMenu" class="side-menu"></div>
@@ -32,7 +32,7 @@
                     <h4 class="page-subtitle">Temporary</h4>
                 </div>
 
-                <button class="button btn-icon btn-primary mb-30" onclick="addTask('board')">Add Task</button>
+                <button class="button btn-icon btn-primary mb-30" onclick="addTask(event, 'board')">Add Task</button>
 
                 <ul id="taskListBoardFg" class="flex-col gap ul-reset"></ul>
 
@@ -42,30 +42,40 @@
     </main>
 
 
-    <div id="taskDetailsDialogue" class="dialogue task-dialogue task-details-dialogue" style="display: none;">
+    <div id="taskDialogue" class="dialogue task-dialogue" style="display: none;">
         <div class="dialogue-inner flex-col pos-relative">
 
-            <button class="close-dialogue" onclick="closeTaskDialogue(event, 'taskDetailsDialogue')" title="close dialogue">
+            <button class="close-dialogue" onclick="closeTaskDialogue(event)" title="close dialogue">
                 <img src="assets/icons/close.svg" alt="close-icon" class="close-icon dark">
                 <img src="assets/icons/close-white.svg" alt="close-icon" class="close-icon light">
             </button>
-            <div id="taskDetailsWrapper" class="dialogue-main flex-col pos-relative"></div>
+
+            <div id="taskDetailsWrapper" class="dialogue-main flex-col pos-relative" style="display: none;"></div>
+
+            <div id="editTaskFormWrapper" class="dialogue-main flex-col pos-relative" style="display: none;">
+                <form id="editTaskForm" onsubmit="saveTask(event)" class="flex-col task-form" data-submit-btn-id="btnSubmit">
+                    <div id="editTaskFieldGroups" class="field-groups flex-row gap-40"></div>
+                    <div class="submit-button-wrapper flex-row gap justify-end">
+                        <div class="required-info">This field is required</div>
+                        <!-- <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetFormAddTask(event)"></button> -->
+                        <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled></button>
+                    </div>
+                </form>
+            </div>
+   
+            <div id="addTaskFormWrapper" class="dialogue-main flex-col pos-relative" style="display: none;">
+                <form id="addTaskForm" onsubmit="createTask(event)" class="flex-col task-form" data-submit-btn-id="btnSubmit">
+                    <div id="addTaskFieldGroups" class="field-groups flex-row gap-40"></div>
+                    <div class="submit-button-wrapper flex-row gap justify-end">
+                        <div class="required-info">This field is required</div>
+                        <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetFormAddTask(event)"></button>
+                        <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled></button>
+                    </div>
+                </form>
+            </div>
 
         </div>    
-    </div>
-
-
-    <div id="taskEditDialogue" class="dialogue task-dialogue task-edit-dialogue" style="display: none;">
-        <div class="dialogue-inner flex-col pos-relative">
-
-            <button class="close-dialogue" onclick="closeTaskDialogue(event, 'taskEditDialogue')" title="close dialogue">
-                <img src="assets/icons/close.svg" alt="close-icon" class="close-icon dark">
-                <img src="assets/icons/close-white.svg" alt="close-icon" class="close-icon light">
-            </button>
-            <div id="taskEditWrapper" class="dialogue-main flex-col pos-relative"></div>
-
-        </div>    
-    </div>
+        </div>
 
 </body>
 </html>

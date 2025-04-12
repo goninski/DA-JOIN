@@ -1,10 +1,10 @@
 
-.add-task-form {
+.add-task-page .task-form {
     position: relative;
     --height-submit-area: 120px;
 }
 
-.add-task-form .field-groups {
+.add-task-page .task-form .field-groups {
     /* background-color: antiquewhite; */
     position: absolute;
     --height-title-area: 156px;
@@ -12,14 +12,15 @@
     height: var(--height);
     max-height: var(--height);
     overflow-y: scroll;
-    scrollbar-width: thin;    
+    scrollbar-width: thin;
+    padding-right: 10px;    
 }
 
-.add-task-form #assignedContactBatches {
+.task-form #assignedContactBatches {
     margin-top: 4px;
 }
 
-.add-task-form .submit-button-wrapper {
+.add-task-page .task-form .submit-button-wrapper {
     /* background-color: aquamarine; */
     max-width: var(--ct-w);
     position: fixed;
@@ -28,7 +29,7 @@
     padding-bottom: 24px;
     width: 100%;
 }
-.add-task-form .required-info {
+.task-form .required-info {
     position: absolute;
     top: 32px;
     left: 0;

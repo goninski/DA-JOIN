@@ -19,9 +19,9 @@ function renderTaskListBoardFg() {
 function getTaskListBoardFgTemplate(task) {
     return `
         <li class="flex-row gap justify-between align-center fw-bold">#${task.id} | ${task.title}
-            <button class="" style="margin-left: auto; text-decoration: underline;" onclick="showTask(${task.id})">Show</button>
-            <button class="" style="text-decoration: underline;" onclick="editTask(${task.id}, event)">Edit</button>
-            <button class="" style="text-decoration: underline;" onclick="deleteTask(${task.id}, event)">Delete</button>
+            <button class="" style="margin-left: auto; text-decoration: underline;" onclick="showTask(event, ${task.id})">Show</button>
+            <button class="" style="text-decoration: underline;" onclick="editTask(event, ${task.id})">Edit</button>
+            <button class="" style="text-decoration: underline;" onclick="deleteTask(event, ${task.id})">Delete</button>
         </li>
     `
 }

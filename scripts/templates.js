@@ -60,18 +60,106 @@ function getSideMenuMobTemplate() {
 
 function getTaskDetailsWrapperTemplate(task) {
     return `
-        <h3 class="mb">${task.title}</h2>                        
-            <div class="edit-buttons flex-row align-center">
-                <button onclick="editTask(${task.id})"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
-                <button onclick="deleteTask(${task.id}, event)"><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
-            </div>
+    <h3 class="mb">${task.title}</h3>                        
+        <div class="edit-buttons flex-row align-center justify-end">
+            <button onclick="editTask(event, ${task.id})"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
+            <button onclick="deleteTask(event, ${task.id})"><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
         </div>
+    </div>
     `
 }
 
-function getTaskEditWrapperTemplate(task) {
+function getTaskFieldsWrapperTemplate(task) {
     return `
-        <h3 class="mb">${task.title}</h2>                        
+    <div class="field-group flex-col flex-grow">
+        <div class="field-wrapper">
+            <label for="title" class="required">Title</label>
+            <input type="text" id="inputTitle" class="x-invalid" name="title" placeholder="Enter a title" required maxlength="128" onfocus="resetInputValidation('inputTitle')" onfocusout="validateInput('inputTitle')">
+            <div class="validation-msg">This field is required</div>
+        </div>
+        <div class="field-wrapper">
+            <label for="description">Description</label>
+            <textarea id="inputDescription" name="description" placeholder="Enter a description"></textarea>
+        </div>
+        <div class="field-wrapper">
+            <label for="dueDate" class="required">Due date</label>
+            <input type="date" id="inputDueDate" name="dueDate" class="placeholder" required min="2000-01-01" max="2099-12-31" onfocus="resetInputValidation('inputDueDate'), setTodayAsDateValue('inputDueDate')" onfocusout="validateInput('inputDueDate')">
+            <div class="validation-msg">Please enter a valid date</div>
+        </div>
+    </div>
+
+    <div class="field-group-divider"></div>
+
+    <div class="field-group flex-col flex-grow gap">
+
+        <div class="field-wrapper">
+            <label for="priority">Priority</label>
+            <div class="priority-input-wrapper flex-row justify-between align-center">
+                <input type="radio" id="inputPrioHigh" name="priority" value="high">
+                <label for="inputPrioHigh" id="labelPrioHigh" class="prio-high button btn-icon btn-radio" value="high"></label>
+
+                <input type="radio" id="inputPrioMedium" name="priority" value="medium">
+                <label for="inputPrioMedium" id="labelPrioMedium" class="prio-medium button btn-icon btn-radio" value="medium"></label>
+
+                <input type="radio" id="inputPrioLow" name="priority" value="low"">
+                <label for="inputPrioLow" id="labelPrioLow" class="prio-low button btn-icon btn-radio" value="low"></label>
+            </div>
+        </div>
+
+        <div class="field-wrapper">
+            <label for="">Assigned to</label>
+            <div class="select custom-select multiple">
+                <div class="select-btn xopen focus">
+                    <span class="select-text">Select contacts to assign</span>
+                    <span class="input-icon-wrapper custom-select"><img src="/assets/icons/arrow-drop-down.svg" class="icon"></span>
+                </div>
+                <ul id="inputContacts"></ul>
+            </div>
+            <ul id="profileBatches" class="profile-batches" style="margin-top: 230px;"></ul>
+        </div>
+
+        <div class="field-wrapper">
+            <label for="categoryId" class="required">Category</label>
+            <div class="input-wrapper custom-select xinvalid">
+                <select class="custom placeholder xinvalid" id="inputCategory" name="categoryId"  required onfocus="resetInputValidation('inputCategory', true)" onfocusout="validateInput('inputCategory', true)"></select>
+                <div class="input-icon-wrapper custom-select">
+                    <img src="/assets/icons/arrow-drop-down.svg" class="icon">
+                </div>
+            </div>
+            <div class="validation-msg">This field is required</div>
+        </div>
+
+        <div class="field-wrapper subtask-wrapper">
+            <label for="subtasks">Subtasks</label>
+            <div class="input-wrapper input-wrapper-subtasks">
+                <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask">
+                <div id="subtaskInputButtons" class="input-icon-wrapper hide">
+                    <button xonclick="cancelSubtaskInput()"><img src="/assets/icons/cancel.svg" class="icon-cancel"></button>
+                    <div class="divider"></div>
+                    <button xonclick="saveSubtaskInput()"><img src="/assets/icons/check.svg" class="icon-check"></button>
+                </div>
+                <div id="subtaskInputButtonAdd" class="input-icon-wrapper xhide">
+                    <button xonclick="addSubtaskInput()"><img src="/assets/icons/add.svg" class="icon-add"></button>
+                </div>
+            </div>
+            <ul id="assignedSubtasks" class="subtask-listing">
+                <li id="subtask-01"><span class="text">Subtask 1</span>
+                    <div class="input-icon-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-delete"></button></div>
+                </li>
+                <li id="subtask-02"><span class="text">Subtask 2</span>
+                    <div class="input-icon-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-delete"></button></div>
+                </li>
+            </ul>
+            <div id="subtaskEdit" class="subtask-edit">Subtask XY
+                <div id="subtaskEditButtons" class="input-icon-wrapper">
+                    <button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-delete"></button>
+                    <div class="divider"></div>
+                    <button onclick="saveSubtaskEdits()"><img src="/assets/icons/check.svg" class="icon-check"></button>
+                </div>
+            </div>
+        </div>
+
+    </div>
     `
 }
 
@@ -139,8 +227,6 @@ function getEditContactSubmitButtonsTemplate(contactId) {
         <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled>Save</button>
     `
 }
-
-
 
 function getContactSelectOptionTemplate(contact) {
     return `
