@@ -15,6 +15,10 @@
     scrollbar-width: thin;    
 }
 
+.add-task-form #assignedContactBatches {
+    margin-top: 4px;
+}
+
 .add-task-form .submit-button-wrapper {
     /* background-color: aquamarine; */
     max-width: var(--ct-w);

@@ -537,12 +537,6 @@ input:has(+ .input-icon-wrapper.simple) {
 .dialogue-main {
     flex-grow: 1;
 }
-.dialogue-inner {
-    background-color: white;
-    border-radius: 30px;
-    overflow: hidden;
-    /* align-items: stretch; */
-}
 button.close-dialogue {
     position: absolute;
     width: 32px;
@@ -557,6 +551,19 @@ button.close-dialogue .light {
     top: 48px;
     right: 40px;
 }
+.dialogue-inner {
+    background-color: white;
+    border-radius: 30px;
+    overflow: hidden;
+    width: 100%;
+    /* align-items: stretch; */
+}
+.task-dialogue .dialogue-inner {
+    padding: 48px 40px;
+    max-width: 525px;
+    gap: 24px;
+}
+
 
 .add-contact-dialogue .dialogue-inner {
     min-height: 594px;
