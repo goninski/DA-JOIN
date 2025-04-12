@@ -102,9 +102,9 @@ function closeTaskDialogue(event, dialogueId) {
 
 function deleteTask(taskId, event) {
     event.stopPropagation();
-    closeTaskDialogue(event, 'taskDetailsDialogue')
     tasks.splice(getTaskIndexFromId(taskId), 1);
     saveTaskData();
     activeTaskId = 0;
     showAlert('Task deleted');
+    closeTaskDialogue(event, 'taskDetailsDialogue')
 }
