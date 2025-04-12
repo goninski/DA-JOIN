@@ -22,7 +22,7 @@
 
     <main class="fixed">
  
-        <div class="section add-task-section" style="--ct-w: 976px;">
+        <div class="section task-section add-task form-scrollable" style="--ct-w: 976px;">
 
             <div class="ct-container">
                 <div class="page-title-wrapper">
@@ -31,7 +31,7 @@
             </div>
 
             <div class="ct-container">
-                <form id="addTaskForm" onsubmit="createTask(event)" class="flex-col task-form add-task-form" data-submit-btn-id="btnSubmit">
+                <form id="addTaskForm" onsubmit="createTask(event)" class="flex-col pos-relative task-form add-task-form" data-submit-btn-id="btnSubmit">
                     <div id="addTaskFieldGroups" class="field-groups flex-row gap-40">
                         <!-- <div class="field-group flex-col flex-grow">
                             <div class="field-wrapper">
@@ -124,9 +124,9 @@
                         </div> -->
                     </div>
 
-                    <div class="submit-button-wrapper flex-row gap justify-end">
+                    <div class="submit-button-wrapper flex-row gap justify-end pos-relative">
                         <div class="required-info">This field is required</div>
-                        <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetFormAddTask(event)"></button>
+                        <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetAddTaskForm(event)"></button>
                         <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled></button>
                     </div>
 

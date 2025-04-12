@@ -11,12 +11,12 @@ function addTask(event, source = 'board') {
     event.stopPropagation();
     taskFormMode = 'add';
     activeTaskId = 0;
+    showTaskDialogue('addTaskFormWrapper', source);
+    renderTaskForm('addTaskFieldGroups');
     if( source == 'init') {
-        renderTaskForm('addTaskFieldGroups');
-        showTaskDialogue('addTaskFormWrapper', source);
     } else {
-        renderTaskForm('addTaskFieldGroups');
-        showTaskDialogue('addTaskFormWrapper', source);
+        document.getElementById('taskDialogue').classList.add('add-task');
+        document.getElementById('taskDialogue').classList.add('form-scrollable');
     }
 }
 
@@ -27,8 +27,9 @@ function showTask(event, taskId = 0) {
     }
     // console.log(tasks);
     let task = tasks[getTaskIndexFromId(taskId)];
-    document.getElementById('taskDetailsWrapper').innerHTML = getTaskDetailsWrapperTemplate(task);
     showTaskDialogue('taskDetailsWrapper');
+    document.getElementById('taskDetailsWrapper').innerHTML = getTaskDetailsWrapperTemplate(task);
+    document.getElementById('taskDialogue').classList.add('show-task');
 }
 
 function editTask(event, taskId = 0) {
@@ -38,16 +39,24 @@ function editTask(event, taskId = 0) {
         taskId = activeTaskId;
     }
     let task = tasks[getTaskIndexFromId(taskId)];
-    renderTaskForm('editTaskFieldGroups', task);
     showTaskDialogue('editTaskFormWrapper');
+    renderTaskForm('editTaskFieldGroups', task);
+    document.getElementById('taskDialogue').classList.add('edit-task');
+    document.getElementById('taskDialogue').classList.add('form-scrollable');
 }
 
 function showTaskDialogue(elementId, source = 'board') {
     if(source == 'board') {
+        document.getElementById('addTaskFieldGroups').innerHTML = '';
+        document.getElementById('editTaskFieldGroups').innerHTML = '';
         document.getElementById('taskDetailsWrapper').style = 'display: none;';
-        document.getElementById('editTaskFormWrapper').style = 'display: none;';
         document.getElementById('addTaskFormWrapper').style = 'display: none;';
+        document.getElementById('editTaskFormWrapper').style = 'display: none;';
         document.getElementById(elementId).style = '';
+        document.getElementById('taskDialogue').classList.remove('show-task');
+        document.getElementById('taskDialogue').classList.remove('add-task');
+        document.getElementById('taskDialogue').classList.remove('edit-task');
+        document.getElementById('taskDialogue').classList.remove('form-scrollable');
         document.getElementById('taskDialogue').style = '';
     }
 }

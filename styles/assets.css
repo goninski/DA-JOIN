@@ -529,13 +529,9 @@ input:has(+ .input-icon-wrapper.simple) {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 4vw;
+    padding: 20px;
     background-color: rgba(0,0,0,0.4);
     z-index: 1000;
-}
-
-.dialogue-main {
-    flex-grow: 1;
 }
 button.close-dialogue {
     position: absolute;
@@ -549,22 +545,33 @@ button.close-dialogue .light {
 
 .task-dialogue button.close-dialogue {
     top: 48px;
-    right: 40px;
+    right: 48px;
 }
+.task-dialogue.add-task button.close-dialogue {
+    top: 64px;
+}
+
 .dialogue-inner {
     background-color: white;
     border-radius: 30px;
     overflow: hidden;
+    flex-grow: 1;
     width: 100%;
     /* align-items: stretch; */
+    overflow-y: auto;
 }
-.task-dialogue .dialogue-inner {
+.task-dialogue:not(.add-task) .dialogue-inner {
     padding: 48px 40px;
     max-width: 525px;
     gap: 24px;
 }
-
-
+.task-dialogue.add-task .dialogue-inner {
+    min-width: 1124px;
+    max-width: 1124px;
+    /* max-width: 1140px; */
+    padding: 64px 74px;
+    gap: 24px;
+}
 .add-contact-dialogue .dialogue-inner {
     min-height: 594px;
     width: 100%;
@@ -575,6 +582,13 @@ button.close-dialogue .light {
     padding: 66px 48px;
     justify-content: center;
 }
+.dialogue-main {
+    flex-grow: 1;
+}
+.task-dialogue.add-task .dialogue-main {
+    /* overflow-y: auto; */
+}
+
 .add-contact-dialogue .dialogue-sidebar {
     background-color: var(--clr-main);
     color: white;

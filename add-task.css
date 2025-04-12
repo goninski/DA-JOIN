@@ -1,10 +1,15 @@
-
-.add-task-page .task-form {
+.form-scrollable .task-form {
+    height: 100%;
     position: relative;
     --height-submit-area: 120px;
+    --ct-w: 976px;
 }
 
-.add-task-page .task-form .field-groups {
+.task-form .field-groups {
+    padding-bottom: 138px;
+}
+
+.form-scrollable .field-groups {
     /* background-color: antiquewhite; */
     position: absolute;
     --height-title-area: 156px;
@@ -12,24 +17,31 @@
     height: var(--height);
     max-height: var(--height);
     overflow-y: scroll;
-    scrollbar-width: thin;
-    padding-right: 10px;    
+    padding-right: 10px;
+    padding-bottom: 0;    
+}
+.task-dialogue.form-scrollable .field-groups {
+    --height: 87.5%;
 }
 
 .task-form #assignedContactBatches {
     margin-top: 4px;
 }
 
-.add-task-page .task-form .submit-button-wrapper {
+.form-scrollable .submit-button-wrapper {
     /* background-color: aquamarine; */
     max-width: var(--ct-w);
-    position: fixed;
+    position: absolute;
     z-index: 1000;
-    bottom: var(--height-footer);
-    padding-bottom: 24px;
+    bottom: 0;
     width: 100%;
 }
-.task-form .required-info {
+.add-task-page .form-scrollable .submit-button-wrapper {
+    position: fixed;
+    bottom: var(--height-footer);
+    padding-bottom: 24px;
+}
+:is(.task-dialogue, .task-section) .submit-button-wrapper .required-info {
     position: absolute;
     top: 32px;
     left: 0;
