@@ -58,6 +58,28 @@ function getSideMenuMobTemplate() {
 
 
 
+function getTaskDetailsWrapperTemplate(task) {
+    return `
+        <h3 class="mb">${task.title}</h2>                        
+            <div class="edit-buttons flex-row align-center">
+                <button onclick="editTask(${task.id})"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
+                <button onclick="deleteTask(${task.id}, event)"><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
+            </div>
+        </div>
+    `
+}
+
+function getTaskEditWrapperTemplate(task) {
+    return `
+        <h3 class="mb">${task.title}</h2>                        
+    `
+}
+
+
+
+
+
+
 function getContactListTemplate(groupName) {
     return `
         <h3 class="contact-letter flex-row align-center"> &ensp;${groupName}</h3>

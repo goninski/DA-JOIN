@@ -160,6 +160,28 @@ main, header, footer {
 
 
 
+
+/*** TASK STUFF */
+
+.add-task-page #assignedContactBatches {
+    margin-top: 4px;
+}
+
+
+.task-dialogue .dialogue-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 48px 40px;
+    min-width: 280px;
+}
+
+
+
+
+
+/*** BREAKPOINTS */
+
 @media(max-width: 719px) {
     :root {
         --px-sec: 16px;

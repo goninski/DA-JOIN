@@ -87,20 +87,6 @@ button.add-contact img {
     font-size: var(--fs-xl);
     font-weight: 500;
 }
-.floating-contact .edit-buttons {
-    gap: 24px;
-}
-.floating-contact .edit-buttons button {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    height: 24px;
-}
-.floating-contact .edit-buttons button img {
-    height: 18px;
-    width: auto;
-    object-fit: contain;
-}
 .contact-info {
     margin-top: 21px;
     gap: 22px;
@@ -127,84 +113,6 @@ button.add-contact img {
     object-fit: contain;
 }
 
-
-
-.dialogue {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 4vw;
-    background-color: rgba(0,0,0,0.4);
-    z-index: 1000;
-}
-
-.dialogue-inner {
-    background-color: white;
-    border-radius: 30px;
-    min-height: 594px;
-    width: 100%;
-    max-width: 1212px;
-    overflow: hidden;
-    align-items: stretch;
-}
-
-.dialogue-inner > div {
-    padding: 66px 48px;
-    justify-content: center;
-}
-
-.dialogue-sidebar {
-    background-color: var(--clr-main);
-    color: white;
-    font-size: var(--fs-xl);
-    justify-content: center;
-    gap: 12px;
-    align-items: start;
-    width: 100%;
-    max-width: 467px;
-    flex-grow: 1;
-}
-
-.dialogue-main {
-    flex-grow: 1;
-}
-
-button.close-dialogue {
-    position: absolute;
-    top: 40px;
-    right: 54px;
-    width: 32px;
-    height: 32px;
-    z-index: 2000;
-}
-button.close-dialogue .light {
-    display: none;
-}
-
-.dialogue .field-groups {
-    gap: 72px;
-}
-
-.dialogue .field-group {
-    --field-width: 422px;
-    min-width: var(--field-width);
-    max-width: var(--field-width);
-    gap: 19px;
-}
-
-.dialogue .batch-wrapper {
-    margin-top: -117px;
-}
-
-.dialogue .submit-input-icon-wrapper {
-    margin-top: 18px;
-}
 
 
 
@@ -250,7 +158,7 @@ button.close-dialogue .light {
     .sticky-button-wrapper {
         display: none;
     }
-    .dialogue-inner {
+    .contact-page .dialogue-inner {
         flex-direction: column;
         min-height: unset;
         max-width: 745px;
@@ -258,9 +166,6 @@ button.close-dialogue .light {
     }
     .dialogue-sidebar {
         max-width: unset;
-    }
-    .dialogue-main {
-        /* align-items: start; */
     }
     button.close-dialogue .dark {
         display: none;
@@ -270,27 +175,9 @@ button.close-dialogue .light {
     }
 }
 @media(max-width: 719px) {
-    .dialogue {
-        padding: 0;
-    }
-    .dialogue-inner {
-        max-width: unset;
-        max-height: unset;
-        height: 100%;
-        border-radius: 0;
-    }
-    .dialogue-inner > div {
-        /* padding: 0; */
-    }
-    .dialogue-main .field-groups {
-        flex-wrap: wrap;
-    }
-    .dialogue-main .batch-wrapper {
+    .contact-page .dialogue-main .batch-wrapper {
         margin-top: unset;
     }
-    .dialogue .field-group {
-        max-width: 100%;
-    }
-    
+   
 }
 

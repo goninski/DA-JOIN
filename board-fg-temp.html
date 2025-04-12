@@ -11,8 +11,8 @@
     <script src="scripts/data.js"></script>
     <script src="scripts/templates.js"></script>
     <script src="script.js"></script>
-    <script src="./scripts/board-fg-temp.js"></script>
     <script src="./scripts/add-task.js"></script>
+    <script src="./scripts/board-fg-temp.js"></script>
 </head>
 
 <body onload="initBoardFg()">
@@ -40,6 +40,32 @@
         </section>
 
     </main>
+
+
+    <div id="taskDetailsDialogue" class="dialogue task-dialogue task-details-dialogue" style="display: none;">
+        <div class="dialogue-inner flex-row align-center pos-relative">
+
+            <button class="close-dialogue" onclick="closeTaskDialogue(event, 'taskDetailsDialogue')" title="close dialogue">
+                <img src="assets/icons/close.svg" alt="close-icon" class="close-icon dark">
+                <img src="assets/icons/close-white.svg" alt="close-icon" class="close-icon light">
+            </button>
+            <div id="taskDetailsWrapper" class="dialogue-main flex-col pos-relative"></div>
+
+        </div>    
+    </div>
+
+
+    <div id="taskEditDialogue" class="dialogue task-dialogue task-edit-dialogue" style="display: none;">
+        <div class="dialogue-inner flex-row align-center pos-relative">
+
+            <button class="close-dialogue" onclick="closeTaskDialogue(event, 'taskEditDialogue')" title="close dialogue">
+                <img src="assets/icons/close.svg" alt="close-icon" class="close-icon dark">
+                <img src="assets/icons/close-white.svg" alt="close-icon" class="close-icon light">
+            </button>
+            <div id="taskEditWrapper" class="dialogue-main flex-col pos-relative"></div>
+
+        </div>    
+    </div>
 
 </body>
 </html>

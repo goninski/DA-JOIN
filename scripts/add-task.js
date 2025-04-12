@@ -64,18 +64,47 @@ function createTask(event) {
     resetFormAddTask(event);
 }
 
+function getTaskIndexFromId(taskId) {
+    return tasks.findIndex(task => task.id == taskId);
+}
+
+
+
+
+
+function showTask(taskId) {
+    activeTaskId = taskId;
+    taskFormMode = 'task-details';
+    let taskDetailsDialogueRef = document.getElementById('taskDetailsDialogue');
+    let taskDetailsWrapperRef = document.getElementById('taskDetailsWrapper');
+    taskDetailsDialogueRef.style = '';
+    let task = tasks[getTaskIndexFromId(taskId)];
+    taskDetailsWrapperRef.innerHTML = getTaskDetailsWrapperTemplate(task);
+}
+
+function editTask(taskId) {
+    activeTaskId = taskId;
+    taskFormMode = 'task-edit';
+    let taskEditDialogueRef = document.getElementById('taskEditDialogue');
+    let taskEditWrapperRef = document.getElementById('taskEditWrapper');
+    taskEditDialogueRef.style = '';
+    let task = tasks[getTaskIndexFromId(taskId)];
+    taskEditWrapperRef.innerHTML = getTaskEditWrapperTemplate(task);
+}
+
+function closeTaskDialogue(event, dialogueId) {
+    event.stopPropagation();
+    let taskDialogueRef = document.getElementById(dialogueId);
+    taskDialogueRef.style = 'display: none;';
+    renderBoards();
+    taskFormMode = 'boards';
+}
+
 function deleteTask(taskId, event) {
+    event.stopPropagation();
+    closeTaskDialogue(event, 'taskDetailsDialogue')
     tasks.splice(getTaskIndexFromId(taskId), 1);
     saveTaskData();
     activeTaskId = 0;
-    if(taskFormMode == 'board-listing-temp') {
-        renderTaskListBoardFg();
-    } else {
-        // closeTaskFormDialogue(event);
-    };
     showAlert('Task deleted');
-}
-
-function getTaskIndexFromId(taskId) {
-    return tasks.findIndex(task => task.id == taskId);
 }
