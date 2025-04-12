@@ -13,7 +13,7 @@
     padding-top: var(--py-sec);
     padding-bottom: var(--py-sec);
 }
-.ct-container{
+.ct-container {
     display: flex;
     flex-direction: column;
     width: 100%;

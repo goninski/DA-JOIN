@@ -1,1 +1,31 @@
 
+.add-task-form {
+    position: relative;
+    --height-submit-area: 120px;
+}
+
+.add-task-form .field-groups {
+    /* background-color: antiquewhite; */
+    position: absolute;
+    --height-title-area: 156px;
+    --height: calc(var(--height-between-header-footer) - var(--height-submit-area) - var(--height-title-area));
+    height: var(--height);
+    max-height: var(--height);
+    overflow-y: scroll;
+    scrollbar-width: thin;    
+}
+
+.add-task-form .submit-button-wrapper {
+    /* background-color: aquamarine; */
+    max-width: var(--ct-w);
+    position: fixed;
+    z-index: 1000;
+    bottom: var(--height-footer);
+    padding-bottom: 24px;
+    width: 100%;
+}
+.add-task-form .required-info {
+    position: absolute;
+    top: 32px;
+    left: 0;
+}
