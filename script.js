@@ -143,7 +143,11 @@ function getAllInputs(event, formId) {
     formInputObj = Object.fromEntries(formData);
     console.log(formInputObj);
     return formInputObj;
-   }
+}
+
+function getCategoryIndexFromId(categoryId) {
+    return categories.findIndex(category => category.id == categoryId);
+}
 
 function setTodayAsDateValue(id) {
     document.getElementById(id).valueAsDate = new Date();
@@ -157,6 +161,10 @@ function getNWord(string, index = 0) {
 function getLastWord(string) {
     let array = string.split(" ");
     return array[array.length - 1];
+}
+
+function setFirstLetterUpperCase(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
 function getInitialsOfFirstAndLastWord(string) {

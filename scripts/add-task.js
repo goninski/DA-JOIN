@@ -1,6 +1,6 @@
 function initAddTask() {
     getMainTemplates();
-    addTask(event, 'init');
+    addTask(event, 'add-task-page');
 }
 
 function openAddTaskPage() {
@@ -13,7 +13,7 @@ function addTask(event, source = 'board') {
     activeTaskId = 0;
     showTaskDialogue('addTaskFormWrapper', source);
     renderTaskForm('addTaskFieldGroups');
-    if( source == 'init') {
+    if( source == 'add-task-page') {
     } else {
         document.getElementById('taskDialogue').classList.add('add-task');
         document.getElementById('taskDialogue').classList.add('form-scrollable');
@@ -43,6 +43,7 @@ function editTask(event, taskId = 0) {
     renderTaskForm('editTaskFieldGroups', task);
     document.getElementById('taskDialogue').classList.add('edit-task');
     document.getElementById('taskDialogue').classList.add('form-scrollable');
+    // setEditTaskValues(task);
 }
 
 function showTaskDialogue(elementId, source = 'board') {
@@ -76,8 +77,24 @@ function renderTaskForm(fieldsWrapperId, task = null) {
     getContactSelectOptions();
     getProfileBatches();
     getCategorySelectOptions();
-    setInitalFormState(requiredTaskFields, 'inputTitle');
+    setEditTaskValues(task);
+    setInitalFormState(requiredTaskFields, 'inputTitle', taskFormMode);
 }
+
+function setEditTaskValues(task) {
+    if(taskFormMode == 'edit') {
+        document.getElementById('inputTitle').value = task.title;
+        document.getElementById('inputDescription').value = task.description;
+        document.getElementById('inputDueDate').value = task.dueDate;
+        if(task.priority) {
+            let priority =  setFirstLetterUpperCase(task.priority);
+            document.getElementById('inputPrio' + priority).checked = true;
+        }
+        document.getElementById('inputCategory').value = task.categoryId;
+    }
+}
+
+
 
 function createTask(event) {
     task = getAllInputs(event, 'addTaskForm');

@@ -75,10 +75,10 @@ let tasksDemo = [
         "id": 1,
         "title": "Title Task 1...",
         "description": "Description Task 1...",
-        "dueDate": 0,
+        "dueDate": "2025-04-01",
         "priority": "high",
         "contactIds": [1, 2, 3],
-        "categoryId": 0,
+        "categoryId": 1,
         "subtasks": [
             {   
                 "title": "Subtask 1",
@@ -94,7 +94,7 @@ let tasksDemo = [
         "id": 2,
         "title": "Title Task 2...",
         "description": "Description Task 2...",
-        "dueDate": 0,
+        "dueDate": "2025-03-31",
         "priority": "medium",
         "contactIds": [2, 3],
         "categoryId": 1,
