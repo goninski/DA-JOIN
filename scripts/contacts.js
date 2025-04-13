@@ -3,11 +3,6 @@ function initContacts() {
     renderContactList();
 }
 
-function getContactIndexFromId(contactId) {
-    return contacts.findIndex(contact => contact.id == contactId);
-}
-
-
 function renderContactList() {
     contactListRef = document.getElementById('contactList');
     contactListRef.innerHTML = '';

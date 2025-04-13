@@ -56,8 +56,6 @@ function getSideMenuMobTemplate() {
 
 
 
-
-
 function getTaskDetailsWrapperTemplate(task) {
     return `
     <h3 class="mb">${task.title}</h3>                        
@@ -69,7 +67,12 @@ function getTaskDetailsWrapperTemplate(task) {
     `
 }
 
-function getTaskFieldsWrapperTemplate(task) {
+
+
+
+// FORM INPUT TEMPLATES
+
+function getTaskFormFieldsTemplate(task) {
     return `
     <div class="field-group flex-col flex-grow">
         <div class="field-wrapper">
@@ -115,7 +118,7 @@ function getTaskFieldsWrapperTemplate(task) {
                 </div>
                 <ul id="inputContacts"></ul>
             </div>
-            <ul id="profileBatches" class="profile-batches" style="margin-top: 230px;"></ul>
+            <ul id="profileBatches" class="profile-batches" style="margin-top: 290px;"></ul>
         </div>
 
         <div class="field-wrapper">
@@ -163,6 +166,41 @@ function getTaskFieldsWrapperTemplate(task) {
     `
 }
 
+function getContactSelectOptionTemplate(contact) {
+    return `
+        <li>
+            <div class="profile-batch" style="--profile-color: ${contact.color};">${contact.initials}</div>
+            <label for="checkboxAssignedContact-${contact.id}">${contact.name}</label>
+            <div class="input-icon-wrapper custom-checkbox">
+                <button>
+                    <input type="checkbox" class="custom" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}" onchange="saveAssignedContactIds(event, ${contact.id})">
+                    <img src="assets/icons/checkbox-checked.svg" alt="checkbox-checked" class="icon-checkbox">
+                </button>
+            </div>
+        </li>
+    `
+}
+
+function getCategorySelectOptionTemplate(category) {
+    return `
+        <option value="${category.id}">${category.name}</option>
+    `
+}
+
+function getAddContactSubmitButtonsTemplate() {
+    return `
+        <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetContactsForm(event)">Cancel</button>
+        <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled>Create Contact</button>
+    `
+}
+
+function getEditContactSubmitButtonsTemplate(contactId) {
+    return `
+        <button id="btnReset" class="button btn-delete btn-icon btn-secondary" onclick="deleteContact(${contactId}, event)">Delete</button>
+        <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled>Save</button>
+    `
+}
+
 
 
 
@@ -200,6 +238,12 @@ function getContactDetailProfileBatchTemplate(contact) {
     `
 }
 
+function getContactProfileBatchTemplate(contact) {
+    return `
+        <li class="profile-batch" style="--profile-color: ${contact.color};">${contact.initials}</li>
+    `
+}
+
 function getContactDetailInfoTemplate(contact) {
     return `
         <h3 class="fs-lg fw-regular flex-col justifiy-center">Contact Information</h3>                        
@@ -214,52 +258,13 @@ function getContactDetailInfoTemplate(contact) {
     `
 }
 
-function getAddContactSubmitButtonsTemplate() {
-    return `
-        <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetContactsForm(event)">Cancel</button>
-        <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled>Create Contact</button>
-    `
-}
-
-function getEditContactSubmitButtonsTemplate(contactId) {
-    return `
-        <button id="btnReset" class="button btn-delete btn-icon btn-secondary" onclick="deleteContact(${contactId}, event)">Delete</button>
-        <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled>Save</button>
-    `
-}
-
-function getContactSelectOptionTemplate(contact) {
-    return `
-        <li>
-            <div class="profile-batch" style="--profile-color: ${contact.color};">${contact.initials}</div>
-            <label for="${contact.id}">${contact.name}</label>
-            <div class="input-icon-wrapper custom-checkbox">
-                <button>
-                    <input type="checkbox" class="custom" id="${contact.id}" name="${contact.id}" value="${contact.id}">
-                    <img src="assets/icons/checkbox-checked.svg" alt="checkbox-checked" class="icon-checkbox">
-                </button>
-            </div>
-        </li>
-    `
-}
-
-function getProfileBatchTemplate(contact) {
-    return `
-        <li class="profile-batch" style="--profile-color: ${contact.color};">${contact.initials}</li>
-    `
-}
-
-function getCategorySelectOptionTemplate(category) {
-    return `
-        <option value="${category.id}">${category.name}</option>
-    `
-}
 
 
 
 
 
 
+// ICON TEMPLATES
 
 function getIconTemplateClose(text = "") {
     return `

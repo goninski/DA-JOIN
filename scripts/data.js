@@ -80,14 +80,8 @@ let tasksDemo = [
         "contactIds": [1, 2, 3],
         "categoryId": 1,
         "subtasks": [
-            {   
-                "title": "Subtask 1",
-                "status": 1
-            },
-            {   
-                "title": "Subtask 2",
-                "status": 0,
-            }
+            {"title": "Subtask 1","status": 1},
+            {"title": "Subtask 2","status": 0},
         ]
     },
     {
@@ -99,14 +93,8 @@ let tasksDemo = [
         "contactIds": [2, 3],
         "categoryId": 1,
         "subtasks": [
-            {   
-                "title": "Subtask 1",
-                "status": 1
-            },
-            {   
-                "title": "Subtask 2",
-                "status": 0,
-            }
+            {"title": "Subtask 1","status": 1},
+            {"title": "Subtask 2","status": 0},
         ]
     },
     {
@@ -118,14 +106,8 @@ let tasksDemo = [
         "contactIds": [3, 1],
         "categoryId": 0,
         "subtasks": [
-            {   
-                "title": "Subtask 1",
-                "status": 1
-            },
-            {   
-                "title": "Subtask 2",
-                "status": 0,
-            }
+            {"title": "Subtask 1","status": 1},
+            {"title": "Subtask 2","status": 0},
         ]
     },
 ];

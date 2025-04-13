@@ -6,6 +6,7 @@ let requiredContactFields = ['inputName', 'inputEmail'];
 let requiredTaskFields = ['inputTitle', 'inputDueDate', 'inputCategory'];
 let activeTaskId = 0;
 let activeContactId = 0;
+let tempAssignedContacts = [];
 
 function init() {
     getMainTemplates();
@@ -145,6 +146,51 @@ function getAllInputs(event, formId) {
     return formInputObj;
 }
 
+
+
+
+// GENERAL REENDER FUNCTIONS
+
+function renderContactProfileBatches(contactIds = [], elementId = 'profileBatches') {
+    let element = document.getElementById(elementId);
+    element.innerHTML = '';
+    for (let index = 0; index < contactIds.length; index++) {
+        contactIndex = getContactIndexFromId(contactIds[index]);
+        if(contactIndex >= 0) {
+            element.innerHTML += getContactProfileBatchTemplate(contacts[contactIndex]);
+        }
+    }
+}
+
+function getContactSelectOptions(id = 'inputContacts') {
+    let selectInput = document.getElementById(id);
+    selectInput.innerHTML = '';
+    for (let index = 0; index < contacts.length; index++) {
+        selectInput.innerHTML += getContactSelectOptionTemplate(contacts[index]);
+    }
+}
+
+function getCategorySelectOptions(id = 'inputCategory') {
+    let selectInput = document.getElementById(id);
+    selectInput.innerHTML = '';
+    for (let index = 0; index < categories.length; index++) {
+        selectInput.innerHTML += getCategorySelectOptionTemplate(categories[index]);
+    }
+}
+
+
+
+
+// HELPER FUNCTIONS
+
+function getTaskIndexFromId(taskId) {
+    return tasks.findIndex(task => task.id == taskId);
+}
+
+function getContactIndexFromId(contactId) {
+    return contacts.findIndex(contact => contact.id == contactId);
+}
+
 function getCategoryIndexFromId(categoryId) {
     return categories.findIndex(category => category.id == categoryId);
 }
@@ -187,29 +233,3 @@ function showAlert(msg, duration = 250) {
 }
 
 
-
-
-
-function getContactSelectOptions(id = 'inputContacts') {
-    let selectInput = document.getElementById(id);
-    selectInput.innerHTML = '';
-    for (let index = 0; index < contacts.length; index++) {
-        selectInput.innerHTML += getContactSelectOptionTemplate(contacts[index]);
-    }
-}
-
-function getProfileBatches(id = 'profileBatches') {
-    let selectInput = document.getElementById(id);
-    selectInput.innerHTML = '';
-    for (let index = 0; index < contacts.length; index++) {
-        selectInput.innerHTML += getProfileBatchTemplate(contacts[index]);
-    }
-}
-
-function getCategorySelectOptions(id = 'inputCategory') {
-    let selectInput = document.getElementById(id);
-    selectInput.innerHTML = '';
-    for (let index = 0; index < categories.length; index++) {
-        selectInput.innerHTML += getCategorySelectOptionTemplate(categories[index]);
-    }
-}

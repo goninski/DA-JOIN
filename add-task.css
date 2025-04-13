@@ -1,3 +1,7 @@
+#inputContacts {
+    opacity: 0.35; /* temp */
+}
+
 .form-scrollable .task-form {
     height: 100%;
     position: relative;

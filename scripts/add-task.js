@@ -64,7 +64,8 @@ function showTaskDialogue(elementId, source = 'board') {
 
 function renderTaskForm(fieldsWrapperId, task = null) {
     console.log(task);
-    document.getElementById(fieldsWrapperId).innerHTML = getTaskFieldsWrapperTemplate(task);
+    tempAssignedContacts = [];
+    document.getElementById(fieldsWrapperId).innerHTML = getTaskFormFieldsTemplate(task);
     document.getElementById('labelPrioHigh').innerHTML = getIconTemplatePrioHigh();
     document.getElementById('labelPrioMedium').innerHTML = getIconTemplatePrioMedium();
     document.getElementById('labelPrioLow').innerHTML = getIconTemplatePrioLow();
@@ -75,7 +76,7 @@ function renderTaskForm(fieldsWrapperId, task = null) {
         document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Ok');
     }
     getContactSelectOptions();
-    getProfileBatches();
+    renderContactProfileBatches();
     getCategorySelectOptions();
     setEditTaskValues(task);
     setInitalFormState(requiredTaskFields, 'inputTitle', taskFormMode);
@@ -91,22 +92,35 @@ function setEditTaskValues(task) {
             document.getElementById('inputPrio' + priority).checked = true;
         }
         document.getElementById('inputCategory').value = task.categoryId;
+        tempAssignedContacts = task.contactIds;
+        renderContactProfileBatches(tempAssignedContacts);
     }
 }
 
 
+function saveAssignedContactIds(event, contactId) {
+    if(event.target.checked == true ) {
+        tempAssignedContacts.push(contactId);
+    } else {
+        tempAssignedContacts.splice(tempAssignedContacts.indexOf(contactId), 1);
+    };
+    // console.log(tempAssignedContacts);
+    renderContactProfileBatches(tempAssignedContacts);
+}
 
 function createTask(event) {
     task = getAllInputs(event, 'addTaskForm');
     lastTaskId++;
     task.id = lastTaskId;
     task.categoryId = Number(task.categoryId)   ;
+    task.contactIds = tempAssignedContacts;
     tasks.push(task);
     saveTaskData();
     alert('new task created');
     console.log(tasks);
     resetAddTaskForm(event);
 }
+
 
 function saveTask(event) {
     taskId = activeTaskId;
@@ -116,6 +130,7 @@ function saveTask(event) {
     }
     let index = getTaskIndexFromId(taskId);
     tasks[index].title = task.title;
+    tasks[index].contactIds = tempAssignedContacts;
     console.log(tasks);
     saveTaskData();
     closeTaskDialogue(event)
@@ -140,6 +155,7 @@ function deleteTask(event, taskId = 0) {
 
 function resetAddTaskForm(event) {
     event.stopPropagation();
+    tempAssignedContacts = [];
     resetForm('addTaskForm');
     setInitalFormState(requiredTaskFields, 'inputTitle', 'add');
     event.preventDefault();
@@ -147,12 +163,8 @@ function resetAddTaskForm(event) {
 
 function closeTaskDialogue(event) {
     event.stopPropagation();
+    resetAddTaskForm(event);
     document.getElementById('taskDialogue').style = 'display: none';
     renderBoards();
     taskFormMode = '';
 }
-
-function getTaskIndexFromId(taskId) {
-    return tasks.findIndex(task => task.id == taskId);
-}
-
