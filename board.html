@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Board</title>
-        <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="board.css">
-        <script src="scripts/data.js"></script>
-        <script src="scripts/templates.js"></script>
-        <script src="script.js"></script>
-        <script src="scripts/add-task.js"></script>
-    </head>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="board.css">
+    <link rel="stylesheet" href="login.css">
+    <script src="scripts/data.js"></script>
+    <script src="scripts/templates.js"></script>
+    <script src="script.js"></script>
+    <script src="scripts/add-task.js"></script>
+</head>
+
 <body onload="init()">
 
     <header id="header" class="section"></header>
@@ -19,8 +22,16 @@
 
     <div class="page-title headline-board">
         <p class="black">Board</p>
-        <input class="board-input" type="text" placeholder="Find Task">
+        <div class="input-wrapper">
+            <input type="text">
+            <div class="input-inner">
+                <div class="find-task">Find Task</div>
+                <hr>
+                <img src="./assets/icons/search.png" alt="Lock Icon">
+            </div>
+        </div>
         <button class="add-task-button">Add task<img src="./assets/icons/add.png" alt=""></button>
     </div>
 </body>
+
 </html>
