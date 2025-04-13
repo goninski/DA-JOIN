@@ -65,6 +65,7 @@ function showTaskDialogue(elementId, source = 'board') {
 function renderTaskForm(fieldsWrapperId, task = null) {
     console.log(task);
     assignedTaskContacts = [];
+    assignedSubtasks = [];
     document.getElementById(fieldsWrapperId).innerHTML = getTaskFormFieldsTemplate(task);
     document.getElementById('labelPrioHigh').innerHTML = getIconTemplatePrioHigh();
     document.getElementById('labelPrioMedium').innerHTML = getIconTemplatePrioMedium();
@@ -93,8 +94,10 @@ function setEditTaskValues(task) {
         }
         document.getElementById('inputCategory').value = task.categoryId;
         assignedTaskContacts = task.contactIds;
+        assignedSubtasks = task.subtasks;
         renderContactSelectOptions();
         renderContactProfileBatches(assignedTaskContacts);
+        renderSubtasks();
     }
 }
 
@@ -147,6 +150,7 @@ function createTask(event) {
     task.id = lastTaskId;
     task.categoryId = Number(task.categoryId)   ;
     task.contactIds = assignedTaskContacts;
+    task.subtasks = assignedSubtasks;
     tasks.push(task);
     saveTaskData();
     alert('new task created');
@@ -164,6 +168,7 @@ function saveTask(event) {
     let index = getTaskIndexFromId(taskId);
     tasks[index].title = task.title;
     tasks[index].contactIds = assignedTaskContacts;
+    tasks[index].subtasks = assignedSubtasks;
     console.log(tasks);
     saveTaskData();
     closeTaskDialogue(event)
@@ -189,6 +194,7 @@ function deleteTask(event, taskId = 0) {
 function resetAddTaskForm(event) {
     event.stopPropagation();
     assignedTaskContacts = [];
+    assignedSubtasks = [];
     resetForm('addTaskForm');
     setInitalFormState(requiredTaskFields, 'inputTitle', 'add');
     event.preventDefault();
