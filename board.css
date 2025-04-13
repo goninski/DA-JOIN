@@ -39,3 +39,9 @@
     padding-left: 16px;
     padding-right: 16px;
 }
+
+.find-task {
+    font-weight: 400;
+    font-size: 20px;
+    color: #D1D1D1;
+}
