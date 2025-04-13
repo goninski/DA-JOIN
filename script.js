@@ -162,15 +162,21 @@ function renderContactProfileBatches(contactIds = [], elementId = 'profileBatche
     }
 }
 
-function getContactSelectOptions(id = 'inputContacts') {
+function renderContactSelectOptions(id = 'inputContacts') {
     let selectInput = document.getElementById(id);
     selectInput.innerHTML = '';
     for (let index = 0; index < contacts.length; index++) {
         selectInput.innerHTML += getContactSelectOptionTemplate(contacts[index]);
+        if(tempAssignedContacts.length > 0) {
+            let isChecked = tempAssignedContacts.includes(contacts[index].id);
+            setTimeout(function() {
+                document.getElementById('checkboxAssignedContact-' + contacts[index].id).checked = isChecked;
+            }, 1);
+        }
     }
 }
 
-function getCategorySelectOptions(id = 'inputCategory') {
+function renderCategorySelectOptions(id = 'inputCategory') {
     let selectInput = document.getElementById(id);
     selectInput.innerHTML = '';
     for (let index = 0; index < categories.length; index++) {

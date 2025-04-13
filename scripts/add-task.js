@@ -75,9 +75,9 @@ function renderTaskForm(fieldsWrapperId, task = null) {
     } else {
         document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Ok');
     }
-    getContactSelectOptions();
+    renderContactSelectOptions();
     renderContactProfileBatches();
-    getCategorySelectOptions();
+    renderCategorySelectOptions();
     setEditTaskValues(task);
     setInitalFormState(requiredTaskFields, 'inputTitle', taskFormMode);
 }
@@ -93,13 +93,14 @@ function setEditTaskValues(task) {
         }
         document.getElementById('inputCategory').value = task.categoryId;
         tempAssignedContacts = task.contactIds;
+        renderContactSelectOptions();
         renderContactProfileBatches(tempAssignedContacts);
     }
 }
 
 
 function saveAssignedContactIds(event, contactId) {
-    if(event.target.checked == true ) {
+    if(event.target.checked) {
         tempAssignedContacts.push(contactId);
     } else {
         tempAssignedContacts.splice(tempAssignedContacts.indexOf(contactId), 1);
