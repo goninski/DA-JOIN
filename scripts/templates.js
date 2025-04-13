@@ -135,24 +135,17 @@ function getTaskFormFieldsTemplate(task) {
         <div class="field-wrapper subtask-wrapper">
             <label for="subtasks">Subtasks</label>
             <div class="input-wrapper input-wrapper-subtasks">
-                <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask">
-                <div id="subtaskInputButtons" class="input-icon-wrapper hide">
-                    <button xonclick="cancelSubtaskInput()"><img src="/assets/icons/cancel.svg" class="icon-cancel"></button>
+                <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask" onfocus="resetInputValidation('inputSubtasks')" oninput="validateSubtaskInput(event)" maxlength="128">
+                <div id="subtaskInputButtons" class="input-icon-wrapper xhide">
+                    <button onclick="resetSubtaskInput(event)"><img src="/assets/icons/cancel.svg" class="icon-cancel"></button>
                     <div class="divider"></div>
-                    <button xonclick="saveSubtaskInput()"><img src="/assets/icons/check.svg" class="icon-check"></button>
+                    <button onclick="addSubtask(event)"><img src="/assets/icons/check.svg" class="icon-check"></button>
                 </div>
-                <div id="subtaskInputButtonAdd" class="input-icon-wrapper xhide">
-                    <button xonclick="addSubtaskInput()"><img src="/assets/icons/add.svg" class="icon-add"></button>
+                <div id="subtaskInputButtonAdd" class="input-icon-wrapper hide">
+                    <button><img src="/assets/icons/add.svg" class="icon-add"></button>
                 </div>
             </div>
-            <ul id="assignedSubtasks" class="subtask-listing">
-                <li id="subtask-01"><span class="text">Subtask 1</span>
-                    <div class="input-icon-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-delete"></button></div>
-                </li>
-                <li id="subtask-02"><span class="text">Subtask 2</span>
-                    <div class="input-icon-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-delete"></button></div>
-                </li>
-            </ul>
+            <ul id="assignedSubtasks" class="subtask-listing"></ul>
             <div id="subtaskEdit" class="subtask-edit">Subtask XY
                 <div id="subtaskEditButtons" class="input-icon-wrapper">
                     <button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-delete"></button>
@@ -166,26 +159,50 @@ function getTaskFormFieldsTemplate(task) {
     `
 }
 
+function tempstuff() {
+    return `
+    '<ul id="assignedSubtasks" class="subtask-listing">
+        <li id="subtask-01"><span class="text">Subtask 1</span>
+            <div class="input-icon-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-delete"></button></div>
+        </li>
+        <li id="subtask-02"><span class="text">Subtask 2</span>
+            <div class="input-icon-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-delete"></button></div>
+        </li>
+    </ul>'
+    `
+}
+
+
+
 function getContactSelectOptionTemplate(contact) {
     return `
-        <li>
-            <div class="profile-batch" style="--profile-color: ${contact.color};">${contact.initials}</div>
-            <label for="checkboxAssignedContact-${contact.id}">${contact.name}</label>
-            <div class="input-icon-wrapper custom-checkbox">
-                <button>
-                    <input type="checkbox" class="custom" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}" onchange="saveAssignedContactIds(event, ${contact.id})">
-                    <img src="assets/icons/checkbox-checked.svg" alt="checkbox-checked" class="icon-checkbox">
-                </button>
-            </div>
-        </li>
+    <li>
+        <div class="profile-batch" style="--profile-color: ${contact.color};">${contact.initials}</div>
+        <label for="checkboxAssignedContact-${contact.id}">${contact.name}</label>
+        <div class="input-icon-wrapper custom-checkbox">
+            <button>
+                <input type="checkbox" class="custom" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}" onchange="tempAssignContactsToTask(event, ${contact.id})">
+                <img src="assets/icons/checkbox-checked.svg" alt="checkbox-checked" class="icon-checkbox">
+            </button>
+        </div>
+    </li>
     `
 }
 
 function getCategorySelectOptionTemplate(category) {
     return `
-        <option value="${category.id}">${category.name}</option>
+    <option value="${category.id}">${category.name}</option>
     `
 }
+
+function getSubtasksTemplate(subtask, index, taskId) {
+    return `
+    <li><span class="text">${subtask}</span>
+        <div class="input-icon-wrapper"><button onclick="editSubtask(event, ${index})"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div><button onclick="deleteSubtask(event, ${index})"><img src="/assets/icons/delete.svg" class="icon-delete"></button></div>
+    </li>
+    `
+}
+
 
 function getAddContactSubmitButtonsTemplate() {
     return `

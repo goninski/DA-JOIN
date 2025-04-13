@@ -6,7 +6,8 @@ let requiredContactFields = ['inputName', 'inputEmail'];
 let requiredTaskFields = ['inputTitle', 'inputDueDate', 'inputCategory'];
 let activeTaskId = 0;
 let activeContactId = 0;
-let tempAssignedContacts = [];
+let assignedTaskContacts = [];
+let assignedSubtasks = [];
 
 function init() {
     getMainTemplates();
@@ -58,6 +59,7 @@ function resetForm(formId) {
 }
 
 function validateInput(id, parent = false) {
+    // let id = event.currentTarget.id;
     let element = document.getElementById(id);
     let index = invalidFields.findIndex(item => item == id);
     if (! element.checkValidity()) {
@@ -93,6 +95,12 @@ function resetAllInputValidations() {
         fieldId = invalidFields[index];
         resetInputValidation(fieldId, true);
     }
+}
+
+
+function resetInput(id) {
+    document.getElementById(id).value = '';
+    resetInputValidation(id)
 }
 
 function resetInputValidation(id, parent = false) {
@@ -167,8 +175,8 @@ function renderContactSelectOptions(id = 'inputContacts') {
     selectInput.innerHTML = '';
     for (let index = 0; index < contacts.length; index++) {
         selectInput.innerHTML += getContactSelectOptionTemplate(contacts[index]);
-        if(tempAssignedContacts.length > 0) {
-            let isChecked = tempAssignedContacts.includes(contacts[index].id);
+        if(assignedTaskContacts.length > 0) {
+            let isChecked = assignedTaskContacts.includes(contacts[index].id);
             setTimeout(function() {
                 document.getElementById('checkboxAssignedContact-' + contacts[index].id).checked = isChecked;
             }, 1);
@@ -184,6 +192,14 @@ function renderCategorySelectOptions(id = 'inputCategory') {
     }
 }
 
+function renderSubtasks(id = 'assignedSubtasks') {
+    let selectInput = document.getElementById(id);
+    selectInput.innerHTML = '';
+    for (let index = 0; index < assignedSubtasks.length; index++) {
+        selectInput.innerHTML += getSubtasksTemplate(assignedSubtasks[index], index, activeTaskId);
+    }
+    console.log(assignedSubtasks);
+}
 
 
 

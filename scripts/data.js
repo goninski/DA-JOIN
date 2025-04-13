@@ -79,10 +79,11 @@ let tasksDemo = [
         "priority": "high",
         "contactIds": [1, 2, 3],
         "categoryId": 1,
-        "subtasks": [
-            {"title": "Subtask 1","status": 1},
-            {"title": "Subtask 2","status": 0},
-        ]
+        "subtasks": ["Subtask 1"]
+        // "subtasks": [
+        //     {"title": "Subtask 1","status": 1},
+        //     {"title": "Subtask 2","status": 0},
+        // ]
     },
     {
         "id": 2,
@@ -92,10 +93,7 @@ let tasksDemo = [
         "priority": "medium",
         "contactIds": [2, 3],
         "categoryId": 1,
-        "subtasks": [
-            {"title": "Subtask 1","status": 1},
-            {"title": "Subtask 2","status": 0},
-        ]
+        "subtasks": ["Subtask 1","Subtask 2"]
     },
     {
         "id": 3,
@@ -105,10 +103,7 @@ let tasksDemo = [
         "priority": "low",
         "contactIds": [3, 1],
         "categoryId": 0,
-        "subtasks": [
-            {"title": "Subtask 1","status": 1},
-            {"title": "Subtask 2","status": 0},
-        ]
+        "subtasks": ["Subtask 1","Subtask 2","Subtask 3"]
     },
 ];
 
