@@ -66,6 +66,14 @@ let contactsDemo = [
         "initials": "WM",
         "color": "#806000"
     },
+    {
+        "id": 6,
+        "name": "Nadine Müller",
+        "email": "nm@domain.com",
+        "phone": "",
+        "initials": "NM",
+        "color": "green"
+    },
 
 ];
 
@@ -149,6 +157,7 @@ function setDemoData() {
     clearLocalStorage();
     categories = categoriesDemo;
     contacts = contactsDemo;
+    contacts.sort((a, b) => a.name.localeCompare(b.name));
     tasks = tasksDemo;
     lastCategoryId = categories.length - 1;
     lastContactId = contacts.length;

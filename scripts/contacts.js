@@ -28,7 +28,7 @@ function renderContactGroupItems(contactGroup, groupName) {
 }
 
 function groupContacts(contacts) {
-    contacts.sort((a, b) => a.name.localeCompare(b.name));
+    sortContacts(contacts);
     let contactsGroupedObj = Map.groupBy(contacts, contact => contact.name[0]);
     // console.log(contactsGroupedObj);
     let contactsGrouped = Array.from(contactsGroupedObj);
@@ -152,6 +152,7 @@ function createContact(contactId, event) {
     contact.initials = getInitialsOfFirstAndLastWord(contact.name);
     contact.color = getRandomColor();
     contacts.push(contact);
+    sortContacts(contacts);
     // console.log(contact);
     saveContactData();
     showAlert('New contact added');
@@ -167,6 +168,7 @@ function saveContact(contactId, event) {
     contacts[index].email = contact.email;
     contacts[index].phone = contact.phone;
     contacts[index].initials = getInitialsOfFirstAndLastWord(contact.name);
+    sortContacts(contacts);
     // console.log(contacts[index]);
     saveContactData();
     closeContactsFormDialogue(event);

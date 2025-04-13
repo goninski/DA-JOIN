@@ -75,16 +75,16 @@ function getTaskDetailsWrapperTemplate(task) {
 function getTaskFormFieldsTemplate(task) {
     return `
     <div class="field-group flex-col flex-grow">
-        <div class="field-wrapper">
+        <div class="field-wrapper has-message">
             <label for="title" class="required">Title</label>
             <input type="text" id="inputTitle" class="x-invalid" name="title" placeholder="Enter a title" required maxlength="128" onfocus="resetInputValidation('inputTitle')" onfocusout="validateInput('inputTitle')">
             <div class="validation-msg">This field is required</div>
         </div>
-        <div class="field-wrapper">
+        <div class="field-wrapper has-message">
             <label for="description">Description</label>
             <textarea id="inputDescription" name="description" placeholder="Enter a description"></textarea>
         </div>
-        <div class="field-wrapper">
+        <div class="field-wrapper has-message">
             <label for="dueDate" class="required">Due date</label>
             <input type="date" id="inputDueDate" name="dueDate" class="placeholder" required min="2000-01-01" max="2099-12-31" onfocus="resetInputValidation('inputDueDate'), setTodayAsDateValue('inputDueDate')" onfocusout="validateInput('inputDueDate')">
             <div class="validation-msg">Please enter a valid date</div>
@@ -110,21 +110,23 @@ function getTaskFormFieldsTemplate(task) {
         </div>
 
         <div class="field-wrapper">
-            <label for="">Assigned to</label>
+            <label for="selectContacts">Assigned to</label>
             <div class="select custom-select multiple">
-                <div class="select-btn xopen focus">
-                    <span class="select-text">Select contacts to assign</span>
-                    <span class="input-icon-wrapper custom-select"><img src="/assets/icons/arrow-drop-down.svg" class="icon"></span>
+                <div class="input-wrapper custom-select">
+                    <input type="text" id="selectContacts" name="selectContacts" placeholder="Select contacts to assign" onfocus="resetInputValidation('selectContacts')" oninput="renderContactSelectOptions(event)" onclick="renderContactSelectOptions(event)" class="clickable">
+                    <div class="input-icon-wrapper custom-select">
+                        <button onclick="renderContactSelectOptions(event)"><img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown"></button>
+                    </div>
                 </div>
-                <ul id="inputContacts"></ul>
+                <ul id="taskContactsSelectOptionsWrapper"></ul>
             </div>
-            <ul id="profileBatches" class="profile-batches" style="margin-top: 290px;"></ul>
+            <ul id="profileBatches" class="profile-batches hide-if-empty" style="margin-top: 16px;"></ul>
         </div>
 
-        <div class="field-wrapper">
+        <div class="field-wrapper xhas-message">
             <label for="categoryId" class="required">Category</label>
             <div class="input-wrapper custom-select xinvalid">
-                <select class="custom placeholder xinvalid" id="inputCategory" name="categoryId"  required onfocus="resetInputValidation('inputCategory', true)" onfocusout="validateInput('inputCategory', true)"></select>
+                <select class="custom placeholder xinvalid clickable" id="inputCategory" name="categoryId"  required onfocus="resetInputValidation('inputCategory', true)" onfocusout="validateInput('inputCategory', true)"></select>
                 <div class="input-icon-wrapper custom-select">
                     <img src="/assets/icons/arrow-drop-down.svg" class="icon">
                 </div>
@@ -136,42 +138,21 @@ function getTaskFormFieldsTemplate(task) {
             <label for="subtasks">Subtasks</label>
             <div class="input-wrapper input-wrapper-subtasks">
                 <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask" onfocus="resetInputValidation('inputSubtasks')" oninput="validateSubtaskInput(event)" maxlength="128">
-                <div id="subtaskInputButtons" class="input-icon-wrapper xhide">
+                <div id="subtaskInputButtonAdd" class="input-icon-wrapper">
+                    <button><img src="/assets/icons/add.svg" class="icon-add"></button>
+                </div>
+                <div id="subtaskInputButtons" class="input-icon-wrapper hide">
                     <button onclick="resetSubtaskInput(event)"><img src="/assets/icons/cancel.svg" class="icon-cancel"></button>
                     <div class="divider"></div>
                     <button onclick="addSubtask(event)"><img src="/assets/icons/check.svg" class="icon-check"></button>
                 </div>
-                <div id="subtaskInputButtonAdd" class="input-icon-wrapper hide">
-                    <button><img src="/assets/icons/add.svg" class="icon-add"></button>
-                </div>
             </div>
             <ul id="assignedSubtasks" class="subtask-listing"></ul>
-            <div id="subtaskEdit" class="subtask-edit">Subtask XY
-                <div id="subtaskEditButtons" class="input-icon-wrapper">
-                    <button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-delete"></button>
-                    <div class="divider"></div>
-                    <button onclick="saveSubtaskEdits()"><img src="/assets/icons/check.svg" class="icon-check"></button>
-                </div>
-            </div>
         </div>
 
     </div>
     `
 }
-
-function tempstuff() {
-    return `
-    '<ul id="assignedSubtasks" class="subtask-listing">
-        <li id="subtask-01"><span class="text">Subtask 1</span>
-            <div class="input-icon-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-delete"></button></div>
-        </li>
-        <li id="subtask-02"><span class="text">Subtask 2</span>
-            <div class="input-icon-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-delete"></button></div>
-        </li>
-    </ul>'
-    `
-}
-
 
 
 function getContactSelectOptionTemplate(contact) {
@@ -197,8 +178,11 @@ function getCategorySelectOptionTemplate(category) {
 
 function getSubtasksTemplate(subtask, index, taskId) {
     return `
-    <li><span class="text">${subtask}</span>
-        <div class="input-icon-wrapper"><button onclick="editSubtask(event, ${index})"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div><button onclick="deleteSubtask(event, ${index})"><img src="/assets/icons/delete.svg" class="icon-delete"></button></div>
+    <li class="input-wrapper input-wrapper-subtask">
+        <input type="text" class="subtask-input" value="${subtask}" readonly="readonly">
+        <div class="input-icon-wrapper">
+            <button onclick="editSubtask(event)"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div><button onclick="deleteSubtask(event, ${index})"><img src="/assets/icons/delete.svg" class="icon-delete"></button>
+        </div>
     </li>
     `
 }
@@ -217,9 +201,6 @@ function getEditContactSubmitButtonsTemplate(contactId) {
         <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled>Save</button>
     `
 }
-
-
-
 
 
 
@@ -276,6 +257,42 @@ function getContactDetailInfoTemplate(contact) {
 }
 
 
+
+
+
+
+
+function preTrash() {
+    return `
+
+    <div class="select-btn focus" onclick="renderContactSelectOptions(event)">
+        <span class="select-text">Select contacts to assign</span>
+        <span class="input-icon-wrapper custom-select"><img src="/assets/icons/arrow-drop-down.svg" class="icon"></span>
+    </div>
+
+
+    '<ul id="assignedSubtasks" class="subtask-listing">
+        <li id="subtask-01"><span class="text">Subtask 1</span>
+            <div class="input-icon-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-delete"></button></div>
+        </li>
+        <li id="subtask-02"><span class="text">Subtask 2</span>
+            <div class="input-icon-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-delete"></button></div>
+        </li>
+    </ul>'
+
+    <li><span class="text">${subtask}</span>
+        <div class="input-icon-wrapper"><button onclick="editSubtask(event, ${index})"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div><button onclick="deleteSubtask(event, ${index})"><img src="/assets/icons/delete.svg" class="icon-delete"></button></div>
+    </li>
+
+    <div id="subtaskEdit" class="subtask-edit mt-50">Subtask XY
+        <div id="subtaskEditButtons" class="input-icon-wrapper">
+            <button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-delete"></button>
+            <div class="divider"></div>
+            <button onclick="saveSubtaskEdits()"><img src="/assets/icons/check.svg" class="icon-check"></button>
+        </div>
+    </div>
+    `
+}
 
 
 

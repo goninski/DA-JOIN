@@ -121,8 +121,10 @@ form {
 .field-wrapper {
     display: flex;
     flex-direction: column;
-    padding-bottom: 16px;
     position: relative;
+}
+.field-wrapper.has-message {
+    padding-bottom: 16px;
 }
 .field-group {
     min-width: var(--field-width);
@@ -254,7 +256,7 @@ input:checked + label.prio-low {
     position: relative;
     width: 100%;
 }
-.select.custom-select .select-btn {
+/* .select.custom-select .select-btn {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -265,7 +267,7 @@ input:checked + label.prio-low {
     background-color: white;
     position: relative;
     z-index: 2;
-}
+} */
 .select.custom-select ul {
     list-style: none;
     padding-top: 8px;
@@ -273,15 +275,15 @@ input:checked + label.prio-low {
     margin-block: -8px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    overflow: hidden;
     background-color: white;
     width: 100%;
-    position: absolute;
+    max-height: 288px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* position: absolute; */
     animation-name: fadeinUp;
     animation-duration: 0.4s;
     animation-fill-mode: both;
-    max-height: 288px;
-    overflow-y: auto;
 }
 .select.custom-select li {
     position: relative;
@@ -303,11 +305,8 @@ input:checked + label.prio-low {
     background-color: var(--clr-subtle);
     background-color: #eee;
 }
-.select.custom-select .select-btn.open ~ ul {
-    opacity: 0;
-    animation-name: fadeInUp;
-    animation-duration: 0.4s;
-    animation-fill-mode: both;
+.input-wrapper.custom-select:not(.open) ~ ul {
+    display: none;
 }
 
 
@@ -351,7 +350,7 @@ input:checked + label.prio-low {
 }
 .input-icon-wrapper:where(.custom-select, .custom-checkbox) {
     /* background: white; */
-    pointer-events: none;
+    /* pointer-events: none; */
 }
 input:has(+ .input-icon-wrapper.simple) {
     padding-right: 56px;
@@ -438,19 +437,21 @@ input:has(+ .input-icon-wrapper.simple) {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 4px 16px;
+    padding: 0;
     min-height: 32px;
     transition-duration: var(--transition-duration);
+}
+.subtask-listing li input {
+    display: list-item;
+    /* margin-left: 28px; */
+    /* width: 100%; */
+    background-color: transparent;
+    border: none;
 }
 .subtask-edit {
     background-color: white;
     border-bottom: solid 1px  var(--clr-light-blue);
     margin-top: 12px;
-}
-.subtask-listing li .text {
-    display: list-item;
-    margin-left: 28px;
-    width: 100%;
 }
 .subtask-listing .input-icon-wrapper {
     display: none;

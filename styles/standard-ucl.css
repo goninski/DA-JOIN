@@ -99,9 +99,6 @@
     margin-block: 0;
     padding-inline: 0;
 }
-.hide {
-    display: none !important;
-}
 
 
 /*** IMAGES */
@@ -316,7 +313,13 @@
 .overflow-hidden {
     overflow: hidden;
 }
-
+.cursor-pointer, .clickable {
+    cursor: pointer;
+}
+.hide-if-empty:empty,
+.hide {
+    display: none !important;
+}
 
 
 

@@ -170,11 +170,18 @@ function renderContactProfileBatches(contactIds = [], elementId = 'profileBatche
     }
 }
 
-function renderContactSelectOptions(id = 'inputContacts') {
-    let selectInput = document.getElementById(id);
-    selectInput.innerHTML = '';
+function renderContactSelectOptions(event, wrapperId = 'taskContactsSelectOptionsWrapper') {
+    let element = event.currentTarget.parentElement;
+    if(element.classList.contains('input-icon-wrapper')) {
+        element = element.parentElement;
+    };
+    // console.log(element);
+    element.classList.toggle('open');
+    contacts = sortContacts(contacts);
+    let optionsWrapper = document.getElementById(wrapperId);
+    optionsWrapper.innerHTML = '';
     for (let index = 0; index < contacts.length; index++) {
-        selectInput.innerHTML += getContactSelectOptionTemplate(contacts[index]);
+        optionsWrapper.innerHTML += getContactSelectOptionTemplate(contacts[index]);
         if(assignedTaskContacts.length > 0) {
             let isChecked = assignedTaskContacts.includes(contacts[index].id);
             setTimeout(function() {
@@ -192,11 +199,11 @@ function renderCategorySelectOptions(id = 'inputCategory') {
     }
 }
 
-function renderSubtasks(id = 'assignedSubtasks') {
-    let selectInput = document.getElementById(id);
-    selectInput.innerHTML = '';
+function renderSubtasks(wrapperId = 'assignedSubtasks') {
+    let element = document.getElementById(wrapperId);
+    element.innerHTML = '';
     for (let index = 0; index < assignedSubtasks.length; index++) {
-        selectInput.innerHTML += getSubtasksTemplate(assignedSubtasks[index], index, activeTaskId);
+        element.innerHTML += getSubtasksTemplate(assignedSubtasks[index], index, activeTaskId);
     }
     console.log(assignedSubtasks);
 }
@@ -204,6 +211,15 @@ function renderSubtasks(id = 'assignedSubtasks') {
 
 
 // HELPER FUNCTIONS
+
+function getCurrentElementIfButtonWrapper(event, id='input-icon-wrapper') {
+    let element = event.currentTarget;
+    let parent = element.parentElement;
+    if(parent.classList.contains(id)) {
+        element = parent.parentElement;
+    }
+    return element;
+}
 
 function getTaskIndexFromId(taskId) {
     return tasks.findIndex(task => task.id == taskId);
@@ -215,6 +231,11 @@ function getContactIndexFromId(contactId) {
 
 function getCategoryIndexFromId(categoryId) {
     return categories.findIndex(category => category.id == categoryId);
+}
+
+
+function sortContacts(contacts) {
+    return contacts.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 function setTodayAsDateValue(id) {

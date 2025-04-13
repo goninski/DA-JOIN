@@ -76,7 +76,7 @@ function renderTaskForm(fieldsWrapperId, task = null) {
     } else {
         document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Ok');
     }
-    renderContactSelectOptions();
+    // renderContactSelectOptions(event);
     renderContactProfileBatches();
     renderCategorySelectOptions();
     setEditTaskValues(task);
@@ -95,7 +95,7 @@ function setEditTaskValues(task) {
         document.getElementById('inputCategory').value = task.categoryId;
         assignedTaskContacts = task.contactIds;
         assignedSubtasks = task.subtasks;
-        renderContactSelectOptions();
+        // renderContactSelectOptions(event);
         renderContactProfileBatches(assignedTaskContacts);
         renderSubtasks();
     }
@@ -110,8 +110,9 @@ function tempAssignContactsToTask(event, contactId) {
     renderContactProfileBatches(assignedTaskContacts);
 }
 
-function validateSubtaskInput(event, id = 'inputSubtasks') {
-    let subtask = document.getElementById(id).value;
+function validateSubtaskInput(event, id='inputSubtasks') {
+    let subtask = event.currentTarget.value;
+    // let subtask = document.getElementById(id).value;
     if(subtask.length <= 0 || subtask.length > 128) {
         document.getElementById('subtaskInputButtonAdd').classList.remove('hide');
         document.getElementById('subtaskInputButtons').classList.add('hide');
@@ -121,11 +122,25 @@ function validateSubtaskInput(event, id = 'inputSubtasks') {
     }
 }
 
-function addSubtask(event , id='inputSubtasks') {
+function addSubtask(event, id='inputSubtasks') {
     let element = document.getElementById(id);
     assignedSubtasks.push(element.value);
     renderSubtasks();
     resetSubtaskInput(event, id);
+}
+
+function editSubtask(event) {
+    let element = getCurrentElementIfButtonWrapper(event);
+    console.log(element);
+    element.classList.add('subtask-edit');
+    element.readOnly = false;
+}
+
+function saveSubtask(event, index) {
+    let element = event.currentTarget;
+    assignedSubtasks[index] = element.value;
+    element.classList.remove('subtask-edit');
+    renderSubtasks();
 }
 
 function deleteSubtask(event, index) {
@@ -133,7 +148,7 @@ function deleteSubtask(event, index) {
     renderSubtasks();
 }
 
-function resetSubtaskInput(event , id = 'inputSubtasks') {
+function resetSubtaskInput(event , id='inputSubtasks') {
     event.preventDefault;
     document.getElementById(id).value = '';
     document.getElementById('subtaskInputButtonAdd').classList.remove('hide');
@@ -196,6 +211,7 @@ function resetAddTaskForm(event) {
     assignedTaskContacts = [];
     assignedSubtasks = [];
     resetForm('addTaskForm');
+    renderContactProfileBatches();    
     setInitalFormState(requiredTaskFields, 'inputTitle', 'add');
     event.preventDefault();
 }
