@@ -19,7 +19,9 @@
     <section class=" flex-row header_login">
         <div class="pos-absol-header-login">
             <p class="not_a_join_user-login-header label">Not a Join user?</p>
-            <button class="btn-login-header-size btn-login-header btn-primary">Sign up</button>
+            <a href="./sign-up.html">
+                <button class="btn-login-header-size btn-login-header btn-primary">Sign up</button>
+            </a>
         </div>
     </section>
 
@@ -31,18 +33,16 @@
             </div>
 
             <div class="flex-col gap-20 login-email-part center">
-                <div class="input-wrapper">
-                    <input type="email" name="email" id="email">
+                <div class="input-wrapper flex justify-between">
+                    <input type="email" name="email" id="email" placeholder="Email">
                     <div class="input-inner"> 
-                        <div class="placeholder-text">Email</div>
                         <img src="./assets/img/mail.png" alt="Mail Icon" class="input-icon">
                     </div>
                 </div>
 
-                <div class="input-wrapper">
-                    <input type="password" id="pwd" name="pwd" minlength="8">
+                <div class="input-wrapper flex justify-between">
+                    <input type="password" id="pwd" name="pwd" minlength="8" placeholder="Password">
                     <div class="input-inner">
-                        <div class="placeholder-text">Password</div>
                         <img src="./assets/img/lock.png" alt="Lock Icon">
                     </div>
                 </div>

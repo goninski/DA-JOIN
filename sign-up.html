@@ -32,34 +32,30 @@
 
             <div class="flex-col login-email-part-sign-up center gap_16px">
                 <div class="flex-col">
-                    <div class="input-wrapper margin-bottom-24px">
-                        <input type="text" minlength="3">
+                    <div class="input-wrapper margin-bottom-24px flex justify-between">
+                        <input type="text" minlength="3" placeholder="Name">
                         <div class="input-inner">
-                            <div class="placeholder-text">Name</div>
                             <img src="./assets/img/person.png" alt="Person Icon" class="input-icon">
                         </div>
                     </div>
 
-                    <div class="input-wrapper margin-bottom-24px">
-                        <input type="email" name="email" id="email">
+                    <div class="input-wrapper margin-bottom-24px flex justify-between">
+                        <input type="email" name="email" id="email" placeholder="Email">
                         <div class="input-inner">
-                            <div class="placeholder-text">Email</div>
                             <img src="./assets/img/mail.png" alt="Mail Icon" class="input-icon">
                         </div>
                     </div>
 
-                    <div class="input-wrapper margin-bottom-24px">
-                        <input type="password" id="pwd" name="pwd" minlength="8">
+                    <div class="input-wrapper margin-bottom-24px flex justify-between">
+                        <input type="password" id="pwd" name="pwd" minlength="8" placeholder="Password">
                         <div class="input-inner">
-                            <div class="placeholder-text">Password</div>
                             <img src="./assets/img/lock.png" alt="Lock Icon">
                         </div>
                     </div>
 
                     <div class="input-wrapper margin-bottom-24px">
-                        <input type="password" id="confirm_pwd" name="pwd" minlength="8">
-                        <div class="input-inner">
-                            <div class="placeholder-text">Confirm Password</div>
+                        <input type="password" id="confirm_pwd" name="pwd" minlength="8" placeholder="Confirm Password">
+                        <div class="input-inner flex justify-between">
                             <img src="./assets/img/lock.png" alt="Lock Icon">
                         </div>
                     </div>
@@ -86,6 +82,9 @@
         <a href="#" class="login-privacy-policy-color">Legal notice</a>
     </section>
 
+    <section class="overlay-sign-up-successfully hide" onclick="showSignUpSuccessOverlay">
+        <div class="overlay-sign-up-successfully-div">You Signed Up successfully</div>
+    </section>
 </body>
 
 </html>

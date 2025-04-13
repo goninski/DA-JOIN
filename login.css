@@ -180,41 +180,46 @@ a.login-privacy-policy-color:hover {
     position: relative;
     width: 422px;
     height: 48px;
-}
-
-
-.input-wrapper input {
-    width: 100%;
-    height: 100%;
-    padding: 0 21px;
-    font-size: 20px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: white;
     box-sizing: border-box;
 }
 
+.input-wrapper:focus-within {
+    border: 2px solid var(--clr-light-blue); /* z.B. #2A8BF2 */
+    box-shadow: 0 0 4px rgba(42, 139, 242, 0.4);
+}
+
+.input-wrapper input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    background: transparent;
+    --clr-focus: transparent;
+    padding: 0;
+}
+
 .input-inner {
-    position: absolute;
-    height: 50%;
-    top: 50%;
-    left: 0;
-    width: 100%;
-    transform: translateY(-50%);
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 21px;
-    pointer-events: none;
+    justify-content: center;
 }
 
 .input-inner img {
-    height: 24px;
     width: 24px;
+    height: 24px;
 }
 
-.placeholder-text {
+input::placeholder {
     color: rgba(168, 168, 168, 1);
     font-size: 20px;
 }
 
-.gap_32px{
+.gap_32px {
     gap: 32px;
 }

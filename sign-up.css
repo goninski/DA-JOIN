@@ -82,7 +82,37 @@
     color: #29ABE2;
 }
 
-.checkbox-wrapper{
+.checkbox-wrapper {
     width: 231px;
     height: 24px;
+}
+
+.overlay-sign-up-successfully {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    padding: 0px 25px;
+    position: relative;
+    width: 312px;
+    height: 74px;
+    filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.1));
+    background: #2A3647;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    color: #FFFFFF;
+}
+
+.overlay-sign-up-successfully-div {
+    width: 262px;
+    height: 24px;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 120%;
+    white-space: nowrap;
 }
