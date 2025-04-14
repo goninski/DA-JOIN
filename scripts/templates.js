@@ -137,9 +137,10 @@ function getTaskFormFieldsTemplate(task) {
         <div class="field-wrapper subtask-wrapper">
             <label for="subtasks">Subtasks</label>
             <div class="input-wrapper input-wrapper-subtasks">
+                <!--<input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask"> -->
                 <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask" onfocus="resetInputValidation('inputSubtasks')" oninput="validateSubtaskInput(event)" maxlength="128">
                 <div id="subtaskInputButtonAdd" class="input-icon-wrapper">
-                    <button><img src="/assets/icons/add.svg" class="icon-add"></button>
+                    <button onclick="addSubtaskPseudo(event)"><img src="/assets/icons/add.svg" class="icon-add"></button>
                 </div>
                 <div id="subtaskInputButtons" class="input-icon-wrapper hide">
                     <button onclick="resetSubtaskInput(event)"><img src="/assets/icons/cancel.svg" class="icon-cancel"></button>
@@ -179,9 +180,15 @@ function getCategorySelectOptionTemplate(category) {
 function getSubtasksTemplate(subtask, index, taskId) {
     return `
     <li class="input-wrapper input-wrapper-subtask">
-        <input type="text" class="subtask-input" value="${subtask}" readonly="readonly">
-        <div class="input-icon-wrapper">
-            <button onclick="editSubtask(event)"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div><button onclick="deleteSubtask(event, ${index})"><img src="/assets/icons/delete.svg" class="icon-delete"></button>
+        <input type="text" id="subtask-i-${index}" class="subtask-input" value="${subtask}">
+        <div class="input-icon-wrapper input-icon-wrapper-read">
+            <button onclick="editSubtask(event)"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div>
+            <button onclick="deleteSubtask(event, ${index})"><img src="/assets/icons/delete.svg" class="icon-delete"></button>
+        </div>
+        <div class="input-icon-wrapper input-icon-wrapper-edit">
+            <button onclick="deleteSubtask(event, ${index})"><img src="/assets/icons/delete.svg" class="icon-delete"></button>
+            <div class="divider"></div>
+            <button onclick="saveSubtask(event, ${index})"><img src="/assets/icons/check.svg" class="icon-check"></button>
         </div>
     </li>
     `

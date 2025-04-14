@@ -111,6 +111,7 @@ function tempAssignContactsToTask(event, contactId) {
 }
 
 function validateSubtaskInput(event, id='inputSubtasks') {
+    // event.stopPropagation();
     let subtask = event.currentTarget.value;
     // let subtask = document.getElementById(id).value;
     if(subtask.length <= 0 || subtask.length > 128) {
@@ -122,44 +123,57 @@ function validateSubtaskInput(event, id='inputSubtasks') {
     }
 }
 
-function addSubtask(event, id='inputSubtasks') {
-    let element = document.getElementById(id);
+function addSubtaskPseudo(event) {
+    event.stopPropagation();
+}
+
+function addSubtask(event) {
+    console.log('addSubtask');
+    event.stopPropagation();
+    let element = getInputElement(event);
     assignedSubtasks.push(element.value);
     renderSubtasks();
-    resetSubtaskInput(event, id);
+    resetSubtaskInput(event, element);
 }
 
 function editSubtask(event) {
-    let element = getCurrentElementIfButtonWrapper(event);
-    console.log(element);
-    element.classList.add('subtask-edit');
+    event.stopPropagation();
+    let wrapper = getInputWrapperElement(event);
+    let element = getInputElement(event);
+    wrapper.classList.add('edit-mode');
     element.readOnly = false;
 }
 
 function saveSubtask(event, index) {
-    let element = event.currentTarget;
+    event.stopPropagation();
+    let element = getInputElement(event);
     assignedSubtasks[index] = element.value;
-    element.classList.remove('subtask-edit');
     renderSubtasks();
 }
 
 function deleteSubtask(event, index) {
+    event.stopPropagation();
     assignedSubtasks.splice(index, 1);
     renderSubtasks();
 }
 
-function resetSubtaskInput(event , id='inputSubtasks') {
+function resetSubtaskInput(event, element) {
+    console.log('resetSubtaskInput');
+    event.stopPropagation();
     event.preventDefault;
-    document.getElementById(id).value = '';
+    element.value = '';
     document.getElementById('subtaskInputButtonAdd').classList.remove('hide');
     document.getElementById('subtaskInputButtons').classList.add('hide');
-    document.getElementById(id).focus();
+    // element.focus();
     // resetInputValidation(id);
 
 }
 
 
 function createTask(event) {
+    console.log('createTask');
+    return;
+    event.stopPropagation();
     task = getAllInputs(event, 'addTaskForm');
     lastTaskId++;
     task.id = lastTaskId;
@@ -175,6 +189,7 @@ function createTask(event) {
 
 
 function saveTask(event) {
+    event.stopPropagation();
     taskId = activeTaskId;
     task = getAllInputs(event, 'editTaskForm');
     if(task.title.length <= 0) {

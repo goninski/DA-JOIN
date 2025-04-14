@@ -448,15 +448,24 @@ input:has(+ .input-icon-wrapper.simple) {
     background-color: transparent;
     border: none;
 }
-.subtask-edit {
+.subtask-listing .input-icon-wrapper {
+    display: none;
+}
+.input-wrapper-subtask:not(.edit-mode) .input-icon-wrapper-edit {
+    display: none;
+}
+.input-wrapper-subtask.edit-mode .input-icon-wrapper-read {
+    display: none;
+}
+.input-wrapper-subtask.edit-mode .input-icon-wrapper-edit {
+    display: flex; /* unset hide */
+}
+.input-wrapper-subtask.edit-mode {
     background-color: white;
     border-bottom: solid 1px  var(--clr-light-blue);
     margin-top: 12px;
 }
-.subtask-listing .input-icon-wrapper {
-    display: none;
-}
-.subtask-listing:hover .input-icon-wrapper {
+.subtask-listing:hover .input-wrapper-subtask:not(.edit-mode) .input-icon-wrapper-read {
     display: flex;
 }
 .subtask-listing li:hover {

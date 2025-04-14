@@ -84,7 +84,7 @@
                         </div>
 
                         <div class="field-group flex-col flex-grow">
-                            <div class="field-wrapper">
+                            <div class="field-wrapper has-message">
                                 <!-- <label for="name" class="xrequired">Name</label> -->
                                 <div class="input-wrapper">
                                     <input type="text" id="inputName" class="x-invalid" name="name" placeholder="Name" required maxlength="64" onfocus="resetInputValidation('inputName', true)" onfocusout="validateInput('inputName', true)">
@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="validation-msg">This field is required</div>
                             </div>
-                            <div class="field-wrapper">
+                            <div class="field-wrapper has-message">
                                 <!-- <label for="email" class="required">Email</label> -->
                                 <div class="input-wrapper">
                                     <input type="email" id="inputEmail" class="x-invalid" name="email" placeholder="Email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required maxlength="64" onfocus="resetInputValidation('inputEmail', true)" onfocusout="validateInput('inputEmail', true)">
@@ -104,7 +104,7 @@
                                 </div>
                                 <div class="validation-msg">Please enter a valid email address</div>
                             </div>
-                            <div class="field-wrapper">
+                            <div class="field-wrapper has-message">
                                 <!-- <label for="phone" class="xrequired">Phone</label> -->
                                 <div class="input-wrapper">
                                     <input type="tel" id="inputPhone" class="x-invalid" name="phone" placeholder="Phone" minlength="10" maxlength="64" onfocus="resetInputValidation('inputPhone', true)" onfocusout="validatePhoneInput('inputPhone', true)">

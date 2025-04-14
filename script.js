@@ -205,19 +205,33 @@ function renderSubtasks(wrapperId = 'assignedSubtasks') {
     for (let index = 0; index < assignedSubtasks.length; index++) {
         element.innerHTML += getSubtasksTemplate(assignedSubtasks[index], index, activeTaskId);
     }
+    for (let index = 0; index < assignedSubtasks.length; index++) {
+        let listItem = document.getElementById('subtask-i-' + index);
+        listItem.readOnly = true;
+        let wrapper = listItem.parentElement;
+        wrapper.classList.remove('edit-mode');
+    }
     console.log(assignedSubtasks);
 }
 
 
 
+
 // HELPER FUNCTIONS
 
-function getCurrentElementIfButtonWrapper(event, id='input-icon-wrapper') {
+
+function getClosestParentElement(event, selector='') {
     let element = event.currentTarget;
-    let parent = element.parentElement;
-    if(parent.classList.contains(id)) {
-        element = parent.parentElement;
-    }
+    return element.closest(selector);
+}
+
+function getInputWrapperElement(event, selector='.input-wrapper') {
+    return getClosestParentElement(event, selector);
+}
+
+function getInputElement(event, selector='.input-wrapper') {
+    let wrapper = getInputWrapperElement(event, selector);
+    let element = wrapper.firstElementChild;
     return element;
 }
 
