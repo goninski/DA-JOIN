@@ -4,4 +4,5 @@ function initBoards() {
 }
 
 function renderBoards() {
+    renderTempTaskList();
 }

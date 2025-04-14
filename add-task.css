@@ -1,8 +1,12 @@
 #tempTaskList {
     position: fixed;
-    left: var(--sidemenu-width);
+    right: 0;
     bottom: 0;
     padding: 32px;
+    min-width: 480px;
+}
+#tempTaskList li {
+    flex-wrap: wrap;
 }
 
 
