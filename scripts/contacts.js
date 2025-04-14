@@ -155,7 +155,10 @@ function createContact(contactId, event) {
     sortContacts(contacts);
     // console.log(contact);
     saveContactData();
-    showFloatingMessage('addedContact');
+    showFloatingMessage('text', 'Contact successfully created');
+    setTimeout(function() { 
+        closeContactsFormDialogue(event);
+    }, 1000);
 }
 
 function saveContact(contactId, event) {
@@ -171,8 +174,10 @@ function saveContact(contactId, event) {
     sortContacts(contacts);
     // console.log(contacts[index]);
     saveContactData();
-    closeContactsFormDialogue(event);
-    showAlert('All changes saved');
+    showFloatingMessage('text', 'Contact successfully edited');
+    setTimeout(function() { 
+        closeContactsFormDialogue(event);
+    }, 1000);
 }
 
 function deleteContact(contactId, event) {

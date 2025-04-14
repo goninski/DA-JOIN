@@ -266,19 +266,16 @@ function getContactDetailInfoTemplate(contact) {
     `
 }
 
+function getFloatingMessageTextTemplate(msg) {
+    return `${msg}`
+}
+
 function getFloatingMessageTaskAddedTemplate() {
     return `
     Task added to board
     <img src="assets/icons/board-white.svg" alt="board-icon" class="icon-board">
     `
 }
-
-function getFloatingMessageContactAddedTemplate() {
-    return `
-    Contact succesfully created
-    `
-}
-
 
 
 function preTrash() {

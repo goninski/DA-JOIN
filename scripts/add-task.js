@@ -37,6 +37,8 @@ function editTask(event, taskId = 0) {
     taskFormMode = 'edit';
     if(taskId == 0) {
         taskId = activeTaskId;
+    } else {
+        activeTaskId = taskId;
     }
     let task = tasks[getTaskIndexFromId(taskId)];
     showTaskDialogue('editTaskFormWrapper');
@@ -97,7 +99,7 @@ function setEditTaskValues(task) {
         assignedSubtasks = task.subtasks;
         // renderContactSelectOptions(event);
         renderContactProfileBatches(assignedTaskContacts);
-        renderSubtasks();
+        // renderSubtasks();
     }
 }
 
@@ -192,18 +194,22 @@ function createTask(event) {
 function saveTask(event) {
     event.stopPropagation();
     taskId = activeTaskId;
+    // console.log(taskId);
     task = getAllInputs(event, 'editTaskForm');
     if(task.title.length <= 0) {
         return;
     }
     let index = getTaskIndexFromId(taskId);
+    // console.log(index);
     tasks[index].title = task.title;
     tasks[index].contactIds = assignedTaskContacts;
     tasks[index].subtasks = assignedSubtasks;
     console.log(tasks);
     saveTaskData();
-    closeTaskDialogue(event)
-    showAlert('All changes saved');
+    showFloatingMessage('text', 'Task successfully edited');
+    setTimeout(function() { 
+        closeTaskDialogue(event)
+    }, 1000);
 }
 
 function deleteTask(event, taskId = 0) {
@@ -218,8 +224,10 @@ function deleteTask(event, taskId = 0) {
         saveTaskData();
     }
     activeTaskId = 0;
-    showAlert('Task deleted');
-    closeTaskDialogue(event)
+    showFloatingMessage('text', 'Task deleted');
+    setTimeout(function() { 
+        closeTaskDialogue(event)
+    }, 1000);
 }
 
 function resetAddTaskForm(event) {
