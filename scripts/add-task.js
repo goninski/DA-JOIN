@@ -172,7 +172,6 @@ function resetSubtaskInput(event, element) {
 
 function createTask(event) {
     console.log('createTask');
-    return;
     event.stopPropagation();
     task = getAllInputs(event, 'addTaskForm');
     lastTaskId++;
@@ -182,11 +181,13 @@ function createTask(event) {
     task.subtasks = assignedSubtasks;
     tasks.push(task);
     saveTaskData();
-    alert('new task created');
     console.log(tasks);
-    resetAddTaskForm(event);
+    // resetAddTaskForm(event);
+    showFloatingMessage('addedTask');
+    setTimeout(function() { 
+        location.href = "/board.html";
+    }, 1500);
 }
-
 
 function saveTask(event) {
     event.stopPropagation();

@@ -289,4 +289,21 @@ function showAlert(msg, duration = 250) {
     setTimeout(function() { alert(msg) }, duration);
 }
 
+function showFloatingMessage(template) {
+    let element = document.getElementById("floatingMsg");
+    if(template == 'addedTask') {
+        element.innerHTML = getFloatingMessageTaskAddedTemplate();
+    } else if (template == 'addedContact'){
+        element.innerHTML = getFloatingMessageContactAddedTemplate();
+    } else {
+        return;
+    }
+    element.classList.remove('hide');
+    setTimeout(function() { 
+        element.classList.add('hide');
+        element.innerHTML = '';
+}, 1500);
+}
+
+
 

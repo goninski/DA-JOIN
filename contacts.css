@@ -29,13 +29,14 @@
 button.add-contact {
     justify-content: center;
     gap: 16px;
+    max-width: 100%;
 }
 button.add-contact img {
     height: 21px;
     width: auto;
     object-fit: contain;
 }
-.floating-button.add-contact {
+.floating-button-round.add-contact {
     display: none;
 }
 .contact-list-sidebar :where(ul, ol) {

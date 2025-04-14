@@ -155,7 +155,7 @@ function createContact(contactId, event) {
     sortContacts(contacts);
     // console.log(contact);
     saveContactData();
-    showAlert('New contact added');
+    showFloatingMessage('addedContact');
 }
 
 function saveContact(contactId, event) {

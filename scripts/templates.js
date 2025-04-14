@@ -126,7 +126,7 @@ function getTaskFormFieldsTemplate(task) {
         <div class="field-wrapper xhas-message">
             <label for="categoryId" class="required">Category</label>
             <div class="input-wrapper custom-select xinvalid">
-                <select class="custom placeholder xinvalid clickable" id="inputCategory" name="categoryId"  required onfocus="resetInputValidation('inputCategory', true)" onfocusout="validateInput('inputCategory', true)"></select>
+                <select class="custom placeholder xinvalid clickable" id="inputCategory" name="categoryId" required onfocus="resetInputValidation('inputCategory', true)" onfocusout="validateInput('inputCategory', true)"></select>
                 <div class="input-icon-wrapper custom-select">
                     <img src="/assets/icons/arrow-drop-down.svg" class="icon">
                 </div>
@@ -134,26 +134,29 @@ function getTaskFormFieldsTemplate(task) {
             <div class="validation-msg">This field is required</div>
         </div>
 
-        <div class="field-wrapper subtask-wrapper">
-            <label for="subtasks">Subtasks</label>
-            <div class="input-wrapper input-wrapper-subtasks">
-                <!--<input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask"> -->
-                <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask" onfocus="resetInputValidation('inputSubtasks')" oninput="validateSubtaskInput(event)" maxlength="128">
-                <div id="subtaskInputButtonAdd" class="input-icon-wrapper">
-                    <button onclick="addSubtaskPseudo(event)"><img src="/assets/icons/add.svg" class="icon-add"></button>
-                </div>
-                <div id="subtaskInputButtons" class="input-icon-wrapper hide">
-                    <button onclick="resetSubtaskInput(event)"><img src="/assets/icons/cancel.svg" class="icon-cancel"></button>
-                    <div class="divider"></div>
-                    <button onclick="addSubtask(event)"><img src="/assets/icons/check.svg" class="icon-check"></button>
-                </div>
-            </div>
-            <ul id="assignedSubtasks" class="subtask-listing"></ul>
-        </div>
-
     </div>
     `
 }
+
+function tempSubtasks() {
+    `<div class="field-wrapper subtask-wrapper">
+    <label for="subtasks">Subtasks</label>
+    <div class="input-wrapper input-wrapper-subtasks">
+        <!--<input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask"> -->
+        <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask" onfocus="resetInputValidation('inputSubtasks')" oninput="validateSubtaskInput(event)" maxlength="128">
+        <div id="subtaskInputButtonAdd" class="input-icon-wrapper">
+            <button onclick="addSubtaskPseudo(event)"><img src="/assets/icons/add.svg" class="icon-add"></button>
+        </div>
+        <div id="subtaskInputButtons" class="input-icon-wrapper hide">
+            <button onclick="resetSubtaskInput(event)"><img src="/assets/icons/cancel.svg" class="icon-cancel"></button>
+            <div class="divider"></div>
+            <button onclick="addSubtask(event)"><img src="/assets/icons/check.svg" class="icon-check"></button>
+        </div>
+    </div>
+    <ul id="assignedSubtasks" class="subtask-listing"></ul>
+    </div>`
+}
+
 
 
 function getContactSelectOptionTemplate(contact) {
@@ -263,9 +266,18 @@ function getContactDetailInfoTemplate(contact) {
     `
 }
 
+function getFloatingMessageTaskAddedTemplate() {
+    return `
+    Task added to board
+    <img src="assets/icons/board-white.svg" alt="board-icon" class="icon-board">
+    `
+}
 
-
-
+function getFloatingMessageContactAddedTemplate() {
+    return `
+    Contact succesfully created
+    `
+}
 
 
 
