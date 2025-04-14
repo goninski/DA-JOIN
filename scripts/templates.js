@@ -35,9 +35,9 @@ function getSideMenuTemplate() {
             <a href="privacy-policy.html">Privacy Policy</a>
             <a href="legal-notice.html">Legal notice</a>
             <div class="flex-col gap-05 mt-10"> 
-                <button onclick="setDemoData()" style="text-align: left; color: #ccc";>Testdata Reset</button>
-                <a href="temp-assets-library.html" style="color: #ccc;">Asset Library</a>
+                <!-- <a href="temp-assets-library.html" style="color: #ccc;">Asset Library</a> -->
                 <a href="board-fg-temp.html" style="color: #ccc;">Board FG Temp</a>
+                <button onclick="setDemoData()" style="text-align: left; color: #ccc";>Testdata Reset</button>
             </div>
         </div>
     `

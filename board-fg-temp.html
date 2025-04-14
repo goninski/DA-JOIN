@@ -15,7 +15,7 @@
     <script src="./scripts/board-fg-temp.js"></script>
 </head>
 
-<body onload="initBoardFg()" class="board-page board-page-fg">
+<body onload="init()" class="board-page board-page-fg">
 
     <header id="header" class="section"></header>
     <div id="sideMenu" class="side-menu"></div>
@@ -32,15 +32,16 @@
                     <h4 class="page-subtitle">Temporary</h4>
                 </div>
 
-                <button class="button btn-icon btn-primary mb-30" onclick="addTask(event, 'board')">Add Task</button>
-
-                <ul id="taskListBoardFg" class="flex-col gap ul-reset"></ul>
+                <button class="button btn-icon btn-primary mb-30" onclick="addTask(event)">Add Task</button>
 
             </div>
         </section>
 
     </main>
 
+
+    <ul id="tempTaskList" class="flex-col gap ul-reset"></ul>
+    <script>renderTempTaskList();</script>
 
     <div id="taskDialogue" class="dialogue task-dialogue" style="display: none;">
         <div class="dialogue-inner flex-col pos-relative">
@@ -76,9 +77,9 @@
                 </form>
             </div>
    
-
         </div>    
-        </div>
+    </div>
+
 
 </body>
 </html>

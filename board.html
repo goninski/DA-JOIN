@@ -8,30 +8,79 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="board.css">
     <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="add-task.css">
     <script src="scripts/data.js"></script>
     <script src="scripts/templates.js"></script>
     <script src="script.js"></script>
     <script src="scripts/add-task.js"></script>
+    <script src="scripts/boards.js"></script>
 </head>
 
-<body onload="init()">
+
+<body onload="initBoards()" class="board-page">
 
     <header id="header" class="section"></header>
     <div id="sideMenu" class="side-menu"></div>
     <div id="sideMenuMob" class="side-menu"></div>
 
-    <div class="page-title headline-board">
-        <p class="black">Board</p>
-        <div class="input-wrapper">
-            <input type="text">
-            <div class="input-inner">
-                <div class="find-task">Find Task</div>
-                <hr>
-                <img src="./assets/icons/search.png" alt="Lock Icon">
+
+        <div class="page-title headline-board">
+            <p class="black">Board</p>
+            <div class="input-wrapper">
+                <input type="text">
+                <div class="input-inner">
+                    <div class="find-task">Find Task</div>
+                    <hr>
+                    <img src="./assets/icons/search.png" alt="Lock Icon">
+                </div>
             </div>
+            <button class="add-task-button" onclick="addTask(event)"">Add task<img src="./assets/icons/add.png" alt=""></button>
         </div>
-        <button class="add-task-button">Add task<img src="./assets/icons/add.png" alt=""></button>
+    
+
+
+        
+
+    <div id="taskDialogue" class="dialogue task-dialogue" style="display: none;">
+        <div class="dialogue-inner flex-col pos-relative">
+
+            <button class="close-dialogue" onclick="closeTaskDialogue(event)" title="close dialogue">
+                <img src="assets/icons/close.svg" alt="close-icon" class="close-icon dark">
+                <img src="assets/icons/close-white.svg" alt="close-icon" class="close-icon light">
+            </button>
+
+            <div id="taskDetailsWrapper" class="dialogue-main flex-col pos-relative" style="display: none;"></div>
+
+            <div id="addTaskFormWrapper" class="dialogue-main flex-col pos-relative" style="display: none;">
+                <div class="page-title-wrapper">
+                    <h2 class="page-title">Add Task</h2>
+                </div>
+                <form id="addTaskForm" onsubmit="createTask(event)" class="flex-col task-form add-task-form" data-submit-btn-id="btnSubmit">
+                    <div id="addTaskFieldGroups" class="field-groups flex-row gap-40"></div>
+                    <div class="submit-button-wrapper flex-row gap justify-end pos-relative">
+                        <div class="required-info">This field is required</div>
+                        <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetAddTaskForm(event)"></button>
+                        <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled></button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="editTaskFormWrapper" class="dialogue-main flex-col pos-relative" style="display: none;">
+                <form id="editTaskForm" onsubmit="saveTask(event)" class="flex-col task-form edit-task-form" data-submit-btn-id="btnSubmit">
+                    <div id="editTaskFieldGroups" class="field-groups flex-col"></div>
+                    <div class="submit-button-wrapper flex-row gap justify-end pos-relative">
+                        <div class="required-info">This field is required</div>
+                        <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled>Ok</button>
+                    </div>
+                </form>
+            </div>
+   
+        </div>    
     </div>
+
+    <ul id="tempTaskList" class="flex-col gap ul-reset"></ul>
+    <script>renderTempTaskList();</script>
+
 </body>
 
 </html>

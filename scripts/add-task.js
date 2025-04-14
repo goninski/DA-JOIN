@@ -218,8 +218,34 @@ function resetAddTaskForm(event) {
 
 function closeTaskDialogue(event) {
     event.stopPropagation();
-    resetAddTaskForm(event);
+    if(taskFormMode == 'add' || taskFormMode == 'edit') {
+        resetAddTaskForm(event);
+    }
     document.getElementById('taskDialogue').style = 'display: none';
     renderBoards();
     taskFormMode = '';
+}
+
+
+
+
+
+// TEMP STUFF
+function renderTempTaskList() {
+    taskFormMode = '';
+    let taskListRef = document.getElementById('tempTaskList');
+    taskListRef.innerHTML = '';
+    for (let index = 0; index < tasks.length; index++) {
+        taskListRef.innerHTML += getTempTaskListTemplate(tasks[index]);
+    }
+}
+
+function getTempTaskListTemplate(task) {
+    return `
+    <li class="flex-row gap justify-between align-center fw-bold">#${task.id} | ${task.title}
+        <button class="" style="margin-left: auto; text-decoration: underline;" onclick="showTask(event, ${task.id})">Show</button>
+        <button class="" style="text-decoration: underline;" onclick="editTask(event, ${task.id})">Edit</button>
+        <button class="" style="text-decoration: underline;" onclick="deleteTask(event, ${task.id})">Delete</button>
+    </li>
+    `
 }
