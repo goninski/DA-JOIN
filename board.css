@@ -5,6 +5,9 @@
     left: 328px;
     top: 206px;
     gap: 30px;
+    width: 1056px;
+    height: 73px;
+    justify-content: space-between;
 }
 
 .black {
@@ -44,4 +47,21 @@
     font-weight: 400;
     font-size: 20px;
     color: #D1D1D1;
+}
+
+.input-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-wrapper-board {
+    width: 312px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: white;
+    box-sizing: border-box;
 }

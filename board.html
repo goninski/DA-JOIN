@@ -25,18 +25,19 @@
 
 
         <div class="page-title headline-board">
-            <p class="black">Board</p>
-            <div class="input-wrapper">
-                <input type="text">
-                <div class="input-inner">
-                    <div class="find-task">Find Task</div>
-                    <hr>
-                    <img src="./assets/icons/search.png" alt="Lock Icon">
+            <div class="black">Board</div>
+            <div style="gap: 32px; display: flex;">
+                <div class="input-wrapper-board">
+                    <input type="text" placeholder="Find Task">
+                    <hr style="height: 31px; width: 0px; color: #D1D1D1; border: solid 1px;">
+                    <div class="input-img">
+                        <img src="./assets/icons/search.png" alt="Search Icon">
+                    </div>
                 </div>
+                <button class="add-task-button" onclick="addTask(event)">Add task<img src="./assets/icons/add.png" alt=""></button>
             </div>
-            <button class="add-task-button" onclick="addTask(event)"">Add task<img src="./assets/icons/add.png" alt=""></button>
+            </div>
         </div>
-    
 
 
         
