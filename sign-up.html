@@ -32,30 +32,30 @@
 
             <div class="flex-col login-email-part-sign-up center gap_16px">
                 <div class="flex-col">
-                    <div class="input-wrapper margin-bottom-24px flex justify-between">
+                    <div class="input-wrapper-signup-login margin-bottom-24px flex justify-between">
                         <input type="text" minlength="3" placeholder="Name">
-                        <div class="input-inner">
+                        <div class="input-inner-signup-login">
                             <img src="./assets/img/person.png" alt="Person Icon" class="input-icon">
                         </div>
                     </div>
 
-                    <div class="input-wrapper margin-bottom-24px flex justify-between">
+                    <div class="input-wrapper-signup-login margin-bottom-24px flex justify-between">
                         <input type="email" name="email" id="email" placeholder="Email">
-                        <div class="input-inner">
+                        <div class="input-inner-signup-login">
                             <img src="./assets/img/mail.png" alt="Mail Icon" class="input-icon">
                         </div>
                     </div>
 
-                    <div class="input-wrapper margin-bottom-24px flex justify-between">
+                    <div class="input-wrapper-signup-login margin-bottom-24px flex justify-between">
                         <input type="password" id="pwd" name="pwd" minlength="8" placeholder="Password">
-                        <div class="input-inner">
+                        <div class="input-inner-signup-login">
                             <img src="./assets/img/lock.png" alt="Lock Icon">
                         </div>
                     </div>
 
-                    <div class="input-wrapper margin-bottom-24px">
+                    <div class="input-wrapper-signup-login margin-bottom-24px">
                         <input type="password" id="confirm_pwd" name="pwd" minlength="8" placeholder="Confirm Password">
-                        <div class="input-inner flex justify-between">
+                        <div class="input-inner-signup-login flex justify-between">
                             <img src="./assets/img/lock.png" alt="Lock Icon">
                         </div>
                     </div>
@@ -72,7 +72,7 @@
             </div>
 
             <div class="flex-row align-end justify-center gap-35">
-                <button type="submit" value="Sign up" class="button btn-login-size btn-fourth">Sign up</button>
+                <button type="submit" value="Sign up" class="button btn-login-size btn-fourth" onclick="showSignUpSuccessOverlay()">Sign up</button>
             </div>
         </div>
     </section>
