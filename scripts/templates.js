@@ -101,7 +101,7 @@ function getTaskFormFieldsTemplate(task) {
                 <input type="radio" id="inputPrioHigh" name="priority" value="high">
                 <label for="inputPrioHigh" id="labelPrioHigh" class="prio-high button btn-icon btn-radio" value="high"></label>
 
-                <input type="radio" id="inputPrioMedium" name="priority" value="medium">
+                <input type="radio" id="inputPrioMedium" name="priority" value="medium" checked>
                 <label for="inputPrioMedium" id="labelPrioMedium" class="prio-medium button btn-icon btn-radio" value="medium"></label>
 
                 <input type="radio" id="inputPrioLow" name="priority" value="low"">
@@ -111,14 +111,14 @@ function getTaskFormFieldsTemplate(task) {
 
         <div class="field-wrapper">
             <label for="selectContacts">Assigned to</label>
-            <div class="select custom-select multiple">
+            <div class="select custom-select multiple right">
                 <div class="input-wrapper custom-select">
                     <input type="text" id="selectContacts" name="selectContacts" placeholder="Select contacts to assign" onfocus="resetInputValidation('selectContacts')" oninput="renderContactSelectOptions(event)" onclick="renderContactSelectOptions(event)" class="clickable">
                     <div class="input-icon-wrapper custom-select">
                         <button onclick="renderContactSelectOptions(event)"><img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown"></button>
                     </div>
                 </div>
-                <ul id="taskContactsSelectOptionsWrapper"></ul>
+                <ol id="taskContactsSelectOptionsWrapper"></ol>
             </div>
             <ul id="profileBatches" class="profile-batches hide-if-empty" style="margin-top: 16px;"></ul>
         </div>
@@ -162,14 +162,15 @@ function tempSubtasks() {
 function getContactSelectOptionTemplate(contact) {
     return `
     <li>
-        <div class="profile-batch" style="--profile-color: ${contact.color};">${contact.initials}</div>
-        <label for="checkboxAssignedContact-${contact.id}">${contact.name}</label>
-        <div class="input-icon-wrapper custom-checkbox">
-            <button>
-                <input type="checkbox" class="custom" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}" onchange="tempAssignContactsToTask(event, ${contact.id})">
-                <img src="assets/icons/checkbox-checked.svg" alt="checkbox-checked" class="icon-checkbox">
-            </button>
-        </div>
+        <label for="checkboxAssignedContact-${contact.id}">${contact.name}
+            <div class="profile-batch label-icon" style="--profile-color: ${contact.color};">${contact.initials}</div>
+            <div class="input-icon-wrapper custom-checkbox">
+                <button>
+                    <input type="checkbox" class="custom" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}" onchange="tempAssignContactsToTask(event, ${contact.id})">
+                    <img src="assets/icons/checkbox-checked-white.svg" alt="checkbox-checked" class="icon-checkbox">
+                </button>
+            </div>
+        </label>
     </li>
     `
 }
@@ -278,7 +279,9 @@ function getFloatingMessageTaskAddedTemplate() {
 }
 
 
-function preTrash() {
+
+
+function trashKeepForNow() {
     return `
 
     <div class="select-btn focus" onclick="renderContactSelectOptions(event)">

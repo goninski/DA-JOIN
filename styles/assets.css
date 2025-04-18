@@ -137,9 +137,14 @@ form {
 .field-wrapper.has-message {
     padding-bottom: 16px;
 }
+.field-groups {
+    row-gap: 12px;
+}
 .field-group {
     min-width: var(--field-width);
     max-width: var(--field-width);
+    padding-left: 1px;
+    padding-right: 1px;
     gap: 24px;
 }
 
@@ -279,7 +284,7 @@ input:checked + label.prio-low {
     position: relative;
     z-index: 2;
 } */
-.select.custom-select ul {
+.select.custom-select :is(ul, ol) {
     list-style: none;
     padding-top: 8px;
     padding-inline: 0;
@@ -295,28 +300,52 @@ input:checked + label.prio-low {
     animation-name: fadeinUp;
     animation-duration: 0.4s;
     animation-fill-mode: both;
+    scrollbar-color: #eee white;
 }
 .select.custom-select li {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 8px;
-    height: 56px;
-    transition: 0.3s;
-    padding-inline: 16px;
-    border-radius: 10px;
-    cursor: pointer;
+    margin-bottom: 1px;
+    /* gap: 8px; */
+    /* height: 56px;
+    transition: 0.3s; */
+    /* padding-inline: 16px; */
+    /* border-radius: 10px; */
+    /* cursor: pointer; */
 }
 .select.custom-select label {
-    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-grow: 1;
+    height: 56px;
+    padding-inline: 16px;
+    margin-bottom: 0;
     cursor: pointer;
+    transition: 0.3s;
+    overflow-wrap: anywhere;
+    border-radius: 10px;
 }
-.select.custom-select li:hover,
-.select.custom-select li:has( input:focus) {
+.select.custom-select.multiple.right label {
+    padding-right: 54px;
+}
+.select.custom-select .label-icon {
+    order: -1;
+}
+.select.custom-select label:hover,
+.select.custom-select label:has( input:focus) {
     background-color: var(--clr-subtle);
     background-color: #eee;
 }
-.input-wrapper.custom-select:not(.open) ~ ul {
+.select.custom-select label:has( input:checked) {
+    background-color: var(--clr-main);
+    color: white;
+}
+.select.custom-select label:hover:has( input:checked) {
+    background-color: var(--clr-dark);
+}
+.input-wrapper.custom-select:not(.open) ~ :is(ul, ol) {
     display: none;
 }
 
@@ -400,6 +429,10 @@ input:has(+ .input-icon-wrapper.simple) {
 .input-icon-wrapper.custom-checkbox input:hover + img {
     border-radius: 3px;
     background-color: var(--clr-subtle);
+}
+.input-icon-wrapper.custom-checkbox input:checked,
+.input-icon-wrapper.custom-checkbox input:checked + img {
+    background-color: transparent;
 }
 .input-icon-wrapper.custom-checkbox input:focus {
     box-shadow: none;
