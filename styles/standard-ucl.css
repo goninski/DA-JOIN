@@ -313,8 +313,13 @@
 .overflow-hidden {
     overflow: hidden;
 }
-.cursor-pointer, .clickable {
+.cursor-pointer,
+.clickable {
     cursor: pointer;
+}
+.cursor-pointer-auto,
+.not-clickable {
+    cursor: none;
 }
 .hide-if-empty:empty,
 .hide {

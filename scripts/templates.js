@@ -111,14 +111,14 @@ function getTaskFormFieldsTemplate(task) {
 
         <div class="field-wrapper">
             <label for="selectContacts">Assigned to</label>
-            <div class="select custom-select multiple right">
+            <div class="select custom-select multiple right select-contacts">
                 <div class="input-wrapper custom-select">
                     <input type="text" id="selectContacts" name="selectContacts" placeholder="Select contacts to assign" onfocus="resetInputValidation('selectContacts')" oninput="renderContactSelectOptions(event)" onclick="renderContactSelectOptions(event)" class="clickable">
                     <div class="input-icon-wrapper custom-select">
                         <button onclick="renderContactSelectOptions(event)"><img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown"></button>
                     </div>
                 </div>
-                <ol id="taskContactsSelectOptionsWrapper"></ol>
+                <ol id="taskContactsSelectOptionsWrapper" class="select-options-wrapper"></ol>
             </div>
             <ul id="profileBatches" class="profile-batches hide-if-empty" style="margin-top: 16px;"></ul>
         </div>
@@ -161,14 +161,14 @@ function tempSubtasks() {
 
 function getContactSelectOptionTemplate(contact) {
     return `
-    <li>
+    <li class="select-option">
         <label for="checkboxAssignedContact-${contact.id}">${contact.name}
             <div class="profile-batch label-icon" style="--profile-color: ${contact.color};">${contact.initials}</div>
             <div class="input-icon-wrapper custom-checkbox">
-                <button>
-                    <input type="checkbox" class="custom" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}" onchange="tempAssignContactsToTask(event, ${contact.id})">
-                    <img src="assets/icons/checkbox-checked-white.svg" alt="checkbox-checked" class="icon-checkbox">
-                </button>
+                <input type="checkbox" class="custom clickable" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}" onchange="tempAssignContactsToTask(event, ${contact.id})">
+                <div class="checkbox-checked-wrapper">
+                    <img src="assets/icons/checkbox-checked-white.svg" alt="checkbox-checked" class="icon-checkbox-checked">
+                </div>
             </div>
         </label>
     </li>
