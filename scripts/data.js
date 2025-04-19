@@ -9,10 +9,10 @@ let lastTaskId = 0;
 
 
 let categoriesDemo = [
-    {
-        "id": "0",
-        "name": "Select Task Category"
-    },
+    // {
+    //     "id": "0",
+    //     "name": "Select Task Category"
+    // },
     {
         "id": "1",
         "name": "Technical Task"

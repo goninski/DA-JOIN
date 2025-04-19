@@ -75,6 +75,7 @@ function getTaskDetailsWrapperTemplate(task) {
 function getTaskFormFieldsTemplate(task) {
     return `
     <div class="field-group flex-col flex-grow">
+
         <div class="field-wrapper has-message">
             <label for="title" class="required">Title</label>
             <input type="text" id="inputTitle" class="x-invalid" name="title" placeholder="Enter a title" required maxlength="128" onfocus="resetInputValidation('inputTitle')" onfocusout="validateInput('inputTitle')">
@@ -120,9 +121,28 @@ function getTaskFormFieldsTemplate(task) {
                 </div>
                 <ol id="taskContactsSelectOptionsWrapper" class="select-options-wrapper"></ol>
             </div>
-            <ul id="profileBatches" class="profile-batches hide-if-empty" style="margin-top: 16px;"></ul>
+            <ul id="profileBatches" class="profile-batches hide-if-empty" style="margin-top: 12px;"></ul>
         </div>
 
+
+        <div class="field-wrapper has-message">
+            <label for="inputCategory" class="required">Category</label>
+            <div class="select custom-select">
+                <div class="input-wrapper custom-select">
+                    <input type="text" id="inputCategory" name="inputCategory" placeholder="Select task category" onfocus="resetInputValidation('inputCategory', true)" onfocusout="validateInput('inputCategory', true)" onclick="renderCategorySelectOptions(event)" class="clickable" required>
+                    <div class="input-icon-wrapper custom-select">
+                        <img src="/assets/icons/arrow-drop-down.svg" class="icon">
+                    </div>
+                </div>
+                <ol id="taskCategoriesSelectOptionsWrapper" class="select-options-wrapper"></ol>
+            </div>
+            <div class="validation-msg">This field is required</div>
+        </div>
+
+
+
+
+<!--        
         <div class="field-wrapper xhas-message">
             <label for="categoryId" class="required">Category</label>
             <div class="input-wrapper custom-select xinvalid">
@@ -133,6 +153,7 @@ function getTaskFormFieldsTemplate(task) {
             </div>
             <div class="validation-msg">This field is required</div>
         </div>
+-->
 
     </div>
     `
@@ -165,7 +186,7 @@ function getContactSelectOptionTemplate(contact) {
         <label for="checkboxAssignedContact-${contact.id}">${contact.name}
             <div class="profile-batch label-icon" style="--profile-color: ${contact.color};">${contact.initials}</div>
             <div class="input-icon-wrapper custom-checkbox">
-                <input type="checkbox" class="custom clickable" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}" onchange="tempAssignContactsToTask(event, ${contact.id})">
+                <input type="checkbox" class="custom clickable" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}" onchange="selectTaskContacts(event, ${contact.id})">
                 <div class="checkbox-checked-wrapper">
                     <img src="assets/icons/checkbox-checked-white.svg" alt="checkbox-checked" class="icon-checkbox-checked">
                 </div>
@@ -176,6 +197,18 @@ function getContactSelectOptionTemplate(contact) {
 }
 
 function getCategorySelectOptionTemplate(category) {
+    return `
+    <li class="select-option">
+        <label for="radioSelectCategory-${category.id}">${category.name}
+            <div class="input-icon-wrapper radio-select-option">
+                <input type="radio" class="clickable" id="radioSelectCategory-${category.id}" name="inputCategoryId" value="${category.id}" onchange="selectTaskCategory(event, '${category.name}')">
+            </div>
+        </label>
+    </li>
+    `
+}
+
+function xgetCategorySelectOptionTemplate(category) {
     return `
     <option value="${category.id}">${category.name}</option>
     `

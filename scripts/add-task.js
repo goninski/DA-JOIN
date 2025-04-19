@@ -80,8 +80,9 @@ function renderTaskForm(fieldsWrapperId, task = null) {
     }
     // renderContactSelectOptions(event);
     renderContactProfileBatches();
-    renderCategorySelectOptions();
+    // renderCategorySelectOptions(event);
     setEditTaskValues(task);
+    // setInitalFormState(requiredTaskFields, 'inputCategory', taskFormMode);
     setInitalFormState(requiredTaskFields, 'inputTitle', taskFormMode);
 }
 
@@ -94,7 +95,7 @@ function setEditTaskValues(task) {
             let priority =  setFirstLetterUpperCase(task.priority);
             document.getElementById('inputPrio' + priority).checked = true;
         }
-        document.getElementById('inputCategory').value = task.categoryId;
+        // document.getElementById('InputCategory').value = task.categoryId;
         assignedTaskContacts = task.contactIds;
         assignedSubtasks = task.subtasks;
         // renderContactSelectOptions(event);
@@ -103,13 +104,29 @@ function setEditTaskValues(task) {
     }
 }
 
-function tempAssignContactsToTask(event, contactId) {
+function selectTaskContacts(event, contactId) {
     if(event.target.checked) {
         assignedTaskContacts.push(contactId);
     } else {
         assignedTaskContacts.splice(assignedTaskContacts.indexOf(contactId), 1);
     };
     renderContactProfileBatches(assignedTaskContacts);
+}
+
+function selectTaskCategory(event, categoryName) {
+    let id = 'inputCategory';
+    selectInput = document.getElementById(id);
+    parentElement = selectInput.parentElement;
+    if(event.target.checked) {
+        parentElement.classList.toggle('open');
+        selectInput.value = categoryName;
+        // selectInput.readOnly = true; 
+        let index = invalidFields.findIndex(item => item == id);
+        if(index >= 0) {
+            invalidFields.splice(index, 1);
+        }
+        resetValidationStyles(selectInput, true);
+       }
 }
 
 function validateSubtaskInput(event, id='inputSubtasks') {

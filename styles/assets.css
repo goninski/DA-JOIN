@@ -186,15 +186,16 @@ select.custom {
     border-color: var(--clr-warning) !important;
 }
 .validation-msg {
-    opacity: 0;
+    visibility: hidden;
     position: absolute;
     bottom: 0;
     height: 12px;
     font-size: 12px;
     color: var(--clr-warning);
 }
+.select.custom-select :has(.invalid) ~ .validation-msg,
 .invalid ~ .validation-msg {
-    opacity: 1;
+    visibility: visible;
 }
 .required-info {
     position: relative;
@@ -289,6 +290,7 @@ input:checked + label.prio-low {
     padding-top: 8px;
     padding-inline: 0;
     margin-block: -8px;
+    margin-bottom: 4px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     background-color: white;
@@ -338,11 +340,11 @@ input:checked + label.prio-low {
     background-color: var(--clr-subtle);
     background-color: #eee;
 }
-.select.custom-select label:has( input:checked) {
+.select.custom-select.multiple label:has( input:checked) {
     background-color: var(--clr-main);
     color: white;
 }
-.select.custom-select label:hover:has( input:checked) {
+.select.custom-select.multiple label:hover:has( input:checked) {
     background-color: var(--clr-dark);
 }
 .input-wrapper.custom-select:not(.open) ~ :is(ul, ol) {
@@ -413,7 +415,8 @@ input:has(+ .input-icon-wrapper.simple) {
     bottom: 2px;
     transition-duration: var(--transition-duration);
 }
-.input-icon-wrapper.custom-checkbox .checkbox-checked-wrapper {
+.input-icon-wrapper.custom-checkbox .checkbox-checked-wrapper,
+.radio-select-option {
     display: none;
 }
 .input-icon-wrapper.custom-checkbox input:checked {

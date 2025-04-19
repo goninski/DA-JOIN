@@ -61,6 +61,8 @@ function resetForm(formId) {
 function validateInput(id, parent = false) {
     // let id = event.currentTarget.id;
     let element = document.getElementById(id);
+    console.log(id);
+    console.log(invalidFields);
     let index = invalidFields.findIndex(item => item == id);
     if (! element.checkValidity()) {
         if(index < 0) {
@@ -74,6 +76,11 @@ function validateInput(id, parent = false) {
         setValidStyles(element);
         return element.value;
     }
+}
+
+function closeSelectOptions(id) {
+    let element = document.getElementById(id);
+    element.parentElement.classList.remove('open');
 }
 
 function validatePhoneInput(id, parent = false) {
@@ -111,7 +118,11 @@ function resetInputValidation(id, parent = false) {
 function setInvalidStyles(element, parent) {
     element.classList.add('invalid');
     if(parent) {
-        element.parentNode.classList.add('invalid');
+        if(element.parentNode.classList.contains('custom-select')) {
+            element.parentNode.parentNode.classList.add('invalid');
+        } else {
+            element.parentNode.classList.add('invalid');
+        };
     }
     setSubmitBtnState(element);
 }
@@ -120,7 +131,11 @@ function resetValidationStyles(element, parent) {
     element.classList.remove('invalid');
     element.classList.remove('valid');
     if(parent) {
-        element.parentNode.classList.remove('invalid');
+        if(element.parentNode.classList.contains('custom-select')) {
+            element.parentNode.parentNode.classList.remove('invalid');
+        } else {
+            element.parentNode.classList.remove('invalid');
+        };
     }
     setSubmitBtnState(element);
 }
@@ -157,7 +172,7 @@ function getAllInputs(event, formId) {
 
 
 
-// GENERAL REENDER FUNCTIONS
+// GENERAL RENDER FUNCTIONS
 
 function renderContactProfileBatches(contactIds = [], elementId = 'profileBatches') {
     let element = document.getElementById(elementId);
@@ -177,9 +192,9 @@ function renderContactSelectOptions(event, wrapperId = 'taskContactsSelectOption
     };
     // console.log(element);
     element.classList.toggle('open');
-    contacts = sortContacts(contacts);
     let optionsWrapper = document.getElementById(wrapperId);
     optionsWrapper.innerHTML = '';
+    contacts = sortContacts(contacts);
     for (let index = 0; index < contacts.length; index++) {
         optionsWrapper.innerHTML += getContactSelectOptionTemplate(contacts[index]);
         if(assignedTaskContacts.length > 0) {
@@ -191,8 +206,22 @@ function renderContactSelectOptions(event, wrapperId = 'taskContactsSelectOption
     }
 }
 
-function renderCategorySelectOptions(id = 'inputCategory') {
-    let selectInput = document.getElementById(id);
+function renderCategorySelectOptions(event, wrapperId = 'taskCategoriesSelectOptionsWrapper') {
+    let element = event.currentTarget.parentElement;
+    if(element.classList.contains('input-icon-wrapper')) {
+        element = element.parentElement;
+    };
+    element.classList.toggle('open');
+    let optionsWrapper = document.getElementById(wrapperId);
+    optionsWrapper.innerHTML = '';
+    categories = sortCategories(categories);
+    for (let index = 0; index < categories.length; index++) {
+        optionsWrapper.innerHTML += getCategorySelectOptionTemplate(categories[index]);
+    }
+}
+
+function xrenderCategorySelectOptions(event, wrapperId = 'taskCategoriesSelectOptionsWrapper') {
+    let selectInput = document.getElementById(wrapperId);
     selectInput.innerHTML = '';
     for (let index = 0; index < categories.length; index++) {
         selectInput.innerHTML += getCategorySelectOptionTemplate(categories[index]);
@@ -250,6 +279,10 @@ function getCategoryIndexFromId(categoryId) {
 
 function sortContacts(contacts) {
     return contacts.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+function sortCategories(categories) {
+    return categories.sort((a, b) => a.id.localeCompare(b.id));
 }
 
 function setTodayAsDateValue(id) {
