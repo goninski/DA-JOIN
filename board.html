@@ -22,21 +22,48 @@
     <div id="sideMenuMob" class="side-menu"></div>
 
 
-        <div class="page-title headline-board">
+    <div class="page-title headline-board">
+        <!-- Container für die oberen drei Elemente -->
+        <div class="top-row" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
             <div class="black">Board</div>
+
             <div style="gap: 32px; display: flex;">
                 <div class="input-wrapper-board">
                     <input type="text" placeholder="Find Task" class="search-input">
-                   <div class="input-divider"></div>
+                    <div class="input-divider"></div>
                     <div class="input-img">
                         <img src="./assets/icons/search.png" alt="Search Icon">
                     </div>
                 </div>
-                <button class="add-task-button" onclick="addTask(event)">Add task<img src="./assets/icons/add.png" alt=""></button>
-            </div>
+                <button class="add-task-button" onclick="addTask(event)">
+                    Add task <img src="./assets/icons/add.png" alt="">
+                </button>
             </div>
         </div>
-        
+
+        <!-- Board Metrics darunter -->
+        <div class="board-metrics" style="margin-top: 20px;">
+            <div>
+                <p>To do</p>
+                <img src="" alt="">
+            </div>
+            <div>
+                <p>In progress</p>
+                <img src="" alt="">
+            </div>
+            <div>
+                <p>Await Feedback</p>
+                <img src="" alt="">
+            </div>
+            <div>
+                <p>Done</p>
+                <img src="" alt="">
+            </div>
+        </div>
+    </div>
+
+
+
 
     <div id="taskDialogue" class="dialogue task-dialogue" style="display: none;">
         <div class="dialogue-inner flex-col pos-relative">
@@ -52,27 +79,32 @@
                 <div class="page-title-wrapper">
                     <h2 class="page-title">Add Task</h2>
                 </div>
-                <form id="addTaskForm" onsubmit="createTask(event)" class="flex-col task-form add-task-form" data-submit-btn-id="btnSubmit">
+                <form id="addTaskForm" onsubmit="createTask(event)" class="flex-col task-form add-task-form"
+                    data-submit-btn-id="btnSubmit">
                     <div id="addTaskFieldGroups" class="field-groups flex-row gap-40"></div>
                     <div class="submit-button-wrapper flex-row gap justify-end pos-relative">
                         <div class="required-info">This field is required</div>
-                        <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetAddTaskForm(event)"></button>
-                        <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled></button>
+                        <button id="btnReset" class="button btn-cancel btn-icon btn-secondary"
+                            onclick="resetAddTaskForm(event)"></button>
+                        <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary"
+                            disabled></button>
                     </div>
                 </form>
             </div>
 
             <div id="editTaskFormWrapper" class="dialogue-main flex-col pos-relative" style="display: none;">
-                <form id="editTaskForm" onsubmit="saveTask(event)" class="flex-col task-form edit-task-form" data-submit-btn-id="btnSubmitSave">
+                <form id="editTaskForm" onsubmit="saveTask(event)" class="flex-col task-form edit-task-form"
+                    data-submit-btn-id="btnSubmitSave">
                     <div id="editTaskFieldGroups" class="field-groups flex-col"></div>
                     <div class="submit-button-wrapper flex-row gap justify-end pos-relative">
                         <div class="required-info">This field is required</div>
-                        <button type="submit" id="btnSubmitSave" class="button btn-check btn-icon btn-primary" disabled>Ok</button>
+                        <button type="submit" id="btnSubmitSave" class="button btn-check btn-icon btn-primary"
+                            disabled>Ok</button>
                     </div>
                 </form>
             </div>
-   
-        </div>    
+
+        </div>
     </div>
 
 

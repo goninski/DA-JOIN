@@ -8,6 +8,7 @@
     width: 1056px;
     height: 73px;
     justify-content: space-between;
+    flex-direction: column;
 }
 
 .black {
@@ -29,6 +30,10 @@
     align-items: center;
     font-size: 21px;
     font-weight: 700;
+}
+
+.add-task-button:hover {
+    background-color: #29ABE2;
 }
 
 .board-input {
@@ -53,8 +58,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
-    height: 20px;
+    width: 32px;
+    height: 32px;
     object-fit: contain;
 }
 
@@ -77,6 +82,8 @@
     font-size: 18px;
     color: #000;
     background-color: transparent;
+    width: 312px;
+    height: 48px;
   }
 
 .search-input::placeholder {
@@ -89,4 +96,9 @@
     height: 60%;
     background-color: #D1D1D1;
     margin: 0 12px;
+}
+
+.board-metrics {
+    display: flex;
+    flex-direction: row;
 }
