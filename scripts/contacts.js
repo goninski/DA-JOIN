@@ -82,7 +82,7 @@ function editContact(contactId) {
 function openContactsForm(contactsFormMode, contactId = 0) {
     document.getElementById('addContactDialogue').style = '';
     document.body.style = 'overflow: hidden;';
-    setInitalFormState(requiredContactFields, 'inputName', contactsFormMode);
+    setInitialFormState('contactsForm', 'inputName', contactsFormMode);
     if(contactsFormMode == 'add'){
         setAddContactValues();
     } else {
@@ -104,7 +104,7 @@ function closeContactsFormDialogue(event) {
 function resetContactsForm(event) {
     event.stopPropagation();
     resetForm('contactsForm');
-    setInitalFormState(requiredContactFields, 'inputName', 'add');
+    setInitialFormState('contactsForm', 'inputName', 'add');
     event.preventDefault();
 }
 
@@ -142,14 +142,18 @@ function submitContactsForm(event, contactId) {
 }
 
 function createContact(contactId, event) {
-    let contact = getAllInputs(event, 'contactsForm');
-    console.log(contact);
-    if(contact.name.length <= 0) {
+    let formInputs = getFormInputObj(event, 'contactsForm');
+    console.log(formInputs);
+    if(formInputs.name.length <= 0) {
         return;
     }
     activeContactId = contactId;
+    let contact = {};
     contact.id = contactId;
-    contact.initials = getInitialsOfFirstAndLastWord(contact.name);
+    contact.name = formInputs.name;
+    contact.email = formInputs.email;
+    contact.phone = formInputs.phone;
+    contact.initials = getInitialsOfFirstAndLastWord(formInputs.name);
     contact.color = getRandomColor();
     contacts.push(contact);
     sortContacts(contacts);
@@ -162,15 +166,16 @@ function createContact(contactId, event) {
 }
 
 function saveContact(contactId, event) {
-    let contact = getAllInputs(event, 'contactsForm');
-    if(contact.name.length <= 0) {
+    let formInputs = getFormInputObj(event, 'contactsForm');
+    if(formInputs.name.length <= 0) {
         return;
     }
     let index = getContactIndexFromId(contactId);
-    contacts[index].name = contact.name;
-    contacts[index].email = contact.email;
-    contacts[index].phone = contact.phone;
-    contacts[index].initials = getInitialsOfFirstAndLastWord(contact.name);
+    let contact = {};
+    contacts[index].name = formInputs.name;
+    contacts[index].email = formInputs.email;
+    contacts[index].phone = formInputs.phone;
+    contacts[index].initials = getInitialsOfFirstAndLastWord(formInputs.name);
     sortContacts(contacts);
     // console.log(contacts[index]);
     saveContactData();
@@ -185,8 +190,10 @@ function deleteContact(contactId, event) {
     // console.log(contacts);
     saveContactData();
     activeContactId = 0;
-    closeContactsFormDialogue(event);
     // reloadPage(event);
-    showAlert('Contact deleted');
+    showFloatingMessage('text', 'Contact deleted');
+    setTimeout(function() { 
+        closeContactsFormDialogue(event);
+    }, 1000);
 }
 

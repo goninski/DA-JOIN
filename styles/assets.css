@@ -183,7 +183,7 @@ select.custom {
     justify-content: center;
     padding: 16px 10px;
 }
-.invalid {
+.invalid input {
     border-color: var(--clr-warning) !important;
 }
 .validation-msg {
@@ -194,8 +194,7 @@ select.custom {
     font-size: 12px;
     color: var(--clr-warning);
 }
-.select.custom-select :has(.invalid) ~ .validation-msg,
-.invalid ~ .validation-msg {
+.invalid .validation-msg {
     visibility: visible;
 }
 .required-info {
@@ -286,9 +285,9 @@ input:checked + label.prio-low {
     position: relative;
     z-index: 2;
 } */
-.select.custom-select :is(ul, ol) {
+.select.custom-select .select-options-wrapper {
     list-style: none;
-    padding-top: 8px;
+    padding-top: 10px;
     padding-inline: 0;
     margin-block: -8px;
     margin-bottom: 4px;
@@ -305,30 +304,27 @@ input:checked + label.prio-low {
     animation-fill-mode: both;
     scrollbar-color: #eee white;
 }
-.select.custom-select li {
+.select-options-wrapper li {
     position: relative;
     display: flex;
     align-items: center;
     margin-bottom: 1px;
-    /* gap: 8px; */
-    /* height: 56px;
-    transition: 0.3s; */
-    /* padding-inline: 16px; */
-    /* border-radius: 10px; */
-    /* cursor: pointer; */
 }
-.select.custom-select label {
+.select-options-wrapper label {
     display: flex;
     align-items: center;
     gap: 8px;
     flex-grow: 1;
-    height: 56px;
+    height: 48px;
     padding-inline: 16px;
     margin-bottom: 0;
     cursor: pointer;
     transition: 0.3s;
     overflow-wrap: anywhere;
     border-radius: 10px;
+}
+.select.custom-select.multiple label {
+    height: 56px;
 }
 .select.custom-select.multiple.right label {
     padding-right: 54px;
@@ -337,7 +333,7 @@ input:checked + label.prio-low {
     order: -1;
 }
 .select.custom-select label:hover,
-.select.custom-select label:has( input:focus) {
+.select.custom-select label:has( input:focus, input:checked) {
     background-color: var(--clr-subtle);
     background-color: #eee;
 }
@@ -348,8 +344,11 @@ input:checked + label.prio-low {
 .select.custom-select.multiple label:hover:has( input:checked) {
     background-color: var(--clr-dark);
 }
-.input-wrapper.custom-select:not(.open) ~ :is(ul, ol) {
+.field-wrapper:not(.select-open) .select-options-wrapper {
     display: none;
+}
+.field-wrapper.select-open .input-icon-wrapper.custom-select img {
+    rotate: 180deg;
 }
 
 

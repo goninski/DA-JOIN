@@ -36,8 +36,8 @@ function getSideMenuTemplate() {
             <a href="legal-notice.html">Legal notice</a>
             <div class="flex-col gap-05 mt-10"> 
                 <!-- <a href="temp-assets-library.html" style="color: #ccc;">Asset Library</a> -->
-                <!-- <a href="board-fg-temp.html" style="color: #ccc;">Board FG Temp</a> -->
                 <button onclick="setDemoData()" style="text-align: left; color: #ccc";>Testdata Reset</button>
+                <a href="board-fg-temp.html" style="color: #ccc;">Board FG Temp</a>
             </div>
         </div>
     `
@@ -78,7 +78,7 @@ function getTaskFormFieldsTemplate(task) {
 
         <div class="field-wrapper has-message">
             <label for="title" class="required">Title</label>
-            <input type="text" id="inputTitle" class="x-invalid" name="title" placeholder="Enter a title" required maxlength="128" onfocus="resetInputValidation('inputTitle')" onfocusout="validateInput('inputTitle')">
+            <input type="text" id="inputTitle" name="title" placeholder="Enter a title" required maxlength="128" onfocus="clearInputValidation(event)" onfocusout="validateInput(event)">
             <div class="validation-msg">This field is required</div>
         </div>
         <div class="field-wrapper has-message">
@@ -87,7 +87,7 @@ function getTaskFormFieldsTemplate(task) {
         </div>
         <div class="field-wrapper has-message">
             <label for="dueDate" class="required">Due date</label>
-            <input type="date" id="inputDueDate" name="dueDate" class="placeholder" required min="2000-01-01" max="2099-12-31" onfocus="resetInputValidation('inputDueDate'), setTodayAsDateValue('inputDueDate')" onfocusout="validateInput('inputDueDate')">
+            <input type="date" id="inputDueDate" name="dueDate" class="placeholder" required min="2000-01-01" max="2099-12-31" onfocus="clearInputValidation(event), setTodayAsDateValue('inputDueDate')" onfocusout="validateInput(event)">
             <div class="validation-msg">Please enter a valid date</div>
         </div>
     </div>
@@ -105,7 +105,7 @@ function getTaskFormFieldsTemplate(task) {
                 <input type="radio" id="inputPrioMedium" name="priority" value="medium" checked>
                 <label for="inputPrioMedium" id="labelPrioMedium" class="prio-medium button btn-icon btn-radio" value="medium"></label>
 
-                <input type="radio" id="inputPrioLow" name="priority" value="low"">
+                <input type="radio" id="inputPrioLow" name="priority" value="low">
                 <label for="inputPrioLow" id="labelPrioLow" class="prio-low button btn-icon btn-radio" value="low"></label>
             </div>
         </div>
@@ -114,9 +114,9 @@ function getTaskFormFieldsTemplate(task) {
             <label for="selectContacts">Assigned to</label>
             <div class="select custom-select multiple right select-contacts">
                 <div class="input-wrapper custom-select">
-                    <input type="text" id="selectContacts" name="selectContacts" placeholder="Select contacts to assign" onfocus="resetInputValidation('selectContacts')" oninput="renderContactSelectOptions(event)" onclick="renderContactSelectOptions(event)" class="clickable">
+                    <input type="text" id="selectContacts" name="selectContacts" placeholder="Select contacts to assign" onfocus="clearInputValidation(event)" oninput="renderContactSelectOptions(event)" onclick="toggleSelectOptionsVisibility(event)" xonfocusout="validateSelectMultiple('selectContacts')" class="clickable">
                     <div class="input-icon-wrapper custom-select">
-                        <button onclick="renderContactSelectOptions(event)"><img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown"></button>
+                        <button onclick="toggleSelectOptionsVisibility(event)"><img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown"></button>
                     </div>
                 </div>
                 <ol id="taskContactsSelectOptionsWrapper" class="select-options-wrapper"></ol>
@@ -124,14 +124,15 @@ function getTaskFormFieldsTemplate(task) {
             <ul id="profileBatches" class="profile-batches hide-if-empty" style="margin-top: 12px;"></ul>
         </div>
 
-
         <div class="field-wrapper has-message">
-            <label for="inputCategory" class="required">Category</label>
+            <label for="categorySelect" class="required">Category</label>
             <div class="select custom-select">
                 <div class="input-wrapper custom-select">
-                    <input type="text" id="inputCategory" name="inputCategory" placeholder="Select task category" onfocus="resetInputValidation('inputCategory', true)" onfocusout="validateInput('inputCategory', true)" onclick="renderCategorySelectOptions(event)" class="clickable" required>
+                    <input type="text" id="categorySelect" name="categorySelect" placeholder="Select task category" class="clickable" onfocus="clearInputValidation(event)" onfocusout="validateInput(event, 'radio-name')" onclick="toggleSelectOptionsVisibility(event)" data-validation-param="categorySelectId" readonly>
                     <div class="input-icon-wrapper custom-select">
-                        <img src="/assets/icons/arrow-drop-down.svg" class="icon">
+                        <button onclick="toggleSelectOptionsVisibility(event)">
+                            <img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown">
+                        </button>
                     </div>
                 </div>
                 <ol id="taskCategoriesSelectOptionsWrapper" class="select-options-wrapper"></ol>
@@ -139,18 +140,10 @@ function getTaskFormFieldsTemplate(task) {
             <div class="validation-msg">This field is required</div>
         </div>
 
-
-
-
-<!--        
-        <div class="field-wrapper xhas-message">
-            <label for="categoryId" class="required">Category</label>
-            <div class="input-wrapper custom-select xinvalid">
-                <select class="custom placeholder xinvalid clickable" id="inputCategory" name="categoryId" required onfocus="resetInputValidation('inputCategory', true)" onfocusout="validateInput('inputCategory', true)"></select>
-                <div class="input-icon-wrapper custom-select">
-                    <img src="/assets/icons/arrow-drop-down.svg" class="icon">
-                </div>
-            </div>
+<!--
+        <div class="field-wrapper has-message">
+            <label for="temp" class="required">Temp</label>
+            <input type="text" id="inputTemp" name="temp" placeholder="Placeholder" xrequired maxlength="128" onfocus="clearInputValidation(event)" onfocusout="validateInput(event)">
             <div class="validation-msg">This field is required</div>
         </div>
 -->
@@ -164,7 +157,7 @@ function tempSubtasks() {
     <label for="subtasks">Subtasks</label>
     <div class="input-wrapper input-wrapper-subtasks">
         <!--<input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask"> -->
-        <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask" onfocus="resetInputValidation('inputSubtasks')" oninput="validateSubtaskInput(event)" maxlength="128">
+        <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask" onfocus="clearInputValidation(event)" oninput="validateSubtaskInput(event)" maxlength="128">
         <div id="subtaskInputButtonAdd" class="input-icon-wrapper">
             <button onclick="addSubtaskPseudo(event)"><img src="/assets/icons/add.svg" class="icon-add"></button>
         </div>
@@ -199,9 +192,9 @@ function getContactSelectOptionTemplate(contact) {
 function getCategorySelectOptionTemplate(category) {
     return `
     <li class="select-option">
-        <label for="radioSelectCategory-${category.id}">${category.name}
+        <label for="categorySelectId-${category.id}">${category.name}
             <div class="input-icon-wrapper radio-select-option">
-                <input type="radio" class="clickable" id="radioSelectCategory-${category.id}" name="inputCategoryId" value="${category.id}" onchange="selectTaskCategory(event, '${category.name}')">
+                <input type="radio" class="clickable" id="categorySelectId-${category.id}" name="categorySelectId" value="${category.id}" onclick="selectCustomSelectOption(event, 'categorySelect', '${category.name}')" data-validation-param="categorySelect" required>
             </div>
         </label>
     </li>

@@ -68,6 +68,7 @@ function renderTaskForm(fieldsWrapperId, task = null) {
     console.log(task);
     assignedTaskContacts = [];
     assignedSubtasks = [];
+    let formId;
     document.getElementById(fieldsWrapperId).innerHTML = getTaskFormFieldsTemplate(task);
     document.getElementById('labelPrioHigh').innerHTML = getIconTemplatePrioHigh();
     document.getElementById('labelPrioMedium').innerHTML = getIconTemplatePrioMedium();
@@ -75,15 +76,17 @@ function renderTaskForm(fieldsWrapperId, task = null) {
     if(taskFormMode == 'add') {
         document.getElementById('btnReset').innerHTML = getIconTemplateCancel('Clear');
         document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Create Task');
+        renderContactSelectOptions(event);
+        formId = 'addTaskForm';
     } else {
         document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Ok');
+        formId = 'editTaskForm';
     }
     // renderContactSelectOptions(event);
-    renderContactProfileBatches();
-    // renderCategorySelectOptions(event);
+    // renderContactProfileBatches();
+    renderCategorySelectOptions(event);
     setEditTaskValues(task);
-    // setInitalFormState(requiredTaskFields, 'inputCategory', taskFormMode);
-    setInitalFormState(requiredTaskFields, 'inputTitle', taskFormMode);
+    setInitialFormState(formId, 'inputTitle', taskFormMode);
 }
 
 function setEditTaskValues(task) {
@@ -95,11 +98,15 @@ function setEditTaskValues(task) {
             let priority =  setFirstLetterUpperCase(task.priority);
             document.getElementById('inputPrio' + priority).checked = true;
         }
-        // document.getElementById('InputCategory').value = task.categoryId;
         assignedTaskContacts = task.contactIds;
-        assignedSubtasks = task.subtasks;
-        // renderContactSelectOptions(event);
+        renderContactSelectOptions(event);
         renderContactProfileBatches(assignedTaskContacts);
+        if(task.categoryId) {
+            document.getElementById('categorySelectId-' + task.categoryId).checked = true;
+            let categoryName = categories[getCategoryIndexFromId(task.categoryId)].name;
+            document.getElementById('categorySelect').value = categoryName;
+        }
+        assignedSubtasks = task.subtasks;
         // renderSubtasks();
     }
 }
@@ -111,22 +118,6 @@ function selectTaskContacts(event, contactId) {
         assignedTaskContacts.splice(assignedTaskContacts.indexOf(contactId), 1);
     };
     renderContactProfileBatches(assignedTaskContacts);
-}
-
-function selectTaskCategory(event, categoryName) {
-    let id = 'inputCategory';
-    selectInput = document.getElementById(id);
-    parentElement = selectInput.parentElement;
-    if(event.target.checked) {
-        parentElement.classList.toggle('open');
-        selectInput.value = categoryName;
-        // selectInput.readOnly = true; 
-        let index = invalidFields.findIndex(item => item == id);
-        if(index >= 0) {
-            invalidFields.splice(index, 1);
-        }
-        resetValidationStyles(selectInput, true);
-       }
 }
 
 function validateSubtaskInput(event, id='inputSubtasks') {
@@ -184,7 +175,7 @@ function resetSubtaskInput(event, element) {
     document.getElementById('subtaskInputButtonAdd').classList.remove('hide');
     document.getElementById('subtaskInputButtons').classList.add('hide');
     // element.focus();
-    // resetInputValidation(id);
+    // clearInputValidation(id);
 
 }
 
@@ -192,11 +183,16 @@ function resetSubtaskInput(event, element) {
 function createTask(event) {
     console.log('createTask');
     event.stopPropagation();
-    task = getAllInputs(event, 'addTaskForm');
+    let taskInputs = getFormInputObj(event, 'addTaskForm');
+    console.log(taskInputs);
     lastTaskId++;
+    let task = {};
     task.id = lastTaskId;
-    task.categoryId = Number(task.categoryId)   ;
+    task.title = taskInputs.title;
+    task.description = taskInputs.description;
+    task.dueDate = taskInputs.dueDate;
     task.contactIds = assignedTaskContacts;
+    task.categoryId = Number(taskInputs.categorySelectId);
     task.subtasks = assignedSubtasks;
     tasks.push(task);
     saveTaskData();
@@ -212,14 +208,17 @@ function saveTask(event) {
     event.stopPropagation();
     taskId = activeTaskId;
     // console.log(taskId);
-    task = getAllInputs(event, 'editTaskForm');
-    if(task.title.length <= 0) {
+    taskInputs = getFormInputObj(event, 'editTaskForm');
+    if(taskInputs.title.length <= 0) {
         return;
     }
     let index = getTaskIndexFromId(taskId);
     // console.log(index);
-    tasks[index].title = task.title;
+    tasks[index].title = taskInputs.title;
+    tasks[index].description = taskInputs.description;
+    tasks[index].dueDate = taskInputs.dueDate;
     tasks[index].contactIds = assignedTaskContacts;
+    tasks[index].categoryId = Number(taskInputs.categorySelectId);
     tasks[index].subtasks = assignedSubtasks;
     console.log(tasks);
     saveTaskData();
@@ -249,11 +248,12 @@ function deleteTask(event, taskId = 0) {
 
 function resetAddTaskForm(event) {
     event.stopPropagation();
+    let formId = 'addTaskForm';
     assignedTaskContacts = [];
     assignedSubtasks = [];
-    resetForm('addTaskForm');
+    resetForm(formId);
     renderContactProfileBatches();    
-    setInitalFormState(requiredTaskFields, 'inputTitle', 'add');
+    setInitialFormState(formId, 'inputTitle', 'add');
     event.preventDefault();
 }
 
@@ -268,6 +268,66 @@ function closeTaskDialogue(event) {
 }
 
 
+
+
+
+
+
+function renderContactProfileBatches(contactIds = [], elementId = 'profileBatches') {
+    let element = document.getElementById(elementId);
+    element.innerHTML = '';
+    for (let index = 0; index < contactIds.length; index++) {
+        contactIndex = getContactIndexFromId(contactIds[index]);
+        if(contactIndex >= 0) {
+            element.innerHTML += getContactProfileBatchTemplate(contacts[contactIndex]);
+        }
+    }
+}
+
+function renderContactSelectOptions(event, wrapperId = 'taskContactsSelectOptionsWrapper') {
+    if(event) {
+        event.stopPropagation();
+    }
+    let optionsWrapper = document.getElementById(wrapperId);
+    optionsWrapper.innerHTML = '';
+    contacts = sortContacts(contacts);
+    for (let index = 0; index < contacts.length; index++) {
+        optionsWrapper.innerHTML += getContactSelectOptionTemplate(contacts[index]);
+        if(assignedTaskContacts.length > 0) {
+            let isChecked = assignedTaskContacts.includes(contacts[index].id);
+            setTimeout(function() {
+                document.getElementById('checkboxAssignedContact-' + contacts[index].id).checked = isChecked;
+            }, 1);
+        }
+    }
+}
+
+function renderCategorySelectOptions(event, wrapperId = 'taskCategoriesSelectOptionsWrapper') {
+    if(event) {
+        event.stopPropagation();
+    }
+    let optionsWrapper = document.getElementById(wrapperId);
+    optionsWrapper.innerHTML = '';
+    categories = sortCategories(categories);
+    for (let index = 0; index < categories.length; index++) {
+        optionsWrapper.innerHTML += getCategorySelectOptionTemplate(categories[index]);
+    }
+}
+
+function renderSubtasks(wrapperId = 'assignedSubtasks') {
+    let element = document.getElementById(wrapperId);
+    element.innerHTML = '';
+    for (let index = 0; index < assignedSubtasks.length; index++) {
+        element.innerHTML += getSubtasksTemplate(assignedSubtasks[index], index, activeTaskId);
+    }
+    for (let index = 0; index < assignedSubtasks.length; index++) {
+        let listItem = document.getElementById('subtask-i-' + index);
+        listItem.readOnly = true;
+        let wrapper = listItem.parentElement;
+        wrapper.classList.remove('edit-mode');
+    }
+    console.log(assignedSubtasks);
+}
 
 
 
