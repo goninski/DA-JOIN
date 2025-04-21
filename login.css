@@ -39,7 +39,8 @@
 }
 
 .bg-grey {
-    background-color: #F6F7F8
+    background-color: #F6F7F8;
+    overflow: hidden;
 }
 
 .bg-white {
@@ -194,14 +195,17 @@ a.login-privacy-policy-color:hover {
     box-shadow: 0 0 4px rgba(42, 139, 242, 0.4);
 }
 
-.input-wrapper-signup-login input {
+.login-signup-input {
     flex-grow: 1;
-    border: none;
+    border: transparent;
     outline: none;
     font-size: 20px;
     background: transparent;
     --clr-focus: transparent;
     padding: 0;
+    z-index: 2;
+    height: 24px;
+    width: 380px;
 }
 
 .input-inner-signup-login {
@@ -222,4 +226,32 @@ input::placeholder {
 
 .gap_32px {
     gap: 32px;
+}
+
+#login-main-content {
+    opacity: 0;
+    padding: 100px 30px;
+    transition: opacity 1s ease-in-out;
+}
+
+#login-main-content.visible {
+    opacity: 1;
+}
+
+#login_logo {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 274px;
+    height: auto;
+    transform: translate(-50%, -50%);
+    transition: all 1s ease-in-out;
+    z-index: 1000;
+}
+
+#login_logo.moved {
+    top: 80px;
+    left: 77px;
+    width: 100.03px;
+    transform: translate(0, 0);
 }

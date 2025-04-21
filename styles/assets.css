@@ -157,7 +157,7 @@ label.required::after,
     content: "*";
     color: var(--clr-warning);
 }
-input:not([type="checkbox"], [type="radio"]):not(.search-input),
+input:not([type="checkbox"], [type="radio"]):not(.search-input):not(.login-signup-input),
 textarea {
     padding: 12px 21px;
     border-radius: 10px;
