@@ -1,7 +1,6 @@
 .headline-board {
     position: absolute;
     display: flex;
-    align-items: center;
     left: 328px;
     top: 206px;
     gap: 30px;
@@ -30,6 +29,7 @@
     align-items: center;
     font-size: 21px;
     font-weight: 700;
+    height: 48px;
 }
 
 .add-task-button:hover {
@@ -100,5 +100,26 @@
 
 .board-metrics {
     display: flex;
-    flex-direction: row;
+    width: 1208px;
+    height: 24px;
+    gap: 35px;
+}
+
+.board-description {
+    font-weight: 700;
+    font-size: 20px;
+    color: #42526E;
+}
+
+.display-flex {
+    display: flex;
+    align-items: center;
+    width: 244px;
+    height: 24px;
+    justify-content: space-between;
+}
+
+.board-plus-button {
+    height: 24px;
+    width: 24px;
 }
