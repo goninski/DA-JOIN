@@ -111,12 +111,12 @@ function getTaskFormFieldsTemplate(task) {
             <label for="selectContacts">Assigned to</label>
             <div class="select custom-select multiple select-contacts">
                 <div class="input-wrapper custom-select">
-                    <input type="text" id="selectContacts" name="selectContacts" placeholder="Select contacts to assign" onfocus="resetInputValidation(event)" oninput="renderContactSelectOptions(event)" onclick="toggleSelectDropdown(event)" class="clickable">
+                    <input type="text" id="selectContacts" name="selectContacts" placeholder="Select contacts to assign" onfocus="resetInputValidation(event)" oninput="renderContactSelectOptions(event)" onclick="toggleSelectDropdown(event)" onkeydown="toggleSelectDropdown(event)" class="clickable">
                     <div class="input-icon-wrapper custom-select">
-                        <button onclick="toggleSelectOptionsVisibility(event)"><img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown"></button>
+                        <button onclick="toggleSelectDropdown(event)"><img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown"></button>
                     </div>
                 </div>
-                <ol id="taskContactsSelectOptionsWrapper" class="select-options-wrapper multiple right"></ol>
+                <ol id="taskContactsSelectOptionsWrapper" class="select-options-wrapper multiple right" role="listbox"></ol>
             </div>
             <ul id="profileBatches" class="profile-batches hide-if-empty" style="margin-top: 12px;"></ul>
         </div>
@@ -125,7 +125,7 @@ function getTaskFormFieldsTemplate(task) {
             <label for="categorySelect" class="required">Category</label>
             <div class="select custom-select">
                 <div class="input-wrapper custom-select">
-                    <input type="text" id="categorySelect" name="categorySelect" placeholder="Select task category" class="clickable" onfocusout="validateInputEvent(event)" onclick="toggleSelectDropdown(event)" data-active-option="0" role="combox" data-custom-validation="required" readonly>
+                    <input type="text" id="categorySelect" name="categorySelect" placeholder="Select task category" class="clickable" onfocusout="validateInputEvent(event)" onclick="toggleSelectDropdown(event)"  onkeydown="toggleSelectDropdown(event)" data-active-option="0" role="combox" data-custom-validation="required" readonly>
                     <div class="input-icon-wrapper custom-select">
                         <div class="icon-wrapper flex">
                             <img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown">

@@ -98,6 +98,15 @@ function sortCategories(categories) {
     return categories.sort((a, b) => a.id.localeCompare(b.id));
 }
 
+function getBooleanFromString(booleanString) {
+    if(booleanString == 'true') {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
 function setTodayAsDateValue(id) {
     document.getElementById(id).valueAsDate = new Date();
 }

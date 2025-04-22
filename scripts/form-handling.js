@@ -33,13 +33,17 @@ function getInvalidInputIds(formId) {
 
 function resetAllInputValidations(formId) {
     invalidFields = [];
-    elementsArr = getFormElementsArray(formId);
-    elementsArr.forEach(function(e) {
-        let fieldWrapper = getFieldWrapperFromId(e.id);
+    let formElements = getFormElementsArray(formId);
+    formElements.forEach(function(element) {
+        if(element.getAttribute("role") == 'listbox' ) {
+            element.setAttribute('aria-expanded', 'false');
+        }
+        if(element.getAttribute("role") == 'combox' ) {
+            element.removeAttribute('data-active-option');
+        }
+        let fieldWrapper = getFieldWrapperFromId(element.id);
         if(fieldWrapper) {
-            fieldWrapper.classList.remove('invalid', 'open-select');
-            // fieldWrapper.classList.remove('open-select');
-            // console.log(e.id + ' / ' + fieldWrapper.classList)
+            fieldWrapper.classList.remove('invalid', 'select-open');
         }
     });
 }
@@ -58,7 +62,7 @@ function setInitialFormState(formId, firstElementId = '', editMode = 'add') {
 }
 
 function validateElement(element) {
-    console.log(element);
+    // console.log(element.id);
     if(! element.checkValidity() || ! checkCustomValidation(element)) {
         return false;
     }
@@ -142,14 +146,30 @@ function getFormInputObj(event, formId) {
 
 
 
-
+function keyPressCheckToggleDropdown(event, types = ['keydown']) {
+    if(! types) {
+        types = ['keypress', 'keydown', 'keyup'];
+    }
+    if(types.includes(event.type)) {
+        let allowedKeys = ['Enter', ' '];
+        return allowedKeys.includes(event.key);
+    } else {
+        return true;
+    }
+}
 
 function toggleSelectDropdown(event) {
     event.stopPropagation();
     event.preventDefault();
+    if(! keyPressCheckToggleDropdown(event)) {
+        return;
+    }
     resetInputValidation(event);
-    getFieldWrapperFromEvent(event).classList.toggle('select-open');
-    // let element = event.currentTarget;
+    let fieldWrapper = getFieldWrapperFromEvent(event);
+    fieldWrapper.classList.toggle('select-open');
+    let listbox = fieldWrapper.querySelector('[role="listbox"]');
+    let isExpanded = getBooleanFromString(listbox.getAttribute('aria-expanded'));
+    listbox.setAttribute('aria-expanded', !isExpanded);
 }
 
 function selectDropdownOption(event, activeOption, optionValue = '') {

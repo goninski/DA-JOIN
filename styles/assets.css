@@ -230,6 +230,9 @@ textarea {
 .placeholder:focus {
     color: var(--clr-main);
 }
+.input-wrapper {
+    z-index: 1;
+}
 
 
 
@@ -292,18 +295,6 @@ label.prio-low:has( > input:checked) {
     position: relative;
     width: 100%;
 }
-/* .select.custom-select .select-btn {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 50px;
-    padding: 0 16px;
-    border-radius: 10px;
-    cursor: pointer;
-    background-color: white;
-    position: relative;
-    z-index: 2;
-} */
 .select.custom-select .select-options-wrapper {
     list-style: none;
     padding-top: 10px;

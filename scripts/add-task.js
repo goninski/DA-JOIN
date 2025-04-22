@@ -253,8 +253,10 @@ function resetAddTaskForm(event) {
     assignedTaskContacts = [];
     assignedSubtasks = [];
     resetForm(formId);
-    renderContactProfileBatches();    
     setInitialFormState(formId, 'inputTitle', 'add');
+    renderContactSelectOptions();    
+    renderContactProfileBatches();    
+    renderCategorySelectOptions();    
     event.preventDefault();
 }
 
@@ -285,10 +287,8 @@ function renderContactProfileBatches(contactIds = [], elementId = 'profileBatche
     }
 }
 
-function renderContactSelectOptions(event, wrapperId = 'taskContactsSelectOptionsWrapper') {
-    if(event) {
-        event.stopPropagation();
-    }
+function renderContactSelectOptions(event = null, wrapperId = 'taskContactsSelectOptionsWrapper') {
+    if(event) {event.stopPropagation();}
     let optionsWrapper = document.getElementById(wrapperId);
     optionsWrapper.innerHTML = '';
     contacts = sortContacts(contacts);
@@ -303,13 +303,12 @@ function renderContactSelectOptions(event, wrapperId = 'taskContactsSelectOption
     }
 }
 
-function renderCategorySelectOptions(event, wrapperId = 'taskCategoriesSelectOptionsWrapper') {
-    if(event) {
-        event.stopPropagation();
-    }
+function renderCategorySelectOptions(event = null, wrapperId = 'taskCategoriesSelectOptionsWrapper') {
+    if(event) {event.stopPropagation();}
     let optionsWrapper = document.getElementById(wrapperId);
     optionsWrapper.innerHTML = '';
     categories = sortCategories(categories);
+    let assignedCategory = 0;
     for (let index = 0; index < categories.length; index++) {
         optionsWrapper.innerHTML += getCategorySelectOptionTemplate(categories[index]);
     }
