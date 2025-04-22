@@ -6,12 +6,14 @@
 
 :root {
     --bg-page: #f6f7f8;
-    --clr-focus: var(--clr-light-blue);
     --clr-main: #2A3647;
     --clr-dark: #091931;
     --clr-light-blue: #29ABE2;
     --clr-disabled: #CDCDCD;
     --clr-subtle: #D1D1D1;
+    --clr-focus: var(--clr-light-blue);
+    --box-shadow-focus: 0 0 0 1px var(--clr-focus);
+    --box-shadow-focus-strong: 0 0 0 2px var(--clr-focus);
 
     --clr-prio-high: #FF3D00;
     --clr-prio-medium: #FFA800;

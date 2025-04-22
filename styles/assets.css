@@ -171,9 +171,6 @@ textarea {
     resize: vertical;
     min-height: 120px;
 }
-select.custom {
-    appearance: none;
-}
 .btn-radio {
     color: var(--clr-main);
     background-color: white;
@@ -182,6 +179,15 @@ select.custom {
     width: 136px;
     justify-content: center;
     padding: 16px 10px;
+}
+.hide-child-input {
+    position: relative;
+}
+.hide-child-input input {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+    opacity: 0; 
 }
 .invalid input {
     border-color: var(--clr-warning) !important;
@@ -233,8 +239,21 @@ select.custom {
 .priority-input-wrapper  {
     gap: 16px;
 }
-.priority-input-wrapper input {
-    display: none;
+/* .priority-input-wrapper label {
+    position: relative;
+    transition-duration: var(--transition-duration);
+    cursor: pointer;
+} */
+/* .priority-input-wrapper input {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0; 
+} */
+.priority-input-wrapper .icon-wrapper {
+    display: flex;
 }
 label.prio-high {
     --icon-color: var(--clr-prio-high);
@@ -246,19 +265,19 @@ label.prio-low {
     --icon-color: var(--clr-prio-low);
 }
 label.prio-high:hover,
-input:checked + label.prio-high {
+label.prio-high:has( > input:checked) {
     background-color: var(--clr-prio-high);
 }
 label.prio-medium:hover,
-input:checked + label.prio-medium {
+label.prio-medium:has( > input:checked) {
     background-color: var(--clr-prio-medium);
 }
 label.prio-low:hover,
-input:checked + label.prio-low {
+label.prio-low:has( > input:checked) {
     background-color: var(--clr-prio-low);
 }
 .priority-input-wrapper label:hover,
-.priority-input-wrapper input:checked + label {
+.priority-input-wrapper label:has( input:checked) {
     color: white;
     --icon-color: white;
     border: none;
@@ -304,36 +323,43 @@ input:checked + label.prio-low {
     animation-fill-mode: both;
     scrollbar-color: #eee white;
 }
-.select-options-wrapper li {
+.select-options-wrapper.multiple li {
     position: relative;
     display: flex;
     align-items: center;
     margin-bottom: 1px;
 }
-.select-options-wrapper label {
+.select-option label,
+.select-options-wrapper:not(.multiple) .select-option {
+    font-size: var(--fs-lg);
+    position: relative;
     display: flex;
     align-items: center;
     gap: 8px;
     flex-grow: 1;
     height: 48px;
     padding-inline: 16px;
-    margin-bottom: 0;
+    margin-bottom: 1px;
     cursor: pointer;
     transition: 0.3s;
     overflow-wrap: anywhere;
     border-radius: 10px;
 }
-.select.custom-select.multiple label {
+.select-options-wrapper.multiple label {
     height: 56px;
 }
-.select.custom-select.multiple.right label {
+.select-options-wrapper.multiple.right label {
     padding-right: 54px;
 }
 .select.custom-select .label-icon {
     order: -1;
 }
 .select.custom-select label:hover,
-.select.custom-select label:has( input:focus, input:checked) {
+.select.custom-select label:focus,
+.select.custom-select label:has( input:focus, input:checked),
+.select-option:hover,
+.select-option:focus,
+.select-option[aria-selected="true"] {
     background-color: var(--clr-subtle);
     background-color: #eee;
 }

@@ -70,9 +70,9 @@ function renderTaskForm(fieldsWrapperId, task = null) {
     assignedSubtasks = [];
     let formId;
     document.getElementById(fieldsWrapperId).innerHTML = getTaskFormFieldsTemplate(task);
-    document.getElementById('labelPrioHigh').innerHTML = getIconTemplatePrioHigh();
-    document.getElementById('labelPrioMedium').innerHTML = getIconTemplatePrioMedium();
-    document.getElementById('labelPrioLow').innerHTML = getIconTemplatePrioLow();
+    document.getElementById('iconPrioHigh').innerHTML = getIconTemplatePrioHigh();
+    document.getElementById('iconPrioMedium').innerHTML = getIconTemplatePrioMedium();
+    document.getElementById('iconPrioLow').innerHTML = getIconTemplatePrioLow();
     if(taskFormMode == 'add') {
         document.getElementById('btnReset').innerHTML = getIconTemplateCancel('Clear');
         document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Create Task');
@@ -102,23 +102,19 @@ function setEditTaskValues(task) {
         renderContactSelectOptions(event);
         renderContactProfileBatches(assignedTaskContacts);
         if(task.categoryId) {
-            document.getElementById('categorySelectId-' + task.categoryId).checked = true;
             let categoryName = categories[getCategoryIndexFromId(task.categoryId)].name;
             document.getElementById('categorySelect').value = categoryName;
+            document.getElementById('categorySelect').dataset.activeOption = task.categoryId;
+            document.getElementById('categoryOptionId-' + task.categoryId).setAttribute('aria-selected', 'true');
         }
         assignedSubtasks = task.subtasks;
         // renderSubtasks();
     }
 }
 
-function selectTaskContacts(event, contactId) {
-    if(event.target.checked) {
-        assignedTaskContacts.push(contactId);
-    } else {
-        assignedTaskContacts.splice(assignedTaskContacts.indexOf(contactId), 1);
-    };
-    renderContactProfileBatches(assignedTaskContacts);
-}
+
+
+
 
 function validateSubtaskInput(event, id='inputSubtasks') {
     // event.stopPropagation();
@@ -175,9 +171,13 @@ function resetSubtaskInput(event, element) {
     document.getElementById('subtaskInputButtonAdd').classList.remove('hide');
     document.getElementById('subtaskInputButtons').classList.add('hide');
     // element.focus();
-    // clearInputValidation(id);
+    // resetInputValidation(id);
 
 }
+
+
+
+
 
 
 function createTask(event) {
@@ -192,7 +192,8 @@ function createTask(event) {
     task.description = taskInputs.description;
     task.dueDate = taskInputs.dueDate;
     task.contactIds = assignedTaskContacts;
-    task.categoryId = Number(taskInputs.categorySelectId);
+    task.categoryId = document.getElementById('categorySelect').dataset.activeOption;
+    // task.categoryId = Number(taskInputs.categorySelectId);
     task.subtasks = assignedSubtasks;
     tasks.push(task);
     saveTaskData();
@@ -218,7 +219,7 @@ function saveTask(event) {
     tasks[index].description = taskInputs.description;
     tasks[index].dueDate = taskInputs.dueDate;
     tasks[index].contactIds = assignedTaskContacts;
-    tasks[index].categoryId = Number(taskInputs.categorySelectId);
+    tasks[index].categoryId = document.getElementById('categorySelect').dataset.activeOption;
     tasks[index].subtasks = assignedSubtasks;
     console.log(tasks);
     saveTaskData();

@@ -20,6 +20,14 @@ let categoriesDemo = [
     {
         "id": "2",
         "name": "User Story"
+    },
+    {
+        "id": "3",
+        "name": "Cat 3"
+    },
+    {
+        "id": "4",
+        "name": "Cat 4"
     }
 ];
 categories = categoriesDemo;
@@ -100,7 +108,7 @@ let tasksDemo = [
         "dueDate": "2025-03-31",
         "priority": "medium",
         "contactIds": [2, 3],
-        "categoryId": 1,
+        "categoryId": 2,
         "subtasks": ["Subtask 1","Subtask 2"]
     },
     {

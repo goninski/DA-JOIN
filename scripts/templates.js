@@ -78,7 +78,7 @@ function getTaskFormFieldsTemplate(task) {
 
         <div class="field-wrapper has-message">
             <label for="title" class="required">Title</label>
-            <input type="text" id="inputTitle" name="title" placeholder="Enter a title" required maxlength="128" onfocus="clearInputValidation(event)" onfocusout="validateInput(event)">
+            <input type="text" id="inputTitle" name="title" placeholder="Enter a title" required maxlength="128" onfocus="resetInputValidation(event)" onfocusout="validateInputEvent(event)">
             <div class="validation-msg">This field is required</div>
         </div>
         <div class="field-wrapper has-message">
@@ -87,7 +87,7 @@ function getTaskFormFieldsTemplate(task) {
         </div>
         <div class="field-wrapper has-message">
             <label for="dueDate" class="required">Due date</label>
-            <input type="date" id="inputDueDate" name="dueDate" class="placeholder" required min="2000-01-01" max="2099-12-31" onfocus="clearInputValidation(event), setTodayAsDateValue('inputDueDate')" onfocusout="validateInput(event)">
+            <input type="date" id="inputDueDate" name="dueDate" class="placeholder" required min="2000-01-01" max="2099-12-31" onfocus="resetInputValidation(event), setTodayAsDateValue('inputDueDate')" onfocusout="validateInputEvent(event)">
             <div class="validation-msg">Please enter a valid date</div>
         </div>
     </div>
@@ -99,27 +99,24 @@ function getTaskFormFieldsTemplate(task) {
         <div class="field-wrapper">
             <label for="priority">Priority</label>
             <div class="priority-input-wrapper flex-row justify-between align-center">
-                <input type="radio" id="inputPrioHigh" name="priority" value="high">
-                <label for="inputPrioHigh" id="labelPrioHigh" class="prio-high button btn-icon btn-radio" value="high"></label>
+                <label for="inputPrioHigh" id="labelPrioHigh" class="prio-high button btn-icon btn-radio hide-child-input" value="high"><input type="radio" id="inputPrioHigh" name="priority" value="high" class="focus-strong">Urgent<div id="iconPrioHigh" class="icon-wrapper"></div></label>
 
-                <input type="radio" id="inputPrioMedium" name="priority" value="medium" checked>
-                <label for="inputPrioMedium" id="labelPrioMedium" class="prio-medium button btn-icon btn-radio" value="medium"></label>
+                <label for="inputPrioMedium" id="labelPrioMedium" class="prio-medium button btn-icon btn-radio hide-child-input" value="medium"><input type="radio" id="inputPrioMedium" name="priority" value="medium" checked class="focus-strong">Medium<div id="iconPrioMedium" class="icon-wrapper"></div></label>
 
-                <input type="radio" id="inputPrioLow" name="priority" value="low">
-                <label for="inputPrioLow" id="labelPrioLow" class="prio-low button btn-icon btn-radio" value="low"></label>
+                <label for="inputPrioLow" id="labelPrioLow" class="prio-low button btn-icon btn-radio hide-child-input" value="low"><input type="radio" id="inputPrioLow" name="priority" value="low" class="focus-strong">Low<div id="iconPrioLow" class="icon-wrapper"></div></label>
             </div>
         </div>
 
         <div class="field-wrapper">
             <label for="selectContacts">Assigned to</label>
-            <div class="select custom-select multiple right select-contacts">
+            <div class="select custom-select multiple select-contacts">
                 <div class="input-wrapper custom-select">
-                    <input type="text" id="selectContacts" name="selectContacts" placeholder="Select contacts to assign" onfocus="clearInputValidation(event)" oninput="renderContactSelectOptions(event)" onclick="toggleSelectOptionsVisibility(event)" xonfocusout="validateSelectMultiple('selectContacts')" class="clickable">
+                    <input type="text" id="selectContacts" name="selectContacts" placeholder="Select contacts to assign" onfocus="resetInputValidation(event)" oninput="renderContactSelectOptions(event)" onclick="toggleSelectDropdown(event)" class="clickable">
                     <div class="input-icon-wrapper custom-select">
                         <button onclick="toggleSelectOptionsVisibility(event)"><img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown"></button>
                     </div>
                 </div>
-                <ol id="taskContactsSelectOptionsWrapper" class="select-options-wrapper"></ol>
+                <ol id="taskContactsSelectOptionsWrapper" class="select-options-wrapper multiple right"></ol>
             </div>
             <ul id="profileBatches" class="profile-batches hide-if-empty" style="margin-top: 12px;"></ul>
         </div>
@@ -128,7 +125,24 @@ function getTaskFormFieldsTemplate(task) {
             <label for="categorySelect" class="required">Category</label>
             <div class="select custom-select">
                 <div class="input-wrapper custom-select">
-                    <input type="text" id="categorySelect" name="categorySelect" placeholder="Select task category" class="clickable" onfocus="clearInputValidation(event)" onfocusout="validateInput(event, 'radio-name')" onclick="toggleSelectOptionsVisibility(event)" data-validation-param="categorySelectId" readonly>
+                    <input type="text" id="categorySelect" name="categorySelect" placeholder="Select task category" class="clickable" onfocusout="validateInputEvent(event)" onclick="toggleSelectDropdown(event)" data-active-option="0" role="combox" data-custom-validation="required" readonly>
+                    <div class="input-icon-wrapper custom-select">
+                        <div class="icon-wrapper flex">
+                            <img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown">
+                        </div>
+                    </div>
+                </div>
+                <ol id="taskCategoriesSelectOptionsWrapper" class="select-options-wrapper" role="listbox" data-combox-id="categorySelect"></ol>
+            </div>
+            <div class="validation-msg">This field is required</div>
+        </div>
+
+<!--
+        <div class="field-wrapper has-message">
+            <label for="categorySelect" class="required">Category</label>
+            <div class="select custom-select">
+                <div class="input-wrapper custom-select">
+                    <input type="text" id="categorySelect" name="categorySelect" placeholder="Select task category" class="clickable" onfocus="resetInputValidation(event)" onfocusout="validateInputEvent(event, 'radio-name')" onclick="toggleSelectOptionsVisibility(event)" data-validation-param="categorySelectId" readonly>
                     <div class="input-icon-wrapper custom-select">
                         <button onclick="toggleSelectOptionsVisibility(event)">
                             <img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown">
@@ -140,10 +154,9 @@ function getTaskFormFieldsTemplate(task) {
             <div class="validation-msg">This field is required</div>
         </div>
 
-<!--
         <div class="field-wrapper has-message">
             <label for="temp" class="required">Temp</label>
-            <input type="text" id="inputTemp" name="temp" placeholder="Placeholder" xrequired maxlength="128" onfocus="clearInputValidation(event)" onfocusout="validateInput(event)">
+            <input type="text" id="inputTemp" name="temp" placeholder="Placeholder" xrequired maxlength="128" onfocus="resetInputValidation(event)" onfocusout="validateInputEvent(event)">
             <div class="validation-msg">This field is required</div>
         </div>
 -->
@@ -157,7 +170,7 @@ function tempSubtasks() {
     <label for="subtasks">Subtasks</label>
     <div class="input-wrapper input-wrapper-subtasks">
         <!--<input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask"> -->
-        <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask" onfocus="clearInputValidation(event)" oninput="validateSubtaskInput(event)" maxlength="128">
+        <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask" onfocus="resetInputValidation(event)" oninput="validateSubtaskInput(event)" maxlength="128">
         <div id="subtaskInputButtonAdd" class="input-icon-wrapper">
             <button onclick="addSubtaskPseudo(event)"><img src="/assets/icons/add.svg" class="icon-add"></button>
         </div>
@@ -176,10 +189,10 @@ function tempSubtasks() {
 function getContactSelectOptionTemplate(contact) {
     return `
     <li class="select-option">
-        <label for="checkboxAssignedContact-${contact.id}">${contact.name}
+        <label for="checkboxAssignedContact-${contact.id}" tabindex="0" class="hide-focus">${contact.name}
             <div class="profile-batch label-icon" style="--profile-color: ${contact.color};">${contact.initials}</div>
             <div class="input-icon-wrapper custom-checkbox">
-                <input type="checkbox" class="custom clickable" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}" onchange="selectTaskContacts(event, ${contact.id})">
+                <input type="checkbox" class="custom clickable" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}" onchange="selectDropdownTaskContact(event, ${contact.id})">
                 <div class="checkbox-checked-wrapper">
                     <img src="assets/icons/checkbox-checked-white.svg" alt="checkbox-checked" class="icon-checkbox-checked">
                 </div>
@@ -191,19 +204,29 @@ function getContactSelectOptionTemplate(contact) {
 
 function getCategorySelectOptionTemplate(category) {
     return `
-    <li class="select-option">
-        <label for="categorySelectId-${category.id}">${category.name}
-            <div class="input-icon-wrapper radio-select-option">
-                <input type="radio" class="clickable" id="categorySelectId-${category.id}" name="categorySelectId" value="${category.id}" onclick="selectCustomSelectOption(event, 'categorySelect', '${category.name}')" data-validation-param="categorySelect" required>
-            </div>
-        </label>
+    <li id="categoryOptionId-${category.id}" class="select-option" role="option" onclick="selectDropdownOption(event, '${category.id}', '${category.name}')" aria-selected="false">${category.name}
     </li>
     `
 }
 
 function xgetCategorySelectOptionTemplate(category) {
     return `
+
     <option value="${category.id}">${category.name}</option>
+
+<!--
+    <li class="select-option">
+        <label for="categorySelectId-${category.id}" class="hide-child-input hide-focus">${category.name}
+            <input type="radio" id="categorySelectId-${category.id}" name="categorySelectId" value="${category.id}" onclick="selectCustomSelectOption(event, 'categorySelect', '${category.name}')" data-validation-param="categorySelect" required>
+        </label>
+    </li>
+
+            <div class="input-icon-wrapper radio-select-option">
+                <input type="radio" id="categorySelectId-${category.id}" name="categorySelectId" value="${category.id}" onclick="selectCustomSelectOption(event, 'categorySelect', '${category.name}')" data-validation-param="categorySelect" required class="hide-focus">
+            </div>
+-->            
+
+
     `
 }
 
@@ -372,7 +395,7 @@ function getIconTemplateCheck(text = "") {
     `
 }
 
-function getIconTemplatePrioHigh(text = "Urgent") {
+function getIconTemplatePrioHigh(text = "") {
     return `
         ${text}
         <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -382,7 +405,7 @@ function getIconTemplatePrioHigh(text = "Urgent") {
     `
 }
 
-function getIconTemplatePrioMedium(text = "Medium") {
+function getIconTemplatePrioMedium(text = "") {
     return `
         ${text}
         <svg width="21" height="8" viewBox="0 0 21 8" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -392,7 +415,7 @@ function getIconTemplatePrioMedium(text = "Medium") {
     `
 }
 
-function getIconTemplatePrioLow(text = "Low") {
+function getIconTemplatePrioLow(text = "") {
     return `
         ${text}
         <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">

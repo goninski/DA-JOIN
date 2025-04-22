@@ -7,9 +7,20 @@
 html {
     scroll-behavior: smooth;
 }
-:focus, .focus {
-    outline: none;
-    box-shadow: 0 0 0 1px var(--clr-focus);
+:focus,
+.focus-child:has( input:focus),
+.hide-child-input:has( input:focus) {
+    outline: none; 
+    box-shadow: var(--box-shadow-focus);
+}
+.focus-strong:focus,
+.focus-child:has( input.focus-strong:focus),
+.hide-child-input:has( input.focus-strong:focus) {
+    box-shadow: var(--box-shadow-focus-strong);
+}
+.hide-focus {
+    outline: none !important;
+    box-shadow: none !important;
 }
 body {
     margin: 0;

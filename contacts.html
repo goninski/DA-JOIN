@@ -11,6 +11,7 @@
     <script src="scripts/data.js"></script>
     <script src="scripts/templates.js"></script>
     <script src="script.js"></script>
+    <script src="scripts/form-handling.js"></script>
     <script src="./scripts/contacts.js"></script>
 </head>
 
@@ -87,7 +88,7 @@
                             <div class="field-wrapper has-message">
                                 <!-- <label for="name" class="xrequired">Name</label> -->
                                 <div class="input-wrapper">
-                                    <input type="text" id="inputName" name="name" placeholder="Name" required maxlength="64" onfocus="clearInputValidation(event)" onfocusout="validateInput(event)">
+                                    <input type="text" id="inputName" name="name" placeholder="Name" required maxlength="64" onfocus="resetInputValidation(event)" onfocusout="validateInputEvent(event)">
                                     <div class="input-icon-wrapper simple">
                                         <img src="/assets/icons/input-name.svg" alt="person-icon" class="icon-name-input">
                                     </div>
@@ -97,7 +98,7 @@
                             <div class="field-wrapper has-message">
                                 <!-- <label for="email" class="required">Email</label> -->
                                 <div class="input-wrapper">
-                                    <input type="email" id="inputEmail" name="email" placeholder="Email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required maxlength="64" onfocus="clearInputValidation(event)" onfocusout="validateInput(event)">
+                                    <input type="email" id="inputEmail" name="email" placeholder="Email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required maxlength="64" onfocus="resetInputValidation(event)" onfocusout="validateInputEvent(event)">
                                     <div class="input-icon-wrapper simple">
                                         <img src="/assets/icons/input-email.svg" alt="email-icon" class="icon-email-input">
                                     </div>
@@ -107,7 +108,7 @@
                             <div class="field-wrapper has-message">
                                 <!-- <label for="phone" class="xrequired">Phone</label> -->
                                 <div class="input-wrapper">
-                                    <input type="tel" id="inputPhone" name="phone" placeholder="Phone" minlength="10" maxlength="64" onfocus="clearInputValidation(event)" onfocusout="validateInput(event, 'phone')">
+                                    <input type="tel" id="inputPhone" name="phone" placeholder="Phone" minlength="10" maxlength="64" onfocus="resetInputValidation(event)" onfocusout="validateInputEvent(event)" data-custom-validation="phone">
                                     <div class="input-icon-wrapper simple">
                                         <img src="/assets/icons/input-phone.svg" alt="phone-icon" class="icon-phone-input">
                                     </div>
