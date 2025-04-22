@@ -12,53 +12,55 @@
 </head>
 
 <body class="bg-grey flex justify-center"">
-    <section>
-        <img class="logo_login" src="./assets/img/Capa 2.png" alt="Logo">
-    </section>
+    <img src=" ./assets/img/Capa 2.png" alt="Logo" id="login_logo">
 
-    <section class=" flex-row header_login">
-        <div class="pos-absol-header-login">
-            <p class="not_a_join_user-login-header label">Not a Join user?</p>
-            <a href="./sign-up.html">
-                <button class="btn-login-header-size btn-login-header btn-primary">Sign up</button>
-            </a>
-        </div>
-    </section>
-
-    <section class="flex justify-center">
-        <div class="flex-col bg-white login-div-size flex center gap_32px">
-            <div class="gap_16px headline_login flex-col align-center">
-                <h1 class="login_title">Log in</h1>
-                <div class="login_border"></div>
+    <div id="login-main-content">
+        <section class=" flex-row header_login">
+            <div class="pos-absol-header-login">
+                <p class="not_a_join_user-login-header label">Not a Join user?</p>
+                <a href="./sign-up.html">
+                    <button class="btn-login-header-size btn-login-header btn-primary">Sign up</button>
+                </a>
             </div>
+        </section>
 
-            <div class="flex-col gap-20 login-email-part center">
-                <div class="input-wrapper-signup-login flex justify-between">
-                    <input type="email" name="email" id="email" placeholder="Email">
-                    <div class="input-inner-signup-login"> 
-                        <img src="./assets/img/mail.png" alt="Mail Icon" class="input-icon">
-                    </div>
+        <section class="flex justify-center">
+            <div class="flex-col bg-white login-div-size flex center gap_32px">
+                <div class="gap_16px headline_login flex-col align-center">
+                    <h1 class="login_title">Log in</h1>
+                    <div class="login_border"></div>
                 </div>
 
-                <div class="input-wrapper-signup-login flex justify-between">
-                    <input type="password" id="pwd" name="pwd" minlength="8" placeholder="Password">
-                    <div class="input-inner-signup-login">
-                        <img src="./assets/img/lock.png" alt="Lock Icon">
+                <div class="flex-col gap-20 login-email-part center">
+                    <div class="input-wrapper-signup-login flex justify-between">
+                        <input class="login-signup-input" type="email" name="email" id="email" placeholder="Email">
+                        <div class="input-inner-signup-login">
+                            <img src="./assets/img/mail.png" alt="Mail Icon" class="input-icon">
+                        </div>
+                    </div>
+
+                    <div class="input-wrapper-signup-login flex justify-between">
+                        <input class="login-signup-input" type="password" id="pwd" name="pwd" minlength="8" placeholder="Password">
+                        <div class="input-inner-signup-login">
+                            <img src="./assets/img/lock.png" alt="Lock Icon">
+                        </div>
                     </div>
                 </div>
+                <div class="flex-row align-end justify-center gap-35">
+                    <button type="submit" value="Log in" class="button btn-login-size btn-fourth">Log in</button>
+                    <button class="button btn-login-size btn-third">Guest Log in</button>
+                </div>
             </div>
-            <div class="flex-row align-end justify-center gap-35">
-                <button type="submit" value="Log in" class="button btn-login-size btn-fourth">Log in</button>
-                <button class="button btn-login-size btn-third">Guest Log in</button>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="flex login-privacy-policy flex-row align-end justify-between">
-        <a href="#" class="login-privacy-policy-color">Privacy Policy</a>
-        <a href="#" class="login-privacy-policy-color">Legal notice</a>
-    </section>
+        <section class="flex login-privacy-policy flex-row align-end justify-between">
+            <a href="#" class="login-privacy-policy-color">Privacy Policy</a>
+            <a href="#" class="login-privacy-policy-color">Legal notice</a>
+        </section>
+    </div>
 
+
+    <script src="login.js"></script>
 </body>
 
 </html>
