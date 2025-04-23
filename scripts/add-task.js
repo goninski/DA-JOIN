@@ -9,7 +9,7 @@ function openAddTaskPage() {
 
 function addTask(event, source = 'board') {
     event.stopPropagation();
-    taskFormMode = 'add';
+    formMode = 'add';
     activeTaskId = 0;
     showTaskDialogue('addTaskFormWrapper', source);
     renderTaskForm('addTaskFieldGroups');
@@ -21,7 +21,7 @@ function addTask(event, source = 'board') {
 }
 
 function showTask(event, taskId = 0) {
-    taskFormMode = 'show';
+    formMode = 'show';
     if(taskId == 0) {
         taskId = activeTaskId;
     }
@@ -34,7 +34,7 @@ function showTask(event, taskId = 0) {
 
 function editTask(event, taskId = 0) {
     event.stopPropagation();
-    taskFormMode = 'edit';
+    formMode = 'edit';
     if(taskId == 0) {
         taskId = activeTaskId;
     } else {
@@ -66,14 +66,14 @@ function showTaskDialogue(elementId, source = 'board') {
 
 function renderTaskForm(fieldsWrapperId, task = null) {
     console.log(task);
-    assignedTaskContacts = [];
+    assignedContacts = [];
     assignedSubtasks = [];
     let formId;
     document.getElementById(fieldsWrapperId).innerHTML = getTaskFormFieldsTemplate(task);
     document.getElementById('iconPrioHigh').innerHTML = getIconTemplatePrioHigh();
     document.getElementById('iconPrioMedium').innerHTML = getIconTemplatePrioMedium();
     document.getElementById('iconPrioLow').innerHTML = getIconTemplatePrioLow();
-    if(taskFormMode == 'add') {
+    if(formMode == 'add') {
         document.getElementById('btnReset').innerHTML = getIconTemplateCancel('Clear');
         document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Create Task');
         renderContactSelectOptions(event);
@@ -86,11 +86,11 @@ function renderTaskForm(fieldsWrapperId, task = null) {
     // renderContactProfileBatches();
     renderCategorySelectOptions(event);
     setEditTaskValues(task);
-    setInitialFormState(formId, 'inputTitle', taskFormMode);
+    setInitialFormState(formId, 'inputTitle', formMode);
 }
 
 function setEditTaskValues(task) {
-    if(taskFormMode == 'edit') {
+    if(formMode == 'edit') {
         document.getElementById('inputTitle').value = task.title;
         document.getElementById('inputDescription').value = task.description;
         document.getElementById('inputDueDate').value = task.dueDate;
@@ -98,9 +98,9 @@ function setEditTaskValues(task) {
             let priority =  setFirstLetterUpperCase(task.priority);
             document.getElementById('inputPrio' + priority).checked = true;
         }
-        assignedTaskContacts = task.contactIds;
+        assignedContacts = task.contactIds;
         renderContactSelectOptions(event);
-        renderContactProfileBatches(assignedTaskContacts);
+        renderContactProfileBatches(assignedContacts);
         if(task.categoryId) {
             let categoryName = categories[getCategoryIndexFromId(task.categoryId)].name;
             document.getElementById('categorySelect').value = categoryName;
@@ -191,7 +191,7 @@ function createTask(event) {
     task.title = taskInputs.title;
     task.description = taskInputs.description;
     task.dueDate = taskInputs.dueDate;
-    task.contactIds = assignedTaskContacts;
+    task.contactIds = assignedContacts;
     task.categoryId = document.getElementById('categorySelect').dataset.activeOption;
     // task.categoryId = Number(taskInputs.categorySelectId);
     task.subtasks = assignedSubtasks;
@@ -218,7 +218,7 @@ function saveTask(event) {
     tasks[index].title = taskInputs.title;
     tasks[index].description = taskInputs.description;
     tasks[index].dueDate = taskInputs.dueDate;
-    tasks[index].contactIds = assignedTaskContacts;
+    tasks[index].contactIds = assignedContacts;
     tasks[index].categoryId = document.getElementById('categorySelect').dataset.activeOption;
     tasks[index].subtasks = assignedSubtasks;
     console.log(tasks);
@@ -250,7 +250,7 @@ function deleteTask(event, taskId = 0) {
 function resetAddTaskForm(event) {
     event.stopPropagation();
     let formId = 'addTaskForm';
-    assignedTaskContacts = [];
+    assignedContacts = [];
     assignedSubtasks = [];
     resetForm(formId);
     setInitialFormState(formId, 'inputTitle', 'add');
@@ -262,12 +262,12 @@ function resetAddTaskForm(event) {
 
 function closeTaskDialogue(event) {
     event.stopPropagation();
-    if(taskFormMode == 'add' || taskFormMode == 'edit') {
+    if(formMode == 'add' || formMode == 'edit') {
         resetAddTaskForm(event);
     }
     document.getElementById('taskDialogue').style = 'display: none';
     renderBoards();
-    taskFormMode = '';
+    formMode = '';
 }
 
 
@@ -294,8 +294,8 @@ function renderContactSelectOptions(event = null, wrapperId = 'taskContactsSelec
     contacts = sortContacts(contacts);
     for (let index = 0; index < contacts.length; index++) {
         optionsWrapper.innerHTML += getContactSelectOptionTemplate(contacts[index]);
-        if(assignedTaskContacts.length > 0) {
-            let isChecked = assignedTaskContacts.includes(contacts[index].id);
+        if(assignedContacts.length > 0) {
+            let isChecked = assignedContacts.includes(contacts[index].id);
             setTimeout(function() {
                 document.getElementById('checkboxAssignedContact-' + contacts[index].id).checked = isChecked;
             }, 1);
@@ -333,7 +333,7 @@ function renderSubtasks(wrapperId = 'assignedSubtasks') {
 
 // TEMP STUFF
 function renderTempTaskList() {
-    taskFormMode = '';
+    formMode = '';
     let taskListRef = document.getElementById('tempTaskList');
     taskListRef.innerHTML = '';
     for (let index = 0; index < tasks.length; index++) {

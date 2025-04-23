@@ -361,10 +361,10 @@ label.prio-low:has( > input:checked) {
 .select.custom-select.multiple label:hover:has( input:checked) {
     background-color: var(--clr-dark);
 }
-.field-wrapper:not(.select-open) .select-options-wrapper {
+.field-wrapper:not(.select-expanded) .select-options-wrapper {
     display: none;
 }
-.field-wrapper.select-open .input-icon-wrapper.custom-select img {
+.field-wrapper.select-expanded .input-icon-wrapper.custom-select img {
     rotate: 180deg;
 }
 

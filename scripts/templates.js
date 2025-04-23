@@ -111,9 +111,9 @@ function getTaskFormFieldsTemplate(task) {
             <label for="selectContacts">Assigned to</label>
             <div class="select custom-select multiple select-contacts">
                 <div class="input-wrapper custom-select">
-                    <input type="text" id="selectContacts" name="selectContacts" placeholder="Select contacts to assign" onfocus="resetInputValidation(event)" oninput="renderContactSelectOptions(event)" onclick="toggleSelectDropdown(event)" onkeydown="toggleSelectDropdown(event)" class="clickable">
+                    <input type="text" id="selectContacts" name="selectContacts" placeholder="Select contacts to assign" onfocus="resetInputValidation(event)" oninput="renderContactSelectOptions(event)" onclick="dropdownEventHandler(event)" onkeydown="dropdownEventHandler(event)" class="clickable">
                     <div class="input-icon-wrapper custom-select">
-                        <button onclick="toggleSelectDropdown(event)"><img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown"></button>
+                        <button onclick="dropdownEventHandler(event)"><img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown"></button>
                     </div>
                 </div>
                 <ol id="taskContactsSelectOptionsWrapper" class="select-options-wrapper multiple right" role="listbox"></ol>
@@ -125,7 +125,7 @@ function getTaskFormFieldsTemplate(task) {
             <label for="categorySelect" class="required">Category</label>
             <div class="select custom-select">
                 <div class="input-wrapper custom-select">
-                    <input type="text" id="categorySelect" name="categorySelect" placeholder="Select task category" class="clickable" onfocusout="validateInputEvent(event)" onclick="toggleSelectDropdown(event)"  onkeydown="toggleSelectDropdown(event)" data-active-option="0" role="combox" data-custom-validation="required" readonly>
+                    <input type="text" id="categorySelect" name="categorySelect" placeholder="Select task category" class="clickable" onfocusout="validateInputEvent(event)" onclick="dropdownEventHandler(event)"  onkeydown="dropdownEventHandler(event)" data-active-option="0" role="combox" data-custom-validation="required" readonly>
                     <div class="input-icon-wrapper custom-select">
                         <div class="icon-wrapper flex">
                             <img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown">

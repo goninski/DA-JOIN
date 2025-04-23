@@ -1,20 +1,18 @@
-function setSubmitBtnState(formId) {
-    getInvalidInputIds(formId);    
-    let submitBtnId = document.getElementById(formId).dataset.submitBtnId;
-    let submitBtn = document.getElementById(submitBtnId);
-    submitBtn.setAttribute('disabled', '');
-    if(invalidFields.length > 0) {
-        submitBtn.setAttribute('disabled', '');
-    } else {
-        submitBtn.removeAttribute('disabled');
-    }
-}
+let formMode = '';
+let invalidFields = [];
+let activeTaskId = 0;
+let activeContactId = 0;
+let assignedContacts = [];
+let assignedSubtasks = [];
+// let assignedCategory = 0;
+let expandedListbox = null;
+document.addEventListener('click', documentClickHandler);
 
 function getFormElementsArray(formId) {
     let form = document.getElementById(formId);
     let elements = form.elements;
     let elementsArr = Array.from(elements);
-    console.log(elementsArr);
+    // console.log(elementsArr);
     return elementsArr;
 }
 
@@ -43,7 +41,7 @@ function resetAllInputValidations(formId) {
         }
         let fieldWrapper = getFieldWrapperFromId(element.id);
         if(fieldWrapper) {
-            fieldWrapper.classList.remove('invalid', 'select-open');
+            fieldWrapper.classList.remove('invalid', 'select-expanded');
         }
     });
 }
@@ -95,20 +93,19 @@ function setFieldValidity(element) {
     }
 }
 
+function resetInputValidation(event) {
+    event.stopPropagation();
+    let fieldWrapper = getFieldWrapperFromEvent(event);
+    if(fieldWrapper){
+        fieldWrapper.classList.remove('invalid');
+    }
+}
+
 function validateInputEvent(event) {
     event.stopPropagation();
     let element = event.currentTarget;
     setFieldValidity(element);
     setSubmitBtnState(element.form.id);
-}
-
-function resetInputValidation(event) {
-    event.stopPropagation();
-    event.preventDefault();
-    let fieldWrapper = getFieldWrapperFromEvent(event);
-    if(fieldWrapper){
-        fieldWrapper.classList.remove('invalid');
-    }
 }
 
 function validatePhoneInput(element) {
@@ -125,7 +122,17 @@ function validatePhoneInput(element) {
     element.value = formattedValue;
 }
 
-
+function setSubmitBtnState(formId) {
+    getInvalidInputIds(formId);    
+    let submitBtnId = document.getElementById(formId).dataset.submitBtnId;
+    let submitBtn = document.getElementById(submitBtnId);
+    submitBtn.setAttribute('disabled', '');
+    if(invalidFields.length > 0) {
+        submitBtn.setAttribute('disabled', '');
+    } else {
+        submitBtn.removeAttribute('disabled');
+    }
+}
 
 function getFormData(formId) {
     let form = document.getElementById(formId);
@@ -146,31 +153,47 @@ function getFormInputObj(event, formId) {
 
 
 
-function keyPressCheckToggleDropdown(event, types = ['keydown']) {
-    if(! types) {
-        types = ['keypress', 'keydown', 'keyup'];
-    }
-    if(types.includes(event.type)) {
-        let allowedKeys = ['Enter', ' '];
-        return allowedKeys.includes(event.key);
-    } else {
-        return true;
+function documentClickHandler(event) {
+    event.stopPropagation();
+    if(expandedListbox) {
+        // console.log(event);
+        toggleDropdown(null, expandedListbox);
     }
 }
 
-function toggleSelectDropdown(event) {
+function dropdownEventHandler(event) {
     event.stopPropagation();
-    event.preventDefault();
-    if(! keyPressCheckToggleDropdown(event)) {
-        return;
+    let {key} = event;
+    let keys = ['Enter','ArrowUp', 'ArrowDown', ' '];
+    if(keys.includes(event.key)) {
+        event.preventDefault();
+        return toggleDropdown(event);
     }
-    resetInputValidation(event);
-    let fieldWrapper = getFieldWrapperFromEvent(event);
-    fieldWrapper.classList.toggle('select-open');
-    let listbox = fieldWrapper.querySelector('[role="listbox"]');
-    let isExpanded = getBooleanFromString(listbox.getAttribute('aria-expanded'));
-    listbox.setAttribute('aria-expanded', !isExpanded);
+    if((expandedListbox) && key === 'Escape' ) {
+        return toggleDropdown(event);
+    }
+    toggleDropdown(event);
 }
+
+function toggleDropdown(event = null, listbox = null) {
+    let fieldWrapper;
+    if(event) {
+        fieldWrapper = getFieldWrapperFromEvent(event);
+        listbox = fieldWrapper.querySelector('[role="listbox"]');
+        resetInputValidation(event);
+    } else {
+        fieldWrapper = listbox.closest('.field-wrapper');
+    }
+    fieldWrapper.classList.toggle('select-expanded');
+    let isExpanded = getBooleanFromString(listbox.getAttribute('aria-expanded'));
+    expandedListbox = null;
+    isExpanded = !isExpanded;
+    listbox.setAttribute('aria-expanded', isExpanded);
+    if(isExpanded) {
+        expandedListbox = listbox;
+    }
+}
+
 
 function selectDropdownOption(event, activeOption, optionValue = '') {
     event.stopPropagation();
@@ -184,16 +207,16 @@ function selectDropdownOption(event, activeOption, optionValue = '') {
     combox.dataset.activeOption = activeOption;
     let option = event.currentTarget;
     option.setAttribute('aria-selected', 'true');
-    toggleSelectDropdown(event);
+    toggleDropdown(null, listbox);
 }
 
 function selectDropdownTaskContact(event, contactId) {
     if(event.target.checked) {
-        assignedTaskContacts.push(contactId);
+        assignedContacts.push(contactId);
     } else {
-        assignedTaskContacts.splice(assignedTaskContacts.indexOf(contactId), 1);
+        assignedContacts.splice(assignedContacts.indexOf(contactId), 1);
     };
-    renderContactProfileBatches(assignedTaskContacts);
+    renderContactProfileBatches(assignedContacts);
 }
 
 
@@ -204,6 +227,24 @@ function selectDropdownTaskContact(event, contactId) {
 
 
 
+
+// function dropdownClickHandler(event) {
+//     event.stopPropagation();
+//     // resetInputValidation(event);
+
+//     let fieldWrapper = getFieldWrapperFromEvent(event);
+//     fieldWrapper.classList.toggle('select-expanded');
+//     let listbox = fieldWrapper.querySelector('[role="listbox"]');
+//     let isExpanded = getBooleanFromString(listbox.getAttribute('aria-expanded'));
+//     if(!isExpanded) {
+//         expandedListbox = listbox;
+//     } else {
+//         expandedListbox = null;
+//     }
+//     // isExpanded = !isExpanded;
+//     listbox.setAttribute('aria-expanded', !isExpanded);
+//     console.log(expandedListbox);
+// }
 
 
 
@@ -243,7 +284,7 @@ function selectDropdownTaskContact(event, contactId) {
 //     event.stopPropagation();
 //     event.preventDefault();
 //     let element = getFieldWrapperFromEvent(event);
-//     element.classList.toggle('select-open');
+//     element.classList.toggle('select-expanded');
 //     resetInputValidation(event);
 // }
 
@@ -345,7 +386,7 @@ function selectDropdownTaskContact(event, contactId) {
 // function closeSelectOptionsVisibility(event) {
 //     event.stopPropagation();
 //     let element = getFieldWrapperFromEvent(event);
-//     element.classList.remove('select-open');
+//     element.classList.remove('select-expanded');
 // }
 
 
@@ -395,5 +436,5 @@ function selectDropdownTaskContact(event, contactId) {
 
 // function closeSelectOptions(id) {
 //     let element = document.getElementById(id);
-//     element.parentElement.classList.remove('select-open');
+//     element.parentElement.classList.remove('select-expanded');
 // }

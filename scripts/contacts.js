@@ -68,22 +68,22 @@ function closeContactDetail(contactId) {
 
 
 function addNewContact() {
-    contactsFormMode = 'add';
+    formMode = 'add';
     activeContactId = 0;
-    openContactsForm(contactsFormMode);
+    openContactsForm(formMode);
 }
 
 function editContact(contactId) {
-    contactsFormMode = 'edit';
+    formMode = 'edit';
     activeContactId = contactId;
-    openContactsForm(contactsFormMode, activeContactId);
+    openContactsForm(formMode, activeContactId);
 }
 
-function openContactsForm(contactsFormMode, contactId = 0) {
+function openContactsForm(formMode, contactId = 0) {
     document.getElementById('addContactDialogue').style = '';
     document.body.style = 'overflow: hidden;';
-    setInitialFormState('contactsForm', 'inputName', contactsFormMode);
-    if(contactsFormMode == 'add'){
+    setInitialFormState('contactsForm', 'inputName', formMode);
+    if(formMode == 'add'){
         setAddContactValues();
     } else {
         setEditContactValues(contactId);
@@ -95,7 +95,7 @@ function closeContactsFormDialogue(event) {
     resetContactsForm(event);
     document.getElementById('addContactDialogue').style = 'display: none;';
     // document.body.style = '';
-    contactsFormMode = '';
+    formMode = '';
     renderContactList();
     showContactDetail(activeContactId);
     // reloadPage(event);
@@ -132,7 +132,7 @@ function setEditContactValues(contactId) {
 
 function submitContactsForm(event, contactId) {
     event.stopPropagation();
-    if(contactsFormMode == 'edit') {
+    if(formMode == 'edit') {
         saveContact(contactId, event);
     } else {
         lastContactId++;

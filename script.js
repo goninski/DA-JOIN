@@ -1,13 +1,3 @@
-let taskFormMode = '';
-let contactsFormMode = '';
-let invalidFields = [];
-// let requiredFields = [];
-// let requiredContactFields = ['inputName', 'inputEmail'];
-// let requiredTaskFields = ['inputTitle', 'inputDueDate', 'categorySelect'];
-let activeTaskId = 0;
-let activeContactId = 0;
-let assignedTaskContacts = [];
-let assignedSubtasks = [];
 
 function init() {
     getMainTemplates();
