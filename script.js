@@ -66,7 +66,6 @@ function getFieldWrapperFromId(id) {
     return getClosestParentElementFromId(id, '.field-wrapper');
 }
 
-
 function getTaskIndexFromId(taskId) {
     return tasks.findIndex(task => task.id == taskId);
 }

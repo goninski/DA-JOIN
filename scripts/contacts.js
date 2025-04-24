@@ -104,7 +104,8 @@ function closeContactsFormDialogue(event) {
 function resetContactsForm(event) {
     event.stopPropagation();
     resetForm('contactsForm');
-    setInitialFormState('contactsForm', 'inputName', 'add');
+    // setInitialFormState('contactsForm', 'inputName', 'add');
+    focusFirstElement('inputName');
     event.preventDefault();
 }
 

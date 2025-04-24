@@ -5,8 +5,9 @@ let activeContactId = 0;
 let assignedContacts = [];
 let assignedSubtasks = [];
 // let assignedCategory = 0;
-let expandedListbox = null;
+let listboxElements = [];
 document.addEventListener('click', documentClickHandler);
+
 
 function getFormElementsArray(formId) {
     let form = document.getElementById(formId);
@@ -14,6 +15,68 @@ function getFormElementsArray(formId) {
     let elementsArr = Array.from(elements);
     // console.log(elementsArr);
     return elementsArr;
+}
+
+function resetForm(formId) {
+    document.getElementById(formId).reset();
+    invalidFields = [];
+    listboxElements = [];
+    let formElements = getFormElementsArray(formId);
+    formElements.forEach(function(element) {
+        resetFormElements(element);
+    });
+    // console.log(listboxElements);
+    getInvalidInputIds(formId);
+}
+
+function resetFormElements(element) {
+    let fieldWrapper = getFieldWrapperFromId(element.id);
+    if(fieldWrapper) {
+        fieldWrapper.classList.remove('selection-expanded', 'invalid');
+        let combox = fieldWrapper.querySelector('[role="combox"]');
+        if(combox) {
+            combox.removeAttribute('data-active-option');
+        }
+        let listbox = fieldWrapper.querySelector('[role="listbox"]');
+        if(listbox) {
+            listboxElements.push(listbox);
+            closeDropdown(listbox);
+        }
+    }
+};
+
+function closeDropdown(listbox) {
+    if(listbox.getAttribute("role") === 'listbox' ) {
+        listbox.setAttribute('aria-expanded', 'false');
+        let fieldWrapper = getFieldWrapperFromId(listbox.id);
+        if(fieldWrapper) {
+            fieldWrapper.classList.remove('select-expanded');
+        }
+    }
+}
+
+function closeAllDropdowns(listboxElements, currentListbox = null) {
+    listboxElements.forEach(function(listbox) {
+        if(listbox !== currentListbox) {
+            closeDropdown(listbox);
+        }
+    });
+}
+
+function setInitialFormState(formId, firstElementId = '', editMode = 'add') {
+    // resetAllInputAttributes(formId);
+    // getInvalidInputIds(formId);
+    if(firstElementId != '') {
+        let firstElement = document.getElementById(firstElementId);
+        firstElement.focus();
+    }
+}
+
+function focusFirstElement(firstElementId = null) {
+    if(firstElementId) {
+        let firstElement = document.getElementById(firstElementId);
+        firstElement.focus();
+    }
 }
 
 function getInvalidInputIds(formId) {
@@ -27,36 +90,6 @@ function getInvalidInputIds(formId) {
     });
     console.log(invalidFields);
     // setSubmitBtnState(formId);
-}
-
-function resetAllInputValidations(formId) {
-    invalidFields = [];
-    let formElements = getFormElementsArray(formId);
-    formElements.forEach(function(element) {
-        if(element.getAttribute("role") == 'listbox' ) {
-            element.setAttribute('aria-expanded', 'false');
-        }
-        if(element.getAttribute("role") == 'combox' ) {
-            element.removeAttribute('data-active-option');
-        }
-        let fieldWrapper = getFieldWrapperFromId(element.id);
-        if(fieldWrapper) {
-            fieldWrapper.classList.remove('invalid', 'select-expanded');
-        }
-    });
-}
-
-function resetForm(formId) {
-    document.getElementById(formId).reset();
-}
-
-function setInitialFormState(formId, firstElementId = '', editMode = 'add') {
-    resetAllInputValidations(formId);
-    getInvalidInputIds(formId);
-    if(firstElementId != '') {
-        let firstElement = document.getElementById(firstElementId);
-        firstElement.focus();
-    }
 }
 
 function validateElement(element) {
@@ -94,7 +127,7 @@ function setFieldValidity(element) {
 }
 
 function resetInputValidation(event) {
-    event.stopPropagation();
+    // event.stopPropagation();
     let fieldWrapper = getFieldWrapperFromEvent(event);
     if(fieldWrapper){
         fieldWrapper.classList.remove('invalid');
@@ -152,29 +185,6 @@ function getFormInputObj(event, formId) {
 }
 
 
-
-function documentClickHandler(event) {
-    event.stopPropagation();
-    if(expandedListbox) {
-        // console.log(event);
-        toggleDropdown(null, expandedListbox);
-    }
-}
-
-function dropdownEventHandler(event) {
-    event.stopPropagation();
-    let {key} = event;
-    let keys = ['Enter','ArrowUp', 'ArrowDown', ' '];
-    if(keys.includes(event.key)) {
-        event.preventDefault();
-        return toggleDropdown(event);
-    }
-    if((expandedListbox) && key === 'Escape' ) {
-        return toggleDropdown(event);
-    }
-    toggleDropdown(event);
-}
-
 function toggleDropdown(event = null, listbox = null) {
     let fieldWrapper;
     if(event) {
@@ -182,16 +192,13 @@ function toggleDropdown(event = null, listbox = null) {
         listbox = fieldWrapper.querySelector('[role="listbox"]');
         resetInputValidation(event);
     } else {
-        fieldWrapper = listbox.closest('.field-wrapper');
+        fieldWrapper = getFieldWrapperFromId(listbox.id);
     }
+    closeAllDropdowns(listboxElements, listbox);
     fieldWrapper.classList.toggle('select-expanded');
     let isExpanded = getBooleanFromString(listbox.getAttribute('aria-expanded'));
-    expandedListbox = null;
     isExpanded = !isExpanded;
     listbox.setAttribute('aria-expanded', isExpanded);
-    if(isExpanded) {
-        expandedListbox = listbox;
-    }
 }
 
 
@@ -222,6 +229,40 @@ function selectDropdownTaskContact(event, contactId) {
 
 
 
+
+function documentClickHandler(event) {
+    event.stopPropagation();
+    closeAllDropdowns(listboxElements);
+}
+
+function focusInHandler(event) {
+    event.stopPropagation();
+    // closeAllDropdowns(listboxElements);
+    resetInputValidation(event);
+}
+
+function focusOutHandler(event) {
+    event.stopPropagation();
+    // let element = event.currentTarget;
+    // let fieldWrapper = getFieldWrapperFromEvent(event);
+}
+
+function dropdownEventHandler(event) {
+    event.stopPropagation();
+    // console.log(event);
+    let {key} = event;
+    let keys = ['Enter','ArrowUp', 'ArrowDown', ' '];
+    if(keys.includes(event.key)) {
+        event.preventDefault();
+        return toggleDropdown(event);
+    }
+    if( key === 'Escape' ) {
+        return toggleDropdown(event);
+    }
+    if(event.type === "click") {
+        return toggleDropdown(event);
+    }
+}
 
 
 
