@@ -63,6 +63,11 @@
     object-fit: contain;
 }
 
+.input-img img {
+    width: 24px;
+    height: 24px;
+}
+
 .input-wrapper-board {
     display: flex;
     align-items: center;
@@ -74,6 +79,10 @@
     padding: 0 12px;
     box-sizing: border-box;
   }
+
+  .input-wrapper-board:focus-within {
+    border-color: #29ABE2;
+}
 
   .search-input {
     flex-grow: 1;
@@ -122,4 +131,17 @@
 .board-plus-button {
     height: 24px;
     width: 24px;
+}
+
+.board-table {
+    position: absolute;
+    top: 336px;
+    left: 232px;
+    gap: 16px;
+}
+
+.table-column {
+    height: 688px;
+    width: 246px;
+    gap: 10px;
 }
