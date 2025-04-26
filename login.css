@@ -21,11 +21,10 @@
 }
 
 .btn-third:hover {
-    color: var(--clr-light-blue);
-    border: solid 2px var(--clr-light-blue);
+    color: rgba(41, 171, 226, 1);
+    border: solid 2px rgba(41, 171, 226, 1);
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
-
 
 .btn-login-size {
     border: solid 1px var(--clr-main);
@@ -139,6 +138,7 @@ a.login-privacy-policy-color:hover {
 
 .not_a_join_user-login-header {
     font-weight: 400;
+    white-space: nowrap;
 }
 
 .pos-absol-header-login {
@@ -146,8 +146,10 @@ a.login-privacy-policy-color:hover {
     flex-direction: row;
     gap: 35px;
     position: absolute;
-    right: 16px;
-    top: 15px;
+    width: 279px;
+    height: 49px;
+    left: 1039px;
+    top: 67px;
 }
 
 .btn-login {
@@ -191,8 +193,11 @@ a.login-privacy-policy-color:hover {
 }
 
 .input-wrapper-signup-login:focus-within {
-    border: 2px solid var(--clr-light-blue); /* z.B. #2A8BF2 */
-    box-shadow: 0 0 4px rgba(42, 139, 242, 0.4);
+    border: 1px solid rgba(41, 171, 226, 1);
+}
+
+.false_input{
+    border: 1px solid rgba(255, 0, 31, 1);
 }
 
 .login-signup-input {
