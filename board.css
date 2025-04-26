@@ -137,11 +137,23 @@
     position: absolute;
     top: 336px;
     left: 232px;
-    gap: 16px;
+    height: 688px;
+    width: 1208px;
+    padding-left: 64pc;
+    padding-right: 64px;
 }
 
 .table-column {
     height: 688px;
     width: 246px;
     gap: 10px;
+}
+
+.no-tasks-to-do {
+    border: 1px;
+    border-radius: 10px;
+    border-color: #A8A8A8;
+    background-color: #E7E7E7;
+    height: 48px;
+    width: 246px;
 }
