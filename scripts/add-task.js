@@ -299,7 +299,7 @@ function renderContactSelectOptions(event = null, wrapperId = 'taskContactsSelec
     optionsWrapper.innerHTML = '';
     contacts = sortContacts(contacts);
     for (let index = 0; index < contacts.length; index++) {
-        optionsWrapper.innerHTML += getContactSelectOptionTemplate(contacts[index]);
+        optionsWrapper.innerHTML += getContactSelectOptionTemplate(contacts[index], index);
         if(assignedContacts.length > 0) {
             let isChecked = assignedContacts.includes(contacts[index].id);
             setTimeout(function() {
@@ -316,7 +316,7 @@ function renderCategorySelectOptions(event = null, wrapperId = 'taskCategoriesSe
     categories = sortCategories(categories);
     let assignedCategory = 0;
     for (let index = 0; index < categories.length; index++) {
-        optionsWrapper.innerHTML += getCategorySelectOptionTemplate(categories[index]);
+        optionsWrapper.innerHTML += getCategorySelectOptionTemplate(categories[index], index);
     }
 }
 

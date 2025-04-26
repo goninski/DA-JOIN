@@ -34,6 +34,7 @@ function resetFormElements(element) {
     getCurrentSelectParts(element);
     if(currentSelectParts.combox) {
         currentSelectParts.combox.removeAttribute('data-option-id');
+        currentSelectParts.combox.removeAttribute('data-active-index');
     }
     if(currentSelectParts.listbox) {
         listboxElements.push(currentSelectParts.listbox);
@@ -42,6 +43,7 @@ function resetFormElements(element) {
 };
 
 function closeDropdown(listbox) {
+    // console.log(Date.now());
     let fieldWrapper = getFieldWrapperFromElement(listbox);
     if(fieldWrapper) {
         listbox.setAttribute('aria-expanded', 'false');
@@ -87,7 +89,8 @@ function getInvalidInputIds(formId) {
 }
 
 function validateElement(element) {
-    // console.log(element.id);
+    console.log('f) validateElement');
+    console.log(element.id);
     if(! element.checkValidity() || ! checkCustomValidation(element)) {
         return false;
     }
@@ -128,9 +131,9 @@ function resetInputValidation(event) {
     }
 }
 
-function validateInputEvent(event) {
-    // event.stopPropagation();
-    let element = event.currentTarget;
+function validateInput(element) {
+    console.log('f) validateInput');
+    console.log(element);
     setFieldValidity(element);
     setSubmitBtnState(element.form.id);
 }
@@ -192,17 +195,15 @@ function focusInHandler(event) {
 
 function focusOutHandler(event) {
     event.stopPropagation();
-    validateInputEvent(event)
-}
-
-function focusOutHandlerDropdown(event) {
-    event.stopPropagation();
-    closeDropdown(event.currentTarget);
-    focusOutHandler(event);
+    let element = event.currentTarget;
+    console.log('f) validateInput');
+    console.log(element);
+    validateInput(element);
 }
 
 function dropdownEventHandler(event) {
     event.stopPropagation();
+    console.log('f) dropdownEventHandler');
     console.log(event.currentTarget);
     // console.log(event);
     if( event.key === 'Escape' || event.type === "click" ) {
@@ -213,7 +214,7 @@ function dropdownEventHandler(event) {
         return toggleDropdown(event.currentTarget);
     }
     if(['ArrowDown', 'ArrowUp'].includes(event.key)) {
-        return dropdownNavigationHandler(event, false);
+        return dropdownOptionKeyHandler(event, false);
     }
 }
 
@@ -229,36 +230,51 @@ function toggleDropdown(element) {
 
 function dropdownOptionClickHandler(event) {
     event.stopPropagation();
+    console.log('f) dropdownOptionClickHandler');
     let option = event.currentTarget.closest('[role="option"]');
+    console.log(option);
     if(option) {
         getCurrentSelectParts(option);
         let options = currentSelectParts.options;
         options.forEach(element => {
             element.setAttribute('aria-selected', 'false');
         });
+        setDropdownOption(currentSelectParts.combox, option, null);
         let combox = currentSelectParts.combox;
-        combox.value = option.textContent;
-        combox.setAttribute('data-option-id', option.dataset.optionId);
-        option.setAttribute('aria-selected', 'true');
+        console.log(combox);
+        toggleDropdown(currentSelectParts.listbox);
+        validateInput(currentSelectParts.combox);
     }
-    toggleDropdown(event.currentTarget);
 }
 
-function dropdownNavigationHandler(event, loop = false) {
+function dropdownMultipleClickHandler(event) {
+    event.stopPropagation();
+    let option = event.currentTarget.closest('[role="option"]');
+}
+
+function dropdownOptionKeyHandler(event, loop = false) {
     getCurrentSelectParts(event.currentTarget);
     let combox = currentSelectParts.combox;
     let options = currentSelectParts.options;
-    let currentIndex = options.findIndex(option => option.dataset.optionId == combox.dataset.optionId);
-    index = setSelectedDropdownIndex(event, currentIndex, options.length, loop);
-    combox.value = options[index].textContent;
-    combox.setAttribute('data-option-id', options[index].dataset.optionId);
-    if(currentIndex >= 0) {
-        options[currentIndex].setAttribute('aria-selected', 'false');
-    }
-    options[index].setAttribute('aria-selected', 'true');
+    let activeIndex = combox.dataset.activeIndex;
+    index = getSelectedDropdownIndex(event, activeIndex, options.length, loop);
+    setDropdownOption(combox, options[index], options[activeIndex]);
 }
 
-function setSelectedDropdownIndex(event, index, length, loop = false) {
+function setDropdownOption(combox, option, activeOption = null) {
+    combox.value = option.textContent;
+    combox.setAttribute('data-option-id', option.dataset.optionId);
+    combox.setAttribute('data-active-index', option.dataset.index);
+    if(activeOption) {
+        activeOption.setAttribute('aria-selected', 'false');
+    }
+    option.setAttribute('aria-selected', 'true');
+}
+
+function getSelectedDropdownIndex(event, index, length, loop = false) {
+    if(!index) {
+        index = -1;
+    }
     if(event.key === 'ArrowDown' ) {
         index = getNextIndex(index, length, loop);
     } else if (event.key === 'ArrowUp' ) {
@@ -288,6 +304,7 @@ function getPreviousIndex(index, length, loop = false) {
     }
     return index;
 }
+
 
 function selectDropdownTaskContact(event, contactId) {
     if(event.target.checked) {
@@ -403,7 +420,7 @@ function getCurrentSelectOptionValues(listbox, multiple = false) {
 //     closeSelectOptions(id);
 //     let element = document.getElementById(id);
 //     element.value = '';
-//     validateInputEvent(id, true);
+//     validateInput(id, true);
 // }
 
 // function setValidationStyle(element) {
@@ -439,7 +456,7 @@ function getCurrentSelectOptionValues(listbox, multiple = false) {
 //     resetInputValidation(event);
 // }
 
-// function validateInputEventOption(element, option) {
+// function validateInputOption(element, option) {
 //     let validationParam = element.getAttribute('data-validation-param');
 //     console.log(validationParam);
 //     let item;
@@ -464,7 +481,7 @@ function getCurrentSelectOptionValues(listbox, multiple = false) {
 //         // validateCustomSelect(event, selectId);
 //     }
 //     //toggleSelectOptionsVisibility(event);
-//     validateInputEvent(event, 'custom-id');
+//     validateInput(event, 'custom-id');
 // }
 
 
@@ -486,7 +503,7 @@ function getCurrentSelectOptionValues(listbox, multiple = false) {
 //     event.stopPropagation();
 //     selectInput = document.getElementById(selectId);
 //     console.log(selectInput.value.length);
-//     // validateInputEvent(selectId, true);
+//     // validateInput(selectId, true);
 //     if(selectInput.value.length <= 0) {
 //         setInvalidStyles(selectInput, true);
 //     } else {
@@ -512,7 +529,7 @@ function getCurrentSelectOptionValues(listbox, multiple = false) {
 // }
 
 
-// function xvalidateInputEvent(id, parent = false) {
+// function xvalidateInput(id, parent = false) {
 //     // let id = event.currentTarget.id;
 //     let element = document.getElementById(id);
 //     console.log(id);
