@@ -33,7 +33,7 @@ function resetForm(formId) {
 function resetFormElements(element) {
     getCurrentSelectParts(element);
     if(currentSelectParts.combox) {
-        currentSelectParts.combox.removeAttribute('data-active-option');
+        currentSelectParts.combox.removeAttribute('data-option-id');
     }
     if(currentSelectParts.listbox) {
         listboxElements.push(currentSelectParts.listbox);
@@ -42,12 +42,10 @@ function resetFormElements(element) {
 };
 
 function closeDropdown(listbox) {
-    if(listbox.getAttribute("role") === 'listbox' ) {
+    let fieldWrapper = getFieldWrapperFromElement(listbox);
+    if(fieldWrapper) {
         listbox.setAttribute('aria-expanded', 'false');
-        let fieldWrapper = getFieldWrapperFromId(listbox.id);
-        if(fieldWrapper) {
-            fieldWrapper.classList.remove('select-expanded');
-        }
+        fieldWrapper.classList.remove('select-expanded');
     }
 }
 
@@ -131,7 +129,7 @@ function resetInputValidation(event) {
 }
 
 function validateInputEvent(event) {
-    event.stopPropagation();
+    // event.stopPropagation();
     let element = event.currentTarget;
     setFieldValidity(element);
     setSubmitBtnState(element.form.id);
@@ -189,18 +187,23 @@ function documentClickHandler(event) {
 
 function focusInHandler(event) {
     event.stopPropagation();
-    // closeAllDropdowns(listboxElements);
     resetInputValidation(event);
 }
 
 function focusOutHandler(event) {
     event.stopPropagation();
-    // let element = event.currentTarget;
-    // let fieldWrapper = getFieldWrapperFromEvent(event);
+    validateInputEvent(event)
+}
+
+function focusOutHandlerDropdown(event) {
+    event.stopPropagation();
+    closeDropdown(event.currentTarget);
+    focusOutHandler(event);
 }
 
 function dropdownEventHandler(event) {
     event.stopPropagation();
+    console.log(event.currentTarget);
     // console.log(event);
     if( event.key === 'Escape' || event.type === "click" ) {
         return toggleDropdown(event.currentTarget);
@@ -225,6 +228,7 @@ function toggleDropdown(element) {
 }
 
 function dropdownOptionClickHandler(event) {
+    event.stopPropagation();
     let option = event.currentTarget.closest('[role="option"]');
     if(option) {
         getCurrentSelectParts(option);
@@ -293,9 +297,6 @@ function selectDropdownTaskContact(event, contactId) {
     };
     renderContactProfileBatches(assignedContacts);
 }
-
-
-
 
 function getFieldWrapperFromElement(element) {
     return element.closest('.field-wrapper');

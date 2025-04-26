@@ -125,7 +125,7 @@ function getTaskFormFieldsTemplate(task) {
             <label for="categorySelect" class="required">Category</label>
             <div class="select custom-select">
                 <div class="input-wrapper custom-select">
-                    <input type="text" id="categorySelect" name="categorySelect" placeholder="Select task category" class="clickable" onfocusout="focusInHandler(event)" onclick="dropdownEventHandler(event)"  onkeydown="dropdownEventHandler(event)" onfocusout="focusOutHandler(event)" data-option-id="-1" role="combox" data-custom-validation="required" readonly>
+                    <input type="text" id="categorySelect" name="categorySelect" placeholder="Select task category" class="clickable" onfocus="focusInHandler(event)" onfocusout="focusOutHandlerDropdown(event)" onclick="dropdownEventHandler(event)" onkeydown="dropdownEventHandler(event)" data-option-id="-1" role="combox" data-custom-validation="required" readonly>
                     <div class="input-icon-wrapper custom-select">
                         <div class="icon-wrapper flex">
                             <img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown">
@@ -221,12 +221,6 @@ function getCategorySelectOptionTemplate(category) {
     </li>
     `
 }
-// function getCategorySelectOptionTemplate(category) {
-//     return `
-//     <li id="categoryOptionId-${category.id}" class="select-option" role="option" onclick="selectDropdownOption(event, '${category.id}', '${category.name}')" aria-selected="false" data-option-id="${category.id}">${category.name}
-//     </li>
-//     `
-// }
 
 function xgetCategorySelectOptionTemplate(category) {
     return `

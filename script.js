@@ -87,7 +87,6 @@ function getBooleanFromString(booleanString) {
     }
 }
 
-
 function setTodayAsDateValue(id) {
     document.getElementById(id).valueAsDate = new Date();
 }
