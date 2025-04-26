@@ -106,7 +106,7 @@ function setEditTaskValues(task) {
         if(task.categoryId) {
             let categoryName = categories[getCategoryIndexFromId(task.categoryId)].name;
             document.getElementById('categorySelect').value = categoryName;
-            document.getElementById('categorySelect').dataset.activeOption = task.categoryId;
+            document.getElementById('categorySelect').dataset.optionId = task.categoryId;
             document.getElementById('categoryOptionId-' + task.categoryId).setAttribute('aria-selected', 'true');
         }
         assignedSubtasks = task.subtasks;

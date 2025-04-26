@@ -6,6 +6,7 @@ let assignedContacts = [];
 let assignedSubtasks = [];
 // let assignedCategory = 0;
 let listboxElements = [];
+let currentSelectParts = {};
 document.addEventListener('click', documentClickHandler);
 
 
@@ -30,18 +31,13 @@ function resetForm(formId) {
 }
 
 function resetFormElements(element) {
-    let fieldWrapper = getFieldWrapperFromId(element.id);
-    if(fieldWrapper) {
-        fieldWrapper.classList.remove('selection-expanded', 'invalid');
-        let combox = fieldWrapper.querySelector('[role="combox"]');
-        if(combox) {
-            combox.removeAttribute('data-active-option');
-        }
-        let listbox = fieldWrapper.querySelector('[role="listbox"]');
-        if(listbox) {
-            listboxElements.push(listbox);
-            closeDropdown(listbox);
-        }
+    getCurrentSelectParts(element);
+    if(currentSelectParts.combox) {
+        currentSelectParts.combox.removeAttribute('data-active-option');
+    }
+    if(currentSelectParts.listbox) {
+        listboxElements.push(currentSelectParts.listbox);
+        closeDropdown(currentSelectParts.listbox);
     }
 };
 
@@ -156,7 +152,7 @@ function validatePhoneInput(element) {
 }
 
 function setSubmitBtnState(formId) {
-    getInvalidInputIds(formId);    
+    getInvalidInputIds(formId);
     let submitBtnId = document.getElementById(formId).dataset.submitBtnId;
     let submitBtn = document.getElementById(submitBtnId);
     submitBtn.setAttribute('disabled', '');
@@ -185,50 +181,6 @@ function getFormInputObj(event, formId) {
 }
 
 
-function toggleDropdown(event = null, listbox = null) {
-    let fieldWrapper;
-    if(event) {
-        fieldWrapper = getFieldWrapperFromEvent(event);
-        listbox = fieldWrapper.querySelector('[role="listbox"]');
-        resetInputValidation(event);
-    } else {
-        fieldWrapper = getFieldWrapperFromId(listbox.id);
-    }
-    closeAllDropdowns(listboxElements, listbox);
-    fieldWrapper.classList.toggle('select-expanded');
-    let isExpanded = getBooleanFromString(listbox.getAttribute('aria-expanded'));
-    isExpanded = !isExpanded;
-    listbox.setAttribute('aria-expanded', isExpanded);
-}
-
-
-function selectDropdownOption(event, activeOption, optionValue = '') {
-    event.stopPropagation();
-    let listbox = getClosestParentElementFromEvent(event, '[role="listbox"]');
-    let options = listbox.querySelectorAll('[role="option"]');
-    options.forEach(option => {
-        option.setAttribute('aria-selected', 'false');
-    });
-    let combox = document.getElementById(listbox.dataset.comboxId);
-    combox.value = optionValue;
-    combox.dataset.activeOption = activeOption;
-    let option = event.currentTarget;
-    option.setAttribute('aria-selected', 'true');
-    toggleDropdown(null, listbox);
-}
-
-function selectDropdownTaskContact(event, contactId) {
-    if(event.target.checked) {
-        assignedContacts.push(contactId);
-    } else {
-        assignedContacts.splice(assignedContacts.indexOf(contactId), 1);
-    };
-    renderContactProfileBatches(assignedContacts);
-}
-
-
-
-
 
 function documentClickHandler(event) {
     event.stopPropagation();
@@ -250,22 +202,179 @@ function focusOutHandler(event) {
 function dropdownEventHandler(event) {
     event.stopPropagation();
     // console.log(event);
-    let {key} = event;
-    let keys = ['Enter','ArrowUp', 'ArrowDown', ' '];
-    if(keys.includes(event.key)) {
+    if( event.key === 'Escape' || event.type === "click" ) {
+        return toggleDropdown(event.currentTarget);
+    }
+    if(['Enter', ' '].includes(event.key)) {
         event.preventDefault();
-        return toggleDropdown(event);
+        return toggleDropdown(event.currentTarget);
     }
-    if( key === 'Escape' ) {
-        return toggleDropdown(event);
+    if(['ArrowDown', 'ArrowUp'].includes(event.key)) {
+        return dropdownNavigationHandler(event, false);
     }
-    if(event.type === "click") {
-        return toggleDropdown(event);
+}
+
+function toggleDropdown(element) {
+    getCurrentSelectParts(element);
+    let listbox = currentSelectParts.listbox;
+    closeAllDropdowns(listboxElements, listbox);
+    currentSelectParts.fieldWrapper.classList.toggle('select-expanded');
+    let isExpanded = getBooleanFromString(listbox.getAttribute('aria-expanded'));
+    isExpanded = !isExpanded;
+    listbox.setAttribute('aria-expanded', isExpanded);
+}
+
+function dropdownOptionClickHandler(event) {
+    let option = event.currentTarget.closest('[role="option"]');
+    if(option) {
+        getCurrentSelectParts(option);
+        let options = currentSelectParts.options;
+        options.forEach(element => {
+            element.setAttribute('aria-selected', 'false');
+        });
+        let combox = currentSelectParts.combox;
+        combox.value = option.textContent;
+        combox.setAttribute('data-option-id', option.dataset.optionId);
+        option.setAttribute('aria-selected', 'true');
     }
+    toggleDropdown(event.currentTarget);
+}
+
+function dropdownNavigationHandler(event, loop = false) {
+    getCurrentSelectParts(event.currentTarget);
+    let combox = currentSelectParts.combox;
+    let options = currentSelectParts.options;
+    let currentIndex = options.findIndex(option => option.dataset.optionId == combox.dataset.optionId);
+    index = setSelectedDropdownIndex(event, currentIndex, options.length, loop);
+    combox.value = options[index].textContent;
+    combox.setAttribute('data-option-id', options[index].dataset.optionId);
+    if(currentIndex >= 0) {
+        options[currentIndex].setAttribute('aria-selected', 'false');
+    }
+    options[index].setAttribute('aria-selected', 'true');
+}
+
+function setSelectedDropdownIndex(event, index, length, loop = false) {
+    if(event.key === 'ArrowDown' ) {
+        index = getNextIndex(index, length, loop);
+    } else if (event.key === 'ArrowUp' ) {
+        index = getPreviousIndex(index, length, loop);
+    }
+    return index;
+}
+
+function getNextIndex(index, length, loop = false) {
+    if(index < length - 1 ) {
+        index++;
+    } else {
+        if(loop) {
+            index = 0;
+        }
+    }
+    return index;
+}
+
+function getPreviousIndex(index, length, loop = false) {
+    if(index <= 0) {
+        if(loop) {
+            index = length - 1;
+        }
+    } else {
+        index--;
+    }
+    return index;
+}
+
+function selectDropdownTaskContact(event, contactId) {
+    if(event.target.checked) {
+        assignedContacts.push(contactId);
+    } else {
+        assignedContacts.splice(assignedContacts.indexOf(contactId), 1);
+    };
+    renderContactProfileBatches(assignedContacts);
 }
 
 
 
+
+function getFieldWrapperFromElement(element) {
+    return element.closest('.field-wrapper');
+}
+
+function getFieldWrapperFromEvent(event) {
+    return getClosestParentElementFromEvent(event, '.field-wrapper');
+}
+
+function getFieldWrapperFromId(id) {
+    return getClosestParentElementFromId(id, '.field-wrapper');
+}
+
+function getCurrentSelectParts(element) {
+    currentSelectParts = {};
+    let fieldWrapper = element.closest('.field-wrapper');
+    if(fieldWrapper) {
+        currentSelectParts.fieldWrapper = fieldWrapper;
+        let combox = fieldWrapper.querySelector('[role="combox"]');
+        if(combox) {
+            currentSelectParts.combox = combox;
+        }
+        let listbox = fieldWrapper.querySelector('[role="listbox"]');
+        if(listbox) {
+            currentSelectParts.listbox = listbox;
+            currentSelectParts.options = getCurrentSelectOptions(listbox);
+        }
+    }
+    // console.log(currentSelectParts);
+    return currentSelectParts;
+}
+
+function getCurrentSelectOptions(listbox, multiple = false) {
+    let selectOptions = [];
+    let options = listbox.querySelectorAll('[role="option"]');
+    options.forEach(function(option) {
+        selectOptions.push(option);
+    });
+    // console.log(selectOptions);
+    return selectOptions;
+}
+
+function getCurrentSelectOptionValues(listbox, multiple = false) {
+    let selectOptionValues = [];
+    let options = listbox.querySelectorAll('[role="option"]');
+    options.forEach(function(element) {
+        let option = {};
+        option.id = element.dataset.optionId;
+        option.name = element.textContent;
+        selectOptionValues.push(option);
+    });
+    console.log(selectOptionValues);
+    return selectOptionValues;
+}
+
+
+
+
+
+
+
+
+
+
+// function toggleDropdown(event = null, listbox = null) {
+//     let fieldWrapper;
+//     if(event) {
+//         fieldWrapper = getFieldWrapperFromEvent(event);
+//         listbox = fieldWrapper.querySelector('[role="listbox"]');
+//         resetInputValidation(event);
+//     } else {
+//         fieldWrapper = getFieldWrapperFromId(listbox.id);
+//     }
+//     closeAllDropdowns(listboxElements, listbox);
+//     fieldWrapper.classList.toggle('select-expanded');
+//     let isExpanded = getBooleanFromString(listbox.getAttribute('aria-expanded'));
+//     isExpanded = !isExpanded;
+//     listbox.setAttribute('aria-expanded', isExpanded);
+// }
 
 
 

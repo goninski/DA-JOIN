@@ -125,7 +125,7 @@ function getTaskFormFieldsTemplate(task) {
             <label for="categorySelect" class="required">Category</label>
             <div class="select custom-select">
                 <div class="input-wrapper custom-select">
-                    <input type="text" id="categorySelect" name="categorySelect" placeholder="Select task category" class="clickable" onfocusout="focusInHandler(event)" onclick="dropdownEventHandler(event)"  onkeydown="dropdownEventHandler(event)" onfocusout="focusOutHandler(event)" data-active-option="0" role="combox" data-custom-validation="required" readonly>
+                    <input type="text" id="categorySelect" name="categorySelect" placeholder="Select task category" class="clickable" onfocusout="focusInHandler(event)" onclick="dropdownEventHandler(event)"  onkeydown="dropdownEventHandler(event)" onfocusout="focusOutHandler(event)" data-option-id="-1" role="combox" data-custom-validation="required" readonly>
                     <div class="input-icon-wrapper custom-select">
                         <div class="icon-wrapper flex">
                             <img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown">
@@ -136,6 +136,19 @@ function getTaskFormFieldsTemplate(task) {
             </div>
             <div class="validation-msg">This field is required</div>
         </div>
+
+
+        <div class="field-wrapper has-message">
+            <label for="selectDefault" class="required">Default Select (temp)</label>
+            <select class="select">
+                <option>Option 1</option>
+                <option>Option 2</option>
+                <option>Option 3</option>
+                <option>Option 4</option>
+            </select>
+            <div class="validation-msg">This field is required</div>
+        </div>
+
 
 <!--
         <div class="field-wrapper has-message">
@@ -204,10 +217,16 @@ function getContactSelectOptionTemplate(contact) {
 
 function getCategorySelectOptionTemplate(category) {
     return `
-    <li id="categoryOptionId-${category.id}" class="select-option" role="option" onclick="selectDropdownOption(event, '${category.id}', '${category.name}')" aria-selected="false">${category.name}
+    <li id="categoryOptionId-${category.id}" class="select-option" role="option" onclick="dropdownOptionClickHandler(event)" aria-selected="false" data-option-id="${category.id}">${category.name}
     </li>
     `
 }
+// function getCategorySelectOptionTemplate(category) {
+//     return `
+//     <li id="categoryOptionId-${category.id}" class="select-option" role="option" onclick="selectDropdownOption(event, '${category.id}', '${category.name}')" aria-selected="false" data-option-id="${category.id}">${category.name}
+//     </li>
+//     `
+// }
 
 function xgetCategorySelectOptionTemplate(category) {
     return `
@@ -332,6 +351,12 @@ function getFloatingMessageTaskAddedTemplate() {
 
 function trashKeepForNow() {
     return `
+
+    <div class="select-btn focus" onclick="renderContactSelectOptions(event)">
+        <span class="select-text">Select contacts to assign</span>
+        <span class="input-icon-wrapper custom-select"><img src="/assets/icons/arrow-drop-down.svg" class="icon"></span>
+    </div>
+
 
     <div class="select-btn focus" onclick="renderContactSelectOptions(event)">
         <span class="select-text">Select contacts to assign</span>

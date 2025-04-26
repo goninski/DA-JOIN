@@ -58,14 +58,6 @@ function getClosestParentElementFromId(id, selector = '') {
     return;
 }
 
-function getFieldWrapperFromEvent(event) {
-    return getClosestParentElementFromEvent(event, '.field-wrapper');
-}
-
-function getFieldWrapperFromId(id) {
-    return getClosestParentElementFromId(id, '.field-wrapper');
-}
-
 function getTaskIndexFromId(taskId) {
     return tasks.findIndex(task => task.id == taskId);
 }
