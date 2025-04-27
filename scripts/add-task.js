@@ -286,7 +286,7 @@ function filterTaskContactOptions(event) {
     renderContactSelectOptions('taskContactsListbox', searchVal);
 }
 
-function renderContactSelectOptions(listboxId = 'taskContactsListbox', searchVal = 'x') {
+function renderContactSelectOptions(listboxId = 'taskContactsListbox', searchVal = '') {
     let listbox = document.getElementById(listboxId);
     let combox = document.getElementById('selectContacts');
     listbox.innerHTML = '';

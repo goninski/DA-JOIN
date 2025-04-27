@@ -31,9 +31,7 @@ function focusOutHandler(event) {
     let element = event.currentTarget;
     console.log('f) validateInput');
     console.log(element);
-    // if(element.hasAttribute('data-select-multiple')) {
-    //     element.value = '';
-    // }
+    closeAllDropdowns(listboxElements);
     validateInput(element);
 }
 
