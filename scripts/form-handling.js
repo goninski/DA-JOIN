@@ -235,17 +235,14 @@ function getFieldWrapperFromId(id) {
 
 // SELECTION HANDLER (DROPDOWNS)
 
-function dropdownEventHandler(event, preventDef = false) {
+function dropdownEventHandler(event) {
     event.stopPropagation();
-    console.log('f) dropdownEventHandler');
-    console.log(event.key);
-    console.log(event.type);
-    console.log(event.target);
+    // console.log('f) dropdownEventHandler');
+    // console.log(event.key);
+    // console.log(event.type);
+    // console.log(event.target);
     getCurrentSelectParts(event.target);
     listbox = currentSelectParts.listbox;
-    // if(preventDef) {
-    //     event.preventDefault();
-    // }
     if(['Enter', ' '].includes(event.key)) {
         event.preventDefault();
         return toggleDropdown(listbox);

@@ -113,7 +113,7 @@ function getTaskFormFieldsTemplate(task) {
                 <div class="input-wrapper custom-select">
                     <input type="text" role="combox" id="selectContacts" name="selectContacts" class="clickable" placeholder="Select contacts to assign" data-select-multiple="true" oninput="filterTaskContactOptions(event)" onfocusout="focusOutHandler(event)" onclick="dropdownEventHandler(event)">
                     <div class="input-icon-wrapper custom-select multiple">
-                        <button onclick="dropdownEventHandler(event, true)"><img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown"></button>
+                        <button onclick="event.preventDefault(), dropdownEventHandler(event)"><img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown"></button>
                     </div>
                 </div>
                 <ol  role="listbox" id="taskContactsListbox" class="select-options-wrapper multiple right"></ol>
