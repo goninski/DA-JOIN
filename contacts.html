@@ -76,7 +76,7 @@
     
             <div class="dialogue-main flex-col justifiy-center align-center pos-relative">
 
-                <form id="contactsForm" onsubmit="submitContactsForm(event, activeContactId)" class="flex-col add-contact-form" data-submit-btn-id="btnSubmit">
+                <form id="contactsForm" onsubmit="submitContactsForm(event, activeContactId)" class="flex-col add-contact-form">
                     <div class="field-groups flex-row align-center justify-between">
  
                         <div class="xfield-group batch-wrapper flex-col">
@@ -85,35 +85,35 @@
                         </div>
 
                         <div class="field-group flex-col flex-grow">
-                            <div class="field-wrapper has-message">
+                            <div class="field-wrapper has-alert">
                                 <!-- <label for="name" class="xrequired">Name</label> -->
                                 <div class="input-wrapper">
-                                    <input type="text" id="inputName" name="name" placeholder="Name" required maxlength="64" onfocus="resetInputValidation(event)" onfocusout="validateInputEvent(event)">
+                                    <input type="text" id="inputName" name="name" placeholder="Name" required maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)">
                                     <div class="input-icon-wrapper simple">
                                         <img src="/assets/icons/input-name.svg" alt="person-icon" class="icon-name-input">
                                     </div>
                                 </div>
-                                <div class="validation-msg">This field is required</div>
+                                <div role="alert" class="validation-alert">This field is required</div>
                             </div>
-                            <div class="field-wrapper has-message">
+                            <div class="field-wrapper has-alert">
                                 <!-- <label for="email" class="required">Email</label> -->
                                 <div class="input-wrapper">
-                                    <input type="email" id="inputEmail" name="email" placeholder="Email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required maxlength="64" onfocus="resetInputValidation(event)" onfocusout="validateInputEvent(event)">
+                                    <input type="email" id="inputEmail" name="email" placeholder="Email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)"">
                                     <div class="input-icon-wrapper simple">
                                         <img src="/assets/icons/input-email.svg" alt="email-icon" class="icon-email-input">
                                     </div>
                                 </div>
-                                <div class="validation-msg">Please enter a valid email address</div>
+                                <div role="alert" class="validation-alert">Please enter a valid email address</div>
                             </div>
-                            <div class="field-wrapper has-message">
+                            <div class="field-wrapper has-alert">
                                 <!-- <label for="phone" class="xrequired">Phone</label> -->
                                 <div class="input-wrapper">
-                                    <input type="tel" id="inputPhone" name="phone" placeholder="Phone" minlength="10" maxlength="64" onfocus="resetInputValidation(event)" onfocusout="validateInputEvent(event)" data-custom-validation="phone">
+                                    <input type="tel" id="inputPhone" name="phone" placeholder="Phone" minlength="10" maxlength="64" data-custom-validation="phone" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)">
                                     <div class="input-icon-wrapper simple">
                                         <img src="/assets/icons/input-phone.svg" alt="phone-icon" class="icon-phone-input">
                                     </div>
                                 </div>
-                                <div class="validation-msg">Please enter a valid phone number (min. 10 digits)</div>
+                                <div role="alert" class="validation-alert">Please enter a valid phone number (min. 10 digits)</div>
                             </div>
                             <div id="submitBtnWrapper" class="submit-button-wrapper flex-row gap">
                                 <button id="btnSubmit"></button>

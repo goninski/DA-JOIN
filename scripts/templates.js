@@ -76,19 +76,19 @@ function getTaskFormFieldsTemplate(task) {
     return `
     <div class="field-group flex-col flex-grow">
 
-        <div class="field-wrapper has-message">
+        <div class="field-wrapper has-alert">
             <label for="title" class="required">Title</label>
             <input type="text" id="inputTitle" name="title" placeholder="Enter a title" required maxlength="128" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)">
-            <div role="alert" class="validation-msg">This field is required</div>
+            <div role="alert" class="validation-alert">This field is required</div>
         </div>
-        <div class="field-wrapper has-message">
+        <div class="field-wrapper has-alert">
             <label for="description">Description</label>
             <textarea id="inputDescription" name="description" placeholder="Enter a description"></textarea>
         </div>
-        <div class="field-wrapper has-message">
+        <div class="field-wrapper has-alert">
             <label for="dueDate" class="required">Due date</label>
-            <input type="date" id="inputDueDate" name="dueDate" required min="2000-01-01" max="2099-12-31" xonfocus="focusInHandler(event), setTodayAsDateValue('inputDueDate')" onfocusout="focusOutHandler(event)" onkeyup="removePlaceholderStyle(event)" data-placeholder-style="true">
-            <div role="alert" class="validation-msg">Please enter a valid date</div>
+            <input type="date" id="inputDueDate" name="dueDate" required min="2000-01-01" max="2099-12-31"  onfocus="focusInHandler(event), setTodayAsDateValue('inputDueDate')" onfocusout="focusOutHandler(event)" onkeyup="removePlaceholderStyle(event)" data-placeholder-style="true">
+            <div role="alert" class="validation-alert">Please enter a valid date</div>
         </div>
     </div>
 
@@ -121,7 +121,7 @@ function getTaskFormFieldsTemplate(task) {
             <ul id="profileBatches" class="profile-batches hide-if-empty" style="margin-top: 12px;"></ul>
         </div>
 
-        <div class="field-wrapper has-message">
+        <div class="field-wrapper has-alert">
             <label for="categorySelect" class="required">Category</label>
             <div class="select custom-select">
                 <div class="input-wrapper custom-select">
@@ -134,12 +134,12 @@ function getTaskFormFieldsTemplate(task) {
                 </div>
                 <ol id="taskCategoriesSelectOptionsWrapper" class="select-options-wrapper" role="listbox" xdata-combox-id="categorySelect"></ol>
             </div>
-            <div role="alert" class="validation-msg">This field is required</div>
+            <div role="alert" class="validation-alert">This field is required</div>
         </div>
 
 
 <!--
-        <div class="field-wrapper has-message">
+        <div class="field-wrapper has-alert">
             <label for="selectDefault" class="required">Default Select (temp)</label>
             <select class="select">
                 <option>Option 1</option>
@@ -147,13 +147,13 @@ function getTaskFormFieldsTemplate(task) {
                 <option>Option 3</option>
                 <option>Option 4</option>
             </select>
-            <div class="validation-msg">This field is required</div>
+            <div class="validation-alert">This field is required</div>
         </div>
 
-        <div class="field-wrapper has-message">
+        <div class="field-wrapper has-alert">
             <label for="temp" class="required">Temp</label>
             <input type="text" id="inputTemp" name="temp" placeholder="Placeholder" xrequired maxlength="128" onfocus="resetInputValidation(event)" onfocusout="focusOutHandler(event)">
-            <div class="validation-msg">This field is required</div>
+            <div class="validation-alert">This field is required</div>
         </div>
 -->
 

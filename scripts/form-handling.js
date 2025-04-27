@@ -20,7 +20,7 @@ function getFormElementsArray(formId) {
 
 function resetForm(formId) {
     document.getElementById(formId).reset();
-    invalidFields = [];
+    // invalidFields = [];
     listboxElements = [];
     let formElements = getFormElementsArray(formId);
     formElements.forEach(function(element) {
@@ -30,7 +30,23 @@ function resetForm(formId) {
     getInvalidInputIds(formId);
 }
 
+function checkEditFormState(formId) {
+    let formElements = getFormElementsArray(formId);
+    formElements.forEach(function(element) {
+        setPlaceholderStyle(element);
+    });
+    setSubmitBtnState(formId);
+    // getInvalidInputIds(formId);
+}
+
+function focusFirstElement(firstElementId = null) {
+    if(firstElementId) {
+        document.getElementById(firstElementId).focus();
+    }
+}
+
 function resetFormElements(element) {
+    setPlaceholderStyle(element);
     getCurrentSelectParts(element);
     if(currentSelectParts.fieldWrapper) {
         currentSelectParts.fieldWrapper.classList.remove('invalid');
@@ -43,7 +59,6 @@ function resetFormElements(element) {
         listboxElements.push(currentSelectParts.listbox);
         closeDropdown(currentSelectParts.listbox);
     }
-    addPlaceholderStyle(element);
 };
 
 function closeDropdown(listbox) {
@@ -61,22 +76,6 @@ function closeAllDropdowns(listboxElements, currentListbox = null) {
             closeDropdown(listbox);
         }
     });
-}
-
-function setInitialFormState(formId, firstElementId = '', editMode = 'add') {
-    // resetAllInputAttributes(formId);
-    // getInvalidInputIds(formId);
-    if(firstElementId != '') {
-        let firstElement = document.getElementById(firstElementId);
-        firstElement.focus();
-    }
-}
-
-function focusFirstElement(firstElementId = null) {
-    if(firstElementId) {
-        let firstElement = document.getElementById(firstElementId);
-        firstElement.focus();
-    }
 }
 
 function getInvalidInputIds(formId) {
@@ -128,6 +127,10 @@ function setFieldValidity(element) {
             fieldWrapper.classList.add('invalid');
         }
     }
+    setPlaceholderStyle(element);
+}
+
+function setPlaceholderStyle(element) {
     if(element.hasAttribute('data-placeholder-style')) {
         if(element.value == '') {
             element.dataset.placeholderStyle = 'true';
@@ -140,14 +143,8 @@ function setFieldValidity(element) {
 function removePlaceholderStyle(event) {
     event.stopPropagation();
     let element = event.currentTarget;
-    if(element.hasAttribute("data-placeholder-style")) {
+    if(element.hasAttribute('data-placeholder-style')) {
         element.dataset.placeholderStyle = 'false';
-    }
-}
-
-function addPlaceholderStyle(element) {
-    if(element.value == '' && element.hasAttribute("data-placeholder-style")) {
-        element.dataset.placeholderStyle = 'true';
     }
 }
 
@@ -182,9 +179,12 @@ function validatePhoneInput(element) {
 
 function setSubmitBtnState(formId) {
     getInvalidInputIds(formId);
-    let submitBtnId = document.getElementById(formId).dataset.submitBtnId;
-    let submitBtn = document.getElementById(submitBtnId);
+    let form = document.getElementById(formId);
+    let submitBtn = form.querySelector('[type="submit"]');
     submitBtn.setAttribute('disabled', '');
+    // console.log('f) setSubmitBtnState');
+    // console.log(invalidFields);
+    // console.log(submitBtn);
     if(invalidFields.length > 0) {
         submitBtn.setAttribute('disabled', '');
     } else {

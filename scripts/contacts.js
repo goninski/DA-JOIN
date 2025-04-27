@@ -80,19 +80,20 @@ function editContact(contactId) {
 }
 
 function openContactsForm(formMode, contactId = 0) {
+    resetForm('contactsForm');
     document.getElementById('addContactDialogue').style = '';
     document.body.style = 'overflow: hidden;';
-    setInitialFormState('contactsForm', 'inputName', formMode);
     if(formMode == 'add'){
         setAddContactValues();
     } else {
         setEditContactValues(contactId);
+        checkEditFormState('contactsForm');
     }
 }
 
 function closeContactsFormDialogue(event) {
     event.stopPropagation();
-    resetContactsForm(event);
+    resetForm('contactsForm');
     document.getElementById('addContactDialogue').style = 'display: none;';
     // document.body.style = '';
     formMode = '';
@@ -101,13 +102,13 @@ function closeContactsFormDialogue(event) {
     // reloadPage(event);
 }
 
-function resetContactsForm(event) {
-    event.stopPropagation();
-    resetForm('contactsForm');
-    // setInitialFormState('contactsForm', 'inputName', 'add');
-    focusFirstElement('inputName');
-    event.preventDefault();
-}
+// function resetContactsForm(event) {
+//     event.stopPropagation();
+//     resetForm('contactsForm');
+//     // setInitialFormState('contactsForm', 'inputName', 'add');
+//     focusFirstElement('inputName');
+//     event.preventDefault();
+// }
 
 function setAddContactValues() {
     document.getElementById('dialogueProfileBatch').innerHTML = '<img src="/assets/icons/profile-placeholder.svg" alt="profile-placeholder">';

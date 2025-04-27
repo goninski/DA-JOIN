@@ -87,11 +87,12 @@ function renderTaskForm(fieldsWrapperId, task = null) {
     // renderContactSelectOptions(event);
     // renderContactProfileBatches();
     renderCategorySelectOptions(event);
-    setEditTaskValues(task);
-    // setInitialFormState(formId, 'inputTitle', formMode);
+    setEditTaskValues(task, formId);
+    focusFirstElement('inputTitle');
+    checkEditFormState(formId);
 }
 
-function setEditTaskValues(task) {
+function setEditTaskValues(task, formId) {
     if(formMode == 'edit') {
         document.getElementById('inputTitle').value = task.title;
         document.getElementById('inputDescription').value = task.description;
