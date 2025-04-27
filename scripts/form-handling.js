@@ -7,8 +7,31 @@ let assignedSubtasks = [];
 // let assignedCategory = 0;
 let listboxElements = [];
 let currentSelectParts = {};
-document.addEventListener('click', documentClickHandler);
+document.addEventListener('click', documentEventHandler);
+document.addEventListener('keyup', documentEventHandler);
 
+function documentEventHandler(event) {
+    // console.log(event.currentTarget);
+    // console.log(event.target);
+    event.stopPropagation();
+    if( event.key === 'Escape' || event.type === "click" ) {
+        closeAllDropdowns(listboxElements);
+        focusCurrentCombox(event.target);
+    }
+}
+
+function focusInHandler(event) {
+    event.stopPropagation();
+    resetInputValidation(event);
+}
+
+function focusOutHandler(event) {
+    event.stopPropagation();
+    let element = event.currentTarget;
+    console.log('f) validateInput');
+    console.log(element);
+    validateInput(element);
+}
 
 function getFormElementsArray(formId) {
     let form = document.getElementById(formId);
@@ -31,15 +54,6 @@ function resetForm(formId) {
     formElements[0].focus();
 }
 
-function checkEditFormState(formId) {
-    let formElements = getFormElementsArray(formId);
-    formElements.forEach(function(element) {
-        setPlaceholderStyle(element);
-    });
-    setSubmitBtnState(formId);
-    formElements[0].focus();
-}
-
 function resetFormElements(element) {
     setPlaceholderStyle(element);
     getCurrentSelectParts(element);
@@ -56,21 +70,13 @@ function resetFormElements(element) {
     }
 };
 
-function closeDropdown(listbox) {
-    // console.log(Date.now());
-    let fieldWrapper = getFieldWrapperFromElement(listbox);
-    if(fieldWrapper) {
-        listbox.setAttribute('aria-expanded', 'false');
-        fieldWrapper.classList.remove('select-expanded');
-    }
-}
-
-function closeAllDropdowns(listboxElements, currentListbox = null) {
-    listboxElements.forEach(function(listbox) {
-        if(listbox !== currentListbox) {
-            closeDropdown(listbox);
-        }
+function checkEditFormState(formId) {
+    let formElements = getFormElementsArray(formId);
+    formElements.forEach(function(element) {
+        setPlaceholderStyle(element);
     });
+    setSubmitBtnState(formId);
+    formElements[0].focus();
 }
 
 function getInvalidInputIds(formId) {
@@ -83,7 +89,6 @@ function getInvalidInputIds(formId) {
         }
     });
     console.log(invalidFields);
-    // setSubmitBtnState(formId);
 }
 
 function validateElement(element) {
@@ -111,6 +116,28 @@ function checkCustomValidation(element) {
         return (element.value.length >= 10);
     }
 }
+
+function validateInput(element) {
+    console.log('f) validateInput');
+    console.log(element);
+    setFieldValidity(element);
+    setSubmitBtnState(element.form.id);
+}
+
+function validatePhoneInput(element) {
+    // let element = document.getElementById(id);
+    let inputValue = element.value;
+    // console.log(inputValue);
+    let formattedValue = inputValue;
+    let rawValue = inputValue.replaceAll(' ', '');
+    if(rawValue.length >= 10){
+        if(! inputValue.startsWith("+")) {
+            formattedValue = "+49 " + inputValue;
+        }
+    }
+    element.value = formattedValue;
+}
+
 
 function setFieldValidity(element) {
     let isValidElement = validateElement(element);
@@ -151,27 +178,6 @@ function resetInputValidation(event) {
     }
 }
 
-function validateInput(element) {
-    console.log('f) validateInput');
-    console.log(element);
-    setFieldValidity(element);
-    setSubmitBtnState(element.form.id);
-}
-
-function validatePhoneInput(element) {
-    // let element = document.getElementById(id);
-    let inputValue = element.value;
-    // console.log(inputValue);
-    let formattedValue = inputValue;
-    let rawValue = inputValue.replaceAll(' ', '');
-    if(rawValue.length >= 10){
-        if(! inputValue.startsWith("+")) {
-            formattedValue = "+49 " + inputValue;
-        }
-    }
-    element.value = formattedValue;
-}
-
 function setSubmitBtnState(formId) {
     getInvalidInputIds(formId);
     let form = document.getElementById(formId);
@@ -201,25 +207,27 @@ function getFormInputObj(event, formId) {
     return formInputObj;
 }
 
-
-
-function documentClickHandler(event) {
-    event.stopPropagation();
-    closeAllDropdowns(listboxElements);
+function getFieldWrapperFromElement(element) {
+    return element.closest('.field-wrapper');
 }
 
-function focusInHandler(event) {
-    event.stopPropagation();
-    resetInputValidation(event);
+function getFieldWrapperFromEvent(event) {
+    return getClosestParentElementFromEvent(event, '.field-wrapper');
 }
 
-function focusOutHandler(event) {
-    event.stopPropagation();
-    let element = event.currentTarget;
-    console.log('f) validateInput');
-    console.log(element);
-    validateInput(element);
+function getFieldWrapperFromId(id) {
+    return getClosestParentElementFromId(id, '.field-wrapper');
 }
+
+
+
+
+
+
+
+
+
+// SELECTION HANDLER (DROPDOWNS)
 
 function dropdownEventHandler(event) {
     event.stopPropagation();
@@ -229,16 +237,18 @@ function dropdownEventHandler(event) {
     if(['Enter', ' '].includes(event.key)) {
         event.preventDefault();
         return toggleDropdown(event.currentTarget);
-    }
-    if( event.key === 'Escape' || event.type === "click" ) {
+    } if( event.key === 'Escape') {
+        return closeDropdown(event.currentTarget);
+    } if( event.type === "click" ) {
         return toggleDropdown(event.currentTarget);
-    }
-    if(['ArrowDown', 'ArrowUp'].includes(event.key)) {
-        return dropdownOptionKeyHandler(event, false);
+    } if(['ArrowDown', 'ArrowUp'].includes(event.key)) {
+        if(!event.currentTarget.hasAttribute('data-select-multiple')) {
+            return dropdownOptionKeyHandler(event, false);
+        }
     }
 }
 
-function toggleDropdown(element) {
+function toggleDropdown(element) {                      
     getCurrentSelectParts(element);
     let listbox = currentSelectParts.listbox;
     closeAllDropdowns(listboxElements, listbox);
@@ -246,6 +256,17 @@ function toggleDropdown(element) {
     let isExpanded = getBooleanFromString(listbox.getAttribute('aria-expanded'));
     isExpanded = !isExpanded;
     listbox.setAttribute('aria-expanded', isExpanded);
+    if(!isExpanded) {
+        // validateInput(currentSelectParts.combox);
+    }
+}
+
+function focusCurrentCombox(element) {
+    getCurrentSelectParts(element);
+    combox = currentSelectParts.combox;
+    if(combox) {
+        combox.focus();
+    }
 }
 
 function dropdownOptionClickHandler(event) {
@@ -263,16 +284,45 @@ function dropdownOptionClickHandler(event) {
         let combox = currentSelectParts.combox;
         console.log(combox);
         toggleDropdown(currentSelectParts.listbox);
-        validateInput(currentSelectParts.combox);
+        // validateInput(currentSelectParts.combox);
     }
 }
 
-function dropdownMultipleClickHandler(event) {
+function dropdownOptionClickHandlerMultiple(event, contactId) {
     event.stopPropagation();
+    console.log('f) dropdownOptionClickHandlerMultiple');
+    console.log(event.currentTarget);
+    console.log(event.target);
     let option = event.currentTarget.closest('[role="option"]');
+    console.log(option);
+    if(option) {
+        // let checkbox = option.querySelector('[type="checkbox"]');
+        let checkbox = event.target;
+        if(checkbox.checked) {
+            assignedContacts.push(contactId);
+            console.log(contactId);
+        } else {
+            assignedContacts.splice(assignedContacts.indexOf(contactId), 1);
+            console.log(contactId);
+        };
+        console.log(checkbox.checked);
+        console.log(assignedContacts);
+        renderContactProfileBatches(assignedContacts);
+        toggleDropdown(currentSelectParts.listbox);
+        // event.preventDefault();
+    }
 }
 
 function dropdownOptionKeyHandler(event, loop = false) {
+    getCurrentSelectParts(event.currentTarget);
+    let combox = currentSelectParts.combox;
+    let options = currentSelectParts.options;
+    let activeIndex = combox.dataset.activeIndex;
+    index = getSelectedDropdownIndex(event, activeIndex, options.length, loop);
+    setDropdownOption(combox, options[index], options[activeIndex]);
+}
+
+function dropdownOptionKeyHandlerMultiple(event, loop = false) {
     getCurrentSelectParts(event.currentTarget);
     let combox = currentSelectParts.combox;
     let options = currentSelectParts.options;
@@ -325,28 +375,6 @@ function getPreviousIndex(index, length, loop = false) {
     return index;
 }
 
-
-function selectDropdownTaskContact(event, contactId) {
-    if(event.target.checked) {
-        assignedContacts.push(contactId);
-    } else {
-        assignedContacts.splice(assignedContacts.indexOf(contactId), 1);
-    };
-    renderContactProfileBatches(assignedContacts);
-}
-
-function getFieldWrapperFromElement(element) {
-    return element.closest('.field-wrapper');
-}
-
-function getFieldWrapperFromEvent(event) {
-    return getClosestParentElementFromEvent(event, '.field-wrapper');
-}
-
-function getFieldWrapperFromId(id) {
-    return getClosestParentElementFromId(id, '.field-wrapper');
-}
-
 function getCurrentSelectParts(element) {
     currentSelectParts = {};
     let fieldWrapper = element.closest('.field-wrapper');
@@ -388,5 +416,30 @@ function getCurrentSelectOptionValues(listbox, multiple = false) {
     console.log(selectOptionValues);
     return selectOptionValues;
 }
+
+function openDropdown(listbox) {
+    let fieldWrapper = getFieldWrapperFromElement(listbox);
+    if(fieldWrapper) {
+        listbox.setAttribute('aria-expanded', 'true');
+        fieldWrapper.classList.add('select-expanded');
+    }
+}
+
+function closeDropdown(listbox) {
+    let fieldWrapper = getFieldWrapperFromElement(listbox);
+    if(fieldWrapper) {
+        listbox.setAttribute('aria-expanded', 'false');
+        fieldWrapper.classList.remove('select-expanded');
+    }
+}
+
+function closeAllDropdowns(listboxElements, currentListbox = null) {
+    listboxElements.forEach(function(listbox) {
+        if(listbox !== currentListbox) {
+            closeDropdown(listbox);
+        }
+    });
+}
+
 
 

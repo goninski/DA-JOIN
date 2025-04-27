@@ -262,7 +262,6 @@ function resetAddTaskForm(event) {
     renderContactSelectOptions();    
     renderContactProfileBatches();    
     renderCategorySelectOptions();    
-    focusFirstElement('inputTitle');
     event.preventDefault();
 }
 

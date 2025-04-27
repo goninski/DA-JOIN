@@ -111,8 +111,8 @@ function getTaskFormFieldsTemplate(task) {
             <label for="selectContacts">Assigned to</label>
             <div class="select custom-select multiple select-contacts">
                 <div class="input-wrapper custom-select">
-                    <input type="text" role="combox" id="selectContacts" name="selectContacts" class="clickable" placeholder="Select contacts to assign" data-select-multiple="true" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="renderContactSelectOptions(event)" onclick="dropdownEventHandler(event)" onkeydown="dropdownEventHandler(event)">
-                    <div class="input-icon-wrapper custom-select multiple">
+                    <input type="text" role="combox" id="selectContacts" name="selectContacts" class="clickable" placeholder="Select contacts to assign" data-select-multiple="true" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" xoninput="renderContactSelectOptions(event)" onclick="dropdownEventHandler(event)" onkeydown="dropdownEventHandler(event)">
+                    <div class="input-icon-wrapper custom-select multiple hide">
                         <button onclick="dropdownEventHandler(event)"><img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown"></button>
                     </div>
                 </div>
@@ -183,11 +183,11 @@ function tempSubtasks() {
 
 function getContactSelectOptionTemplate(contact, index) {
     return `
-    <li class="select-option" role="option" data-index="${index}" xonclick="dropdownMultipleClickHandler(event)">
+    <li class="select-option" role="option" data-index="${index}">
         <label for="checkboxAssignedContact-${contact.id}" class="hide-focus">${contact.name}
             <div class="profile-batch label-icon" style="--profile-color: ${contact.color};">${contact.initials}</div>
             <div class="input-icon-wrapper custom-checkbox">
-                <input type="checkbox" class="custom clickable" tabindex="-1" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}" onchange="selectDropdownTaskContact(event, ${contact.id})">
+                <input type="checkbox" class="custom clickable" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}"  onchange="dropdownOptionClickHandlerMultiple(event, ${contact.id})">
                 <div class="checkbox-checked-wrapper">
                     <img src="assets/icons/checkbox-checked-white.svg" alt="checkbox-checked" class="icon-checkbox-checked">
                 </div>
