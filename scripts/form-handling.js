@@ -9,29 +9,33 @@ let assignedSubtasks = [];
 let listboxElements = [];
 let currentSelectParts = {};
 document.addEventListener('click', documentEventHandler);
-document.addEventListener('keyup', documentEventHandler);
+document.addEventListener('keydown', documentEventHandler);
 
 function documentEventHandler(event) {
-    // console.log(event.currentTarget);
-    // console.log(event.target);
-    event.stopPropagation();
+    console.log('f) documentEventHandler');
     if( event.key === 'Escape' || event.type === "click" ) {
         closeAllDropdowns(listboxElements);
         focusCurrentCombox(event.target);
+        console.log('escape/click on document !');
+        console.log(event.currentTarget);
+        console.log(event.target);
     }
 }
 
 function focusInHandler(event) {
     event.stopPropagation();
+    let element = event.currentTarget;
+    console.log('f) focusInHandler');
+    console.log(element);
     resetInputValidation(event);
 }
 
 function focusOutHandler(event) {
     event.stopPropagation();
     let element = event.currentTarget;
-    console.log('f) validateInput');
-    console.log(element);
-    closeAllDropdowns(listboxElements);
+    console.log('f) focusOutHandler');
+    // console.log(element);
+    // closeAllDropdowns(listboxElements);
     validateInput(element);
 }
 
@@ -90,7 +94,7 @@ function getInvalidInputIds(formId) {
             invalidFields.push(element.id);
         }
     });
-    console.log(invalidFields);
+    // console.log(invalidFields);
 }
 
 function validateElement(element) {
@@ -233,20 +237,31 @@ function getFieldWrapperFromId(id) {
 
 function dropdownEventHandler(event, preventDef = false) {
     event.stopPropagation();
-    if(preventDef) {
-        event.preventDefault();
-    }
-    // console.log('f) dropdownEventHandler');
+    console.log('f) dropdownEventHandler');
+    console.log(event.key);
+    console.log(event.type);
+    console.log(event.target);
+    getCurrentSelectParts(event.target);
+    listbox = currentSelectParts.listbox;
+    // if(preventDef) {
+    //     event.preventDefault();
+    // }
     if(['Enter', ' '].includes(event.key)) {
         event.preventDefault();
-        return toggleDropdown(event.currentTarget);
-    } if( event.key === 'Escape') {
-        return closeDropdown(event.currentTarget);
-    } if( event.type === "click" ) {
-        return toggleDropdown(event.currentTarget);
-    } if(['ArrowDown', 'ArrowUp'].includes(event.key)) {
-        if(!event.currentTarget.hasAttribute('data-select-multiple')) {
+        return toggleDropdown(listbox);
+    }
+    if( event.type === 'click') {
+        return toggleDropdown(listbox);
+    }
+    if( event.key === 'Escape') {
+        return closeDropdown(listbox);
+    }
+    if(!event.currentTarget.hasAttribute('data-select-multiple')) {
+        if(['ArrowDown', 'ArrowUp'].includes(event.key)) {
             return dropdownOptionKeyHandler(event, false);
+        }
+        if(['Tab'].includes(event.key)) {
+            return toggleDropdown(listbox);
         }
     }
 }
@@ -260,7 +275,7 @@ function toggleDropdown(element) {
     isExpanded = !isExpanded;
     listbox.setAttribute('aria-expanded', isExpanded);
     if(!isExpanded) {
-        // validateInput(currentSelectParts.combox);
+        validateInput(currentSelectParts.combox);
     }
 }
 
@@ -276,7 +291,7 @@ function dropdownOptionClickHandler(event) {
     event.stopPropagation();
     console.log('f) dropdownOptionClickHandler');
     let option = event.currentTarget.closest('[role="option"]');
-    console.log(option);
+    // console.log(option);
     if(option) {
         getCurrentSelectParts(option);
         let options = currentSelectParts.options;
@@ -284,8 +299,8 @@ function dropdownOptionClickHandler(event) {
             element.setAttribute('aria-selected', 'false');
         });
         setDropdownOption(currentSelectParts.combox, option, null);
-        let combox = currentSelectParts.combox;
-        console.log(combox);
+        // let combox = currentSelectParts.combox;
+        // console.log(combox);
         toggleDropdown(currentSelectParts.listbox);
         // validateInput(currentSelectParts.combox);
     }
@@ -295,7 +310,7 @@ function dropdownOptionClickHandlerMultiple(event, contactId) {
     event.stopPropagation();
     console.log('f) dropdownOptionClickHandlerMultiple');
     let option = event.currentTarget.closest('[role="option"]');
-    console.log(option);
+    // console.log(option);
     if(option) {
         // let checkbox = option.querySelector('[type="checkbox"]');
         let checkbox = event.target;
@@ -305,7 +320,7 @@ function dropdownOptionClickHandlerMultiple(event, contactId) {
             assignedContacts.splice(assignedContacts.indexOf(contactId), 1);
         };
         renderContactProfileBatches(assignedContacts);
-        toggleDropdown(currentSelectParts.listbox);
+        // toggleDropdown(currentSelectParts.listbox);
         // event.preventDefault();
     }
 }

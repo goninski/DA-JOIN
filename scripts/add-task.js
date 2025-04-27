@@ -303,7 +303,7 @@ function renderContactSelectOptions(listboxId = 'taskContactsListbox', searchVal
         openDropdown(listbox);
         taskContacts = taskContacts.filter(contact => contact.name.toLowerCase().includes(searchVal));
     }
-    console.log(taskContacts);
+    // console.log(taskContacts);
     for (let index = 0; index < taskContacts.length; index++) {
         listbox.innerHTML += getContactSelectOptionTemplate(taskContacts[index], index);
         if(assignedContacts.length > 0) {

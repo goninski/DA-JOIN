@@ -111,7 +111,7 @@ function getTaskFormFieldsTemplate(task) {
             <label for="selectContacts">Assigned to</label>
             <div class="select custom-select multiple select-contacts">
                 <div class="input-wrapper custom-select">
-                    <input type="text" role="combox" id="selectContacts" name="selectContacts" class="clickable" placeholder="Select contacts to assign" data-select-multiple="true" onfocusout="focusOutHandler(event)" oninput="filterTaskContactOptions(event)" onclick="dropdownEventHandler(event)" xonkeydown="dropdownEventHandler(event)">
+                    <input type="text" role="combox" id="selectContacts" name="selectContacts" class="clickable" placeholder="Select contacts to assign" data-select-multiple="true" oninput="filterTaskContactOptions(event)" onfocusout="focusOutHandler(event)" onclick="dropdownEventHandler(event)">
                     <div class="input-icon-wrapper custom-select multiple">
                         <button onclick="dropdownEventHandler(event, true)"><img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown"></button>
                     </div>
@@ -136,26 +136,6 @@ function getTaskFormFieldsTemplate(task) {
             </div>
             <div role="alert" class="validation-alert">This field is required</div>
         </div>
-
-
-<!--
-        <div class="field-wrapper has-alert">
-            <label for="selectDefault" class="required">Default Select (temp)</label>
-            <select class="select">
-                <option>Option 1</option>
-                <option>Option 2</option>
-                <option>Option 3</option>
-                <option>Option 4</option>
-            </select>
-            <div class="validation-alert">This field is required</div>
-        </div>
-
-        <div class="field-wrapper has-alert">
-            <label for="temp" class="required">Temp</label>
-            <input type="text" id="inputTemp" name="temp" placeholder="Placeholder" xrequired maxlength="128" onfocus="resetInputValidation(event)" onfocusout="focusOutHandler(event)">
-            <div class="validation-alert">This field is required</div>
-        </div>
--->
 
     `
 }
@@ -183,8 +163,8 @@ function tempSubtasks() {
 
 function getContactSelectOptionTemplate(contact, index) {
     return `
-    <li class="select-option" role="option" data-index="${index}">
-        <label for="checkboxAssignedContact-${contact.id}" class="hide-focus">${contact.name}
+    <li class="select-option" role="option" data-index="${index}" onclick="event.stopPropagation()">
+        <label for="checkboxAssignedContact-${contact.id}" class="hide-focus" onkeydown="event.stopPropagation()">${contact.name}
             <div class="profile-batch label-icon" style="--profile-color: ${contact.color};">${contact.initials}</div>
             <div class="input-icon-wrapper custom-checkbox">
                 <input type="checkbox" class="custom clickable" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}"  onchange="dropdownOptionClickHandlerMultiple(event, ${contact.id})">
@@ -311,6 +291,25 @@ function getFloatingMessageTaskAddedTemplate() {
 
 function trashKeepForNow() {
     return `
+
+    <div class="field-wrapper has-alert">
+        <label for="selectDefault" class="required">Default Select (temp)</label>
+        <select class="select">
+            <option>Option 1</option>
+            <option>Option 2</option>
+            <option>Option 3</option>
+            <option>Option 4</option>
+        </select>
+        <div class="validation-alert">This field is required</div>
+    </div>
+
+    <div class="field-wrapper has-alert">
+        <label for="temp" class="required">Temp</label>
+        <input type="text" id="inputTemp" name="temp" placeholder="Placeholder" xrequired maxlength="128" onfocus="resetInputValidation(event)" onfocusout="focusOutHandler(event)">
+        <div class="validation-alert">This field is required</div>
+    </div>
+-->
+
 
     <div class="select-btn focus" onclick="renderContactSelectOptions(event)">
         <span class="select-text">Select contacts to assign</span>
