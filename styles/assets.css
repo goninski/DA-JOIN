@@ -223,8 +223,7 @@ textarea {
     font-size: 20px;
 }
 ::placeholder,
-.placeholder:not(.valid),
-.placeholder option[value="0"] {
+[data-placeholder-style="true"] {
     color: var(--clr-subtle);
 }
 .placeholder:focus {
@@ -400,6 +399,9 @@ label.prio-low:has( > input:checked) {
 .input-icon-wrapper:where(.custom-checkbox) {
     position: absolute;
     right: 16px;
+}
+.input-icon-wrapper.custom-select:not(.multiple) {
+    pointer-events: none;
 }
 .input-icon-wrapper.simple,
 .input-icon-wrapper.custom-select,

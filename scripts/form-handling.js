@@ -32,6 +32,9 @@ function resetForm(formId) {
 
 function resetFormElements(element) {
     getCurrentSelectParts(element);
+    if(currentSelectParts.fieldWrapper) {
+        currentSelectParts.fieldWrapper.classList.remove('invalid');
+    }
     if(currentSelectParts.combox) {
         currentSelectParts.combox.removeAttribute('data-option-id');
         currentSelectParts.combox.removeAttribute('data-active-index');
@@ -40,6 +43,7 @@ function resetFormElements(element) {
         listboxElements.push(currentSelectParts.listbox);
         closeDropdown(currentSelectParts.listbox);
     }
+    addPlaceholderStyle(element);
 };
 
 function closeDropdown(listbox) {
@@ -89,8 +93,11 @@ function getInvalidInputIds(formId) {
 }
 
 function validateElement(element) {
-    console.log('f) validateElement');
-    console.log(element.id);
+    // console.log('f) validateElement');
+    // console.log(element.id);
+    if(element.hasAttribute('required')) {
+        return (element.value.replaceAll(' ', '') != '');
+    }
     if(! element.checkValidity() || ! checkCustomValidation(element)) {
         return false;
     }
@@ -112,14 +119,35 @@ function checkCustomValidation(element) {
 }
 
 function setFieldValidity(element) {
+    let isValidElement = validateElement(element);
     let fieldWrapper = getFieldWrapperFromId(element.id);
     if(fieldWrapper){
-        let isValidElement = validateElement(element);
         if(isValidElement) {
             fieldWrapper.classList.remove('invalid');
         } else {
             fieldWrapper.classList.add('invalid');
         }
+    }
+    if(element.hasAttribute('data-placeholder-style')) {
+        if(element.value == '') {
+            element.dataset.placeholderStyle = 'true';
+        } else {
+            element.dataset.placeholderStyle = 'false';
+        }
+    }
+}
+
+function removePlaceholderStyle(event) {
+    event.stopPropagation();
+    let element = event.currentTarget;
+    if(element.hasAttribute("data-placeholder-style")) {
+        element.dataset.placeholderStyle = 'false';
+    }
+}
+
+function addPlaceholderStyle(element) {
+    if(element.value == '' && element.hasAttribute("data-placeholder-style")) {
+        element.dataset.placeholderStyle = 'true';
     }
 }
 
@@ -141,7 +169,7 @@ function validateInput(element) {
 function validatePhoneInput(element) {
     // let element = document.getElementById(id);
     let inputValue = element.value;
-    console.log(inputValue);
+    // console.log(inputValue);
     let formattedValue = inputValue;
     let rawValue = inputValue.replaceAll(' ', '');
     if(rawValue.length >= 10){
@@ -203,14 +231,14 @@ function focusOutHandler(event) {
 
 function dropdownEventHandler(event) {
     event.stopPropagation();
-    console.log('f) dropdownEventHandler');
-    console.log(event.currentTarget);
+    // console.log('f) dropdownEventHandler');
+    // console.log(event.currentTarget);
     // console.log(event);
-    if( event.key === 'Escape' || event.type === "click" ) {
-        return toggleDropdown(event.currentTarget);
-    }
     if(['Enter', ' '].includes(event.key)) {
         event.preventDefault();
+        return toggleDropdown(event.currentTarget);
+    }
+    if( event.key === 'Escape' || event.type === "click" ) {
         return toggleDropdown(event.currentTarget);
     }
     if(['ArrowDown', 'ArrowUp'].includes(event.key)) {
@@ -370,239 +398,3 @@ function getCurrentSelectOptionValues(listbox, multiple = false) {
 }
 
 
-
-
-
-
-
-
-
-
-// function toggleDropdown(event = null, listbox = null) {
-//     let fieldWrapper;
-//     if(event) {
-//         fieldWrapper = getFieldWrapperFromEvent(event);
-//         listbox = fieldWrapper.querySelector('[role="listbox"]');
-//         resetInputValidation(event);
-//     } else {
-//         fieldWrapper = getFieldWrapperFromId(listbox.id);
-//     }
-//     closeAllDropdowns(listboxElements, listbox);
-//     fieldWrapper.classList.toggle('select-expanded');
-//     let isExpanded = getBooleanFromString(listbox.getAttribute('aria-expanded'));
-//     isExpanded = !isExpanded;
-//     listbox.setAttribute('aria-expanded', isExpanded);
-// }
-
-
-
-// function dropdownClickHandler(event) {
-//     event.stopPropagation();
-//     // resetInputValidation(event);
-
-//     let fieldWrapper = getFieldWrapperFromEvent(event);
-//     fieldWrapper.classList.toggle('select-expanded');
-//     let listbox = fieldWrapper.querySelector('[role="listbox"]');
-//     let isExpanded = getBooleanFromString(listbox.getAttribute('aria-expanded'));
-//     if(!isExpanded) {
-//         expandedListbox = listbox;
-//     } else {
-//         expandedListbox = null;
-//     }
-//     // isExpanded = !isExpanded;
-//     listbox.setAttribute('aria-expanded', !isExpanded);
-//     console.log(expandedListbox);
-// }
-
-
-
-// function validateSelectMultiple(id) {
-//     closeSelectOptions(id);
-//     let element = document.getElementById(id);
-//     element.value = '';
-//     validateInput(id, true);
-// }
-
-// function setValidationStyle(element) {
-//     getInvalidInputIds(element.form.id);
-//     let fieldWrapper = getFieldWrapperFromId(element.id);
-//     if(fieldWrapper){
-//         if (! element.checkValidity()) {
-//             fieldWrapper.classList.add('invalid');
-//         } else {
-//             fieldWrapper.classList.remove('invalid');
-//         }
-//     }
-// }
-
-
-// function setFieldToInvalid(element, visible = false) {
-//     let fieldWrapper = getFieldWrapperFromId(element.id);
-//     if(fieldWrapper){
-//         invalidFields.push(element.id);
-//         if(visible) {
-//             fieldWrapper.classList.add('invalid');
-//         }
-//     }
-// }
-
-
-// function toggleSelectOptionsVisibility(event) {
-//     console.log(event.key);
-//     event.stopPropagation();
-//     event.preventDefault();
-//     let element = getFieldWrapperFromEvent(event);
-//     element.classList.toggle('select-expanded');
-//     resetInputValidation(event);
-// }
-
-// function validateInputOption(element, option) {
-//     let validationParam = element.getAttribute('data-validation-param');
-//     console.log(validationParam);
-//     let item;
-//     if(option == 'radio-name') {
-//         item = document.getElementsByName(validationParam)[0];
-//     } else if (option == 'custom-id') {
-//         item = document.getElementById(validationParam);
-//     } else {
-//         item = element;
-//     }
-//     if(option == 'phone') {
-//         validatePhoneInput(item);
-//     }
-//     setValidationStyle(item);
-// }
-
-// function selectCustomSelectOption(event, selectId, optionValue) {
-//     event.stopPropagation();
-//     selectInput = document.getElementById(selectId);
-//     if(event.target.checked) {
-//         selectInput.value = optionValue;
-//         // validateCustomSelect(event, selectId);
-//     }
-//     //toggleSelectOptionsVisibility(event);
-//     validateInput(event, 'custom-id');
-// }
-
-
-// function setValidity(element) {
-//     let fieldWrapper = getFieldWrapperFromId(element.id);
-//     if(fieldWrapper) {
-//         if(element.checkValidity()) {
-//             fieldWrapper.classList.remove('invalid');
-//         } else {
-//             invalidFields.push(element.id)
-//             fieldWrapper.classList.add('invalid');
-//             // console.log('invalid) ' + element.id);
-//         }
-//     }
-// }
-
-
-// function validateCustomSelect(event, selectId) {
-//     event.stopPropagation();
-//     selectInput = document.getElementById(selectId);
-//     console.log(selectInput.value.length);
-//     // validateInput(selectId, true);
-//     if(selectInput.value.length <= 0) {
-//         setInvalidStyles(selectInput, true);
-//     } else {
-//         resetValidationStyles(selectInput, true);
-//     }
-// }
-
-// function validateSelectInput(event, radioId = 'inputCategoryId') {
-//     event.stopPropagation();
-//     let element = event.currentTarget;
-//     let fieldWrapper = getFieldWrapperFromId(element.id);
-//     console.log(invalidFields);
-//     if(fieldWrapper){
-//         if (! element.checkValidity()) {
-//             fieldWrapper.classList.add('invalid');
-//         } else {
-//             fieldWrapper.classList.remove('invalid');
-//         }
-//         let formId = element.form.id;
-//         getInvalidInputIds(formId);
-//         return element.value;
-//     }
-// }
-
-
-// function xvalidateInput(id, parent = false) {
-//     // let id = event.currentTarget.id;
-//     let element = document.getElementById(id);
-//     console.log(id);
-//     console.log(invalidFields);
-//     let index = invalidFields.findIndex(item => item == id);
-//     if (! element.checkValidity() || (element.value = '' && element.required == true)) {
-//         if(index < 0) {
-//             invalidFields.push(id);
-//         }
-//         setInvalidStyles(element, parent);
-//     } else {
-//         if(index >= 0) {
-//             invalidFields.splice(index, 1);
-//         }
-//         setValidStyles(element);
-//         return element.value;
-//     }
-// }
-
-
-
-// function closeSelectOptionsVisibility(event) {
-//     event.stopPropagation();
-//     let element = getFieldWrapperFromEvent(event);
-//     element.classList.remove('select-expanded');
-// }
-
-
-// function closeAllSelectOptions(formId) {
-//     for (let index = 0; index < invalidFields.length; index++) {
-//         fieldId = invalidFields[index];
-//         resetInputValidation(fieldId, true);
-//     }
-// }
-
-// function resetInput(id) {
-//     document.getElementById(id).value = '';
-//     resetInputValidation(id)
-// }
-
-// function setInvalidStyles(element, parent) {
-//     element.classList.add('invalid');
-//     if(parent) {
-//         if(element.parentNode.classList.contains('custom-select')) {
-//             element.parentNode.parentNode.classList.add('invalid');
-//         } else {
-//             element.parentNode.classList.add('invalid');
-//         };
-//     }
-//     setSubmitBtnState(element);
-// }
-
-// function resetValidationStyles(element, parent) {
-//     element.classList.remove('invalid');
-//     element.classList.remove('valid');
-//     if(parent) {
-//         if(element.parentNode.classList.contains('custom-select')) {
-//             element.parentNode.parentNode.classList.remove('invalid');
-//         } else {
-//             element.parentNode.classList.remove('invalid');
-//         };
-//     }
-//     setSubmitBtnState(element);
-// }
-
-// function setValidStyles(element) {
-//     if(element.classList.contains('placeholder')) {
-//         element.classList.add('valid');
-//     }
-//     setSubmitBtnState(element);
-// }
-
-// function closeSelectOptions(id) {
-//     let element = document.getElementById(id);
-//     element.parentElement.classList.remove('select-expanded');
-// }

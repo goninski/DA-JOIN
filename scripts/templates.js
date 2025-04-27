@@ -78,8 +78,8 @@ function getTaskFormFieldsTemplate(task) {
 
         <div class="field-wrapper has-message">
             <label for="title" class="required">Title</label>
-            <input type="text" id="inputTitle" name="title" placeholder="Enter a title" required maxlength="128" onfocus="resetInputValidation(event)" onfocusout="focusOutHandler(event)">
-            <div class="validation-msg">This field is required</div>
+            <input type="text" id="inputTitle" name="title" placeholder="Enter a title" required maxlength="128" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)">
+            <div role="alert" class="validation-msg">This field is required</div>
         </div>
         <div class="field-wrapper has-message">
             <label for="description">Description</label>
@@ -87,8 +87,8 @@ function getTaskFormFieldsTemplate(task) {
         </div>
         <div class="field-wrapper has-message">
             <label for="dueDate" class="required">Due date</label>
-            <input type="date" id="inputDueDate" name="dueDate" class="placeholder" required min="2000-01-01" max="2099-12-31" onfocus="resetInputValidation(event), setTodayAsDateValue('inputDueDate')" onfocusout="focusOutHandler(event)">
-            <div class="validation-msg">Please enter a valid date</div>
+            <input type="date" id="inputDueDate" name="dueDate" required min="2000-01-01" max="2099-12-31" xonfocus="focusInHandler(event), setTodayAsDateValue('inputDueDate')" onfocusout="focusOutHandler(event)" onkeyup="removePlaceholderStyle(event)" data-placeholder-style="true">
+            <div role="alert" class="validation-msg">Please enter a valid date</div>
         </div>
     </div>
 
@@ -111,8 +111,8 @@ function getTaskFormFieldsTemplate(task) {
             <label for="selectContacts">Assigned to</label>
             <div class="select custom-select multiple select-contacts">
                 <div class="input-wrapper custom-select">
-                    <input type="text" role="combox" id="selectContacts" name="selectContacts" class="clickable" placeholder="Select contacts to assign" data-select-multiple="true" onfocus="focusInHandler(event)" oninput="renderContactSelectOptions(event)" onclick="dropdownEventHandler(event)" onkeydown="dropdownEventHandler(event)" onfocusout="focusOutHandler(event)">
-                    <div class="input-icon-wrapper custom-select">
+                    <input type="text" role="combox" id="selectContacts" name="selectContacts" class="clickable" placeholder="Select contacts to assign" data-select-multiple="true" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="renderContactSelectOptions(event)" onclick="dropdownEventHandler(event)" onkeydown="dropdownEventHandler(event)">
+                    <div class="input-icon-wrapper custom-select multiple">
                         <button onclick="dropdownEventHandler(event)"><img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown"></button>
                     </div>
                 </div>
@@ -132,12 +132,13 @@ function getTaskFormFieldsTemplate(task) {
                         </div>
                     </div>
                 </div>
-                <ol id="taskCategoriesSelectOptionsWrapper" class="select-options-wrapper" role="listbox" data-combox-id="categorySelect"></ol>
+                <ol id="taskCategoriesSelectOptionsWrapper" class="select-options-wrapper" role="listbox" xdata-combox-id="categorySelect"></ol>
             </div>
-            <div class="validation-msg">This field is required</div>
+            <div role="alert" class="validation-msg">This field is required</div>
         </div>
 
 
+<!--
         <div class="field-wrapper has-message">
             <label for="selectDefault" class="required">Default Select (temp)</label>
             <select class="select">
@@ -149,8 +150,6 @@ function getTaskFormFieldsTemplate(task) {
             <div class="validation-msg">This field is required</div>
         </div>
 
-
-<!--
         <div class="field-wrapper has-message">
             <label for="temp" class="required">Temp</label>
             <input type="text" id="inputTemp" name="temp" placeholder="Placeholder" xrequired maxlength="128" onfocus="resetInputValidation(event)" onfocusout="focusOutHandler(event)">
