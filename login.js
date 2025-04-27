@@ -16,8 +16,8 @@ window.onload = () => {
 //     event.preventDefault();
 //     console.log('Login function called');
 
-//     const emailField = document.getElementById('email');
-//     const passwordField = document.getElementById('pwd');
+//     const emailField = document.getElementById('email-login');
+//     const passwordField = document.getElementById('pwd-login');
 
 //     const emailInput = emailField.value.trim();
 //     const passwordInput = passwordField.value.trim();

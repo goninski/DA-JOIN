@@ -211,6 +211,7 @@ a.login-privacy-policy-color:hover {
     z-index: 2;
     height: 24px;
     width: 380px;
+    all: unset;
 }
 
 .input-inner-signup-login {
@@ -260,3 +261,27 @@ input::placeholder {
     width: 100.03px;
     transform: translate(0, 0);
 }
+
+
+.pictureinput {
+    background-repeat: no-repeat;
+    background-position: right 0px center; /* Rechts mittig platzieren */
+    background-size: 20px 20px; /* Größe des Bildes anpassen */
+    padding-right: 40px; /* Platz für das Bild lassen */
+    height: 40px;
+    font-size: 16px;
+    height: 24px;
+    width: 380px;
+  }
+
+  .pwd-pic{
+    background-image: url('./assets/img/lock.png');
+  }
+  
+  .mail-pic{
+    background-image: url('./assets/img/mail.png');
+  }
+
+  .person-pic{
+    background-image: url('./assets/img/person.png');
+  }

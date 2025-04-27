@@ -96,7 +96,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 999;
+    z-index: 5;
     padding: 0px 25px;
     position: relative;
     width: 312px;
@@ -115,4 +115,11 @@
     font-size: 20px;
     line-height: 120%;
     white-space: nowrap;
+}
+
+.overlay-sign-up-successfully-background {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(211, 211, 211, 0.2);
+    z-index: 2;
 }
