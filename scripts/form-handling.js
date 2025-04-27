@@ -28,6 +28,7 @@ function resetForm(formId) {
     });
     // console.log(listboxElements);
     getInvalidInputIds(formId);
+    formElements[0].focus();
 }
 
 function checkEditFormState(formId) {
@@ -36,13 +37,7 @@ function checkEditFormState(formId) {
         setPlaceholderStyle(element);
     });
     setSubmitBtnState(formId);
-    // getInvalidInputIds(formId);
-}
-
-function focusFirstElement(firstElementId = null) {
-    if(firstElementId) {
-        document.getElementById(firstElementId).focus();
-    }
+    formElements[0].focus();
 }
 
 function resetFormElements(element) {
@@ -182,9 +177,6 @@ function setSubmitBtnState(formId) {
     let form = document.getElementById(formId);
     let submitBtn = form.querySelector('[type="submit"]');
     submitBtn.setAttribute('disabled', '');
-    // console.log('f) setSubmitBtnState');
-    // console.log(invalidFields);
-    // console.log(submitBtn);
     if(invalidFields.length > 0) {
         submitBtn.setAttribute('disabled', '');
     } else {

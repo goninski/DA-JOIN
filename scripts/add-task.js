@@ -88,7 +88,6 @@ function renderTaskForm(fieldsWrapperId, task = null) {
     // renderContactProfileBatches();
     renderCategorySelectOptions(event);
     setEditTaskValues(task, formId);
-    focusFirstElement('inputTitle');
     checkEditFormState(formId);
 }
 

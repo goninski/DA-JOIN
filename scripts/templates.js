@@ -70,7 +70,7 @@ function getTaskDetailsWrapperTemplate(task) {
 
 
 
-// FORM INPUT TEMPLATES
+// TASK FORM INNER
 
 function getTaskFormFieldsTemplate(task) {
     return `
@@ -222,6 +222,9 @@ function getSubtasksTemplate(subtask, index, taskId) {
 }
 
 
+
+// CONTACTS FORM
+
 function getAddContactSubmitButtonsTemplate() {
     return `
         <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetContactsForm(event)">Cancel</button>
@@ -231,12 +234,10 @@ function getAddContactSubmitButtonsTemplate() {
 
 function getEditContactSubmitButtonsTemplate(contactId) {
     return `
-        <button id="btnReset" class="button btn-delete btn-icon btn-secondary" onclick="deleteContact(${contactId}, event)">Delete</button>
+        <button id="btnReset" class="button btn-delete btn-icon btn-secondary" onclick="deleteContact(event, ${contactId})">Delete</button>
         <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled>Save</button>
     `
 }
-
-
 
 function getContactListTemplate(groupName) {
     return `
@@ -247,7 +248,7 @@ function getContactListTemplate(groupName) {
 
 function getContactListGroupTemplate(contact) {
     return `
-        <li id="listContactId-${contact.id}" class="contact-item flex-row align-center" onclick="showContactDetail(${contact.id})">
+        <li id="listContactId-${contact.id}" class="contact-item flex-row align-center" onclick="showContactDetail(event, ${contact.id})">
             <div class="profile-batch" style="--profile-color: ${contact.color};">${contact.initials}</div>
             <div class="contact-details flex-col">
                 <div class="name">${contact.name}&ensp;#${contact.id}</div>
@@ -263,8 +264,8 @@ function getContactDetailProfileBatchTemplate(contact) {
         <div class="profile-title flex-col">
             <h2 class="">${contact.name}</h2>                        
             <div class="edit-buttons flex-row align-center">
-                <button onclick="editContact(${contact.id})"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
-                <button onclick="deleteContact(${contact.id}, event)"><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
+                <button onclick="editContact(event, ${contact.id})"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
+                <button onclick="deleteContact(event, ${contact.id})"><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
             </div>
         </div>
     `
@@ -302,6 +303,10 @@ function getFloatingMessageTaskAddedTemplate() {
 }
 
 
+
+
+
+// TRASH
 
 
 function trashKeepForNow() {

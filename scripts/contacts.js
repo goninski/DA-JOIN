@@ -36,7 +36,8 @@ function groupContacts(contacts) {
     return contactsGrouped;
 }
 
-function showContactDetail(contactId) {
+function showContactDetail(event, contactId) {
+    event.stopPropagation();
     // console.log(activeContactId);
     if(activeContactId > 0 && activeContactId != contactId){
         document.getElementById('listContactId-' + activeContactId).classList.remove('active');
@@ -73,7 +74,7 @@ function addNewContact() {
     openContactsForm(formMode);
 }
 
-function editContact(contactId) {
+function editContact(event, contactId) {
     formMode = 'edit';
     activeContactId = contactId;
     openContactsForm(formMode, activeContactId);
@@ -98,17 +99,9 @@ function closeContactsFormDialogue(event) {
     // document.body.style = '';
     formMode = '';
     renderContactList();
-    showContactDetail(activeContactId);
+    showContactDetail(event, activeContactId);
     // reloadPage(event);
 }
-
-// function resetContactsForm(event) {
-//     event.stopPropagation();
-//     resetForm('contactsForm');
-//     // setInitialFormState('contactsForm', 'inputName', 'add');
-//     focusFirstElement('inputName');
-//     event.preventDefault();
-// }
 
 function setAddContactValues() {
     document.getElementById('dialogueProfileBatch').innerHTML = '<img src="/assets/icons/profile-placeholder.svg" alt="profile-placeholder">';
@@ -135,15 +128,16 @@ function setEditContactValues(contactId) {
 function submitContactsForm(event, contactId) {
     event.stopPropagation();
     if(formMode == 'edit') {
-        saveContact(contactId, event);
+        saveContact(event, contactId);
     } else {
         lastContactId++;
         contactId = lastContactId;
-        createContact(contactId, event);
+        createContact(event, contactId);
     }
 }
 
-function createContact(contactId, event) {
+function createContact(event, contactId) {
+    event.stopPropagation();
     let formInputs = getFormInputObj(event, 'contactsForm');
     console.log(formInputs);
     if(formInputs.name.length <= 0) {
@@ -167,7 +161,8 @@ function createContact(contactId, event) {
     }, 1000);
 }
 
-function saveContact(contactId, event) {
+function saveContact(event, contactId) {
+    event.stopPropagation();
     let formInputs = getFormInputObj(event, 'contactsForm');
     if(formInputs.name.length <= 0) {
         return;
@@ -187,7 +182,8 @@ function saveContact(contactId, event) {
     }, 1000);
 }
 
-function deleteContact(contactId, event) {
+function deleteContact(event, contactId) {
+    event.stopPropagation();
     contacts.splice(getContactIndexFromId(contactId), 1);
     // console.log(contacts);
     saveContactData();
