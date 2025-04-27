@@ -1,4 +1,5 @@
 let formMode = '';
+let taskContacts = {};
 let invalidFields = [];
 let activeTaskId = 0;
 let activeContactId = 0;
@@ -30,6 +31,9 @@ function focusOutHandler(event) {
     let element = event.currentTarget;
     console.log('f) validateInput');
     console.log(element);
+    // if(element.hasAttribute('data-select-multiple')) {
+    //     element.value = '';
+    // }
     validateInput(element);
 }
 
@@ -118,8 +122,8 @@ function checkCustomValidation(element) {
 }
 
 function validateInput(element) {
-    console.log('f) validateInput');
-    console.log(element);
+    // console.log('f) validateInput');
+    // console.log(element);
     setFieldValidity(element);
     setSubmitBtnState(element.form.id);
 }
@@ -229,11 +233,12 @@ function getFieldWrapperFromId(id) {
 
 // SELECTION HANDLER (DROPDOWNS)
 
-function dropdownEventHandler(event) {
+function dropdownEventHandler(event, preventDef = false) {
     event.stopPropagation();
+    if(preventDef) {
+        event.preventDefault();
+    }
     // console.log('f) dropdownEventHandler');
-    // console.log(event.currentTarget);
-    // console.log(event);
     if(['Enter', ' '].includes(event.key)) {
         event.preventDefault();
         return toggleDropdown(event.currentTarget);
@@ -291,8 +296,6 @@ function dropdownOptionClickHandler(event) {
 function dropdownOptionClickHandlerMultiple(event, contactId) {
     event.stopPropagation();
     console.log('f) dropdownOptionClickHandlerMultiple');
-    console.log(event.currentTarget);
-    console.log(event.target);
     let option = event.currentTarget.closest('[role="option"]');
     console.log(option);
     if(option) {
@@ -300,13 +303,9 @@ function dropdownOptionClickHandlerMultiple(event, contactId) {
         let checkbox = event.target;
         if(checkbox.checked) {
             assignedContacts.push(contactId);
-            console.log(contactId);
         } else {
             assignedContacts.splice(assignedContacts.indexOf(contactId), 1);
-            console.log(contactId);
         };
-        console.log(checkbox.checked);
-        console.log(assignedContacts);
         renderContactProfileBatches(assignedContacts);
         toggleDropdown(currentSelectParts.listbox);
         // event.preventDefault();
@@ -322,14 +321,8 @@ function dropdownOptionKeyHandler(event, loop = false) {
     setDropdownOption(combox, options[index], options[activeIndex]);
 }
 
-function dropdownOptionKeyHandlerMultiple(event, loop = false) {
-    getCurrentSelectParts(event.currentTarget);
-    let combox = currentSelectParts.combox;
-    let options = currentSelectParts.options;
-    let activeIndex = combox.dataset.activeIndex;
-    index = getSelectedDropdownIndex(event, activeIndex, options.length, loop);
-    setDropdownOption(combox, options[index], options[activeIndex]);
-}
+// function dropdownOptionKeyHandlerMultiple(event, loop = false) {
+// }
 
 function setDropdownOption(combox, option, activeOption = null) {
     combox.value = option.textContent;

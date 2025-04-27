@@ -111,12 +111,12 @@ function getTaskFormFieldsTemplate(task) {
             <label for="selectContacts">Assigned to</label>
             <div class="select custom-select multiple select-contacts">
                 <div class="input-wrapper custom-select">
-                    <input type="text" role="combox" id="selectContacts" name="selectContacts" class="clickable" placeholder="Select contacts to assign" data-select-multiple="true" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" xoninput="renderContactSelectOptions(event)" onclick="dropdownEventHandler(event)" onkeydown="dropdownEventHandler(event)">
-                    <div class="input-icon-wrapper custom-select multiple hide">
-                        <button onclick="dropdownEventHandler(event)"><img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown"></button>
+                    <input type="text" role="combox" id="selectContacts" name="selectContacts" class="clickable" placeholder="Select contacts to assign" data-select-multiple="true" onfocusout="focusOutHandler(event)" oninput="filterTaskContactOptions(event)" onclick="dropdownEventHandler(event)" xonkeydown="dropdownEventHandler(event)">
+                    <div class="input-icon-wrapper custom-select multiple">
+                        <button onclick="dropdownEventHandler(event, true)"><img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown"></button>
                     </div>
                 </div>
-                <ol  role="listbox" id="taskContactsSelectOptionsWrapper" class="select-options-wrapper multiple right"></ol>
+                <ol  role="listbox" id="taskContactsListbox" class="select-options-wrapper multiple right"></ol>
             </div>
             <ul id="profileBatches" class="profile-batches hide-if-empty" style="margin-top: 12px;"></ul>
         </div>
