@@ -133,27 +133,42 @@
     width: 24px;
 }
 
-.board-table {
+.board {
+    display: flex;
+    gap: 26px;
     position: absolute;
     top: 336px;
     left: 232px;
-    height: 688px;
     width: 1208px;
-    padding-left: 64pc;
-    padding-right: 64px;
-}
-
-.table-column {
     height: 688px;
-    width: 246px;
+    padding-left: 64px;
+    padding-right: 64px;
+  }
+  
+  .column {
+    background: white;
+    border-radius: 8px;
+    padding: 10px;
+    width: 250px;
+    min-height: 500px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .column h2 {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .task-list {
+    display: flex;
+    flex-direction: column;
     gap: 10px;
-}
-
-.no-tasks-to-do {
-    border: 1px;
-    border-radius: 10px;
-    border-color: #A8A8A8;
-    background-color: #E7E7E7;
-    height: 48px;
-    width: 246px;
-}
+  }
+  
+  .task {
+    background: #eef1f6;
+    border-radius: 6px;
+    padding: 10px;
+    cursor: grab;
+    user-select: none;
+  }
