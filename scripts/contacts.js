@@ -45,7 +45,7 @@ function showContactDetail(event, contactId) {
     if(contactId == 0) {
         return closeContactDetail(contactId);
     }
-    document.getElementById('contactsMainWrapper').classList.add('show-contact-detail');
+    document.getElementById('contactPageInner').classList.add('show-contact-detail');
     document.getElementById('listContactId-' + contactId).classList.add('active');
     document.getElementById('btnCloseContactDetails').addEventListener('click', function(event) {
         event.stopPropagation();
@@ -59,7 +59,7 @@ function showContactDetail(event, contactId) {
 }
 
 function closeContactDetail(contactId) {
-    document.getElementById('contactsMainWrapper').classList.remove('show-contact-detail');
+    document.getElementById('contactPageInner').classList.remove('show-contact-detail');
     document.getElementById('floatingContact').innerHTML = '';
     document.getElementById('contactInfo').innerHTML = '';
     if(contactId > 0) {

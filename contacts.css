@@ -1,5 +1,4 @@
-.contact-page main {
-    display: flex;
+.contact-page-inner {
     flex-direction: row;
 }
 .contact-detail-section {
@@ -139,13 +138,13 @@ button.add-contact img {
     .contact-list-sidebar {
         max-width: 100%;
     }
-    main:not(.show-contact-detail) .contact-detail-section {
+    .contact-page-inner:not(.show-contact-detail) .contact-detail-section {
         display: none;
     }
-    main:not(.show-contact-detail) .floating-button.add-contact {
+    .contact-page-inner:not(.show-contact-detail) .floating-button.add-contact {
         display: unset;
     }
-    main.show-contact-detail .contact-detail-section {
+    .contact-page-inner.show-contact-detail .contact-detail-section {
         position: absolute;
         top: 0;
         left: 0;

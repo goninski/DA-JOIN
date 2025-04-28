@@ -66,8 +66,8 @@ body {
     color: var(--clr-main);
 }
 header {
-    /* position: fixed;
-    top: 0; */
+    /* position: fixed; */
+    /* top: 0; */
     justify-content: center;
     height: var(--height-header);
     background-color: white;
@@ -90,13 +90,15 @@ main, header, footer {
     margin-left: var(--sidemenu-width);
     width: calc(100% - var(--sidemenu-width)) !important;
 }
-.main-inner {
+.main-inner-absolute {
     position: absolute;
-    inset-block: var(--py-sec);
-    inset-inline: var(--px-sec);
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+}
+.main-inner-absolute:not(.inset) {
+    inset-block: var(--py-sec);
+    inset-inline: var(--px-sec);
 }
 .ct-container {
     margin-left: 0;
