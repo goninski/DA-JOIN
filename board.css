@@ -1,5 +1,5 @@
 .headline-board {
-    /* position: absolute; */
+    position: absolute;
     display: flex;
     left: 328px;
     top: 206px;
@@ -136,13 +136,13 @@
 .board {
     display: flex;
     gap: 26px;
-    /* position: absolute; */
+    position: absolute;
     top: 336px;
     left: 232px;
     width: 1208px;
     height: 688px;
-    /* padding-left: 64px;
-    padding-right: 64px; */
+    padding-left: 64px;
+    padding-right: 64px;
   }
   
   .column {
