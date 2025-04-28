@@ -55,7 +55,8 @@ a:hover {
 }
 .btn-icon {
     border-radius: 10px;
-    padding: 16px;
+    padding-block: 16px;
+    padding-inline: 24px;
     min-height: 56px;
     font-size: 21px;
     --icon-color: var(--clr-main);
@@ -127,6 +128,9 @@ a:hover {
 form {
     display: flex;
     flex-direction: column;
+    --field-width: 422px;
+}
+form.task-form {
     --field-width: 440px;
 }
 form.scrollable {
@@ -148,6 +152,7 @@ form.scrollable .field-groups {
     overflow-x: hidden;
     overflow-y: auto;
     margin-right: -15px;
+    scrollbar-width: none;
 }
 .field-group {
     min-width: var(--field-width);
@@ -248,19 +253,6 @@ textarea {
 .priority-input-wrapper  {
     gap: 16px;
 }
-/* .priority-input-wrapper label {
-    position: relative;
-    transition-duration: var(--transition-duration);
-    cursor: pointer;
-} */
-/* .priority-input-wrapper input {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    opacity: 0; 
-} */
 .priority-input-wrapper .icon-wrapper {
     display: flex;
 }
@@ -617,7 +609,7 @@ input:has(+ .input-icon-wrapper.simple) {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 16px;
     background-color: rgba(0,0,0,0.4);
     z-index: 1000;
 }
@@ -660,21 +652,21 @@ button.close-dialogue .light {
     padding: 64px 74px;
     gap: 24px;
 }
-.add-contact-dialogue .dialogue-inner {
-    min-height: 594px;
+.contact-dialogue .dialogue-inner {
+    height: 100%;
+    max-height: 594px;
     width: 100%;
     max-width: 1212px;
     align-items: stretch;
 }
-.add-contact-dialogue .dialogue-inner > div {
+.contact-dialogue .dialogue-inner > div {
     padding: 66px 48px;
     justify-content: center;
 }
 .dialogue-main {
     flex-grow: 1;
 }
-
-.add-contact-dialogue .dialogue-sidebar {
+.dialogue-sidebar {
     background-color: var(--clr-main);
     color: white;
     font-size: var(--fs-xl);
@@ -682,27 +674,34 @@ button.close-dialogue .light {
     gap: 12px;
     align-items: start;
     width: 100%;
-    max-width: 467px;
     flex-grow: 1;
 }
-.add-contact-dialogue button.close-dialogue {
-    top: 40px;
-    right: 54px;
+.contact-dialogue .dialogue-sidebar {
+    max-width: 469px;
 }
-.add-contact-dialogue .field-groups {
+.dialogue-sidebar .title-deco-divider {
+    order: 99;
+    width: 90px;
+    height: 3px;
+}
+
+.contact-dialogue .field-groups {
     gap: 72px;
 }
-.add-contact-dialogue .field-group {
-    --field-width: 422px;
-    min-width: var(--field-width);
-    max-width: var(--field-width);
+.field-group {
+    /* min-width: var(--field-width);
+    max-width: var(--field-width); */
     gap: 19px;
 }
-.add-contact-dialogue .batch-wrapper {
-    margin-top: -117px;
+.contact-dialogue .batch-wrapper {
+    margin-top: -120px;
 }
-.add-contact-dialogue .submit-button-wrapper {
+.contact-dialogue .submit-button-wrapper {
     margin-top: 18px;
+}
+.contact-dialogue button.close-dialogue {
+    top: 40px;
+    right: 54px;
 }
 
 
@@ -712,8 +711,8 @@ button.close-dialogue .light {
 /** BREAKPOINTS */
 
 @media(max-width: 1345px) {
-    .add-task-page .task-form {
-        --height-submit-area: 150px !important;
+    .task-form {
+        gap: 64px;
     }
     .task-form .field-groups {
         flex-direction: column;
@@ -736,7 +735,12 @@ button.close-dialogue .light {
         top: -32px !important;
     }
 }
+@media(max-width: 1179px) {
+}
 @media(max-width: 719px) {
+    form {
+        --field-width: 364px !important;
+    }
     .page-title-wrapper {
         flex-direction: column;
         align-items: start;
@@ -749,30 +753,22 @@ button.close-dialogue .light {
     .field-groups {
         flex-direction: column;
     }
-    .field-group {
-        min-width: 100%;
-        max-width: unset;
-    }
     .floating-button-round.bottom-right {
         bottom: calc(var(--height-footer) + 32px);
     }
-    .dialogue {
-        padding: 0;
-    }
-    .dialogue-inner {
-        max-width: unset;
-        max-height: unset;
-        height: 100%;
-        border-radius: 0;
-    }
     .dialogue-inner > div {
-        /* padding: 0; */
+        padding: 61px 16px !important;
     }
     .dialogue-main .field-groups {
         flex-wrap: wrap;
     }
-    .dialogue .field-group {
-        max-width: 100%;
+    .contact-dialogue button.close-dialogue {
+        top: 24px;
+        right: 16px;
     }
 }
-
+@media(max-width: 511px) {
+    form {
+        --field-width: 100% !important;
+    }
+}

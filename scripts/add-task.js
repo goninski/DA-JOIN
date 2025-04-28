@@ -17,7 +17,7 @@ function addTask(event, source = 'board') {
         return;
     } else {
         document.getElementById('taskDialogue').classList.add('add-task');
-        document.getElementById('taskDialogue').classList.add('form-scrollable');
+        // document.getElementById('taskDialogue').classList.add('form-scrollable');
     }
 }
 
@@ -45,7 +45,7 @@ function editTask(event, taskId = 0) {
     showTaskDialogue('editTaskFormWrapper');
     renderTaskForm('editTaskFieldGroups', task);
     document.getElementById('taskDialogue').classList.add('edit-task');
-    document.getElementById('taskDialogue').classList.add('form-scrollable');
+    // document.getElementById('taskDialogue').classList.add('form-scrollable');
     // setEditTaskValues(task);
 }
 
@@ -60,7 +60,7 @@ function showTaskDialogue(elementId, source = 'board') {
         document.getElementById('taskDialogue').classList.remove('show-task');
         document.getElementById('taskDialogue').classList.remove('add-task');
         document.getElementById('taskDialogue').classList.remove('edit-task');
-        document.getElementById('taskDialogue').classList.remove('form-scrollable');
+        // document.getElementById('taskDialogue').classList.remove('form-scrollable');
         document.getElementById('taskDialogue').style = '';
     }
 }

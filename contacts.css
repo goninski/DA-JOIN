@@ -55,10 +55,6 @@ button.add-contact img {
     min-height: 87px;
     gap: 35px;
 }
-.contact-item:where(.active, :hover, :focus) {
-    background-color: var(--clr-main);
-    color: white;
-}
 .contact-item .contact-details {
     gap: 5px;
 }
@@ -66,12 +62,20 @@ button.add-contact img {
     font-size: var(--fs-lg);
 }
 .contact-item .email {
-    color: var(--clr-light-blue);
+    color: var(--clr-link-blue);
 }
 .contact-item {
     padding: 15px 24px;
     gap: 35px;
     cursor: pointer;
+}
+.contact-item:where(.active, :hover, :focus) {
+    background-color: var(--clr-main);
+    color: white !important;
+}
+.contact-item:where(.active, :hover, :focus) .email {
+    background-color: var(--clr-main);
+    /* color: white; */
 }
 
 
@@ -83,8 +87,8 @@ button.add-contact img {
 .floating-contact .profile-title {
     gap: 8px;
 }
-.floating-contact .profile-title h3 {
-    font-size: var(--fs-xl);
+.floating-contact .profile-title h2 {
+    font-size: var(--fs-xxl);
     font-weight: 500;
 }
 .contact-info {
@@ -97,6 +101,12 @@ button.add-contact img {
 }
 .contact-property {
     gap: 15px;
+}
+.contact-property .label {
+    font-weight: var(--fw-bold);
+}
+.contact-property .email {
+    color: var(--clr-link-blue);
 }
 #btnCloseContactDetails {
     display: none;
@@ -146,11 +156,25 @@ button.add-contact img {
     }
     .contact-page-inner.show-contact-detail .contact-detail-section {
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        inset: 0;
         overflow: auto;
+    }
+    .contact-dialogue .dialogue-inner {
+        max-height: unset;
+    }
+    .contact-dialogue .batch-wrapper {
+        margin-top: -124px;
+    }
+    .contact-dialogue .dialogue-sidebar {
+        max-width: 100%;
+        min-height: 351px;
+    }
+    .contact-dialogue .field-groups {
+        flex-direction: column;
+        gap: 32px;
+    }
+    .contact-dialogue .submit-button-wrapper {
+        justify-content: center;
     }
     #btnCloseContactDetails {
         display: unset;
@@ -158,14 +182,15 @@ button.add-contact img {
     .sticky-button-wrapper {
         display: none;
     }
-    .contact-page .dialogue-inner {
+    .contact-dialogue .dialogue-inner {
         flex-direction: column;
         min-height: unset;
         max-width: 745px;
         overflow: auto;
+        scrollbar-width: none;
     }
-    .dialogue-sidebar {
-        max-width: unset;
+    .contact-dialogue .dialogue-main {
+        justify-content: flex-start;
     }
     button.close-dialogue .dark {
         display: none;
@@ -174,10 +199,9 @@ button.add-contact img {
         display: unset;
     }
 }
-@media(max-width: 719px) {
-    .contact-page .dialogue-main .batch-wrapper {
-        margin-top: unset;
-    }
-   
-}
 
+@media(max-width: 719px) {
+    #btnReset {
+        display: none;
+    }
+}

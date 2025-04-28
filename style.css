@@ -9,12 +9,12 @@
     --clr-main: #2A3647;
     --clr-dark: #091931;
     --clr-light-blue: #29ABE2;
+    --clr-link-blue: #007CEE;
     --clr-disabled: #CDCDCD;
     --clr-subtle: #D1D1D1;
     --clr-focus: var(--clr-light-blue);
     --box-shadow-focus: 0 0 0 1px var(--clr-focus);
     --box-shadow-focus-strong: 0 0 0 2px var(--clr-focus);
-
     --clr-prio-high: #FF3D00;
     --clr-prio-medium: #FFA800;
     --clr-prio-low: #7AE229;
@@ -25,6 +25,7 @@
     --fs-base: 16px;
     --fs-lg: 20px;
     --fs-xl: 27px;
+    --fs-xxl: 47px;
     --fs-main-title: 61px;
     --lh-base: 1.2;
     --fw-regular: 400;
@@ -48,12 +49,12 @@
     --sp-90: 150px;
     --gap: var(--sp-10);
 
-    --sidemenu-width: 232px;
+    --sidebar-width: 232px;
     --transition-duration: 125ms;
     --height-header: 96px;
     --height-footer: 0px; /* fixed bottom menu, mobile only */
-    --height-full-ex-header: calc(100vh - var(--height-header));
-    --height-between-header-footer: calc(100vh - (var(--height-header) + var(--height-footer)));
+    /* --height-full-ex-header: calc(100vh - var(--height-header));
+    --height-between-header-footer: calc(100vh - (var(--height-header) + var(--height-footer))); */
 }
 
 html {
@@ -87,8 +88,8 @@ main {
     overflow: hidden;
 }
 main, header, footer {
-    margin-left: var(--sidemenu-width);
-    width: calc(100% - var(--sidemenu-width)) !important;
+    margin-left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width)) !important;
 }
 .main-inner-absolute {
     position: absolute;
@@ -110,7 +111,7 @@ main, header, footer {
     top: 0;
     left: 0;
     bottom: 0;
-    width: var(--sidemenu-width);
+    width: var(--sidebar-width);
     padding: 64px 32px 64px 52px;
 }
 #sidebarMob {

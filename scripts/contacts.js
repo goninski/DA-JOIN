@@ -29,7 +29,7 @@ function renderContactGroupItems(contactGroup, groupName) {
 
 function groupContacts(contacts) {
     sortContacts(contacts);
-    let contactsGroupedObj = Map.groupBy(contacts, contact => contact.name[0]);
+    let contactsGroupedObj = Map.groupBy(contacts, contact => contact.name[0].toUpperCase());
     // console.log(contactsGroupedObj);
     let contactsGrouped = Array.from(contactsGroupedObj);
     // console.log(contactsGrouped);
@@ -109,7 +109,7 @@ function setAddContactValues() {
     document.getElementById('dialogueTitle').innerHTML = 'Add Contact';
     document.getElementById('submitBtnWrapper').innerHTML = getAddContactSubmitButtonsTemplate();
     document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Create contact');
-    document.getElementById('btnReset').innerHTML = getIconTemplateCancel('Clear');
+    document.getElementById('btnReset').innerHTML = getIconTemplateCancel('Cancel');
 }
 
 function setEditContactValues(contactId) {

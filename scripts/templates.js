@@ -261,12 +261,12 @@ function getContactDetailInfoTemplate(contact) {
     return `
         <h3 class="fs-lg fw-regular flex-col justifiy-center">Contact Information</h3>                        
         <div class="contact-property flex-col">
-            <div class="fw-bold" >Email</div>
-            <div>${contact.email}</div>
+            <div class="label" >Email</div>
+            <a href="mailto:${contact.email}" class="email">${contact.email}</a>
         </div>
         <div class="contact-property flex-col">
-            <div class="fw-bold">Phone</div>
-            <div>${contact.phone}</div>
+            <div class="label">Phone</div>
+            <div class="phone">${contact.phone}</div>
         </div>
     `
 }

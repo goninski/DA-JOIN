@@ -32,7 +32,7 @@
             </div>
 
 
-            <div class="section contact-detail-section" style="--ct-w: 752px;">
+            <div class="section contact-detail-section" xstyle="--ct-w: 752px;">
                 <button id="btnCloseContactDetails" title="back to contact list"><img src="/assets/icons/arrow-left-blue.svg" alt="arrow-left-icon"></button>
     
                 <div class="ct-container full-width">
@@ -48,6 +48,7 @@
     
         </div>
     </main>
+
 
     <div id="sidebar" class="sidebar"></div>
     <div id="sidebarMob" class="sidebar"></div>
@@ -70,7 +71,7 @@
     
             <div class="dialogue-main flex-col justifiy-center align-center pos-relative">
 
-                <form id="contactsForm" onsubmit="submitContactsForm(event, activeContactId)" class="flex-col add-contact-form">
+                <form id="contactsForm" onsubmit="submitContactsForm(event, activeContactId)" class="flex-col contact-form add-contact-form">
                     <div class="field-groups flex-row align-center justify-between">
  
                         <div class="xfield-group batch-wrapper flex-col">
@@ -122,6 +123,7 @@
         </div>
     </div>
 
+    
     <div id="floatingMsg" class="button btn-icon btn-primary floating-message hide"></div>
 
 </body>
