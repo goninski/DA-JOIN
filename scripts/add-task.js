@@ -194,8 +194,9 @@ function createTask(event) {
     task.title = taskInputs.title;
     task.description = taskInputs.description;
     task.dueDate = taskInputs.dueDate;
+    task.priority = taskInputs.priority;
     task.contactIds = assignedContacts;
-    task.categoryId = document.getElementById('categorySelect').dataset.activeOption;
+    task.categoryId = document.getElementById('categorySelect').dataset.optionId;
     // task.categoryId = Number(taskInputs.categorySelectId);
     task.subtasks = assignedSubtasks;
     tasks.push(task);
@@ -221,8 +222,9 @@ function saveTask(event) {
     tasks[index].title = taskInputs.title;
     tasks[index].description = taskInputs.description;
     tasks[index].dueDate = taskInputs.dueDate;
+    tasks[index].priority = taskInputs.priority;
     tasks[index].contactIds = assignedContacts;
-    tasks[index].categoryId = document.getElementById('categorySelect').dataset.activeOption;
+    tasks[index].categoryId = document.getElementById('categorySelect').dataset.optionId;
     tasks[index].subtasks = assignedSubtasks;
     console.log(tasks);
     saveTaskData();
