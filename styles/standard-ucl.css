@@ -18,8 +18,11 @@
     flex-direction: column;
     width: 100%;
     max-width: var(--ct-w);
-    /* margin-left: auto; */
+    margin-left: auto;
     margin-right: auto;
+}
+.ct-container.left {
+    margin-left: 0;
 }
 
 
@@ -304,11 +307,21 @@
 .pos-absolute {
     position: absolute;
 }
+.pos-absolute-inset {
+    position: absolute;
+    inset: 0;
+}
+.inset {
+    inset: 0;
+}
 .overlay-before:before {
     content: '';
     position: absolute;
-    top: 0; bottom: 0; left: 0; right: 0;
+    inset: 0;
     background-color: var(--overlay);
+}
+.overflow-auto {
+    overflow: auto;
 }
 .overflow-hidden {
     overflow: hidden;

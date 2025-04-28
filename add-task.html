@@ -7,7 +7,7 @@
     <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
     <title>Add Task | Join</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="add-task.css">
+    <!-- <link rel="stylesheet" href="add-task.css"> -->
     <script src="scripts/data.js"></script>
     <script src="scripts/templates.js"></script>
     <script src="script.js"></script>
@@ -18,12 +18,10 @@
 <body onload="initAddTask()" class="add-task-page">
 
     <header id="header" class="section"></header>
-    <div id="sideMenu" class="side-menu"></div>
-    <div id="sideMenuMob" class="side-menu"></div>
 
-    <main class="fixed">
+    <main>
  
-        <div class="section task-section add-task form-scrollable" style="--ct-w: 976px;">
+        <div class="main-inner task-page-inner add-task" style="--ct-w: 976px;">
 
             <div class="ct-container">
                 <div class="page-title-wrapper">
@@ -31,11 +29,11 @@
                 </div>
             </div>
 
-            <div class="ct-container">
-                <form id="addTaskForm" onsubmit="createTask(event)" class="flex-col pos-relative task-form add-task-form">
-                    <div id="addTaskFieldGroups" class="field-groups flex-row gap-40"></div>
+            <div class="ct-container flex-grow pos-relative">
+                <form id="addTaskForm" onsubmit="createTask(event)" class="task-form add-task-form flex-col flex-grow gap scrollable">
+                    <div id="addTaskFieldGroups" class="field-groups flex-row flex-grow gap-40"></div>
 
-                    <div class="submit-button-wrapper flex-row gap justify-end pos-relative">
+                    <div class="submit-button-wrapper flex-row flex-grow gap justify-end pos-relative">
                         <div class="required-info">This field is required</div>
                         <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetAddTaskForm(event)"></button>
                         <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled></button>
@@ -48,6 +46,8 @@
 
     </main>
 
+    <div id="sidebar" class="sidebar"></div>
+    <div id="sidebarMob" class="sidebar"></div>
     <div id="floatingMsg" class="button btn-icon btn-primary floating-message hide"></div>
 
 </body>

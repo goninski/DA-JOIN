@@ -1,29 +1,42 @@
-#tempTaskList {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    padding: 32px;
-    min-width: 480px;
+
+
+/* form.scrollable {
+    position: absolute;
+    inset: 0;
 }
-#tempTaskList li {
-    flex-wrap: wrap;
+form.scrollable .field-groups {
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-right: -15px;
+} */
+/* 
+.task-form .submit-button-wrapper {
+    flex-grow: 1;
+    max-height: 56px;
 }
+.task-form #assignedContactBatches {
+    margin-top: 4px;
+}
+:is(.task-dialogue, .task-section) .submit-button-wrapper .required-info {
+    position: absolute;
+    top: 32px;
+    left: 0;
+} */
 
 
 
-.form-scrollable .task-form {
+/* .form-scrollable .task-form {
     height: 100%;
     position: relative;
     --height-submit-area: 120px;
     --ct-w: 976px;
-}
+} */
 
-.task-form .field-groups {
+/* .task-form .field-groups {
     padding-bottom: 138px;
-}
+} */
 
-.form-scrollable .field-groups {
-    /* background-color: antiquewhite; */
+/* .form-scrollable .field-groups {
     position: absolute;
     --height-title-area: 156px;
     --height: calc(var(--height-between-header-footer) - var(--height-submit-area) - var(--height-title-area));
@@ -32,30 +45,22 @@
     overflow-y: auto;
     padding-right: 10px;
     padding-bottom: 0;    
-}
-.task-dialogue.form-scrollable .field-groups {
+} */
+/* .task-dialogue.form-scrollable .field-groups {
     --height: 87.5%;
-}
+} */
 
-.task-form #assignedContactBatches {
-    margin-top: 4px;
-}
 
-.form-scrollable .submit-button-wrapper {
-    /* background-color: aquamarine; */
+/* .form-scrollable .submit-button-wrapper {
     max-width: var(--ct-w);
     position: absolute;
     z-index: 1000;
     bottom: 0;
     width: 100%;
-}
-.add-task-page .form-scrollable .submit-button-wrapper {
+} */
+/* .add-task-page .form-scrollable .submit-button-wrapper {
     position: fixed;
     bottom: var(--height-footer);
     padding-bottom: 24px;
-}
-:is(.task-dialogue, .task-section) .submit-button-wrapper .required-info {
-    position: absolute;
-    top: 32px;
-    left: 0;
-}
+} */
+

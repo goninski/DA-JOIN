@@ -20,78 +20,87 @@
 <body onload="initBoards()" class="board-page">
 
     <header id="header" class="section"></header>
-    <div id="sideMenu" class="side-menu"></div>
-    <div id="sideMenuMob" class="side-menu"></div>
+    <div id="sidebar" class="sidebar"></div>
+    <div id="sidebarMob" class="sidebar"></div>
+
+    <main>
+        <div class="main-inner board-page-inner">
 
 
-    <div class="page-title headline-board">
-        <!-- Container für die oberen drei Elemente -->
-        <div class="top-row" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
-            <div class="black">Board</div>
-
-            <div style="gap: 32px; display: flex;">
-                <div class="input-wrapper-board">
-                    <input type="text" placeholder="Find Task" class="search-input">
-                    <div class="input-divider"></div>
-                    <div class="input-img">
-                        <img src="./assets/icons/search.png" alt="Search Icon">
+            <div class="page-title headline-board">
+                <!-- Container für die oberen drei Elemente -->
+                <div class="top-row" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                    <div class="black">Board</div>
+        
+                    <div style="gap: 32px; display: flex;">
+                        <div class="input-wrapper-board">
+                            <input type="text" placeholder="Find Task" class="search-input">
+                            <div class="input-divider"></div>
+                            <div class="input-img">
+                                <img src="./assets/icons/search.png" alt="Search Icon">
+                            </div>
+                        </div>
+                        <button class="add-task-button" onclick="addTask(event)">
+                            Add task <img src="./assets/icons/add.png" alt="">
+                        </button>
                     </div>
                 </div>
-                <button class="add-task-button" onclick="addTask(event)">
-                    Add task <img src="./assets/icons/add.png" alt="">
-                </button>
+        
+                <!-- Board Metrics darunter -->
+                <div class="board-metrics" style="margin-top: 20px;">
+                    <div class="display-flex">
+                        <p class="board-description">To do</p>
+                        <img class="board-plus-button" src="./assets/icons/plus button.png" alt="Plus Button">
+                    </div>
+                    <div class="display-flex">
+                        <p class="board-description">In progress</p>
+                        <img class="board-plus-button" src="./assets/icons/plus button.png" alt="Plus Button">
+                    </div>
+                    <div class="display-flex">
+                        <p class="board-description">Await Feedback</p>
+                        <img class="board-plus-button" src="./assets/icons/plus button.png" alt="Plus Button">
+                    </div>
+                    <div class="display-flex">
+                        <p class="board-description">Done</p>
+                    </div>
+                </div>
             </div>
-        </div>
+        
+            <div class="board">
+                <div class="column" id="todo">
+                  <div class="task-list"></div>
+                </div>
+                
+                <div class="column" id="inprogress">
+                  <div class="task-list">
+                    <div class="task">
+                      <p><strong>User Story</strong><br>Kochwelt Page & Recipe Recommender</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="column" id="awaitfeedback">
+                  <div class="task-list">
+                    <div class="task">
+                      <p><strong>Technical Task</strong><br>HTML Base Template Creation</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="column" id="done">
+                  <div class="task-list">
+                    <div class="task">
+                      <p><strong>Technical Task</strong><br>CSS Architecture Planning</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                   
 
-        <!-- Board Metrics darunter -->
-        <div class="board-metrics" style="margin-top: 20px;">
-            <div class="display-flex">
-                <p class="board-description">To do</p>
-                <img class="board-plus-button" src="./assets/icons/plus button.png" alt="Plus Button">
-            </div>
-            <div class="display-flex">
-                <p class="board-description">In progress</p>
-                <img class="board-plus-button" src="./assets/icons/plus button.png" alt="Plus Button">
-            </div>
-            <div class="display-flex">
-                <p class="board-description">Await Feedback</p>
-                <img class="board-plus-button" src="./assets/icons/plus button.png" alt="Plus Button">
-            </div>
-            <div class="display-flex">
-                <p class="board-description">Done</p>
-            </div>
-        </div>
-    </div>
+        </div>        
+    </main>
 
-    <div class="board">
-        <div class="column" id="todo">
-          <div class="task-list"></div>
-        </div>
-        
-        <div class="column" id="inprogress">
-          <div class="task-list">
-            <div class="task">
-              <p><strong>User Story</strong><br>Kochwelt Page & Recipe Recommender</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="column" id="awaitfeedback">
-          <div class="task-list">
-            <div class="task">
-              <p><strong>Technical Task</strong><br>HTML Base Template Creation</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="column" id="done">
-          <div class="task-list">
-            <div class="task">
-              <p><strong>Technical Task</strong><br>CSS Architecture Planning</p>
-            </div>
-          </div>
-        </div>
-      </div>
+    
 
     <div id="taskDialogue" class="dialogue task-dialogue" style="display: none;">
         <div class="dialogue-inner flex-col pos-relative">
@@ -101,45 +110,40 @@
                 <img src="assets/icons/close-white.svg" alt="close-icon" class="close-icon light">
             </button>
 
-            <div id="taskDetailsWrapper" class="dialogue-main flex-col pos-relative" style="display: none;"></div>
+            <div id="taskDetailsWrapper" class="dialogue-main flex-col flex-grow pos-relative" style="display: none;"></div>
 
-            <div id="addTaskFormWrapper" class="dialogue-main flex-col pos-relative" style="display: none;">
+            <div id="addTaskFormWrapper" class="dialogue-main flex-col flex-grow pos-relative" style="display: none;">
                 <div class="page-title-wrapper">
                     <h2 class="page-title">Add Task</h2>
                 </div>
-                <form id="addTaskForm" onsubmit="createTask(event)" class="flex-col task-form add-task-form"
-                    data-submit-btn-id="btnSubmit">
-                    <div id="addTaskFieldGroups" class="field-groups flex-row gap-40"></div>
-                    <div class="submit-button-wrapper flex-row gap justify-end pos-relative">
+                <form id="addTaskForm" onsubmit="createTask(event)" class="task-form add-task-form flex-col flex-grow gap scrollable" data-submit-btn-id="btnSubmit">
+                    <div id="addTaskFieldGroups" class="field-groups flex-row flex-grow gap-40"></div>
+                    <div class="submit-button-wrapper flex-row flex-grow gap justify-end pos-relative">
                         <div class="required-info">This field is required</div>
-                        <button id="btnReset" class="button btn-cancel btn-icon btn-secondary"
-                            onclick="resetAddTaskForm(event)"></button>
-                        <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary"
-                            disabled></button>
+                        <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetAddTaskForm(event)"></button>
+                        <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled></button>
                     </div>
                 </form>
             </div>
 
-            <div id="editTaskFormWrapper" class="dialogue-main flex-col pos-relative" style="display: none;">
-                <form id="editTaskForm" onsubmit="saveTask(event)" class="flex-col task-form edit-task-form"
-                    data-submit-btn-id="btnSubmitSave">
-                    <div id="editTaskFieldGroups" class="field-groups flex-col"></div>
-                    <div class="submit-button-wrapper flex-row gap justify-end pos-relative">
+            <div id="editTaskFormWrapper" class="dialogue-main flex-col flex-grow pos-relative" style="display: none;">
+                <form id="editTaskForm" onsubmit="saveTask(event)" class="task-form edit-task-form flex-col flex-grow gap scrollable" data-submit-btn-id="btnSubmit">
+                    <div id="editTaskFieldGroups" class="field-groups flex-col flex-grow"></div>
+                    <div class="submit-button-wrapper flex-row flex-grow gap justify-end pos-relative">
                         <div class="required-info">This field is required</div>
-                        <button type="submit" id="btnSubmitSave" class="button btn-check btn-icon btn-primary"
-                            disabled>Ok</button>
+                        <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled>Ok</button>
                     </div>
                 </form>
             </div>
 
-        </div>
+        </div>    
     </div>
-
-
+        
+  
     <div id="floatingMsg" class="button btn-icon btn-primary floating-message hide"></div>
+    <ul id="tempTaskList" class="flex-col gap ul-reset" style="position: fixed; bottom: 32px; right: 32px;"></ul>
 
-    <ul id="tempTaskList" class="flex-col gap ul-reset" style="position: absolute; bottom: 32px; right: 32px;"></ul>
-    <script src="board.js"></script>
+
 </body>
 
 </html>

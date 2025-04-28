@@ -129,6 +129,10 @@ form {
     flex-direction: column;
     --field-width: 440px;
 }
+form.scrollable {
+    position: absolute;
+    inset: 0;
+}
 .field-wrapper {
     display: flex;
     flex-direction: column;
@@ -139,6 +143,11 @@ form {
 }
 .field-groups {
     row-gap: 12px;
+}
+form.scrollable .field-groups {
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-right: -15px;
 }
 .field-group {
     min-width: var(--field-width);
@@ -176,9 +185,10 @@ textarea {
     background-color: white;
     border: solid 1px var(--clr-subtle);
     cursor: pointer;
-    width: 136px;
     justify-content: center;
     padding: 16px 10px;
+    flex-grow: 1;
+    min-width: 136px;
 }
 .hide-child-input {
     position: relative;
@@ -364,6 +374,19 @@ label.prio-low:has( > input:checked) {
     rotate: 180deg;
 }
 
+/** TASK FORM SPECIFIC */
+.task-form .submit-button-wrapper {
+    flex-grow: 1;
+    max-height: 56px;
+}
+.task-form #assignedContactBatches {
+    margin-top: 4px;
+}
+:is(.task-page-inner, .task-dialogue) .submit-button-wrapper .required-info {
+    position: absolute;
+    top: 32px;
+    left: 0;
+}
 
 
 
@@ -609,8 +632,8 @@ button.close-dialogue .light {
 }
 
 .task-dialogue button.close-dialogue {
-    top: 48px;
-    right: 48px;
+    top: 32px;
+    right: 40px;
 }
 .task-dialogue.add-task button.close-dialogue {
     top: 64px;
@@ -649,9 +672,6 @@ button.close-dialogue .light {
 }
 .dialogue-main {
     flex-grow: 1;
-}
-.task-dialogue.add-task .dialogue-main {
-    /* overflow-y: auto; */
 }
 
 .add-contact-dialogue .dialogue-sidebar {

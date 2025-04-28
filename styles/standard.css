@@ -4,9 +4,6 @@
     box-sizing: border-box;
     scrollbar-width: thin;
 }
-html {
-    scroll-behavior: smooth;
-}
 :focus,
 .focus-child:has( input:focus),
 .hide-child-input:has( input:focus) {
@@ -22,16 +19,22 @@ html {
     outline: none !important;
     box-shadow: none !important;
 }
+html {
+    scroll-behavior: smooth;
+}
 body {
     margin: 0;
+    position: relative;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     min-height: 100svh;
-    position: relative;
 }
 main {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 header {
     z-index: 1;

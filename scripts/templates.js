@@ -1,6 +1,6 @@
 function getHeaderTemplate() {
     return `
-        <div class="ct-container flex-row gap justify-between align-center flex-wrap--ss-mob py">
+        <div class="ct-container flex-row gap justify-between align-center flex-wrap--ss-mob">
             <p class="header-title">Kanban Project Management Tool</p>
             <a id="help-icon" href="help.html">
                 <img class="help-icon" src="./assets/icons/Property 1=help.svg"></img>
@@ -10,7 +10,7 @@ function getHeaderTemplate() {
     `
 }
 
-function getSideMenuTemplate() {
+function getSidebarTemplate() {
     return `
         <div class="sidebar-logo">
              <a href="summary.html" style="text-decoration: none; border: none;">
@@ -43,7 +43,7 @@ function getSideMenuTemplate() {
     `
 }
 
-function getSideMenuMobTemplate() {
+function getSidebarMobTemplate() {
     return `
         <div class="link-wrapper temp flex-row flex-grow gap-05 justify-around align-center"> 
             <a href="summary.html">Summary</a>
