@@ -75,6 +75,10 @@ header {
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
     z-index: 900;
 }
+footer {
+    margin-top: auto !important;
+}
+
 
 .header-title{
     font-size: 20px;
@@ -86,6 +90,7 @@ header {
 
 main {
     overflow: hidden;
+    margin-bottom: var(--height-footer);
 }
 main, header, footer {
     margin-left: var(--sidebar-width);
@@ -114,22 +119,22 @@ main, header, footer {
     width: var(--sidebar-width);
     padding: 64px 32px 64px 52px;
 }
+.sidebar {
+    position: fixed;
+    background-color: var(--clr-main);
+    color: white;
+}
 #sidebarMob {
+    display: flex;
     /* display: none; */
     width: 100%;
     height: var(--height-footer);
     justify-content: space-between;
     padding: 8px var(--px-sec);
     font-size: 14px;
-    margin-top: auto !important;
-    /* left: 0;
+    left: 0;
     right: 0;
-    bottom: 0; */
-}
-.sidebar {
-    position: fixed;
-    background-color: var(--clr-main);
-    color: white;
+    bottom: 0;
 }
 .sidebar a {
     color: white;
@@ -190,7 +195,7 @@ main, header, footer {
 
 /*** BREAKPOINTS */
 
-@media(max-width: 719px) {
+@media(max-width: 735px) {
     :root {
         --px-sec: 16px;
         --height-footer: 80px;

@@ -23,10 +23,9 @@
         <div id="contactPageInner" class="main-inner-absolute contact-page-inner inset">
 
             <div class="contact-list-sidebar flex-col">
-                <button class="floating-button-round bottom-right add-contact" onclick="addNewContact()"><img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button>
+                <button id="addNewContactBtnFloating" class="floating-button-round bottom-right add-contact" onclick="addNewContact(event)"><img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button>
                 <div class="sticky-button-wrapper flex-col">
-                    <button class="button btn-icon btn-primary add-contact" onclick="addNewContact()">Add new Contact<img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button>
-                    <!-- <button class="button btn-icon btn-secondary add-contact mt-05" onclick="addDemoContact(event)">Add Demo Contact<img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button> -->
+                    <button class="button btn-icon btn-primary add-contact" onclick="addNewContact(event)">Add new Contact<img src="/assets/icons/add-contact-white.svg" alt="add-contact-icon"></button>
                 </div>
                 <ol id="contactList" class="contact-list"></ol>
             </div>
@@ -75,7 +74,6 @@
                     <div class="field-groups flex-row align-center justify-between">
  
                         <div class="xfield-group batch-wrapper flex-col">
-                            <!-- <div class="profile-batch profile-batch-large" style="--profile-color: violet;">P1</div> -->
                             <div id="dialogueProfileBatch" class="profile-batch profile-batch-large" style="--profile-color: violet;"><img src="/assets/icons/profile-placeholder.svg" alt="profile-placeholder"></div>
                         </div>
 

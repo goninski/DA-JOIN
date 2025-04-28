@@ -68,13 +68,16 @@ function closeContactDetail(contactId) {
 }
 
 
-function addNewContact() {
+function addNewContact(event) {
+    event.stopPropagation();
     formMode = 'add';
     activeContactId = 0;
     openContactsForm(formMode);
+
 }
 
 function editContact(event, contactId) {
+    event.stopPropagation();
     formMode = 'edit';
     activeContactId = contactId;
     openContactsForm(formMode, activeContactId);
@@ -83,6 +86,7 @@ function editContact(event, contactId) {
 function openContactsForm(formMode, contactId = 0) {
     resetForm('contactsForm');
     document.getElementById('addContactDialogue').style = '';
+    document.getElementById('addNewContactBtnFloating').style = 'display: none;';
     document.body.style = 'overflow: hidden;';
     if(formMode == 'add'){
         setAddContactValues();
@@ -96,6 +100,7 @@ function closeContactsFormDialogue(event) {
     event.stopPropagation();
     resetForm('contactsForm');
     document.getElementById('addContactDialogue').style = 'display: none;';
+    document.getElementById('addNewContactBtnFloating').style = '';
     // document.body.style = '';
     formMode = '';
     renderContactList();

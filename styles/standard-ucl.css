@@ -354,7 +354,7 @@
         display: none;
     }
 } */
-@media(max-width: 719px) {
+@media(max-width: 735px) {
     .flex-wrap--ss-mob {
         flex-wrap: wrap;
     }
@@ -370,7 +370,7 @@
 @media(min-width: 1516px) {
 }
 
-@media(min-width: 720px) {
+@media(min-width: 736px) {
     .show--ss-mob {
         display: none !important;
     }

@@ -84,6 +84,9 @@ button.add-contact img {
     gap: 54px;
     align-items: center;
 }
+.floating-contact .profile-batch {
+    flex-shrink: 0;
+}
 .floating-contact .profile-title {
     gap: 8px;
 }
@@ -151,7 +154,7 @@ button.add-contact img {
     .contact-page-inner:not(.show-contact-detail) .contact-detail-section {
         display: none;
     }
-    .contact-page-inner:not(.show-contact-detail) .floating-button.add-contact {
+    .contact-page-inner:not(.show-contact-detail) .floating-button-round.add-contact {
         display: unset;
     }
     .contact-page-inner.show-contact-detail .contact-detail-section {
@@ -200,8 +203,12 @@ button.add-contact img {
     }
 }
 
-@media(max-width: 719px) {
+@media(max-width: 735px) {
     #btnReset {
         display: none;
+    }
+    .floating-contact {
+        flex-wrap: wrap;
+        gap: 16px;
     }
 }
