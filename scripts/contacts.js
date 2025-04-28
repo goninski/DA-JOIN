@@ -193,10 +193,21 @@ function deleteContact(event, contactId) {
     // console.log(contacts);
     saveContactData();
     activeContactId = 0;
+    removeDeletedContactsFromTasks(contactId);
     // reloadPage(event);
     showFloatingMessage('text', 'Contact deleted');
     setTimeout(function() { 
         closeContactsFormDialogue(event);
     }, 1000);
+}
+
+function removeDeletedContactsFromTasks(deletedContactId) {
+    for (let i = 0; i < tasks.length; i++) {
+        let contactIds = tasks[i].contactIds;
+        let index = contactIds.indexOf(deletedContactId)
+        if(index >= 0) {
+            contactIds.splice(index, 1);
+        }
+    }
 }
 

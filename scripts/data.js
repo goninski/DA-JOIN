@@ -124,7 +124,6 @@ let tasksDemo = [
 ];
 
 
-
 // GET & SAVE DATA
 
 getAllData();
