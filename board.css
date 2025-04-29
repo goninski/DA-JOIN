@@ -1,11 +1,8 @@
 .headline-board {
-    position: absolute;
     display: flex;
-    left: 328px;
-    top: 206px;
     gap: 30px;
-    width: 1056px;
-    height: 73px;
+    width: 100%;
+    max-width: 1056px;
     justify-content: space-between;
     flex-direction: column;
 }
@@ -136,22 +133,19 @@
 .board {
     display: flex;
     gap: 26px;
-    position: absolute;
-    top: 336px;
-    left: 232px;
-    width: 1208px;
-    height: 688px;
-    padding-left: 64px;
-    padding-right: 64px;
-  }
+    width: 100%;
+    max-width: 1208px;
+    flex-grow: 1;
+    box-sizing: border-box;
+    overflow-x: auto;
+    padding-top: 20px;
+}
   
   .column {
-    background: white;
+    background: #F6F7F8;
     border-radius: 8px;
-    padding: 10px;
     width: 250px;
     min-height: 500px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
   
   .column h2 {
@@ -166,9 +160,21 @@
   }
   
   .task {
-    background: #eef1f6;
+    background: #FFFFFF;
     border-radius: 6px;
     padding: 10px;
     cursor: grab;
     user-select: none;
+    border-radius: 26px;
   }
+
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    padding: 64px;
+}
+
+.user-story {
+    height: 263px;
+    width: 252px;
+}
