@@ -26,7 +26,7 @@
 
       <!-- HEADLINE-BEREICH -->
       <div class="headline-board">
-        <div class="top-row" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+        <div class="top-row" style="display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center;">
           <div class="page-title">Board</div>
           <div style="gap: 32px; display: flex;">
             <div class="input-wrapper-board">
@@ -65,20 +65,32 @@
       <div class="board">
         <div class="column" id="todo">
           <div class="task-list"></div>
+          <div class="no-task">
+            <p class="no-task-to-do">No tasks To Do</p>
+          </div>
         </div>
 
         <div class="column" id="inprogress">
           <div class="task-list">
             <div class="task user-story">
-              <p><strong>User Story</strong><br />Kochwelt Page & Recipe Recommender</p>
+              <div class="user-story-task">User Story</div>
+               <p class="task-heading">Kochwelt Page & Recipe Recommender</p>
+               <p class="task-description">Build start page with recipe recommendation...</p>
             </div>
           </div>
         </div>
 
         <div class="column" id="awaitfeedback">
           <div class="task-list">
-            <div class="task">
-              <p><strong>Technical Task</strong><br />HTML Base Template Creation</p>
+            <div class="task-1">
+              <div class="technical-task">Technical Task</div>
+              <p class="task-heading">HTML Base Template Creation</p>
+              <p class="task-description">Create reusable HTML base teamplates...</p>
+            </div>
+            <div class="task-2">
+              <div class="user-story-task">User Story</div>
+              <p class="task-heading">Daily Kochwelt Recipe</p>
+              <p class="task-description">Implement daily recipe and portion calculator....</p>
             </div>
           </div>
         </div>
@@ -86,7 +98,9 @@
         <div class="column" id="done">
           <div class="task-list">
             <div class="task">
-              <p><strong>Technical Task</strong><br />CSS Architecture Planning</p>
+              <div class="technical-task">Technical Task</div>
+              <p class="task-heading">CSS Architecture Planning</p>
+              <p class="task-description">Define CSS naming conventions and structure...</p>
             </div>
           </div>
         </div>
