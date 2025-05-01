@@ -7,7 +7,6 @@ let lastCategoryId = 0;
 let lastContactId = 0;
 let lastTaskId = 0;
 
-
 let categoriesDemo = [
     // {
     //     "id": "0",
@@ -45,7 +44,7 @@ let contactsDemo = [
     {
         "id": 2,
         "name": "Nico Hässler",
-        "email": "",
+        "email": "nico@email.com",
         "phone": "",
         "initials": "NH",
         "color": "orange"
@@ -53,7 +52,7 @@ let contactsDemo = [
     {
         "id": 3,
         "name": "Julian Kraske",
-        "email": "",
+        "email": "julian@email.com",
         "phone": "",
         "initials": "JK",
         "color": "pink"
@@ -61,7 +60,7 @@ let contactsDemo = [
     {
         "id": 4,
         "name": "Vivienne Wündisch",
-        "email": "",
+        "email": "vivienne@email.com",
         "phone": "",
         "initials": "VW",
         "color": "lightblue"
@@ -69,7 +68,7 @@ let contactsDemo = [
     {
         "id": 5,
         "name": "Viva Müller",
-        "email": "mail@domain.com",
+        "email": "viva@email.com",
         "phone": "",
         "initials": "WM",
         "color": "#806000"
@@ -77,7 +76,7 @@ let contactsDemo = [
     {
         "id": 6,
         "name": "Nadine Müller",
-        "email": "nm@domain.com",
+        "email": "nadine@email.com",
         "phone": "",
         "initials": "NM",
         "color": "green"
@@ -126,7 +125,7 @@ let tasksDemo = [
 
 // GET & SAVE DATA
 
-getAllData();
+// getAllData();
 function getAllData() {
     getCategoryData();
     getContactData();

@@ -3,6 +3,11 @@ function init() {
     getMainTemplates();
 }
 
+function initSummary() {
+    getMainTemplates();
+    getAllData();
+}
+
 function getMainTemplates() {
     getHeader();
     getSidebar();
@@ -22,7 +27,11 @@ function getSidebar() {
     sidebarMobRef.classList.add('show--ss-mob');
 }
 
-function guestLogin(event) {
+function guestLogin(event = null) {
+    loginRoutine();
+}
+
+function loginRoutine() {
     window.location.href = "/summary.html";
     getAllData();
 }
@@ -30,6 +39,7 @@ function guestLogin(event) {
 function logout(event) {
     window.location.href = "/login.html";
 }
+
 
 
 

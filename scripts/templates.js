@@ -36,8 +36,9 @@ function getSidebarTemplate() {
             <a href="legal-notice.html">Legal notice</a>
             <div class="flex-col gap-05 mt-10"> 
                 <!-- <a href="temp-assets-library.html" style="color: #ccc;">Asset Library</a> -->
-                <button onclick="setDemoData()" style="text-align: left; color: #ccc";>Testdata Reset</button>
+                <a href="/" style="color: #ccc;">Start</a>
                 <a href="#" onclick="logout(event)" style="color: #ccc;">Logout</a>
+                <button onclick="setDemoData()" style="text-align: left; color: #ccc";>Testdata Reset</button>
                 <a href="board-fg-temp.html" style="color: #ccc;">Board FG Temp</a>
             </div>
         </div>
@@ -232,7 +233,8 @@ function getContactListGroupTemplate(contact) {
         <li id="listContactId-${contact.id}" class="contact-item flex-row align-center" onclick="showContactDetail(event, ${contact.id})">
             <div class="profile-batch" style="--profile-color: ${contact.color};">${contact.initials}</div>
             <div class="contact-details flex-col">
-                <div class="name">${contact.name}&ensp;#${contact.id}</div>
+                <!-- <div class="name">${contact.name}&ensp;#${contact.id}</div> -->
+                <div class="name">${contact.name}</div>
                 <div class="email">${contact.email}</div>
             </div>
         </li>

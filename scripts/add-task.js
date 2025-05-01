@@ -7,13 +7,14 @@ let assignedSubtasks = [];
 function initAddTask() {
     getMainTemplates();
     addTask(event, 'add-task-page');
+    getAllData();
 }
 
 function openAddTaskPage() {
     window.location.href = "/add-task.html";
 }
 
-function addTask(event, source = 'board') {
+function addTask(event = null, source = 'board') {
     event.stopPropagation();
     formMode = 'add';
     activeTaskId = 0;

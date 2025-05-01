@@ -1,5 +1,6 @@
 function initBoards() {
     getMainTemplates();
+    getAllData();
     renderBoards();
 }
 

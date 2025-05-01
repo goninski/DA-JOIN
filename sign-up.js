@@ -32,7 +32,7 @@
     
     console.log(usersDatabase); 
   }
-  
+
 
   function showSignUpSuccessOverlay() {
     const overlaySignUp = document.querySelector('.overlay-sign-up-successfully-background');
@@ -41,10 +41,23 @@
         overlaySignUp.classList.add('flex');
   
       setTimeout(() => {
-        window.location.href = "login.html";
+        window.location.href = "summary.html";
       }, 1000); 
     }, 800);
   }
   
-   
 window.onload = function() {console.log(usersDatabase);}
+
+
+function addSignedUpContact(username, email) {
+  let contact = {};
+  lastContactId++;
+  contact.id = lastContactId++;
+  contact.name = username;
+  contact.email = email;
+  contact.initials = getInitialsOfFirstAndLastWord(username);
+  contact.color = getRandomColor();
+  contacts.push(contact);
+  sortContacts(contacts);
+  saveContactData();
+}

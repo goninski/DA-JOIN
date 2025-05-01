@@ -2,6 +2,7 @@ let activeContactId = 0;
 
 function initContacts() {
     getMainTemplates();
+    getAllData();
     renderContactList();
 }
 
@@ -157,7 +158,8 @@ function createContact(event, contactId) {
     }
     activeContactId = contactId;
     let contact = {};
-    contact.id = contactId;
+    // contact.id = contactId;
+    contact.id = formInputs.email;
     contact.name = formInputs.name;
     contact.email = formInputs.email;
     contact.phone = formInputs.phone;
