@@ -168,11 +168,11 @@
     border-radius: 26px;
   }
 
-  .main-content {
+  /* .main-content {
     display: flex;
     flex-direction: column;
     padding: 64px;
-}
+} */
 
 .user-story {
     height: 263px;

@@ -93,44 +93,45 @@
 
   <!-- DIALOG -->
   <div id="taskDialogue" class="dialogue task-dialogue" style="display: none;">
-    <div class="dialogue-inner flex-col">
+    <div class="dialogue-inner flex-col pos-relative">
 
-      <button class="close-dialogue" onclick="closeTaskDialogue(event)" title="close dialogue">
-        <img src="assets/icons/close.svg" alt="close-icon" class="close-icon dark" />
-        <img src="assets/icons/close-white.svg" alt="close-icon" class="close-icon light" />
-      </button>
+        <button class="close-dialogue" onclick="closeTaskDialogue(event)" title="close dialogue">
+            <img src="assets/icons/close.svg" alt="close-icon" class="close-icon dark">
+            <img src="assets/icons/close-white.svg" alt="close-icon" class="close-icon light">
+        </button>
 
-      <div id="taskDetailsWrapper" class="dialogue-main flex-col flex-grow" style="display: none;"></div>
+        <div id="taskDetailsWrapper" class="dialogue-main flex-col flex-grow pos-relative" style="display: none;"></div>
 
-      <div id="addTaskFormWrapper" class="dialogue-main flex-col flex-grow" style="display: none;">
-        <div class="page-title-wrapper">
-          <h2 class="page-title">Add Task</h2>
-        </div>
-        <div class="flex-col flex-grow">
-          <form id="addTaskForm" onsubmit="createTask(event)" class="task-form add-task-form flex-col flex-grow gap scrollable">
-            <div id="addTaskFieldGroups" class="field-groups flex-row flex-grow gap-40"></div>
-            <div class="submit-button-wrapper flex-row flex-grow gap justify-end">
-              <div class="required-info">This field is required</div>
-              <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetAddTaskForm(event)"></button>
-              <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled></button>
+        <div id="addTaskFormWrapper" class="dialogue-main flex-col flex-grow pos-relative" style="display: none;">
+            <div class="page-title-wrapper">
+                <h2 class="page-title">Add Task</h2>
             </div>
-          </form>
+            <div class="flex-col flex-grow pos-relative">
+                <form id="addTaskForm" onsubmit="createTask(event)" class="task-form add-task-form flex-col flex-grow gap scrollable">
+                    <div id="addTaskFieldGroups" class="field-groups flex-row flex-grow gap-40"></div>
+                    <div class="submit-button-wrapper flex-row flex-grow gap justify-end pos-relative">
+                        <div class="required-info">This field is required</div>
+                        <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetAddTaskForm(event)"></button>
+                        <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled></button>
+                    </div>
+                </form>
+            </div>
         </div>
-      </div>
 
-      <div id="editTaskFormWrapper" class="dialogue-main flex-col flex-grow" style="display: none;">
-        <form id="editTaskForm" onsubmit="saveTask(event)" class="task-form edit-task-form flex-col flex-grow gap scrollable" data-submit-btn-id="btnSubmit">
-          <div id="editTaskFieldGroups" class="field-groups flex-col flex-grow"></div>
-          <div class="submit-button-wrapper flex-row flex-grow gap justify-end">
-            <div class="required-info">This field is required</div>
-            <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled>Ok</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+        <div id="editTaskFormWrapper" class="dialogue-main flex-col flex-grow pos-relative" style="display: none;">
+            <form id="editTaskForm" onsubmit="saveTask(event)" class="task-form edit-task-form flex-col flex-grow gap scrollable" data-submit-btn-id="btnSubmit">
+                <div id="editTaskFieldGroups" class="field-groups flex-col flex-grow"></div>
+                <div class="submit-button-wrapper flex-row flex-grow gap justify-end pos-relative">
+                    <div class="required-info">This field is required</div>
+                    <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled>Ok</button>
+                </div>
+            </form>
+        </div>
 
-  <!-- FLOATING ELEMENTS -->
+    </div>    
+</div>
+
+<!-- FLOATING ELEMENTS -->
   <div id="floatingMsg" class="button btn-icon btn-primary floating-message hide"></div>
   <ul id="tempTaskList" class="flex-col gap ul-reset"></ul>
 
