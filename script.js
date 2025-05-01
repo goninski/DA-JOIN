@@ -100,7 +100,7 @@ function setTodayAsDateValue(id) {
     document.getElementById(id).valueAsDate = new Date();
 }
 
-function getNWord(string, index = 0) {
+function getFirstWord(string, index = 0) {
     let array = string.split(" ");
     return array[index];
 }
@@ -115,7 +115,7 @@ function setFirstLetterUpperCase(string) {
 }
 
 function getInitialsOfFirstAndLastWord(string) {
-    let firstWord = getNWord(string);
+    let firstWord = getFirstWord(string);
     let lastWord = getLastWord(string);
     return (firstWord[0] + lastWord[0]).toUpperCase();
 }
