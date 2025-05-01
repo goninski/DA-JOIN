@@ -37,6 +37,7 @@ function getSidebarTemplate() {
             <div class="flex-col gap-05 mt-10"> 
                 <!-- <a href="temp-assets-library.html" style="color: #ccc;">Asset Library</a> -->
                 <button onclick="setDemoData()" style="text-align: left; color: #ccc";>Testdata Reset</button>
+                <a href="#" onclick="logout(event)" style="color: #ccc;">Logout</a>
                 <a href="board-fg-temp.html" style="color: #ccc;">Board FG Temp</a>
             </div>
         </div>

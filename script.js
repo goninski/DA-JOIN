@@ -22,7 +22,14 @@ function getSidebar() {
     sidebarMobRef.classList.add('show--ss-mob');
 }
 
+function guestLogin(event) {
+    window.location.href = "/summary.html";
+    getAllData();
+}
 
+function logout(event) {
+    window.location.href = "/login.html";
+}
 
 
 
@@ -33,14 +40,6 @@ function reloadPage(event) {
     event.preventDefault();
     location.href = location.pathname;
 }
-
-// function getInputValue(formId, property) {
-//     let form = document.getElementById(formId);
-//     let formData = new FormData(form);
-//     let value = formData.get(property);
-//     console.log(value);
-//     return value;
-// }
 
 function getClosestParentElementFromEvent(event, selector = '') {
     let element = event.currentTarget;

@@ -1,11 +1,5 @@
 let formMode = '';
-let taskContacts = {};
 let invalidFields = [];
-let activeTaskId = 0;
-let activeContactId = 0;
-let assignedContacts = [];
-let assignedSubtasks = [];
-// let assignedCategory = 0;
 let listboxElements = [];
 let currentSelectParts = {};
 document.addEventListener('click', documentEventHandler);
@@ -25,8 +19,8 @@ function documentEventHandler(event) {
 function focusInHandler(event) {
     event.stopPropagation();
     let element = event.currentTarget;
-    console.log('f) focusInHandler');
-    console.log(element);
+    // console.log('f) focusInHandler');
+    // console.log(element);
     resetInputValidation(event);
 }
 

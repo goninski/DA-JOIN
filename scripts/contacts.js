@@ -1,3 +1,5 @@
+let activeContactId = 0;
+
 function initContacts() {
     getMainTemplates();
     renderContactList();
@@ -96,6 +98,11 @@ function openContactsForm(formMode, contactId = 0) {
     }
 }
 
+function resetContactsForm(event) {
+    event.stopPropagation();
+    resetForm('contactsForm');
+}
+
 function closeContactsFormDialogue(event) {
     event.stopPropagation();
     resetForm('contactsForm');
@@ -190,10 +197,10 @@ function saveContact(event, contactId) {
 function deleteContact(event, contactId) {
     event.stopPropagation();
     contacts.splice(getContactIndexFromId(contactId), 1);
-    // console.log(contacts);
-    saveContactData();
     activeContactId = 0;
     removeDeletedContactsFromTasks(contactId);
+    // console.log(contacts);
+    saveContactData();
     // reloadPage(event);
     showFloatingMessage('text', 'Contact deleted');
     setTimeout(function() { 

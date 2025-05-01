@@ -1,3 +1,9 @@
+let taskContacts = {};
+let activeTaskId = 0;
+let assignedContacts = [];
+let assignedSubtasks = [];
+
+
 function initAddTask() {
     getMainTemplates();
     addTask(event, 'add-task-page');
@@ -66,7 +72,7 @@ function showTaskDialogue(elementId, source = 'board') {
 }
 
 function renderTaskForm(fieldsWrapperId, task = null) {
-    console.log(task);
+    // console.log(task);
     assignedContacts = [];
     assignedSubtasks = [];
     let formId;
