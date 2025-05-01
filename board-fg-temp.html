@@ -41,13 +41,10 @@
     </main>
 
     <div id="sidebarMob" class="sidebar"></div>
-
     <div id="sidebar" class="sidebar"></div>
-
 
     <ul id="tempTaskList" class="flex-col gap ul-reset"></ul>
     <script>renderTempTaskList();</script>
-
 
     <div id="taskDialogue" class="dialogue task-dialogue" style="display: none;">
         <div class="dialogue-inner flex-col pos-relative">
@@ -65,7 +62,7 @@
                 </div>
                 <div class="flex-col flex-grow pos-relative">
                     <form id="addTaskForm" onsubmit="createTask(event)" class="task-form add-task-form flex-col flex-grow gap scrollable">
-                        <div id="addTaskFieldGroups" class="field-groups flex-row flex-grow gap-40"></div>
+                        <div id="addTaskFieldGroups" class="field-groups flex-row xflex-grow gap-40"></div>
                         <div class="submit-button-wrapper flex-row flex-grow gap justify-end pos-relative">
                             <div class="required-info">This field is required</div>
                             <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetAddTaskForm(event)"></button>

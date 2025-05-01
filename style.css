@@ -103,8 +103,9 @@ main, header, footer {
     flex-direction: column;
     flex-grow: 1;
 }
-.main-inner-absolute:not(.inset) {
-    inset-block: var(--py-sec);
+:where(.main-inner-absolute):not(.inset) {
+    top: 110px;
+    bottom: var(--py-sec);
     inset-inline: var(--px-sec);
 }
 .ct-container {
@@ -218,6 +219,6 @@ main, header, footer {
 }
 @media(min-width: 1440px) {
     :root {
-        --px-sec: 64px;
+        --px-sec: 100px;
     }
 }

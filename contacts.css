@@ -1,3 +1,9 @@
+.board-page-inner {
+    top: 80px;
+
+    inset-inline: var(--px-sec-sm);
+}
+
 .contact-page-inner {
     flex-direction: row;
 }
@@ -210,5 +216,11 @@ button.add-contact img {
     .floating-contact {
         flex-wrap: wrap;
         gap: 16px;
+    }
+}
+
+@media(min-width: 1440px) {
+    .contact-page-inner {
+        --px-sec: 55px;
     }
 }

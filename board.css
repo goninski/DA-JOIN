@@ -1,3 +1,7 @@
+.board-page-inner {
+    top: 80px;
+}
+
 .headline-board {
     display: flex;
     gap: 30px;
@@ -177,4 +181,12 @@
 .user-story {
     height: 263px;
     width: 252px;
+}
+
+
+
+@media(min-width: 1440px) {
+    .board-page-inner {
+        --px-sec: 64px;
+    }
 }
