@@ -387,6 +387,7 @@ label.prio-low:has( > input:checked) {
 .task-form .submit-button-wrapper {
     flex-grow: 1;
     max-height: 56px;
+    margin-top: auto;
 }
 :is(.task-page-inner, .task-dialogue) .submit-button-wrapper .required-info {
     position: absolute;

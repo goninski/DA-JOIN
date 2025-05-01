@@ -191,6 +191,12 @@
     margin-left: auto;
     margin-right: auto;
 }
+.mt-auto {
+    margin-top: auto;
+}
+.mb-auto {
+    margin-bottom: auto;
+}
 .ml-auto {
     margin-left: auto;
 }
