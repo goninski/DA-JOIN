@@ -11,6 +11,12 @@ window.onload = () => {
     }, 100);
 };
 
+function checkSignInFormValidity() {
+    return true;
+  }
+  
+
+
 // usersDatabase soll hier die Datenbank mit den User Zugangsdaten symbolisieren - muss noch geändert werden
 // function checkLogin(event) {
 //     event.preventDefault();

@@ -28,6 +28,10 @@ function signUp() {
     let email = document.getElementById('email').value;
     let password = document.getElementById('pwd').value;
 
+    if(! checkSignUpFormValidity()) {
+      return;
+    };
+
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const user = userCredential.user;
@@ -62,8 +66,9 @@ function signIn() {
   let email = document.getElementById('email-login').value;
   let password = document.getElementById('pwd-login').value;
 
-  console.log(app);
-  console.log(database);
+  if(! checkSignInFormValidity()) {
+    return;
+  };
 
   signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
