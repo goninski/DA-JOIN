@@ -1,6 +1,9 @@
+const page = window.location.pathname;
+const today = new Date();
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
-import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getDatabase, set, update, ref } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInAnonymously, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCOB2IDXOJe-1pBfiPCOzAZAVymnVMBiTs",
@@ -15,29 +18,60 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
-let signUpBtn = document.getElementById('signUpBtn');
-signUpBtn.addEventListener('click', signUp);
 
+// console.log(app);
+// console.log(database);
+// console.log(auth);
 
 function signUp() {
-// function signUp(username, email, password) {
-  let username = document.getElementById('sign-up-name').value;
-  let email = document.getElementById('email').value;
-  let password = document.getElementById('pwd').value;
+    let username = document.getElementById('sign-up-name').value;
+    let email = document.getElementById('email').value;
+    let password = document.getElementById('pwd').value;
 
-  createUserWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            set(ref(database, 'users/' + user.uid), {
+                id: user.uid,
+                name: username,
+                email: email,
+                initials: getInitialsOfFirstAndLastWord(username),
+                color: getRandomColor(),
+                // firstLogin: today,
+              })
+            // console.log(contacts);
+            // console.log(user);
+            showFloatingMessage('text', 'You Signed Up successfully');
+            setTimeout(function() { 
+              window.location.href = "/summary.html";
+          }, 1000);
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert(errorMessage);
+        });
+}
+
+if(page == '/sign-up.html') {
+  document.getElementById('signUpBtn').addEventListener('click', signUp);
+}
+
+
+function signIn() {
+  let email = document.getElementById('email-login').value;
+  let password = document.getElementById('pwd-login').value;
+
+  console.log(app);
+  console.log(database);
+
+  signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
           const user = userCredential.user;
-
-          lastContactId++;
-          set(ref(usersDatabase, 'users/' + user.uid), {
-            id: lastContactId,
-            name: username,
-            email, email
+          update(ref(database, 'users/' + user.uid), {
+              lastLogin: today,
           })
-        
-          // addSignedUpContact(user, username, email);
-          // showSignUpSuccessOverlay();
+          window.location.href = "/summary.html";
       })
       .catch((error) => {
           const errorCode = error.code;
@@ -46,30 +80,60 @@ function signUp() {
       });
 }
 
-// function addSignedUpContact(user, username, email) {
-//   let contact = {};
-//   lastContactId++;
-//   contact.id = lastContactId;
-//   contact.name = username;
-//   contact.email = email;
-//   contact.initials = getInitialsOfFirstAndLastWord(username);
-//   contact.color = getRandomColor();
-//   contacts.push(contact);
-//   sortContacts(contacts);
-//   saveContactData();
-
-//   set(ref(usersDatabase, 'users/' + user.uid), {
-//     id: lastContactId,
-//     name: username,
-//     email, email
-//   })
-// }
-
-function addSignedUpContact(user, username, email) {
-  lastContactId++;
-  set(ref(usersDatabase, 'users/' + user.uid), {
-    id: lastContactId,
-    name: username,
-    email, email
-  })
+function signInAsGuest() {
+  signInAnonymously(auth)
+      .then(() => {
+          location.href = "/summary.html";
+      })
+      .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert(errorMessage);
+      });
 }
+
+if(page == '/login.html') {
+  document.getElementById('signInBtn').addEventListener('click', signIn);
+  document.getElementById('signInGuestBtn').addEventListener('click', signInAsGuest);
+}
+
+function logout() {
+  signOut(auth)
+      .then(() => {
+          window.location.href = "/login.html";
+      })
+      .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert(errorMessage);
+      });
+}
+
+
+if(page != '/login.html' && page != '/sign-up.html') {
+  checkAuth();
+  // document.getElementById('logoutBtnTemp').addEventListener('click', logout);
+  // document.getElementById('logoutBtn').addEventListener('click', logout);
+  renderTemporaryLogoutButton();
+}
+
+function checkAuth() {
+  const user = auth.currentUser;
+  onAuthStateChanged(auth, (user) => {
+    if(user) {
+      // user is signed in
+      const uid = user.uid;
+    } else {
+      window.location.href = "/login.html";
+    }
+  });
+}
+
+function renderTemporaryLogoutButton() {
+  let btn = document.createElement("button");
+  btn.innerHTML = 'Logout';
+  btn.style = 'color: white; position: fixed; bottom: 0; width: 232px; height: 48px;';
+  btn.addEventListener('click', logout)
+  document.body.appendChild(btn);
+};
+  

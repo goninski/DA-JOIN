@@ -37,7 +37,7 @@ function getSidebarTemplate() {
             <div class="flex-col gap-05 mt-10"> 
                 <!-- <a href="temp-assets-library.html" style="color: #ccc;">Asset Library</a> -->
                 <a href="/" style="color: #ccc;">Start</a>
-                <a href="#" onclick="logout(event)" style="color: #ccc;">Logout</a>
+                <!-- <a href="#" id="logoutBtnTemp" onclick="logout()" style="color: #ccc;">Logout</a> -->
                 <button onclick="setDemoData()" style="text-align: left; color: #ccc";>Testdata Reset</button>
                 <a href="board-fg-temp.html" style="color: #ccc;">Board FG Temp</a>
             </div>
@@ -55,7 +55,6 @@ function getSidebarMobTemplate() {
         </div>
     `
 }
-
 
 
 function getTaskDetailsWrapperTemplate(task) {
@@ -169,7 +168,7 @@ function getContactSelectOptionTemplate(contact, index) {
         <label for="checkboxAssignedContact-${contact.id}" class="hide-focus" onkeydown="event.stopPropagation()">${contact.name}
             <div class="profile-batch label-icon" style="--profile-color: ${contact.color};">${contact.initials}</div>
             <div class="input-icon-wrapper custom-checkbox">
-                <input type="checkbox" class="custom clickable" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}"  onchange="dropdownOptionClickHandlerMultiple(event, ${contact.id})">
+                <input type="checkbox" class="custom clickable" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}"  onchange="dropdownOptionClickHandlerMultiple(event, '${contact.id}')">
                 <div class="checkbox-checked-wrapper">
                     <img src="assets/icons/checkbox-checked-white.svg" alt="checkbox-checked" class="icon-checkbox-checked">
                 </div>
@@ -216,7 +215,7 @@ function getAddContactSubmitButtonsTemplate() {
 
 function getEditContactSubmitButtonsTemplate(contactId) {
     return `
-        <button id="btnReset" class="button btn-delete btn-icon btn-secondary" onclick="deleteContact(event, ${contactId})">Delete</button>
+        <button id="btnReset" class="button btn-delete btn-icon btn-secondary" onclick="deleteContact(event, '${contactId}')">Delete</button>
         <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled>Save</button>
     `
 }
@@ -230,10 +229,9 @@ function getContactListTemplate(groupName) {
 
 function getContactListGroupTemplate(contact) {
     return `
-        <li id="listContactId-${contact.id}" class="contact-item flex-row align-center" onclick="showContactDetail(event, ${contact.id})">
+        <li id="listContactId-${contact.id}" class="contact-item flex-row align-center" onclick="showContactDetail(event, '${contact.id}')">
             <div class="profile-batch" style="--profile-color: ${contact.color};">${contact.initials}</div>
             <div class="contact-details flex-col">
-                <!-- <div class="name">${contact.name}&ensp;#${contact.id}</div> -->
                 <div class="name">${contact.name}</div>
                 <div class="email">${contact.email}</div>
             </div>
@@ -247,8 +245,8 @@ function getContactDetailProfileBatchTemplate(contact) {
         <div class="profile-title flex-col">
             <h2 class="">${contact.name}</h2>                        
             <div class="edit-buttons flex-row align-center">
-                <button onclick="editContact(event, ${contact.id})"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
-                <button onclick="deleteContact(event, ${contact.id})"><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
+                <button onclick="editContact(event, '${contact.id}')"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
+                <button onclick="deleteContact(event, '${contact.id}')"><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
             </div>
         </div>
     `

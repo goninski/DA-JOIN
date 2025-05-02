@@ -1,4 +1,4 @@
-let activeContactId = 0;
+let activeContactId = '';
 
 function initContacts() {
     getMainTemplates();
@@ -42,10 +42,10 @@ function groupContacts(contacts) {
 function showContactDetail(event, contactId) {
     event.stopPropagation();
     // console.log(activeContactId);
-    if(activeContactId > 0 && activeContactId != contactId){
+    if(activeContactId != '' && activeContactId != contactId){
         document.getElementById('listContactId-' + activeContactId).classList.remove('active');
     }
-    if(contactId == 0) {
+    if(contactId == '') {
         return closeContactDetail(contactId);
     }
     document.getElementById('contactPageInner').classList.add('show-contact-detail');
@@ -65,7 +65,7 @@ function closeContactDetail(contactId) {
     document.getElementById('contactPageInner').classList.remove('show-contact-detail');
     document.getElementById('floatingContact').innerHTML = '';
     document.getElementById('contactInfo').innerHTML = '';
-    if(contactId > 0) {
+    if(contactId != '') {
         document.getElementById('listContactId-' + contactId).classList.remove('active');
     }
 }
@@ -74,7 +74,7 @@ function closeContactDetail(contactId) {
 function addNewContact(event) {
     event.stopPropagation();
     formMode = 'add';
-    activeContactId = 0;
+    activeContactId = '';
     openContactsForm(formMode);
 
 }
@@ -86,7 +86,7 @@ function editContact(event, contactId) {
     openContactsForm(formMode, activeContactId);
 }
 
-function openContactsForm(formMode, contactId = 0) {
+function openContactsForm(formMode, contactId = '') {
     resetForm('contactsForm');
     document.getElementById('addContactDialogue').style = '';
     document.getElementById('addNewContactBtnFloating').style = 'display: none;';
@@ -143,8 +143,9 @@ function submitContactsForm(event, contactId) {
     if(formMode == 'edit') {
         saveContact(event, contactId);
     } else {
-        lastContactId++;
-        contactId = lastContactId;
+        // lastContactId++;
+        // contactId = lastContactId;
+        contactId = getRandomString();
         createContact(event, contactId);
     }
 }
@@ -158,8 +159,7 @@ function createContact(event, contactId) {
     }
     activeContactId = contactId;
     let contact = {};
-    // contact.id = contactId;
-    contact.id = formInputs.email;
+    contact.id = contactId;
     contact.name = formInputs.name;
     contact.email = formInputs.email;
     contact.phone = formInputs.phone;
@@ -198,8 +198,9 @@ function saveContact(event, contactId) {
 
 function deleteContact(event, contactId) {
     event.stopPropagation();
+    event.preventDefault();
     contacts.splice(getContactIndexFromId(contactId), 1);
-    activeContactId = 0;
+    activeContactId = '';
     removeDeletedContactsFromTasks(contactId);
     // console.log(contacts);
     saveContactData();

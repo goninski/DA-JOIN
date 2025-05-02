@@ -33,7 +33,6 @@ function addUser() {
   console.log(usersDatabase); 
 }
 
-
 function showSignUpSuccessOverlay() {
   const overlaySignUp = document.querySelector('.overlay-sign-up-successfully-background');
     setTimeout(() => {
@@ -41,7 +40,7 @@ function showSignUpSuccessOverlay() {
       overlaySignUp.classList.add('flex');
 
     setTimeout(() => {
-      window.location.href = "summary.html";
+      location.href = "/summary.html";
     }, 1000); 
   }, 800);
 }

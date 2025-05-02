@@ -8,6 +8,7 @@
     <title>Board | Join</title>
     <link rel="stylesheet" href="style.css">
     <!-- <link rel="stylesheet" href="add-task.css"> -->
+    <script type="module" src="./scripts/auth.js"></script>
     <script src="scripts/data.js"></script>
     <script src="scripts/templates.js"></script>
     <script src="script.js"></script>
@@ -43,8 +44,6 @@
     <div id="sidebarMob" class="sidebar"></div>
     <div id="sidebar" class="sidebar"></div>
 
-    <ul id="tempTaskList" class="flex-col gap ul-reset"></ul>
-    <script>renderTempTaskList();</script>
 
     <div id="taskDialogue" class="dialogue task-dialogue" style="display: none;">
         <div class="dialogue-inner flex-col pos-relative">
@@ -87,6 +86,8 @@
 
     
     <div id="floatingMsg" class="button btn-icon btn-primary floating-message hide"></div>
+    <ul id="tempTaskList" class="flex-col gap ul-reset"></ul>
+    <script>renderTempTaskList();</script>
 
 </body>
 </html>

@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="sign-up.css">
-    <script src="scripts/data.js"></script>
+    <script type="module" src="./scripts/auth.js"></script>
+    <script src="scripts/templates.js"></script>
     <script src="script.js"></script>
 </head>
 
@@ -81,64 +82,10 @@
     </section>
 
 
+    <div id="floatingMsg" class="button btn-icon btn-primary floating-message hide"></div>
+    
+
     <script src="sign-up.js"></script>
-
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
-        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-
-        const firebaseConfig = {
-        apiKey: "AIzaSyCOB2IDXOJe-1pBfiPCOzAZAVymnVMBiTs",
-        authDomain: "da-join-449.firebaseapp.com",
-        databaseURL: "https://da-join-449-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "da-join-449",
-        storageBucket: "da-join-449.firebasestorage.app",
-        messagingSenderId: "972751449711",
-        appId: "1:972751449711:web:f8bc03c7e3056a61f1a79a"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-        const auth = getAuth();
-
-        function signUp() {
-            let username = document.getElementById('sign-up-name').value;
-            let email = document.getElementById('email').value;
-            let password = document.getElementById('pwd').value;
-
-            console.log(app);
-            console.log(database);
-
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    getContactData();
-                    const user = userCredential.user;
-                    lastContactId++;
-                    set(ref(database, 'users/' + user.uid), {
-                        id: lastContactId,
-                        name: username,
-                        email: email,
-                        initials: getInitialsOfFirstAndLastWord(username),
-                        color: getRandomColor()
-                    })
-                    // console.log(contacts);
-                    // console.log(user);
-                    showSignUpSuccessOverlay();
-                    location.href = "/summary.html";
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    alert(errorMessage);
-                });
-        }
-
-        let signUpBtn = document.getElementById('signUpBtn');
-        signUpBtn.addEventListener('click', signUp);
-
-    </script>
 
 </body>
 

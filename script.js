@@ -27,19 +27,6 @@ function getSidebar() {
     sidebarMobRef.classList.add('show--ss-mob');
 }
 
-function guestLogin(event = null) {
-    loginRoutine();
-}
-
-function loginRoutine() {
-    window.location.href = "/summary.html";
-    getAllData();
-}
-
-function logout(event) {
-    window.location.href = "/login.html";
-}
-
 
 
 
@@ -127,6 +114,16 @@ function getInitialOfLastWord(string) {
 
 function getRandomColor(format = 'hex') {
     return '#' + Math.floor(Math.random()*16777215).toString(16);
+}
+
+function getRandomString(length = 16) {
+    let characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let charactersLength = characters.length;
+    let result = ' ';
+    for ( let i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result.trim();
 }
 
 function showAlert(msg, duration = 250) {

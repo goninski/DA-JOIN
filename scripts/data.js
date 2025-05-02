@@ -34,7 +34,7 @@ lastCategoryId = categories.length - 1;
 
 let contactsDemo = [
     {
-        "id": 1,
+        "id": "1",
         "name": "François Gonin",
         "email": "mail@goninski.dev",
         "phone": "+41 78 888 77 66",
@@ -42,7 +42,7 @@ let contactsDemo = [
         "color": "violet"
     },
     {
-        "id": 2,
+        "id": "2",
         "name": "Nico Hässler",
         "email": "nico@email.com",
         "phone": "",
@@ -50,7 +50,7 @@ let contactsDemo = [
         "color": "orange"
     },
     {
-        "id": 3,
+        "id": "3",
         "name": "Julian Kraske",
         "email": "julian@email.com",
         "phone": "",
@@ -58,7 +58,7 @@ let contactsDemo = [
         "color": "pink"
     },
     {
-        "id": 4,
+        "id": "4",
         "name": "Vivienne Wündisch",
         "email": "vivienne@email.com",
         "phone": "",
@@ -66,7 +66,7 @@ let contactsDemo = [
         "color": "lightblue"
     },
     {
-        "id": 5,
+        "id": "5",
         "name": "Viva Müller",
         "email": "viva@email.com",
         "phone": "",
@@ -74,7 +74,7 @@ let contactsDemo = [
         "color": "#806000"
     },
     {
-        "id": 6,
+        "id": "6",
         "name": "Nadine Müller",
         "email": "nadine@email.com",
         "phone": "",
