@@ -116,7 +116,7 @@ function getRandomColor(format = 'hex') {
     return '#' + Math.floor(Math.random()*16777215).toString(16);
 }
 
-function getRandomString(length = 16) {
+function getRandomString(length = 20) {
     let characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let charactersLength = characters.length;
     let result = ' ';

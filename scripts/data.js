@@ -1,17 +1,16 @@
 // *** TEST DATA
 let categories = [];
+let categoriesDefault = [];
 let contacts = [];
 let tasks = [];
-
+let contactsDemo = [];
+let tasksDemo = [];
+let contactsDemoOld = [];
 let lastCategoryId = 0;
-let lastContactId = 0;
+// let lastContactId = 0;
 let lastTaskId = 0;
 
-let categoriesDemo = [
-    // {
-    //     "id": "0",
-    //     "name": "Select Task Category"
-    // },
+categoriesDefault = [
     {
         "id": "1",
         "name": "Technical Task"
@@ -20,19 +19,46 @@ let categoriesDemo = [
         "id": "2",
         "name": "User Story"
     },
-    {
-        "id": "3",
-        "name": "Cat 3"
-    },
-    {
-        "id": "4",
-        "name": "Cat 4"
-    }
+    // {
+    //     "id": "3",
+    //     "name": "Cat 3"
+    // },
+    // {
+    //     "id": "4",
+    //     "name": "Cat 4"
+    // }
 ];
-categories = categoriesDemo;
+categories = categoriesDefault;
 lastCategoryId = categories.length - 1;
 
-let contactsDemo = [
+contactsDemo = [
+    {
+        "id": "101",
+        "name": "Boris Becker",
+        "email": "boris@becker.de",
+        "phone": "+49 999 888 777",
+        "initials": "BB",
+        "color": "violet"
+    },
+    {
+        "id": "102",
+        "name": "Roger Federer",
+        "email": "roger@federer.ch",
+        "phone": "+41 99 888 77 66",
+        "initials": "RF",
+        "color": "orange"
+    },
+    {
+        "id": "103",
+        "name": "Novak Djokovic",
+        "email": "novak@djokovic.rs",
+        "phone": "+381 99 888 77 66",
+        "initials": "ND",
+        "color": "pink"
+    },
+];
+
+contactsDemoOld = [
     {
         "id": "1",
         "name": "François Gonin",
@@ -81,13 +107,11 @@ let contactsDemo = [
         "initials": "NM",
         "color": "green"
     },
-
 ];
 
-
-let tasksDemo = [
+tasksDemo = [
     {
-        "id": 1,
+        "id": "1",
         "title": "Title Task 1...",
         "description": "Description Task 1...",
         "dueDate": "2025-04-01",
@@ -101,7 +125,7 @@ let tasksDemo = [
         // ]
     },
     {
-        "id": 2,
+        "id": "2",
         "title": "Title Task 2...",
         "description": "Description Task 2...",
         "dueDate": "2025-03-31",
@@ -111,7 +135,7 @@ let tasksDemo = [
         "subtasks": ["Subtask 1","Subtask 2"]
     },
     {
-        "id": 3,
+        "id": "3",
         "title": "Title Task 3...",
         "description": "Description Task 3...",
         "dueDate": 0,
@@ -121,6 +145,8 @@ let tasksDemo = [
         "subtasks": ["Subtask 1","Subtask 2","Subtask 3"]
     },
 ];
+
+
 
 
 // GET & SAVE DATA
@@ -150,7 +176,6 @@ function getTaskData() {
 function saveCategoryData() {
     saveCategoryDataLS();
 }
-
 function saveContactData() {
     saveContactDataLS();
 }
@@ -161,12 +186,13 @@ function saveTaskData() {
 
 function setDemoData() {
     clearLocalStorage();
-    categories = categoriesDemo;
+    categories = categoriesDefault;
     contacts = contactsDemo;
     contacts.sort((a, b) => a.name.localeCompare(b.name));
     tasks = tasksDemo;
+    console.log(categories);
     lastCategoryId = categories.length - 1;
-    lastContactId = contacts.length;
+    // lastContactId = contacts.length;
     lastTaskId = tasks.length;
     saveCategoryData();
     saveContactData();
@@ -175,7 +201,26 @@ function setDemoData() {
 }
 
 
-// TEMPORARY LOCAL STORAGE HANDLING
+
+// DATA HANDLING FIREBASE
+
+
+function saveContactDataDB(contact) {
+  set(ref(database, 'users/' + contact.id), {
+    id: contact.id,
+    name: contact.name,
+    email: contact.email,
+    phone: contact.phone,
+    initials: contact.initials,
+    color: contact.color,
+  })
+}
+
+
+
+
+
+// DATA HANDLING LOCAL STORAGE > TEMPORARY
 
 function getCategoryDataLS() {
     categories = getFromLocalStorage('categories');

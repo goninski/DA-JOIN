@@ -2,7 +2,7 @@ const page = window.location.pathname;
 const today = new Date();
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getDatabase, set, update, ref } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+import { getDatabase, ref, set, update } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInAnonymously, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
 const firebaseConfig = {
@@ -19,9 +19,29 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
 
-// console.log(app);
-// console.log(database);
-// console.log(auth);
+console.log(app);
+console.log(database);
+console.log(auth);
+
+
+if(page != '/login.html' && page != '/sign-up.html') {
+  checkAuth();
+  // document.getElementById('logoutBtnTemp').addEventListener('click', logout);
+  // document.getElementById('logoutBtn').addEventListener('click', logout);
+  renderTemporaryLogoutButton();
+}
+
+function checkAuth() {
+  const user = auth.currentUser;
+  onAuthStateChanged(auth, (user) => {
+    if(user) {
+      // user is signed in
+      const uid = user.uid;
+    } else {
+      window.location.href = "/login.html";
+    }
+  });
+}
 
 function signUp() {
     let username = document.getElementById('sign-up-name').value;
@@ -114,26 +134,6 @@ function logout() {
       });
 }
 
-
-if(page != '/login.html' && page != '/sign-up.html') {
-  checkAuth();
-  // document.getElementById('logoutBtnTemp').addEventListener('click', logout);
-  // document.getElementById('logoutBtn').addEventListener('click', logout);
-  renderTemporaryLogoutButton();
-}
-
-function checkAuth() {
-  const user = auth.currentUser;
-  onAuthStateChanged(auth, (user) => {
-    if(user) {
-      // user is signed in
-      const uid = user.uid;
-    } else {
-      window.location.href = "/login.html";
-    }
-  });
-}
-
 function renderTemporaryLogoutButton() {
   let btn = document.createElement("button");
   btn.innerHTML = 'Logout';
@@ -142,3 +142,38 @@ function renderTemporaryLogoutButton() {
   document.body.appendChild(btn);
 };
   
+//importDemoContactsToFirebase();
+function importDemoContactsToFirebase() {
+  console.log(contactsDemo);    
+  console.log(today);    
+  deleteAllContacts();
+  contactsDemo.forEach(contact => {
+    // let id = getRandomString();
+    set(ref(database, 'users/' + contact.id), {
+      id: contact.id,
+      name: contact.name,
+      email: contact.email,
+      phone: contact.phone,
+      initials: getInitialsOfFirstAndLastWord(contact.name),
+      color: getRandomColor(),
+      lastLogin: today,
+    })
+  });
+}
+
+// saveContactDataDB(contact);
+export function saveContactDataDB(contact) {
+  set(ref(database, 'users/' + contact.id), {
+    id: contact.id,
+    name: contact.name,
+    email: contact.email,
+    phone: contact.phone,
+    initials: contact.initials,
+    color: contact.color,
+  })
+}
+
+function deleteAllContacts() {
+  set(ref(database, 'users/'), {
+  })
+}

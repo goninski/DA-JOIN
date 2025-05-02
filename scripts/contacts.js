@@ -169,6 +169,7 @@ function createContact(event, contactId) {
     sortContacts(contacts);
     // console.log(contact);
     saveContactData();
+    saveContactDataDB(contact);
     showFloatingMessage('text', 'Contact successfully created');
     setTimeout(function() { 
         closeContactsFormDialogue(event);
