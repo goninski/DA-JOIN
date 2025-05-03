@@ -6,8 +6,8 @@ let assignedSubtasks = [];
 
 function initAddTask() {
     getMainTemplates();
-    addTask(event, 'add-task-page');
     getAllData();
+    addTask(event, 'add-task-page');
 }
 
 function openAddTaskPage() {
@@ -91,6 +91,7 @@ function renderTaskForm(fieldsWrapperId, task = null) {
         formId = 'editTaskForm';
     }
     resetForm(formId);
+    console.log(contacts);
     renderCategorySelectOptions(event);
     setEditTaskValues(task, formId);
     checkEditFormState(formId);
@@ -299,12 +300,14 @@ function renderContactSelectOptions(listboxId = 'taskContactsListbox', searchVal
     let listbox = document.getElementById(listboxId);
     let combox = document.getElementById('selectContacts');
     listbox.innerHTML = '';
+    console.log(contacts);
     taskContacts = Object.create(contacts);
     taskContacts = sortContacts(taskContacts);
+    console.log(taskContacts);
     if(searchVal === ' ') {
         combox.value = '';
         toggleDropdown(listbox);        
-    } else if(searchVal.length == 1) {
+    } else if(searchVal.length === 1) {
         closeDropdown(listbox);
         return;
     }
@@ -312,7 +315,7 @@ function renderContactSelectOptions(listboxId = 'taskContactsListbox', searchVal
         openDropdown(listbox);
         taskContacts = taskContacts.filter(contact => contact.name.toLowerCase().includes(searchVal));
     }
-    // console.log(taskContacts);
+    console.log(taskContacts);
     for (let index = 0; index < taskContacts.length; index++) {
         listbox.innerHTML += getContactSelectOptionTemplate(taskContacts[index], index);
         if(assignedContacts.length > 0) {

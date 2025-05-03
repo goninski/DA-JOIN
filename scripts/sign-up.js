@@ -2,6 +2,9 @@ let usersDatabase = [
   { name: 'Max', email: 'max@example.com', password: '12345678' }
 ];
 
+function checkSignUpFormValidity() {
+  return true;
+}
 
 function addUser() {
   console.log(usersDatabase); 

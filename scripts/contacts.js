@@ -3,8 +3,14 @@ let activeContactId = '';
 function initContacts() {
     getMainTemplates();
     getAllData();
+    console.log(contacts);
+    if(!contacts) {
+        contacts = [];
+        console.log('error: contacts undefined !');
+    }
     renderContactList();
 }
+
 
 function renderContactList() {
     contactListRef = document.getElementById('contactList');
@@ -135,6 +141,7 @@ function setEditContactValues(contactId) {
     document.getElementById('inputEmail').value = contact.email;
     document.getElementById('inputPhone').value = contact.phone;
     document.getElementById('submitBtnWrapper').innerHTML = getEditContactSubmitButtonsTemplate(contactId);
+    document.getElementById('dialogueBtnDelete').innerHTML = getIconTemplateCancel('Cancel');
     document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Save');
 }
 
@@ -169,7 +176,7 @@ function createContact(event, contactId) {
     sortContacts(contacts);
     // console.log(contact);
     saveContactData();
-    saveContactDataDB(contact);
+    createContactOnFirebase(contact);
     showFloatingMessage('text', 'Contact successfully created');
     setTimeout(function() { 
         closeContactsFormDialogue(event);
@@ -200,8 +207,9 @@ function saveContact(event, contactId) {
 function deleteContact(event, contactId) {
     event.stopPropagation();
     event.preventDefault();
-    contacts.splice(getContactIndexFromId(contactId), 1);
+    // deleteContactFromDB(contactId);
     activeContactId = '';
+    contacts.splice(getContactIndexFromId(contactId), 1);
     removeDeletedContactsFromTasks(contactId);
     // console.log(contacts);
     saveContactData();

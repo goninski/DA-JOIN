@@ -18,7 +18,7 @@ function documentEventHandler(event) {
 
 function focusInHandler(event) {
     event.stopPropagation();
-    let element = event.currentTarget;
+    // let element = event.currentTarget;
     // console.log('f) focusInHandler');
     // console.log(element);
     resetInputValidation(event);

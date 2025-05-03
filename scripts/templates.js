@@ -215,7 +215,7 @@ function getAddContactSubmitButtonsTemplate() {
 
 function getEditContactSubmitButtonsTemplate(contactId) {
     return `
-        <button id="btnReset" class="button btn-delete btn-icon btn-secondary" onclick="deleteContact(event, '${contactId}')">Delete</button>
+        <button id="dialogueBtnDelete" class="button btn-delete btn-icon btn-secondary" onclick="deleteContact(event, '${contactId}')">Delete</button>
         <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled>Save</button>
     `
 }
@@ -246,7 +246,7 @@ function getContactDetailProfileBatchTemplate(contact) {
             <h2 class="">${contact.name}</h2>                        
             <div class="edit-buttons flex-row align-center">
                 <button onclick="editContact(event, '${contact.id}')"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
-                <button onclick="deleteContact(event, '${contact.id}')"><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
+                <button id="btnDelete" onclick="deleteContact(event, '${contact.id}')"><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
             </div>
         </div>
     `
