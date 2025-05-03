@@ -33,11 +33,6 @@ function getSidebar() {
 // HELPER FUNCTIONS
 
 
-function reloadPage(event) {
-    event.preventDefault();
-    location.href = location.pathname;
-}
-
 function getClosestParentElementFromEvent(event, selector = '') {
     let element = event.currentTarget;
     if(element) {

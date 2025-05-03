@@ -61,8 +61,8 @@ function getTaskDetailsWrapperTemplate(task) {
     return `
     <h3 class="mb">${task.title}</h3>                        
         <div class="edit-buttons flex-row align-center justify-end">
-            <button onclick="editTask(event, ${task.id})"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
-            <button onclick="deleteTask(event, ${task.id})"><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
+            <button onclick="editTask(event, '${task.id}')"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
+            <button onclick="deleteTask(event, '${task.id}')"><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
         </div>
     </div>
     `

@@ -1,5 +1,5 @@
 let taskContacts = {};
-let activeTaskId = 0;
+let activeTaskId = '';
 let assignedContacts = [];
 let assignedSubtasks = [];
 
@@ -17,7 +17,7 @@ function openAddTaskPage() {
 function addTask(event = null, source = 'board') {
     event.stopPropagation();
     formMode = 'add';
-    activeTaskId = 0;
+    activeTaskId = '';
     showTaskDialogue('addTaskFormWrapper', source);
     renderTaskForm('addTaskFieldGroups');
     if( source == 'add-task-page') {
@@ -28,9 +28,9 @@ function addTask(event = null, source = 'board') {
     }
 }
 
-function showTask(event, taskId = 0) {
+function showTask(event, taskId = '') {
     formMode = 'show';
-    if(taskId == 0) {
+    if(taskId == '') {
         taskId = activeTaskId;
     }
     // console.log(tasks);
@@ -40,10 +40,10 @@ function showTask(event, taskId = 0) {
     document.getElementById('taskDialogue').classList.add('show-task');
 }
 
-function editTask(event, taskId = 0) {
+function editTask(event, taskId = '') {
     event.stopPropagation();
     formMode = 'edit';
-    if(taskId == 0) {
+    if(taskId == '') {
         taskId = activeTaskId;
     } else {
         activeTaskId = taskId;
@@ -208,7 +208,8 @@ function createTask(event) {
     // task.categoryId = Number(taskInputs.categorySelectId);
     task.subtasks = assignedSubtasks;
     tasks.push(task);
-    saveTaskData();
+    saveTasksToLS();
+    saveTaskToDB(task.id);
     console.log(tasks);
     // resetAddTaskForm(event);
     showFloatingMessage('addedTask');
@@ -217,7 +218,7 @@ function createTask(event) {
     }, 1500);
 }
 
-function saveTask(event) {
+async function saveTask(event) {
     event.stopPropagation();
     taskId = activeTaskId;
     // console.log(taskId);
@@ -235,25 +236,27 @@ function saveTask(event) {
     tasks[index].categoryId = document.getElementById('categorySelect').dataset.optionId;
     tasks[index].subtasks = assignedSubtasks;
     console.log(tasks);
-    saveTaskData();
+    saveTasksToLS();
+    await saveTaskToDB(task.id);
     showFloatingMessage('text', 'Task successfully edited');
     setTimeout(function() { 
         closeTaskDialogue(event)
     }, 1000);
 }
 
-function deleteTask(event, taskId = 0) {
+async function deleteTask(event, taskId = '') {
     event.stopPropagation();
-    if(taskId == 0) {
+    if(taskId == '') {
         taskId = activeTaskId;
     }
     console.log(taskId);
     let index = getTaskIndexFromId(taskId);
     if(index >= 0) {
         tasks.splice(index, 1);
-        saveTaskData();
     }
-    activeTaskId = 0;
+    activeTaskId = '';
+    saveTasksToLS();
+    await deleteTaskFromDB(taskId);
     showFloatingMessage('text', 'Task deleted');
     setTimeout(function() { 
         closeTaskDialogue(event)

@@ -175,8 +175,8 @@ function createContact(event, contactId) {
     contacts.push(contact);
     sortContacts(contacts);
     // console.log(contact);
-    saveContactData();
-    createContactOnFirebase(contact);
+    saveContactToDB(contactId);
+    saveContactsToLS();
     showFloatingMessage('text', 'Contact successfully created');
     setTimeout(function() { 
         closeContactsFormDialogue(event);
@@ -197,7 +197,8 @@ function saveContact(event, contactId) {
     contacts[index].initials = getInitialsOfFirstAndLastWord(formInputs.name);
     sortContacts(contacts);
     // console.log(contacts[index]);
-    saveContactData();
+    updateContactInDB(contactId);
+    saveContactsToLS();
     showFloatingMessage('text', 'Contact successfully edited');
     setTimeout(function() { 
         closeContactsFormDialogue(event);
@@ -207,12 +208,12 @@ function saveContact(event, contactId) {
 function deleteContact(event, contactId) {
     event.stopPropagation();
     event.preventDefault();
-    // deleteContactFromDB(contactId);
+    deleteContactFromDB(contactId);
     activeContactId = '';
     contacts.splice(getContactIndexFromId(contactId), 1);
     removeDeletedContactsFromTasks(contactId);
     // console.log(contacts);
-    saveContactData();
+    saveContactsToLS();
     // reloadPage(event);
     showFloatingMessage('text', 'Contact deleted');
     setTimeout(function() { 

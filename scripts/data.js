@@ -1,128 +1,95 @@
-let localStorageMode = false;
+const fetchUrl = "https://da-join-449-default-rtdb.europe-west1.firebasedatabase.app/"
+let localStorageMode = true;
 let categories = [];
 let categoriesDefault = [];
 let contacts = [];
 let tasks = [];
-let lastCategoryId = 0;
-// let lastContactId = 0;
-let lastTaskId = 0;
 let contactsDemo = [];
 let tasksDemo = [];
-let contactsDemoOld = [];
-let lastId = 0;
+let lastId = '';
+let lastCategoryId = '';
+let lastContactId = '';
+let lastTaskId = '';
 let dataArr = [];
-const fetchUrl = "https://da-join-449-default-rtdb.europe-west1.firebasedatabase.app/"
 
 categoriesDefault = [
     {
-        "id": "1",
+        "id": "101",
         "name": "Technical Task"
     },
     {
-        "id": "2",
+        "id": "102",
         "name": "User Story"
     },
 ];
 categories = categoriesDefault;
-lastCategoryId = categories.length - 1;
+lastCategoryId = Math.max(...categories.map(category => category.id));
 
 contactsDemo = [
     {
-        "id": "101",
+        "id": "1001",
         "name": "Roger Federer",
         "email": "roger@federer.ch",
         "phone": "+41 99 888 77 66",
-        "initials": "RF",
-        "color": "orange"
     },
     {
-        "id": "102",
+        "id": "1002",
         "name": "Novak Djokovic",
         "email": "novak@djokovic.rs",
         "phone": "+381 99 888 77 66",
-        "initials": "ND",
-        "color": "pink"
     },
     {
-        "id": "103",
+        "id": "1003",
         "name": "Rafael Nadal",
         "email": "rafael@nadal.es",
         "phone": "+34 111 222 333",
-        "initials": "RN",
-        "color": "violet"
     },
     {
-        "id": "104",
+        "id": "1004",
         "name": "Carlos Alcaraz",
         "email": "carlos@alcaraz.es",
         "phone": "+34 555 666 777",
-        "initials": "CA",
-        "color": "violet"
     },
     {
-        "id": "105",
+        "id": "1005",
         "name": "Boris Becker",
         "email": "boris@becker.de",
         "phone": "+49 999 888 777",
-        "initials": "BB",
-        "color": "violet"
     },
-];
-
-contactsDemoOld = [
     {
-        "id": "1",
+        "id": "1011",
         "name": "François Gonin",
-        "email": "mail@goninski.dev",
-        "phone": "+41 78 888 77 66",
-        "initials": "FG",
-        "color": "violet"
+        "email": "francois@gonin.ch",
+        "phone": "+41 99 888 77 66",
     },
     {
-        "id": "2",
+        "id": "1012",
         "name": "Nico Hässler",
-        "email": "nico@email.com",
-        "phone": "",
-        "initials": "NH",
-        "color": "orange"
+        "email": "nico@haessler.de",
+        "phone": "+49 999 888 777",
     },
     {
-        "id": "3",
+        "id": "1013",
         "name": "Julian Kraske",
-        "email": "julian@email.com",
-        "phone": "",
-        "initials": "JK",
-        "color": "pink"
+        "email": "julian@kraske.de",
+        "phone": "+49 777 888 999",
     },
     {
-        "id": "4",
+        "id": "1014",
         "name": "Vivienne Wündisch",
-        "email": "vivienne@email.com",
-        "phone": "",
-        "initials": "VW",
-        "color": "lightblue"
+        "email": "vivienne@wuendisch.de",
+        "phone": "+49 111 222 333",
     },
     {
-        "id": "5",
-        "name": "Viva Müller",
-        "email": "viva@email.com",
-        "phone": "",
-        "initials": "WM",
-        "color": "#806000"
-    },
-    {
-        "id": "6",
-        "name": "Nadine Müller",
-        "email": "nadine@email.com",
-        "phone": "",
-        "initials": "NM",
-        "color": "green"
+        "id": "1015",
+        "name": "Developer Akademie",
+        "email": "info@developerakademie.com",
     },
 ];
 
 tasksDemo = [
     {
-        "id": "1",
+        "id": "10001",
         "title": "Title Task 1...",
         "description": "Description Task 1...",
         "dueDate": "2025-04-01",
@@ -136,7 +103,7 @@ tasksDemo = [
         // ]
     },
     {
-        "id": "2",
+        "id": "10002",
         "title": "Title Task 2...",
         "description": "Description Task 2...",
         "dueDate": "2025-03-31",
@@ -146,7 +113,7 @@ tasksDemo = [
         "subtasks": ["Subtask 1","Subtask 2"]
     },
     {
-        "id": "3",
+        "id": "10003",
         "title": "Title Task 3...",
         "description": "Description Task 3...",
         "dueDate": 0,
@@ -164,107 +131,45 @@ tasksDemo = [
 
 // getAllData();
 async function getAllData() {
-    localStorageMode = true;
-    getCategoryData(localStorageMode);
-    getContactData(localStorageMode);
-    getTaskData(localStorageMode);
+    if(localStorageMode) {
+        await getAllDataFromLS();
+    } else {
+        await getAllDataFromDB();
+    }
     if(! contacts || ! tasks) {
-        setDemoData(localStorageMode);
+        setDemoData();
     }
 }
 
-function setDemoData(localStorageMode = false) {
-    deleteAllData();
+async function setDemoData() {
     categories = categoriesDefault;
     contacts = contactsDemo;
     contacts.sort((a, b) => a.name.localeCompare(b.name));
     tasks = tasksDemo;
-    lastCategoryId = categories.length - 1;
-    lastTaskId = tasks.length;
-    saveCategoryData(localStorageMode);
-    saveContactData(localStorageMode);
-    saveTaskData(localStorageMode);
-    location.href = location.pathname;
-}
-
-function getCategoryData() {
+    lastCategoryId = Math.max(...categories.map(category => category.id));
+    lastContactId = Math.max(...contacts.map(contact => contact.id));
+    lastTaskId = Math.max(...tasks.map(task => task.id));
+    contacts.forEach(function(contact) {
+        if(! contact.initials) {
+            contact.initials = getInitialsOfFirstAndLastWord(contact.name);
+        }
+        if(! contact.color) {
+            contact.color = getRandomColor();
+        }
+    });
     if(localStorageMode) {
-        lastId = getFromLocalStorage('lastCategoryId');
-        dataArr = getFromLocalStorage('categories');
+        await clearLocalStorage();
+        await saveCategoriesToLS();
+        await saveContactsToLS();
+        await saveTasksToLS();
     } else {
-        dataArr = getCategoriesFromDB();
+        await deleteAllDataFromDB();
+        await saveAllCategoriesToDB();
+        await saveAllContactsToDB();
+        await saveAllTasksToDB();
     }
-    setCategories(dataArr, lastId);
+    location.reload()
 }
-
-function setCategories(dataArr, lastId) {
-    categories = dataArr;
-    lastCategoryId = lastId;
-    console.log(categories);
-}
-
-function getContactData() {
-    if(localStorageMode) {
-        dataArr = getFromLocalStorage('contacts');
-    } else {
-        dataArr = getContactsFromDB();
-    }
-    setContacts(dataArr);
-}
-
-function setContacts(dataArr) {
-    contacts = dataArr;
-    console.log(contacts);
-}
-
-function getTaskData() {
-    if(localStorageMode) {
-        dataArr = getFromLocalStorage('tasks');
-        lastId = getFromLocalStorage('lastTaskId');
-    } else {
-        dataArr = getTasksFromDB();
-    }
-    setTasks(dataArr, lastId);
-}
-
-function setTasks(dataArr, lastId) {
-    tasks = dataArr;
-    lastTaskId = lastId;
-    console.log(tasks);
-}
-
-function saveCategoryData() {
-    if(localStorageMode) {
-        saveCategoriesToLS();
-    } else {
-        saveCategoriesToDB();
-    }
-}
-
-function saveContactData() {
-    if(localStorageMode) {
-        saveContactsToLS();
-    } else {
-        saveContactsToDB();
-    }
-}
-
-function saveTaskData() {
-    if(localStorageMode) {
-        saveTasksToLS();
-    } else {
-        saveTasksToDB();
-    }
-}
-
-function deleteAllData(localStorageMode = false) {
-    if(localStorageMode) {
-        clearLocalStorage();
-    } else {
-        deleteAllDataFromDB();
-    }
-}
-
 
 
 
@@ -278,7 +183,7 @@ async function fetchDataFromFirebase(fetchPath = '') {
     }
 }
 
-function firebaseObjToArray(fetchObj) {
+async function firebaseObjToArray(fetchObj) {
     dataArr = [];
     console.log(fetchObj);
     let fetchEntries = Object.entries(fetchObj);
@@ -301,7 +206,7 @@ async function saveDataToFirebase(fetchPath, dataArr, postMethode="PUT") {
         body: JSON.stringify(dataArr),
     });
     let key = await response.json();
-    console.log(key);
+    // console.log(key);
 }
 
 
@@ -312,34 +217,49 @@ async function deleteFirebaseData(fetchPath="x") {
     dataObj = await response.json();
 }
 
+async function getAllDataFromDB() {
+    await getCategoriesFromDB();
+    await getContactsFromDB();
+    await getTasksFromDB();
+}
+
 async function getCategoriesFromDB() {
-    dataArr = await fetchDataFromFirebase('categories/');
-    console.log(dataArr);
+    categories = await fetchDataFromFirebase('categories/');
+    lastCategoryId = await getLastIdFromDB('categories');
 }
 
 async function getContactsFromDB() {
-    dataArr = await fetchDataFromFirebase('users/');
-    console.log(dataArr);
+    contacts = await fetchDataFromFirebase('users/');
+    lastContactId = await getLastIdFromDB('users');
 }
 
 async function getTasksFromDB() {
-    dataArr = await fetchDataFromFirebase('tasks/');
-    console.log(dataArr);
+    tasks = await fetchDataFromFirebase('tasks/');
+    lastTaskId = await getLastIdFromDB('tasks');
+}
+
+async function getLastIdFromDB(type) {
+    let idType = await fetchDataFromFirebase('lastId/' +  type);
+    console.log(idType);
 }
 
 async function saveCategoryToDB(category) {
-    // console.log(category);
     saveDataToFirebase('categories/' + category.Id, category);
+    saveLastIdToDB('categories', lastContactId)
 }
 
 async function saveContactToDB(contact) {
-    // console.log(contact);
     saveDataToFirebase('users/' + contact.Id, contact);
+    saveLastIdToDB('users', lastContactId)
 }
 
 async function saveTaskToDB(task) {
-    // console.log(task);
     saveDataToFirebase('tasks/' + task.Id, task);
+    saveLastIdToDB('tasks', lastTaskId)
+}
+
+async function saveLastIdToDB(type, lastId) {
+    saveDataToFirebase('lastId/' + type, lastId);
 }
 
 async function deleteCategoryFromDB(categoryId) {
@@ -353,7 +273,6 @@ async function deleteContactFromDB(contactId) {
 async function deleteTaskFromDB(taskId) {
     deleteFirebaseData('tasks/' + taskId);
 }
-
 
 
 async function saveAllDataToDB() {
@@ -404,34 +323,51 @@ function clearLocalStorage(){
     localStorage.clear();
 }
 
-// function getCategoriesFromLS() {
-//     categories = getFromLocalStorage('categories');
-//     lastCategoryId = getFromLocalStorage('lastCategoryId');
-// }
+function getAllDataFromLS() {
+    getCategoriesFromLS();
+    getContactsFromLS();
+    getTasksFromLS();
+}
 
-// function getContactsFromLS() {
-//     // contacts = getFromLocalStorage('contacts');
-//     // lastContactId = getFromLocalStorage('lastContactId');
-//     return getFromLocalStorage('contacts');
-// }
+function saveAllDataToLS() {
+    saveCategoriesToLS();
+    saveContactsToLS();
+    saveTasksToLS();
+}
 
-// function getTasksFromLS() {
-//     tasks = getFromLocalStorage('tasks');
-//     lastTaskId = getFromLocalStorage('lastTaskId');
-// }
+function getCategoriesFromLS() {
+    categories = getFromLocalStorage('categories');
+    lastCategoryId = getFromLocalStorage('lastCategoryId');
+}
+
+function getContactsFromLS() {
+    contacts = getFromLocalStorage('contacts');
+    lastContactId = getFromLocalStorage('lastContactId');
+}
+
+function getTasksFromLS() {
+    tasks = getFromLocalStorage('tasks');
+    lastTaskId = getFromLocalStorage('lastTaskId');
+}
 
 function saveCategoriesToLS() {
-    saveToLocalStorage('categories', categories);
-    saveToLocalStorage('lastCategoryId', lastCategoryId);
+    if(localStorageMode) {
+        saveToLocalStorage('categories', categories);
+        saveToLocalStorage('lastCategoryId', lastCategoryId);
+    }
 }
 
 function saveContactsToLS() {
-    saveToLocalStorage('contacts', contacts);
-    // saveToLocalStorage('lastContactId', lastContactId);
+    if(localStorageMode) {
+        saveToLocalStorage('contacts', contacts);
+        saveToLocalStorage('lastContactId', lastContactId);
+    }
 }
 
 function saveTasksToLS() {
-    saveToLocalStorage('tasks', tasks);
-    saveToLocalStorage('lastTaskId', lastTaskId);
+    if(localStorageMode) {
+        saveToLocalStorage('tasks', tasks);
+        saveToLocalStorage('lastTaskId', lastTaskId);
+    }
 }
 
