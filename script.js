@@ -108,7 +108,12 @@ function getInitialOfLastWord(string) {
 }
 
 function getRandomColor(format = 'hex') {
-    return '#' + Math.floor(Math.random()*16777215).toString(16);
+    let clr = Math.floor(Math.random()*16777215).toString(16);
+    clr = '#' + clr;
+    if(clr.length == 6) {
+        clr = clr + '0';
+    }
+    return clr;
 }
 
 function getRandomString(length = 20) {

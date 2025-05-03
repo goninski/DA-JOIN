@@ -12,6 +12,10 @@ let lastContactId = '';
 let lastTaskId = '';
 let dataArr = [];
 
+function getLastIdFromObjArray(objArray) {
+    return Math.max(...objArray.map(item => item.id));
+}
+
 categoriesDefault = [
     {
         "id": "101",
@@ -23,7 +27,8 @@ categoriesDefault = [
     },
 ];
 categories = categoriesDefault;
-lastCategoryId = Math.max(...categories.map(category => category.id));
+lastCategoryId = getLastIdFromObjArray(categories);
+// lastCategoryId = Math.max(...categories.map(category => category.id));
 
 contactsDemo = [
     {
@@ -146,9 +151,9 @@ async function setDemoData() {
     contacts = contactsDemo;
     contacts.sort((a, b) => a.name.localeCompare(b.name));
     tasks = tasksDemo;
-    lastCategoryId = Math.max(...categories.map(category => category.id));
-    lastContactId = Math.max(...contacts.map(contact => contact.id));
-    lastTaskId = Math.max(...tasks.map(task => task.id));
+    lastCategoryId = getLastIdFromObjArray(categories);
+    lastContactId = getLastIdFromObjArray(contacts);
+    lastTaskId = getLastIdFromObjArray(tasks);
     contacts.forEach(function(contact) {
         if(! contact.initials) {
             contact.initials = getInitialsOfFirstAndLastWord(contact.name);
@@ -175,10 +180,21 @@ async function setDemoData() {
 
 // DATA HANDLING FIREBASE
 
-async function fetchDataFromFirebase(fetchPath = '') {
+// function test() {
+//     let contact = contacts[0];
+//     console.log(contact);
+//     contact.initials = 'RFF';
+//     console.log(contact);
+//     saveContactToDB(contact);
+// }
+
+async function fetchDataFromFirebase(fetchPath = '', raw = false) {
     let response = await fetch(fetchUrl + fetchPath + '.json');
     let fetchObj = await response.json();
     if(fetchObj) {
+        if(raw) {
+            return fetchObj;
+        }
         return firebaseObjToArray(fetchObj);
     }
 }
@@ -226,36 +242,56 @@ async function getAllDataFromDB() {
 async function getCategoriesFromDB() {
     categories = await fetchDataFromFirebase('categories/');
     lastCategoryId = await getLastIdFromDB('categories');
+    // let x = await fetchDataFromFirebase('categories/');
+    // let y = await getLastIdFromDB('categories');
+    // console.log(x);
+    // console.log(y);
 }
 
 async function getContactsFromDB() {
-    contacts = await fetchDataFromFirebase('users/');
-    lastContactId = await getLastIdFromDB('users');
+    // contacts = await fetchDataFromFirebase('users/');
+    // lastContactId = await getLastIdFromDB('users');
+    let x = await fetchDataFromFirebase('users/');
+    let y = await getLastIdFromDB('users');
+    console.log(x);
+    console.log(y);
 }
 
 async function getTasksFromDB() {
-    tasks = await fetchDataFromFirebase('tasks/');
-    lastTaskId = await getLastIdFromDB('tasks');
+    // tasks = await fetchDataFromFirebase('tasks/');
+    // lastTaskId = await getLastIdFromDB('tasks');
+    let x = await fetchDataFromFirebase('tasks/');
+    let y = await getLastIdFromDB('tasks');
+    console.log(x);
+    console.log(y);
 }
 
 async function getLastIdFromDB(type) {
-    let idType = await fetchDataFromFirebase('lastId/' +  type);
-    console.log(idType);
+    let lastId = await fetchDataFromFirebase('lastId/' +  type, true);
+    console.log(lastId);
+    return lastId;
 }
 
 async function saveCategoryToDB(category) {
-    saveDataToFirebase('categories/' + category.Id, category);
-    saveLastIdToDB('categories', lastContactId)
+    let categoryId = category.id;
+    saveDataToFirebase('categories/' + categoryId, category);
+    saveLastIdToDB('categories', lastCategoryId)
 }
 
-async function saveContactToDB(contact) {
-    saveDataToFirebase('users/' + contact.Id, contact);
-    saveLastIdToDB('users', lastContactId)
+async function saveContactToDB(contact, mode = 'add') {
+    let contactId = contact.id;
+    saveDataToFirebase('users/' + contactId, contact);
+    if(mode == 'add') {
+        saveLastIdToDB('users', lastContactId)
+    }
 }
 
-async function saveTaskToDB(task) {
-    saveDataToFirebase('tasks/' + task.Id, task);
-    saveLastIdToDB('tasks', lastTaskId)
+async function saveTaskToDB(task, mode = 'add') {
+    let taskId = task.id;
+    saveDataToFirebase('tasks/' + taskId, task);
+    if(mode == 'add') {
+        saveLastIdToDB('tasks', lastTaskId)
+    }
 }
 
 async function saveLastIdToDB(type, lastId) {
@@ -285,8 +321,8 @@ async function saveAllDataToDB() {
 
 async function saveAllCategoriesToDB() {
     console.log(categories);
-    categories.forEach(function(item) {
-        saveCategoryToDB(item);
+    categories.forEach(function(category) {
+        saveCategoryToDB(category);
     });
 }
 
@@ -305,6 +341,9 @@ async function saveAllTasksToDB() {
 async function deleteAllDataFromDB(fetchPath="") {
     deleteFirebaseData(fetchPath);
 }
+
+
+
 
 
 

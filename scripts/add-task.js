@@ -191,7 +191,7 @@ function resetSubtaskInput(event, element) {
 
 
 
-function createTask(event) {
+async function createTask(event) {
     console.log('createTask');
     event.stopPropagation();
     let taskInputs = getFormInputObj(event, 'addTaskForm');
@@ -209,7 +209,7 @@ function createTask(event) {
     task.subtasks = assignedSubtasks;
     tasks.push(task);
     saveTasksToLS();
-    saveTaskToDB(task.id);
+    await saveTaskToDB(task.id);
     console.log(tasks);
     // resetAddTaskForm(event);
     showFloatingMessage('addedTask');
@@ -237,7 +237,7 @@ async function saveTask(event) {
     tasks[index].subtasks = assignedSubtasks;
     console.log(tasks);
     saveTasksToLS();
-    await saveTaskToDB(task.id);
+    await saveTaskToDB(task.id, 'edit');
     showFloatingMessage('text', 'Task successfully edited');
     setTimeout(function() { 
         closeTaskDialogue(event)

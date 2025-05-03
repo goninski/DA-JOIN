@@ -141,7 +141,7 @@ function setEditContactValues(contactId) {
     document.getElementById('inputEmail').value = contact.email;
     document.getElementById('inputPhone').value = contact.phone;
     document.getElementById('submitBtnWrapper').innerHTML = getEditContactSubmitButtonsTemplate(contactId);
-    document.getElementById('dialogueBtnDelete').innerHTML = getIconTemplateCancel('Cancel');
+    // document.getElementById('dialogueBtnDelete').innerHTML = getIconTemplateCancel('Cancel');
     document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Save');
 }
 
@@ -157,7 +157,7 @@ function submitContactsForm(event, contactId) {
     }
 }
 
-function createContact(event, contactId) {
+async function createContact(event, contactId) {
     event.stopPropagation();
     let formInputs = getFormInputObj(event, 'contactsForm');
     console.log(formInputs);
@@ -175,7 +175,7 @@ function createContact(event, contactId) {
     contacts.push(contact);
     sortContacts(contacts);
     // console.log(contact);
-    saveContactToDB(contactId);
+    await saveContactToDB(contactId);
     saveContactsToLS();
     showFloatingMessage('text', 'Contact successfully created');
     setTimeout(function() { 
@@ -183,7 +183,7 @@ function createContact(event, contactId) {
     }, 1000);
 }
 
-function saveContact(event, contactId) {
+async function saveContact(event, contactId) {
     event.stopPropagation();
     let formInputs = getFormInputObj(event, 'contactsForm');
     if(formInputs.name.length <= 0) {
@@ -197,7 +197,7 @@ function saveContact(event, contactId) {
     contacts[index].initials = getInitialsOfFirstAndLastWord(formInputs.name);
     sortContacts(contacts);
     // console.log(contacts[index]);
-    updateContactInDB(contactId);
+    saveContactToDB(contactId, 'update');
     saveContactsToLS();
     showFloatingMessage('text', 'Contact successfully edited');
     setTimeout(function() { 
@@ -205,10 +205,10 @@ function saveContact(event, contactId) {
     }, 1000);
 }
 
-function deleteContact(event, contactId) {
+async function deleteContact(event, contactId) {
     event.stopPropagation();
     event.preventDefault();
-    deleteContactFromDB(contactId);
+    await deleteContactFromDB(contactId);
     activeContactId = '';
     contacts.splice(getContactIndexFromId(contactId), 1);
     removeDeletedContactsFromTasks(contactId);
@@ -221,13 +221,18 @@ function deleteContact(event, contactId) {
     }, 1000);
 }
 
-function removeDeletedContactsFromTasks(deletedContactId) {
+
+async function removeDeletedContactsFromTasks(deletedContactId) {
     for (let i = 0; i < tasks.length; i++) {
-        let contactIds = tasks[i].contactIds;
-        let index = contactIds.indexOf(deletedContactId)
+        task = tasks[i]
+        // let contactIds = tasks[i].contactIds;
+        let index = task.contactIds.indexOf(deletedContactId)
         if(index >= 0) {
-            contactIds.splice(index, 1);
+            task.contactIds.splice(index, 1);
         }
+        await saveTaskToDB(task, 'edit');
+        saveTasksToLS();
     }
+
 }
 
