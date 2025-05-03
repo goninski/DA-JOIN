@@ -94,8 +94,8 @@ tasksDemo = [
         "description": "Description Task 1...",
         "dueDate": "2025-04-01",
         "priority": "high",
-        "contactIds": [1, 2, 3],
-        "categoryId": 1,
+        "contactIds": ['1001', '1002', '1003'],
+        "categoryId": '101',
         "subtasks": ["Subtask 1"]
         // "subtasks": [
         //     {"title": "Subtask 1","status": 1},
@@ -108,8 +108,8 @@ tasksDemo = [
         "description": "Description Task 2...",
         "dueDate": "2025-03-31",
         "priority": "medium",
-        "contactIds": [2, 3],
-        "categoryId": 2,
+        "contactIds": ['1004', '1006'],
+        "categoryId": '102',
         "subtasks": ["Subtask 1","Subtask 2"]
     },
     {
@@ -118,8 +118,8 @@ tasksDemo = [
         "description": "Description Task 3...",
         "dueDate": 0,
         "priority": "low",
-        "contactIds": [3, 1],
-        "categoryId": 0,
+        "contactIds": ['1005', '1009'],
+        // "categoryId": '102',
         "subtasks": ["Subtask 1","Subtask 2","Subtask 3"]
     },
 ];
