@@ -72,13 +72,12 @@ async function getCategoryIndexFromId(categoryId) {
     return categories.findIndex(category => category.id == categoryId);
 }
 
-
 async function sortContacts(contacts) {
-    return contacts.sort((a, b) => a.name.localeCompare(b.name));
+    return await contacts.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 async function sortCategories(categories) {
-    return categories.sort((a, b) => a.id.localeCompare(b.id));
+    return await categories.sort((a, b) => a.id.localeCompare(b.id));
 }
 
 function getBooleanFromString(booleanString) {

@@ -41,7 +41,7 @@ function getFormElementsArray(formId) {
     return elementsArr;
 }
 
-function resetForm(formId) {
+async function resetForm(formId) {
     document.getElementById(formId).reset();
     // invalidFields = [];
     listboxElements = [];
@@ -70,7 +70,7 @@ function resetFormElements(element) {
     }
 };
 
-function checkEditFormState(formId) {
+async function checkEditFormState(formId) {
     let formElements = getFormElementsArray(formId);
     formElements.forEach(function(element) {
         setPlaceholderStyle(element);
@@ -297,7 +297,7 @@ function dropdownOptionClickHandler(event) {
     }
 }
 
-function dropdownOptionClickHandlerMultiple(event, contactId) {
+async function dropdownOptionClickHandlerMultiple(event, contactId) {
     event.stopPropagation();
     console.log('f) dropdownOptionClickHandlerMultiple');
     let option = event.currentTarget.closest('[role="option"]');
@@ -310,7 +310,7 @@ function dropdownOptionClickHandlerMultiple(event, contactId) {
         } else {
             assignedContacts.splice(assignedContacts.indexOf(contactId), 1);
         };
-        renderContactProfileBatches(assignedContacts);
+        await renderContactProfileBatches(assignedContacts);
         // toggleDropdown(currentFieldElements.listbox);
         // event.preventDefault();
     }

@@ -21,7 +21,7 @@ async function addUser() {
     return;
   }
 
-  await getUserData(); // creates a 'contacts' object, use the function 'createContact(contact)' to add a user
+  await getUserData(); // creates a 'contacts' object, use the function 'createContactDB(contact)' to add a user
 
   const newUser = {
     name: nameInput,

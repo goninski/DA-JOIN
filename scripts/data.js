@@ -298,11 +298,11 @@ async function saveContactToDB(contact, mode = 'add') {
     }
 }
 
-async function createContact(contact) {
+async function createContactDB(contact) {
     await saveContactToDB(contact);
 }
 
-async function updateContact(contact) {
+async function updateContactDB(contact) {
     await saveContactToDB(contact, 'update');
 }
 
@@ -314,11 +314,11 @@ async function saveTaskToDB(task, mode = 'add') {
     }
 }
 
-async function createTask(task) {
+async function createTaskDB(task) {
     await saveTaskToDB(task);
 }
 
-async function updateTask(task) {
+async function updateTaskDB(task) {
     await saveTaskToDB(task, 'update');
 }
 

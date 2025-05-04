@@ -37,8 +37,8 @@ async function renderContactGroupItems(contactGroup, groupName) {
 }
 
 async function groupContacts(contacts) {
-    sortContacts(contacts);
-    let contactsGroupedObj = Map.groupBy(contacts, contact => contact.name[0].toUpperCase());
+    await sortContacts(contacts);
+    let contactsGroupedObj = await Map.groupBy(contacts, contact => contact.name[0].toUpperCase());
     // console.log(contactsGroupedObj);
     let contactsGrouped = Array.from(contactsGroupedObj);
     // console.log(contactsGrouped);
@@ -92,8 +92,8 @@ function editContact(event, contactId) {
     openContactsForm(formMode, activeContactId);
 }
 
-function openContactsForm(formMode, contactId = '') {
-    resetForm('contactsForm');
+async function openContactsForm(formMode, contactId = '') {
+    await resetForm('contactsForm');
     document.getElementById('addContactDialogue').style = '';
     document.getElementById('addNewContactBtnFloating').style = 'display: none;';
     document.body.style = 'overflow: hidden;';
@@ -107,6 +107,7 @@ function openContactsForm(formMode, contactId = '') {
 
 function resetContactsForm(event) {
     event.stopPropagation();
+    event.preventDefault();
     resetForm('contactsForm');
 }
 
@@ -131,10 +132,10 @@ function setAddContactValues() {
     document.getElementById('btnReset').innerHTML = getIconTemplateCancel('Cancel');
 }
 
-function setEditContactValues(contactId) {
+async function setEditContactValues(contactId) {
     document.getElementById('dialogueTeaser').style = 'display: none;';
     document.getElementById('dialogueTitle').innerHTML = 'Edit Contact';
-    let contact = contacts[getContactIndexFromId(contactId)];
+    let contact = await contacts[getContactIndexFromId(contactId)];
     document.getElementById('dialogueProfileBatch').innerHTML = contact.initials;
     document.getElementById('dialogueProfileBatch').style = '--profile-color: violet;';
     document.getElementById('inputName').value = contact.name;
@@ -175,7 +176,7 @@ async function createContact(event, contactId) {
     contacts.push(contact);
     sortContacts(contacts);
     // console.log(contact);
-    await saveContactToDB(contact);
+    await createContactDB(contact);
     saveContactsToLS();
     showFloatingMessage('text', 'Contact successfully created');
     setTimeout(function() { 
@@ -197,7 +198,7 @@ async function saveContact(event, contactId) {
     sortContacts(contacts);
     let contact = contacts[index];
     // console.log(contact);
-    await updateContact(contact);
+    await updateContactDB(contact);
     saveContactsToLS();
     showFloatingMessage('text', 'Contact successfully edited');
     setTimeout(function() { 
