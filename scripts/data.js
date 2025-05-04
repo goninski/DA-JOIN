@@ -292,11 +292,19 @@ async function saveCategoryToDB(category) {
 }
 
 async function saveContactToDB(contact, mode = 'add') {
-    let contactId = contact.id;
-    saveDataToFirebase('users/' + contactId, contact);
-    if(mode == 'add') {
-        saveLastIdToDB('users', lastContactId)
+    let contactId
+    if(contact.id) {
+        contactId = contact.id;
+    } else {
+        if(mode == 'add') {
+            lastContactId++;
+            contactId = lastContactId;
+            saveLastIdToDB('users', contactId)
+        } else {
+            return alert('Contact is not saved due missing Id !');
+        }
     }
+    saveDataToFirebase('users/' + contactId, contact);
 }
 
 async function createContactDB(contact) {
