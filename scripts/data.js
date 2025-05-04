@@ -157,6 +157,7 @@ async function getUserData() {
 }
 
 async function resetToDemoData() {
+    if(! window.confirm('All data will be reset to default demo data! OK?')) { return; }
     categories = categoriesDefault;
     contacts = contactsDemo;
     contacts.sort((a, b) => a.name.localeCompare(b.name));
@@ -184,7 +185,7 @@ async function resetToDemoData() {
         await saveAllContactsToDB();
         await saveAllTasksToDB();
     }
-    showAlert('Data Reset successfull. Please reload the page', 1500);
+    showAlert('Data Reset successfull. Please reload the page !', 1250);
     // location.reload()
 }
 
