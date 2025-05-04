@@ -158,16 +158,16 @@ async function setEditContactValues(contactId) {
 function submitContactsForm(event, contactId) {
     event.stopPropagation();
     if(formMode == 'edit') {
-        saveContact(event, contactId);
+        submitUpdateContact(event, contactId);
     } else {
         lastContactId++;
         contactId = lastContactId;
         // contactId = getRandomString();
-        createContact(event, contactId);
+        submitCreateContact(event, contactId);
     }
 }
 
-async function createContact(event, contactId) {
+async function submitCreateContact(event, contactId) {
     event.stopPropagation();
     let formInputs = getFormInputObj(event, 'contactsForm');
     console.log(formInputs);
@@ -193,7 +193,7 @@ async function createContact(event, contactId) {
     }, 1000);
 }
 
-async function saveContact(event, contactId) {
+async function submitUpdateContact(event, contactId) {
     event.stopPropagation();
     let formInputs = getFormInputObj(event, 'contactsForm');
     if(formInputs.name.length <= 0) {

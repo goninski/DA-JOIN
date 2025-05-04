@@ -21,8 +21,6 @@ async function addUser() {
     return;
   }
 
-  await getUserData(); // creates a 'contacts' object, use the function 'createContactDB(contact)' to add a user
-
   const newUser = {
     name: nameInput,
     email: emailInput,
@@ -30,6 +28,8 @@ async function addUser() {
   };
 
   usersDatabase.push(newUser);
+
+  createContact(newUser);
 
   signUpSuccessfull();
   // showSignUpSuccessOverlay();
