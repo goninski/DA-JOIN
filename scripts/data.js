@@ -296,16 +296,15 @@ async function saveCategoryToDB(category) {
 
 async function saveContactToDB(contact, mode = 'add') {
     let contactId
-    if(contact.id) {
+    if(contact.id && contact.id > 0) {
         contactId = contact.id;
-        console.log('i) has contactId');
+        // console.log('i) has contactId');
     } else {
-        if(mode == 'add') {
+        if(mode == 'add' && lastContactId > 0) {
             // lastContactId = await getLastIdFromDB('users');
             lastContactId++;
-            console.log(lastContactId);
             contactId = lastContactId;
-            console.log('i) new contactId');
+            // console.log('i) new contactId');
             await saveLastIdToDB('users', contactId)
         } else {
             return alert('Contact is not saved due missing Id !');
