@@ -29,7 +29,8 @@ async function addUser() {
 
   usersDatabase.push(newUser);
 
-  createContact(newUser);
+  await getUserData();
+  await createContact(newUser);
 
   signUpSuccessfull();
   // showSignUpSuccessOverlay();

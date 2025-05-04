@@ -126,7 +126,7 @@ tasksDemo = [
 ];
 
 
-function getLastIdFromObjArray(objArray) {
+async function getLastIdFromObjArray(objArray) {
     return Math.max(...objArray.map(item => item.id));
 }
 
@@ -162,9 +162,9 @@ async function resetToDemoData() {
     contacts = contactsDemo;
     contacts.sort((a, b) => a.name.localeCompare(b.name));
     tasks = tasksDemo;
-    lastCategoryId = getLastIdFromObjArray(categories);
-    lastContactId = getLastIdFromObjArray(contacts);
-    lastTaskId = getLastIdFromObjArray(tasks);
+    lastCategoryId = await getLastIdFromObjArray(categories);
+    lastContactId = await getLastIdFromObjArray(contacts);
+    lastTaskId = await getLastIdFromObjArray(tasks);
     contacts.forEach(function(contact) {
         if(! contact.initials) {
             contact.initials = getInitialsOfFirstAndLastWord(contact.name);
@@ -295,10 +295,14 @@ async function saveContactToDB(contact, mode = 'add') {
     let contactId
     if(contact.id) {
         contactId = contact.id;
+        console.log('i) has contactId');
     } else {
         if(mode == 'add') {
+            // lastContactId = await getLastIdFromDB('users');
             lastContactId++;
+            console.log(lastContactId);
             contactId = lastContactId;
+            console.log('i) new contactId');
             saveLastIdToDB('users', contactId)
         } else {
             return alert('Contact is not saved due missing Id !');
