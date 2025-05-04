@@ -28,21 +28,11 @@ function getSidebar() {
     sidebarMobRef.classList.add('show--ss-mob');
 }
 
-function signUpSuccessfull() {
-    showFloatingMessage('text', 'You Signed Up successfully');
-    signIn();
-}
-
 function signIn() {
     setTimeout(function() { 
         window.location.href = "/summary.html";
       }, 1000);
 }
-
-function signInGuest() {
-    signIn();
-}
-
 
 function signOut() {
     window.location.href = "/login.html";
@@ -70,24 +60,24 @@ function getClosestParentElementFromId(id, selector = '') {
     return;
 }
 
-function getTaskIndexFromId(taskId) {
+async function getTaskIndexFromId(taskId) {
     return tasks.findIndex(task => task.id == taskId);
 }
 
-function getContactIndexFromId(contactId) {
+async function getContactIndexFromId(contactId) {
     return contacts.findIndex(contact => contact.id == contactId);
 }
 
-function getCategoryIndexFromId(categoryId) {
+async function getCategoryIndexFromId(categoryId) {
     return categories.findIndex(category => category.id == categoryId);
 }
 
 
-function sortContacts(contacts) {
+async function sortContacts(contacts) {
     return contacts.sort((a, b) => a.name.localeCompare(b.name));
 }
 
-function sortCategories(categories) {
+async function sortCategories(categories) {
     return categories.sort((a, b) => a.id.localeCompare(b.id));
 }
 

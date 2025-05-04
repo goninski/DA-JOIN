@@ -1,5 +1,5 @@
 const fetchUrl = "https://da-join-449-default-rtdb.europe-west1.firebasedatabase.app/"
-let localStorageMode = true;
+let localStorageMode = false;
 let categories = [];
 let categoriesDefault = [];
 let contacts = [];
@@ -137,22 +137,22 @@ function getLastIdFromObjArray(objArray) {
 async function getAllData() {
     if(localStorageMode) {
         await getAllDataFromLS();
+        // if(! contacts || ! tasks) {
+        //     resetToDemoData();
+        // }
     } else {
         await getAllDataFromDB();
-    }
-    if(! contacts || ! tasks) {
-        resetToDemoData();
     }
 }
 
 async function getUserData() {
     if(localStorageMode) {
         await getContactsFromLS();
+        // if(! contacts) {
+        //     resetToDemoData();
+        // }
     } else {
         await getContactsFromDB();
-    }
-    if(! contacts) {
-        resetToDemoData();
     }
 }
 
@@ -184,7 +184,8 @@ async function resetToDemoData() {
         await saveAllContactsToDB();
         await saveAllTasksToDB();
     }
-    location.reload()
+    showAlert('Data Reset successfull. Please reload the page', 1500);
+    // location.reload()
 }
 
 
@@ -212,7 +213,7 @@ async function fetchDataFromFirebase(fetchPath = '', raw = false) {
 
 async function firebaseObjToArray(fetchObj) {
     dataArr = [];
-    console.log(fetchObj);
+    // console.log(fetchObj);
     let fetchEntries = Object.entries(fetchObj);
     console.log(fetchEntries);
     fetchEntries.forEach(function(item) {
@@ -279,7 +280,7 @@ async function getTasksFromDB() {
 
 async function getLastIdFromDB(type) {
     let lastId = await fetchDataFromFirebase('lastId/' +  type, true);
-    console.log(lastId);
+    // console.log(lastId);
     return lastId;
 }
 
@@ -297,6 +298,14 @@ async function saveContactToDB(contact, mode = 'add') {
     }
 }
 
+async function createContact(contact) {
+    await saveContactToDB(contact);
+}
+
+async function updateContact(contact) {
+    await saveContactToDB(contact, 'update');
+}
+
 async function saveTaskToDB(task, mode = 'add') {
     let taskId = task.id;
     saveDataToFirebase('tasks/' + taskId, task);
@@ -304,6 +313,16 @@ async function saveTaskToDB(task, mode = 'add') {
         saveLastIdToDB('tasks', lastTaskId)
     }
 }
+
+async function createTask(task) {
+    await saveTaskToDB(task);
+}
+
+async function updateTask(task) {
+    await saveTaskToDB(task, 'update');
+}
+
+
 
 async function saveLastIdToDB(type, lastId) {
     saveDataToFirebase('lastId/' + type, lastId);
@@ -350,7 +369,7 @@ async function saveAllTasksToDB() {
 }
 
 async function deleteAllDataFromDB(fetchPath="") {
-    deleteFirebaseData(fetchPath);
+    await deleteFirebaseData(fetchPath);
 }
 
 

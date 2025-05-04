@@ -6,7 +6,7 @@ let assignedSubtasks = [];
 
 async function initAddTask() {
     getMainTemplates();
-    addTask(event, 'add-task-page');
+    await addTask(event, 'add-task-page');
     await getAllData();
 }
 
@@ -14,12 +14,12 @@ function openAddTaskPage() {
     window.location.href = "/add-task.html";
 }
 
-function addTask(event = null, source = 'board') {
+async function addTask(event = null, source = 'board') {
     event.stopPropagation();
     formMode = 'add';
     activeTaskId = '';
     showTaskDialogue('addTaskFormWrapper', source);
-    renderTaskForm('addTaskFieldGroups');
+    await renderTaskForm('addTaskFieldGroups');
     if( source == 'add-task-page') {
         return;
     } else {
@@ -40,7 +40,7 @@ function showTask(event, taskId = '') {
     document.getElementById('taskDialogue').classList.add('show-task');
 }
 
-function editTask(event, taskId = '') {
+async function editTask(event, taskId = '') {
     event.stopPropagation();
     formMode = 'edit';
     if(taskId == '') {
@@ -50,7 +50,7 @@ function editTask(event, taskId = '') {
     }
     let task = tasks[getTaskIndexFromId(taskId)];
     showTaskDialogue('editTaskFormWrapper');
-    renderTaskForm('editTaskFieldGroups', task);
+    await renderTaskForm('editTaskFieldGroups', task);
     document.getElementById('taskDialogue').classList.add('edit-task');
     // document.getElementById('taskDialogue').classList.add('form-scrollable');
     // setEditTaskValues(task);
@@ -72,7 +72,7 @@ function showTaskDialogue(elementId, source = 'board') {
     }
 }
 
-function renderTaskForm(fieldsWrapperId, task = null) {
+async function renderTaskForm(fieldsWrapperId, task = null) {
     // console.log(task);
     assignedContacts = [];
     assignedSubtasks = [];
@@ -84,7 +84,7 @@ function renderTaskForm(fieldsWrapperId, task = null) {
     if(formMode == 'add') {
         document.getElementById('btnReset').innerHTML = getIconTemplateCancel('Clear');
         document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Create Task');
-        renderContactSelectOptions();
+        await renderContactSelectOptions();
         formId = 'addTaskForm';
     } else {
         document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Ok');
@@ -92,12 +92,12 @@ function renderTaskForm(fieldsWrapperId, task = null) {
     }
     resetForm(formId);
     console.log(contacts);
-    renderCategorySelectOptions(event);
+    await renderCategorySelectOptions(event);
     setEditTaskValues(task, formId);
     checkEditFormState(formId);
 }
 
-function setEditTaskValues(task, formId) {
+async function setEditTaskValues(task, formId) {
     if(formMode == 'edit') {
         document.getElementById('inputTitle').value = task.title;
         document.getElementById('inputDescription').value = task.description;
@@ -107,8 +107,8 @@ function setEditTaskValues(task, formId) {
             document.getElementById('inputPrio' + priority).checked = true;
         }
         assignedContacts = task.contactIds;
-        renderContactSelectOptions();
-        renderContactProfileBatches(assignedContacts);
+        await renderContactSelectOptions();
+        await renderContactProfileBatches(assignedContacts);
         if(task.categoryId) {
             let categoryName = categories[getCategoryIndexFromId(task.categoryId)].name;
             document.getElementById('categorySelect').value = categoryName;
@@ -123,7 +123,80 @@ function setEditTaskValues(task, formId) {
 }
 
 
+async function filterTaskContactOptions(event) {
+    event.stopPropagation()
+    let searchVal = document.getElementById('selectContacts').value;
+    console.log(searchVal);
+    await renderContactSelectOptions('taskContactsListbox', searchVal);
+}
 
+async function renderContactSelectOptions(listboxId = 'taskContactsListbox', searchVal = '') {
+    let listbox = document.getElementById(listboxId);
+    let combox = document.getElementById('selectContacts');
+    listbox.innerHTML = '';
+    console.log(contacts);
+    taskContacts = Object.create(contacts);
+    taskContacts = sortContacts(taskContacts);
+    console.log(taskContacts);
+    if(searchVal === ' ') {
+        combox.value = '';
+        toggleDropdown(listbox);        
+    } else if(searchVal.length === 1) {
+        closeDropdown(listbox);
+        return;
+    }
+    if(searchVal && searchVal.length >= 2) {
+        openDropdown(listbox);
+        taskContacts = taskContacts.filter(contact => contact.name.toLowerCase().includes(searchVal));
+    }
+    console.log(taskContacts);
+    for (let index = 0; index < taskContacts.length; index++) {
+        listbox.innerHTML += getContactSelectOptionTemplate(taskContacts[index], index);
+        if(assignedContacts.length > 0) {
+            let isChecked = assignedContacts.includes(taskContacts[index].id);
+            setTimeout(function() {
+                document.getElementById('checkboxAssignedContact-' + taskContacts[index].id).checked = isChecked;
+            }, 1);
+        }
+    }
+}
+
+async function renderContactProfileBatches(contactIds = [], elementId = 'profileBatches') {
+    let element = document.getElementById(elementId);
+    element.innerHTML = '';
+    for (let index = 0; index < contactIds.length; index++) {
+        contactIndex = getContactIndexFromId(contactIds[index]);
+        if(contactIndex >= 0) {
+            element.innerHTML += getContactProfileBatchTemplate(contacts[contactIndex]);
+        }
+    }
+}
+
+async function renderCategorySelectOptions(event = null, wrapperId = 'taskCategoriesSelectOptionsWrapper') {
+    if(event) {event.stopPropagation();}
+    let optionsWrapper = document.getElementById(wrapperId);
+    optionsWrapper.innerHTML = '';
+    categories = sortCategories(categories);
+    let assignedCategory = 0;
+    for (let index = 0; index < categories.length; index++) {
+        optionsWrapper.innerHTML += getCategorySelectOptionTemplate(categories[index], index);
+    }
+}
+
+async function renderSubtasks(wrapperId = 'assignedSubtasks') {
+    let element = document.getElementById(wrapperId);
+    element.innerHTML = '';
+    for (let index = 0; index < assignedSubtasks.length; index++) {
+        element.innerHTML += getSubtasksTemplate(assignedSubtasks[index], index, activeTaskId);
+    }
+    for (let index = 0; index < assignedSubtasks.length; index++) {
+        let listItem = document.getElementById('subtask-i-' + index);
+        listItem.readOnly = true;
+        let wrapper = listItem.parentElement;
+        wrapper.classList.remove('edit-mode');
+    }
+    console.log(assignedSubtasks);
+}
 
 
 
@@ -190,9 +263,6 @@ function resetSubtaskInput(event, element) {
 
 
 
-
-
-
 async function createTask(event) {
     console.log('createTask');
     event.stopPropagation();
@@ -210,8 +280,8 @@ async function createTask(event) {
     // task.categoryId = Number(taskInputs.categorySelectId);
     task.subtasks = assignedSubtasks;
     tasks.push(task);
+    await createTask(task);
     saveTasksToLS();
-    await saveTaskToDB(task.id);
     console.log(tasks);
     // resetAddTaskForm(event);
     showFloatingMessage('addedTask');
@@ -222,7 +292,9 @@ async function createTask(event) {
 
 async function saveTask(event) {
     event.stopPropagation();
-    taskId = activeTaskId;
+    console.log(event.currentTarget);
+    console.log(event.target);
+    let taskId = activeTaskId;
     // console.log(taskId);
     taskInputs = getFormInputObj(event, 'editTaskForm');
     if(taskInputs.title.length <= 0) {
@@ -238,8 +310,9 @@ async function saveTask(event) {
     tasks[index].categoryId = document.getElementById('categorySelect').dataset.optionId;
     tasks[index].subtasks = assignedSubtasks;
     console.log(tasks);
+    let task = tasks[index];
+    await updateTask(task);
     saveTasksToLS();
-    await saveTaskToDB(task.id, 'edit');
     showFloatingMessage('text', 'Task successfully edited');
     setTimeout(function() { 
         closeTaskDialogue(event)
@@ -292,87 +365,8 @@ function closeTaskDialogue(event) {
 
 
 
-
-
-function filterTaskContactOptions(event) {
-    event.stopPropagation()
-    let searchVal = document.getElementById('selectContacts').value;
-    console.log(searchVal);
-    renderContactSelectOptions('taskContactsListbox', searchVal);
-}
-
-function renderContactSelectOptions(listboxId = 'taskContactsListbox', searchVal = '') {
-    let listbox = document.getElementById(listboxId);
-    let combox = document.getElementById('selectContacts');
-    listbox.innerHTML = '';
-    console.log(contacts);
-    taskContacts = Object.create(contacts);
-    taskContacts = sortContacts(taskContacts);
-    console.log(taskContacts);
-    if(searchVal === ' ') {
-        combox.value = '';
-        toggleDropdown(listbox);        
-    } else if(searchVal.length === 1) {
-        closeDropdown(listbox);
-        return;
-    }
-    if(searchVal && searchVal.length >= 2) {
-        openDropdown(listbox);
-        taskContacts = taskContacts.filter(contact => contact.name.toLowerCase().includes(searchVal));
-    }
-    console.log(taskContacts);
-    for (let index = 0; index < taskContacts.length; index++) {
-        listbox.innerHTML += getContactSelectOptionTemplate(taskContacts[index], index);
-        if(assignedContacts.length > 0) {
-            let isChecked = assignedContacts.includes(taskContacts[index].id);
-            setTimeout(function() {
-                document.getElementById('checkboxAssignedContact-' + taskContacts[index].id).checked = isChecked;
-            }, 1);
-        }
-    }
-}
-
-function renderContactProfileBatches(contactIds = [], elementId = 'profileBatches') {
-    let element = document.getElementById(elementId);
-    element.innerHTML = '';
-    for (let index = 0; index < contactIds.length; index++) {
-        contactIndex = getContactIndexFromId(contactIds[index]);
-        if(contactIndex >= 0) {
-            element.innerHTML += getContactProfileBatchTemplate(contacts[contactIndex]);
-        }
-    }
-}
-
-function renderCategorySelectOptions(event = null, wrapperId = 'taskCategoriesSelectOptionsWrapper') {
-    if(event) {event.stopPropagation();}
-    let optionsWrapper = document.getElementById(wrapperId);
-    optionsWrapper.innerHTML = '';
-    categories = sortCategories(categories);
-    let assignedCategory = 0;
-    for (let index = 0; index < categories.length; index++) {
-        optionsWrapper.innerHTML += getCategorySelectOptionTemplate(categories[index], index);
-    }
-}
-
-function renderSubtasks(wrapperId = 'assignedSubtasks') {
-    let element = document.getElementById(wrapperId);
-    element.innerHTML = '';
-    for (let index = 0; index < assignedSubtasks.length; index++) {
-        element.innerHTML += getSubtasksTemplate(assignedSubtasks[index], index, activeTaskId);
-    }
-    for (let index = 0; index < assignedSubtasks.length; index++) {
-        let listItem = document.getElementById('subtask-i-' + index);
-        listItem.readOnly = true;
-        let wrapper = listItem.parentElement;
-        wrapper.classList.remove('edit-mode');
-    }
-    console.log(assignedSubtasks);
-}
-
-
-
 // TEMP STUFF
-function renderTempTaskList() {
+async function renderTempTaskList() {
     formMode = '';
     let taskListRef = document.getElementById('tempTaskList');
     taskListRef.innerHTML = '';
@@ -384,9 +378,9 @@ function renderTempTaskList() {
 function getTempTaskListTemplate(task) {
     return `
     <li class="flex-row gap justify-between align-center fw-bold">#${task.id} | ${task.title}
-        <button class="" style="margin-left: auto; text-decoration: underline;" onclick="showTask(event, ${task.id})">Show</button>
-        <button class="" style="text-decoration: underline;" onclick="editTask(event, ${task.id})">Edit</button>
-        <button class="" style="text-decoration: underline;" onclick="deleteTask(event, ${task.id})">Delete</button>
+        <button class="" style="margin-left: auto; text-decoration: underline;" onclick="showTask(event, '${task.id}')">Show</button>
+        <button class="" style="text-decoration: underline;" onclick="editTask(event, '${task.id}')">Edit</button>
+        <button class="" style="text-decoration: underline;" onclick="deleteTask(event, '${task.id}')">Delete</button>
     </li>
     `
 }

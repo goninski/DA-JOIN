@@ -15,18 +15,18 @@ async function initContacts() {
 async function renderContactList() {
     contactListRef = document.getElementById('contactList');
     contactListRef.innerHTML = '';
-    let contactsGrouped = groupContacts(contacts);
+    let contactsGrouped = await groupContacts(contacts);
     for (let index = 0; index < contactsGrouped.length; index++) {
         let contactGroupObj = contactsGrouped[index];
         // console.log(contactGroupObj);
         let groupName = contactGroupObj[0];
         let contactGroup = contactGroupObj[1];
         contactListRef.innerHTML += getContactListTemplate(groupName);
-        renderContactGroupItems(contactGroup, groupName);
+        await renderContactGroupItems(contactGroup, groupName);
     }
 }
 
-function renderContactGroupItems(contactGroup, groupName) {
+async function renderContactGroupItems(contactGroup, groupName) {
     let contactListGroupRef = document.getElementById('contactListGroup-' + groupName);
     contactListGroupRef.innerHTML = '';
     for (let index = 0; index < contactGroup.length; index++) {
@@ -36,7 +36,7 @@ function renderContactGroupItems(contactGroup, groupName) {
     }
 }
 
-function groupContacts(contacts) {
+async function groupContacts(contacts) {
     sortContacts(contacts);
     let contactsGroupedObj = Map.groupBy(contacts, contact => contact.name[0].toUpperCase());
     // console.log(contactsGroupedObj);
@@ -45,7 +45,7 @@ function groupContacts(contacts) {
     return contactsGrouped;
 }
 
-function showContactDetail(event, contactId) {
+async function showContactDetail(event, contactId) {
     event.stopPropagation();
     // console.log(activeContactId);
     if(activeContactId != '' && activeContactId != contactId){
@@ -62,9 +62,9 @@ function showContactDetail(event, contactId) {
     });
     activeContactId = contactId;
     // console.log(activeContactId);
-    let contact = contacts[getContactIndexFromId(contactId)];
-    document.getElementById('floatingContact').innerHTML = getContactDetailProfileBatchTemplate(contact);
-    document.getElementById('contactInfo').innerHTML = getContactDetailInfoTemplate(contact);
+    let contact = await contacts[getContactIndexFromId(contactId)];
+    document.getElementById('floatingContact').innerHTML = await getContactDetailProfileBatchTemplate(contact);
+    document.getElementById('contactInfo').innerHTML = await getContactDetailInfoTemplate(contact);
 }
 
 function closeContactDetail(contactId) {
@@ -110,15 +110,15 @@ function resetContactsForm(event) {
     resetForm('contactsForm');
 }
 
-function closeContactsFormDialogue(event) {
+async function closeContactsFormDialogue(event) {
     event.stopPropagation();
     resetForm('contactsForm');
     document.getElementById('addContactDialogue').style = 'display: none;';
     document.getElementById('addNewContactBtnFloating').style = '';
     // document.body.style = '';
     formMode = '';
-    renderContactList();
-    showContactDetail(event, activeContactId);
+    await renderContactList();
+    await showContactDetail(event, activeContactId);
     // reloadPage(event);
 }
 
@@ -150,9 +150,9 @@ function submitContactsForm(event, contactId) {
     if(formMode == 'edit') {
         saveContact(event, contactId);
     } else {
-        // lastContactId++;
-        // contactId = lastContactId;
-        contactId = getRandomString();
+        lastContactId++;
+        contactId = lastContactId;
+        // contactId = getRandomString();
         createContact(event, contactId);
     }
 }
@@ -175,7 +175,7 @@ async function createContact(event, contactId) {
     contacts.push(contact);
     sortContacts(contacts);
     // console.log(contact);
-    await saveContactToDB(contactId);
+    await saveContactToDB(contact);
     saveContactsToLS();
     showFloatingMessage('text', 'Contact successfully created');
     setTimeout(function() { 
@@ -190,14 +190,14 @@ async function saveContact(event, contactId) {
         return;
     }
     let index = getContactIndexFromId(contactId);
-    let contact = {};
     contacts[index].name = formInputs.name;
     contacts[index].email = formInputs.email;
     contacts[index].phone = formInputs.phone;
     contacts[index].initials = getInitialsOfFirstAndLastWord(formInputs.name);
     sortContacts(contacts);
-    // console.log(contacts[index]);
-    saveContactToDB(contactId, 'update');
+    let contact = contacts[index];
+    // console.log(contact);
+    await updateContact(contact);
     saveContactsToLS();
     showFloatingMessage('text', 'Contact successfully edited');
     setTimeout(function() { 
