@@ -36,7 +36,8 @@ async function showTask(event, taskId = '') {
         taskId = activeTaskId;
     }
     // console.log(tasks);
-    let task = await tasks[getTaskIndexFromId(taskId)];
+    let index = await getTaskIndexFromId(taskId);
+    let task = tasks[index];
     await showTaskDialogue('taskDetailsWrapper');
     document.getElementById('taskDetailsWrapper').innerHTML = getTaskDetailsWrapperTemplate(task);
     document.getElementById('taskDialogue').classList.add('show-task');
@@ -50,7 +51,8 @@ async function editTask(event, taskId = '') {
     } else {
         activeTaskId = taskId;
     }
-    let task = await tasks[getTaskIndexFromId(taskId)];
+    let index = await getTaskIndexFromId(taskId);
+    let task = tasks[index];
     await showTaskDialogue('editTaskFormWrapper');
     await renderTaskForm('editTaskFieldGroups', task);
     document.getElementById('taskDialogue').classList.add('edit-task');
@@ -112,7 +114,8 @@ async function setEditTaskValues(task, formId) {
         await renderContactSelectOptions();
         await renderContactProfileBatches(assignedContacts);
         if(task.categoryId) {
-            let categoryName = await categories[getCategoryIndexFromId(task.categoryId)].name;
+            let index = await getCategoryIndexFromId(task.categoryId);
+            let categoryName = categories[index].name;
             document.getElementById('categorySelect').value = categoryName;
             document.getElementById('categorySelect').dataset.optionId = task.categoryId;
             // document.getElementById('categoryOptionId-' + task.categoryId).setAttribute('aria-selected', 'true');
@@ -335,7 +338,11 @@ async function deleteTask(event, taskId = '') {
     activeTaskId = '';
     saveTasksToLS();
     await deleteTaskFromDB(taskId);
-    showFloatingMessage('text', 'Task deleted');
+    await showFloatingMessage('text', 'Task deleted');
+    // console.log(currentPage);
+    if(currentPage == '/board.html') {
+        await renderBoards(); // does not work !?
+    }
     setTimeout(function() { 
         closeTaskDialogue(event)
     }, 1000);
@@ -374,11 +381,11 @@ async function renderTempTaskList() {
     let taskListRef = document.getElementById('tempTaskList');
     taskListRef.innerHTML = '';
     for (let index = 0; index < tasks.length; index++) {
-        taskListRef.innerHTML += getTempTaskListTemplate(tasks[index]);
+        taskListRef.innerHTML += await getTempTaskListTemplate(tasks[index]);
     }
 }
 
-function getTempTaskListTemplate(task) {
+async function getTempTaskListTemplate(task) {
     return `
     <li class="flex-row gap justify-between align-center fw-bold">#${task.id} | ${task.title}
         <button class="" style="margin-left: auto; text-decoration: underline;" onclick="showTask(event, '${task.id}')">Show</button>

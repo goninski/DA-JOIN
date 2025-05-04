@@ -48,10 +48,13 @@ async function groupContacts(contacts) {
 async function showContactDetail(event, contactId) {
     event.stopPropagation();
     // console.log(activeContactId);
+    // console.log(contactId);
     if(activeContactId != '' && activeContactId != contactId){
         document.getElementById('listContactId-' + activeContactId).classList.remove('active');
-    }
+        console.log('condition A');
+        }
     if(contactId == '') {
+        console.log('condition B');
         return closeContactDetail(contactId);
     }
     document.getElementById('contactPageInner').classList.add('show-contact-detail');
@@ -62,9 +65,14 @@ async function showContactDetail(event, contactId) {
     });
     activeContactId = contactId;
     // console.log(activeContactId);
-    let contact = await contacts[getContactIndexFromId(contactId)];
-    document.getElementById('floatingContact').innerHTML = await getContactDetailProfileBatchTemplate(contact);
-    document.getElementById('contactInfo').innerHTML = await getContactDetailInfoTemplate(contact);
+    // console.log(contactId);
+    // console.log(contacts);
+    let index = await getContactIndexFromId(contactId);
+    // console.log(index);
+    let contact = contacts[index];
+    // console.log(contact);
+    document.getElementById('floatingContact').innerHTML = getContactDetailProfileBatchTemplate(contact);
+    document.getElementById('contactInfo').innerHTML = getContactDetailInfoTemplate(contact);
 }
 
 function closeContactDetail(contactId) {
@@ -77,19 +85,19 @@ function closeContactDetail(contactId) {
 }
 
 
-function addNewContact(event) {
+async function addNewContact(event) {
     event.stopPropagation();
     formMode = 'add';
     activeContactId = '';
-    openContactsForm(formMode);
+    await openContactsForm(formMode);
 
 }
 
-function editContact(event, contactId) {
+async function editContact(event, contactId) {
     event.stopPropagation();
     formMode = 'edit';
     activeContactId = contactId;
-    openContactsForm(formMode, activeContactId);
+    await openContactsForm(formMode, activeContactId);
 }
 
 async function openContactsForm(formMode, contactId = '') {
@@ -98,10 +106,10 @@ async function openContactsForm(formMode, contactId = '') {
     document.getElementById('addNewContactBtnFloating').style = 'display: none;';
     document.body.style = 'overflow: hidden;';
     if(formMode == 'add'){
-        setAddContactValues();
+        await setAddContactValues();
     } else {
-        setEditContactValues(contactId);
-        checkEditFormState('contactsForm');
+        await setEditContactValues(contactId);
+        await checkEditFormState('contactsForm');
     }
 }
 
@@ -123,7 +131,7 @@ async function closeContactsFormDialogue(event) {
     // reloadPage(event);
 }
 
-function setAddContactValues() {
+async function setAddContactValues() {
     document.getElementById('dialogueProfileBatch').innerHTML = '<img src="/assets/icons/profile-placeholder.svg" alt="profile-placeholder">';
     document.getElementById('dialogueTeaser').style = '';
     document.getElementById('dialogueTitle').innerHTML = 'Add Contact';
@@ -135,7 +143,8 @@ function setAddContactValues() {
 async function setEditContactValues(contactId) {
     document.getElementById('dialogueTeaser').style = 'display: none;';
     document.getElementById('dialogueTitle').innerHTML = 'Edit Contact';
-    let contact = await contacts[getContactIndexFromId(contactId)];
+    let index = await getContactIndexFromId(contactId);
+    let contact = contacts[index];
     document.getElementById('dialogueProfileBatch').innerHTML = contact.initials;
     document.getElementById('dialogueProfileBatch').style = '--profile-color: violet;';
     document.getElementById('inputName').value = contact.name;
@@ -190,7 +199,7 @@ async function saveContact(event, contactId) {
     if(formInputs.name.length <= 0) {
         return;
     }
-    let index = getContactIndexFromId(contactId);
+    let index = await getContactIndexFromId(contactId);
     contacts[index].name = formInputs.name;
     contacts[index].email = formInputs.email;
     contacts[index].phone = formInputs.phone;
@@ -211,7 +220,8 @@ async function deleteContact(event, contactId) {
     event.preventDefault();
     await deleteContactFromDB(contactId);
     activeContactId = '';
-    contacts.splice(getContactIndexFromId(contactId), 1);
+    let index = await getContactIndexFromId(contactId);
+    contacts.splice(index, 1);
     removeDeletedContactsFromTasks(contactId);
     // console.log(contacts);
     saveContactsToLS();

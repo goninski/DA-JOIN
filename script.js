@@ -140,7 +140,7 @@ function showAlert(msg, duration = 250) {
     setTimeout(function() { alert(msg) }, duration);
 }
 
-function showFloatingMessage(template, msg = '') {
+async function showFloatingMessage(template, msg = '') {
     let element = document.getElementById("floatingMsg");
     if(template == 'addedTask') {
         element.innerHTML = getFloatingMessageTaskAddedTemplate();
