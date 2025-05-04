@@ -149,7 +149,7 @@ async function setEditContactValues(contactId) {
     document.getElementById('dialogueProfileBatch').style = '--profile-color: violet;';
     document.getElementById('inputName').value = contact.name;
     document.getElementById('inputEmail').value = contact.email;
-    document.getElementById('inputPhone').value = contact.phone;
+    contact.phone ? document.getElementById('inputPhone').value = contact.phone : '';
     document.getElementById('submitBtnWrapper').innerHTML = getEditContactSubmitButtonsTemplate(contactId);
     // document.getElementById('dialogueBtnDelete').innerHTML = getIconTemplateCancel('Cancel');
     document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Save');
