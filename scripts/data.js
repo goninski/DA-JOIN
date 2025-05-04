@@ -184,7 +184,10 @@ async function resetToDemoData() {
         await saveAllCategoriesToDB();
         await saveAllContactsToDB();
         await saveAllTasksToDB();
-    }
+        await saveLastIdToDB('users', lastContactId)
+        // await saveLastIdToDB('categories', lastCategoryId)
+        // await saveLastIdToDB('tasks', lastTaskId)
+        }
     showAlert('Data Reset successfull. Please reload the page !', 1250);
     // location.reload()
 }
@@ -287,8 +290,8 @@ async function getLastIdFromDB(type) {
 
 async function saveCategoryToDB(category) {
     let categoryId = category.id;
-    saveDataToFirebase('categories/' + categoryId, category);
-    saveLastIdToDB('categories', lastCategoryId)
+    await saveDataToFirebase('categories/' + categoryId, category);
+    await saveLastIdToDB('categories', lastCategoryId)
 }
 
 async function saveContactToDB(contact, mode = 'add') {
@@ -303,12 +306,12 @@ async function saveContactToDB(contact, mode = 'add') {
             console.log(lastContactId);
             contactId = lastContactId;
             console.log('i) new contactId');
-            saveLastIdToDB('users', contactId)
+            await saveLastIdToDB('users', contactId)
         } else {
             return alert('Contact is not saved due missing Id !');
         }
     }
-    saveDataToFirebase('users/' + contactId, contact);
+    await saveDataToFirebase('users/' + contactId, contact);
 }
 
 async function createContact(contact) {
@@ -321,9 +324,9 @@ async function updateContact(contact) {
 
 async function saveTaskToDB(task, mode = 'add') {
     let taskId = task.id;
-    saveDataToFirebase('tasks/' + taskId, task);
+    await saveDataToFirebase('tasks/' + taskId, task);
     if(mode == 'add') {
-        saveLastIdToDB('tasks', lastTaskId)
+        await saveLastIdToDB('tasks', lastTaskId)
     }
 }
 
@@ -338,19 +341,19 @@ async function updateTaskDB(task) {
 
 
 async function saveLastIdToDB(type, lastId) {
-    saveDataToFirebase('lastId/' + type, lastId);
+    await saveDataToFirebase('lastId/' + type, lastId);
 }
 
 async function deleteCategoryFromDB(categoryId) {
-    deleteFirebaseData('categories/' + categoryId);
+    await deleteFirebaseData('categories/' + categoryId);
 }
 
 async function deleteContactFromDB(contactId) {
-    deleteFirebaseData('users/' + contactId);
+    await deleteFirebaseData('users/' + contactId);
 }
 
 async function deleteTaskFromDB(taskId) {
-    deleteFirebaseData('tasks/' + taskId);
+   await deleteFirebaseData('tasks/' + taskId);
 }
 
 
@@ -370,9 +373,12 @@ async function saveAllCategoriesToDB() {
 }
 
 async function saveAllContactsToDB() {
-    contacts.forEach(function(item) {
-        saveContactToDB(item);
+    // saveContactToDB(item);
+    contacts.forEach(function(contact) {
+        let contactId = contact.id;
+        saveDataToFirebase('users/' + contactId, contact);
     });
+    saveLastIdToDB('users', lastContactId);
 }
 
 async function saveAllTasksToDB() {

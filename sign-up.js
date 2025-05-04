@@ -28,11 +28,11 @@ async function addUser() {
   };
 
   usersDatabase.push(newUser);
-
+  
   await getUserData();
   await createContact(newUser);
-
   signUpSuccessfull();
+
   // showSignUpSuccessOverlay();
   
   console.log(usersDatabase); 
