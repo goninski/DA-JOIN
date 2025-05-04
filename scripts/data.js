@@ -307,11 +307,11 @@ async function saveContactToDB(contact, mode = 'add') {
     saveDataToFirebase('users/' + contactId, contact);
 }
 
-async function createContactDB(contact) {
+async function createContact(contact) {
     await saveContactToDB(contact);
 }
 
-async function updateContactDB(contact) {
+async function updateContact(contact) {
     await saveContactToDB(contact, 'update');
 }
 
