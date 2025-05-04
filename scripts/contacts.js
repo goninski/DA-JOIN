@@ -1,18 +1,18 @@
 let activeContactId = '';
 
-function initContacts() {
+async function initContacts() {
     getMainTemplates();
-    getAllData();
-    console.log(contacts);
-    if(!contacts) {
-        contacts = [];
-        console.log('error: contacts undefined !');
-    }
-    renderContactList();
+    await getUserData();
+    // console.log(contacts);
+    // if(!contacts) {
+    //     contacts = [];
+    //     console.log('error: contacts undefined !');
+    // }
+    await renderContactList();
 }
 
 
-function renderContactList() {
+async function renderContactList() {
     contactListRef = document.getElementById('contactList');
     contactListRef.innerHTML = '';
     let contactsGrouped = groupContacts(contacts);

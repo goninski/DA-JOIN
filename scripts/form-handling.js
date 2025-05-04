@@ -1,7 +1,7 @@
 let formMode = '';
 let invalidFields = [];
 let listboxElements = [];
-let currentSelectParts = {};
+let currentFieldElements = {};
 document.addEventListener('click', documentEventHandler);
 document.addEventListener('keydown', documentEventHandler);
 
@@ -56,17 +56,17 @@ function resetForm(formId) {
 
 function resetFormElements(element) {
     setPlaceholderStyle(element);
-    getCurrentSelectParts(element);
-    if(currentSelectParts.fieldWrapper) {
-        currentSelectParts.fieldWrapper.classList.remove('invalid');
+    getCurrentFieldElements(element);
+    if(currentFieldElements.fieldWrapper) {
+        currentFieldElements.fieldWrapper.classList.remove('invalid');
     }
-    if(currentSelectParts.combox) {
-        currentSelectParts.combox.removeAttribute('data-option-id');
-        currentSelectParts.combox.removeAttribute('data-active-index');
+    if(currentFieldElements.combox) {
+        currentFieldElements.combox.removeAttribute('data-option-id');
+        currentFieldElements.combox.removeAttribute('data-active-index');
     }
-    if(currentSelectParts.listbox) {
-        listboxElements.push(currentSelectParts.listbox);
-        closeDropdown(currentSelectParts.listbox);
+    if(currentFieldElements.listbox) {
+        listboxElements.push(currentFieldElements.listbox);
+        closeDropdown(currentFieldElements.listbox);
     }
 };
 
@@ -235,8 +235,8 @@ function dropdownEventHandler(event) {
     // console.log(event.key);
     // console.log(event.type);
     // console.log(event.target);
-    getCurrentSelectParts(event.target);
-    listbox = currentSelectParts.listbox;
+    getCurrentFieldElements(event.target);
+    listbox = currentFieldElements.listbox;
     if(['Enter', ' '].includes(event.key)) {
         event.preventDefault();
         return toggleDropdown(listbox);
@@ -258,21 +258,21 @@ function dropdownEventHandler(event) {
 }
 
 function toggleDropdown(element) {                      
-    getCurrentSelectParts(element);
-    let listbox = currentSelectParts.listbox;
+    getCurrentFieldElements(element);
+    let listbox = currentFieldElements.listbox;
     closeAllDropdowns(listboxElements, listbox);
-    currentSelectParts.fieldWrapper.classList.toggle('select-expanded');
+    currentFieldElements.fieldWrapper.classList.toggle('select-expanded');
     let isExpanded = getBooleanFromString(listbox.getAttribute('aria-expanded'));
     isExpanded = !isExpanded;
     listbox.setAttribute('aria-expanded', isExpanded);
     if(!isExpanded) {
-        validateInput(currentSelectParts.combox);
+        validateInput(currentFieldElements.combox);
     }
 }
 
 function focusCurrentCombox(element) {
-    getCurrentSelectParts(element);
-    combox = currentSelectParts.combox;
+    getCurrentFieldElements(element);
+    combox = currentFieldElements.combox;
     if(combox) {
         combox.focus();
     }
@@ -284,16 +284,16 @@ function dropdownOptionClickHandler(event) {
     let option = event.currentTarget.closest('[role="option"]');
     // console.log(option);
     if(option) {
-        getCurrentSelectParts(option);
-        let options = currentSelectParts.options;
+        getCurrentFieldElements(option);
+        let options = currentFieldElements.options;
         options.forEach(element => {
             element.setAttribute('aria-selected', 'false');
         });
-        setDropdownOption(currentSelectParts.combox, option, null);
-        // let combox = currentSelectParts.combox;
+        setDropdownOption(currentFieldElements.combox, option, null);
+        // let combox = currentFieldElements.combox;
         // console.log(combox);
-        toggleDropdown(currentSelectParts.listbox);
-        // validateInput(currentSelectParts.combox);
+        toggleDropdown(currentFieldElements.listbox);
+        // validateInput(currentFieldElements.combox);
     }
 }
 
@@ -311,15 +311,15 @@ function dropdownOptionClickHandlerMultiple(event, contactId) {
             assignedContacts.splice(assignedContacts.indexOf(contactId), 1);
         };
         renderContactProfileBatches(assignedContacts);
-        // toggleDropdown(currentSelectParts.listbox);
+        // toggleDropdown(currentFieldElements.listbox);
         // event.preventDefault();
     }
 }
 
 function dropdownOptionKeyHandler(event, loop = false) {
-    getCurrentSelectParts(event.currentTarget);
-    let combox = currentSelectParts.combox;
-    let options = currentSelectParts.options;
+    getCurrentFieldElements(event.currentTarget);
+    let combox = currentFieldElements.combox;
+    let options = currentFieldElements.options;
     let activeIndex = combox.dataset.activeIndex;
     index = getSelectedDropdownIndex(event, activeIndex, options.length, loop);
     setDropdownOption(combox, options[index], options[activeIndex]);
@@ -372,23 +372,27 @@ function getPreviousIndex(index, length, loop = false) {
     return index;
 }
 
-function getCurrentSelectParts(element) {
-    currentSelectParts = {};
+function getCurrentFieldElements(element) {
+    currentFieldElements = {};
     let fieldWrapper = element.closest('.field-wrapper');
     if(fieldWrapper) {
-        currentSelectParts.fieldWrapper = fieldWrapper;
+        currentFieldElements.fieldWrapper = fieldWrapper;
+        let alert = fieldWrapper.querySelector('[role="alert"]');
+        if(alert) {
+            currentFieldElements.alert = alert;
+        }
         let combox = fieldWrapper.querySelector('[role="combox"]');
         if(combox) {
-            currentSelectParts.combox = combox;
+            currentFieldElements.combox = combox;
         }
         let listbox = fieldWrapper.querySelector('[role="listbox"]');
         if(listbox) {
-            currentSelectParts.listbox = listbox;
-            currentSelectParts.options = getCurrentSelectOptions(listbox);
+            currentFieldElements.listbox = listbox;
+            currentFieldElements.options = getCurrentSelectOptions(listbox);
         }
     }
-    // console.log(currentSelectParts);
-    return currentSelectParts;
+    // console.log(currentFieldElements);
+    return currentFieldElements;
 }
 
 function getCurrentSelectOptions(listbox, multiple = false) {

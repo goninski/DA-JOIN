@@ -4,10 +4,10 @@ let assignedContacts = [];
 let assignedSubtasks = [];
 
 
-function initAddTask() {
+async function initAddTask() {
     getMainTemplates();
-    getAllData();
     addTask(event, 'add-task-page');
+    await getAllData();
 }
 
 function openAddTaskPage() {
@@ -113,7 +113,9 @@ function setEditTaskValues(task, formId) {
             let categoryName = categories[getCategoryIndexFromId(task.categoryId)].name;
             document.getElementById('categorySelect').value = categoryName;
             document.getElementById('categorySelect').dataset.optionId = task.categoryId;
-            document.getElementById('categoryOptionId-' + task.categoryId).setAttribute('aria-selected', 'true');
+            // document.getElementById('categoryOptionId-' + task.categoryId).setAttribute('aria-selected', 'true');
+            document.getElementById('categorySelect').classList.remove("clickable");
+            document.getElementById('categorySelect').setAttribute("disabled", '');
         }
         assignedSubtasks = task.subtasks;
         // renderSubtasks();

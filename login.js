@@ -11,10 +11,14 @@ window.onload = () => {
     }, 100);
 };
 
-function checkSignInFormValidity() {
-    return true;
-  }
+async function checkLogin(event) {
+    await getUserData(); // creates a 'contacts' object
+    signIn();
+}
   
+function guestLogin(event) {
+    signIn();
+}
 
 
 // usersDatabase soll hier die Datenbank mit den User Zugangsdaten symbolisieren - muss noch geändert werden

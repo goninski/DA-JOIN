@@ -1,3 +1,4 @@
+let currentPage = window.location.pathname;
 
 function init() {
     getMainTemplates();
@@ -25,6 +26,26 @@ function getSidebar() {
     let sidebarMobRef = document.getElementById('sidebarMob');
     sidebarMobRef.innerHTML = getSidebarMobTemplate();
     sidebarMobRef.classList.add('show--ss-mob');
+}
+
+function signUpSuccessfull() {
+    showFloatingMessage('text', 'You Signed Up successfully');
+    signIn();
+}
+
+function signIn() {
+    setTimeout(function() { 
+        window.location.href = "/summary.html";
+      }, 1000);
+}
+
+function signInGuest() {
+    signIn();
+}
+
+
+function signOut() {
+    window.location.href = "/login.html";
 }
 
 
@@ -145,4 +166,19 @@ function showFloatingMessage(template, msg = '') {
 }
 
 
+
+
+// console.log(currentPage);
+if(currentPage != '/login.html' && currentPage != '/logout.html') {
+    // renderTemporaryButtons();
+}
+
+function renderTemporaryButtons() {
+    let btn = document.createElement("button");
+    btn.innerHTML = 'Logout';
+    btn.style = 'color: white; position: fixed; bottom: 0; width: 232px; height: 48px;';
+    btn.addEventListener('click', signOut)
+    document.body.appendChild(btn);
+  };
+  
 

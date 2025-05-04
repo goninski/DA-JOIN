@@ -34,12 +34,11 @@ function getSidebarTemplate() {
         <div class="sidebar-footer">
             <a href="privacy-policy.html">Privacy Policy</a>
             <a href="legal-notice.html">Legal notice</a>
-            <div class="flex-col gap-05 mt-10"> 
-                <!-- <a href="temp-assets-library.html" style="color: #ccc;">Asset Library</a> -->
-                <a href="/" style="color: #ccc;">Start</a>
-                <!-- <a href="#" id="logoutBtnTemp" onclick="logout()" style="color: #ccc;">Logout</a> -->
-                <button onclick="setDemoData()" style="text-align: left; color: #ccc";>Testdata Reset</button>
-                <a href="board-fg-temp.html" style="color: #ccc;">Board FG Temp</a>
+            <div class="temp-links flex-col mt-10"> 
+                <a href="/">Start</a>
+                <a href="#" id="signOutBtnTemp" onclick="signOut()">Logout</a>
+                <a href="#" onclick="resetToDemoData()">Reset Demo Data</a>
+                <a href="board-fg-temp.html">Board FG Temp</a>
             </div>
         </div>
     `

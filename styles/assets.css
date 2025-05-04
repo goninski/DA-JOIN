@@ -367,6 +367,9 @@ label.prio-low:has( > input:checked) {
 .field-wrapper.select-expanded .input-icon-wrapper.custom-select img {
     rotate: 180deg;
 }
+input[disabled] + .input-icon-wrapper.custom-select {
+    display: none;
+}
 
 
 /** TASK FORM SPECIFIC */

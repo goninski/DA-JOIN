@@ -183,6 +183,16 @@ main, header, footer {
 
 
 /** TEMP */
+.temp-links {
+    gap: 5px;
+}
+.temp-links a {
+    color: #ccc;
+    font-size: 14px;
+}
+.temp-links a:hover {
+    color: white;
+}
 #tempTaskList {
     position: fixed;
     right: 32px;

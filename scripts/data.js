@@ -12,10 +12,6 @@ let lastContactId = '';
 let lastTaskId = '';
 let dataArr = [];
 
-function getLastIdFromObjArray(objArray) {
-    return Math.max(...objArray.map(item => item.id));
-}
-
 categoriesDefault = [
     {
         "id": "101",
@@ -124,12 +120,15 @@ tasksDemo = [
         "dueDate": 0,
         "priority": "low",
         "contactIds": ['1005', '1009'],
-        // "categoryId": '102',
+        "categoryId": '102',
         "subtasks": ["Subtask 1","Subtask 2","Subtask 3"]
     },
 ];
 
 
+function getLastIdFromObjArray(objArray) {
+    return Math.max(...objArray.map(item => item.id));
+}
 
 
 // GET & SAVE DATA
@@ -142,11 +141,22 @@ async function getAllData() {
         await getAllDataFromDB();
     }
     if(! contacts || ! tasks) {
-        setDemoData();
+        resetToDemoData();
     }
 }
 
-async function setDemoData() {
+async function getUserData() {
+    if(localStorageMode) {
+        await getContactsFromLS();
+    } else {
+        await getContactsFromDB();
+    }
+    if(! contacts) {
+        resetToDemoData();
+    }
+}
+
+async function resetToDemoData() {
     categories = categoriesDefault;
     contacts = contactsDemo;
     contacts.sort((a, b) => a.name.localeCompare(b.name));
@@ -168,6 +178,7 @@ async function setDemoData() {
         await saveContactsToLS();
         await saveTasksToLS();
     } else {
+        await clearLocalStorage();
         await deleteAllDataFromDB();
         await saveAllCategoriesToDB();
         await saveAllContactsToDB();
@@ -249,21 +260,21 @@ async function getCategoriesFromDB() {
 }
 
 async function getContactsFromDB() {
-    // contacts = await fetchDataFromFirebase('users/');
-    // lastContactId = await getLastIdFromDB('users');
-    let x = await fetchDataFromFirebase('users/');
-    let y = await getLastIdFromDB('users');
-    console.log(x);
-    console.log(y);
+    contacts = await fetchDataFromFirebase('users/');
+    lastContactId = await getLastIdFromDB('users');
+    // let x = await fetchDataFromFirebase('users/');
+    // let y = await getLastIdFromDB('users');
+    // console.log(x);
+    // console.log(y);
 }
 
 async function getTasksFromDB() {
-    // tasks = await fetchDataFromFirebase('tasks/');
-    // lastTaskId = await getLastIdFromDB('tasks');
-    let x = await fetchDataFromFirebase('tasks/');
-    let y = await getLastIdFromDB('tasks');
-    console.log(x);
-    console.log(y);
+    tasks = await fetchDataFromFirebase('tasks/');
+    lastTaskId = await getLastIdFromDB('tasks');
+    // let x = await fetchDataFromFirebase('tasks/');
+    // let y = await getLastIdFromDB('tasks');
+    // console.log(x);
+    // console.log(y);
 }
 
 async function getLastIdFromDB(type) {

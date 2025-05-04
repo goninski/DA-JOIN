@@ -3,7 +3,7 @@ let usersDatabase = [
 ];
 
 
-function addUser() {
+async function addUser() {
   console.log(usersDatabase); 
 
   const nameInput = document.getElementById('sign-up-name').value.trim();
@@ -21,6 +21,8 @@ function addUser() {
     return;
   }
 
+  await getUserData(); // creates a 'contacts' object
+
   const newUser = {
     name: nameInput,
     email: emailInput,
@@ -29,7 +31,8 @@ function addUser() {
 
   usersDatabase.push(newUser);
 
-  showSignUpSuccessOverlay();
+  signUpSuccessfull();
+  // showSignUpSuccessOverlay();
   
   console.log(usersDatabase); 
 }
