@@ -13,7 +13,8 @@ window.onload = () => {
 
 async function checkLogin(event) {
     await getUserData(); // creates a 'contacts' object, use the function 'updateContact(contact)' to update a user
-    signIn();
+    console.log(contacts);
+    // signIn();
 }
   
 function guestLogin(event) {
