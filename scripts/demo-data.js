@@ -104,7 +104,7 @@ let tasksDemo = [
         "id": "10003",
         "title": "Title Task 3...",
         "description": "Description Task 3...",
-        "dueDate": 0,
+        "dueDate": '2025-05-05',
         "priority": "low",
         "contactIds": ['1005', '1009'],
         "categoryId": '102',
@@ -117,7 +117,6 @@ let tasksDemo = [
         "id": "10004",
         "title": "Title Task 4...",
         "description": "Description Task 4...",
-        "dueDate": 0,
         "priority": "low",
         "contactIds": ['1007', '1008'],
         "categoryId": '102',
@@ -161,7 +160,7 @@ async function resetToDemoData() {
         // await saveLastIdToDB('categories', lastCategoryId)
         // await saveLastIdToDB('tasks', lastTaskId)
         }
-    showAlert('Data Reset successfull. Please reload the page !', 1250);
+    showAlert('Data Reset successfull. Please reload the page !', 1000);
     // location.reload()
 }
 

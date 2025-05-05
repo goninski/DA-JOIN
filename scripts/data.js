@@ -39,7 +39,7 @@ async function firebaseObjToArray(fetchObj) {
     dataArr = [];
     // console.log(fetchObj);
     let fetchEntries = Object.entries(fetchObj);
-    console.log(fetchEntries);
+    // console.log(fetchEntries);
     fetchEntries.forEach(function(item) {
         dataArr.push(item[1]);
     });
@@ -81,9 +81,6 @@ async function getAllDataFromDB() {
 async function getAllData() {
     if(localStorageMode) {
         await getAllDataFromLS();
-        // if(! contacts || ! tasks) {
-        //     resetToDemoData();
-        // }
     } else {
         await getAllDataFromDB();
     }
@@ -92,13 +89,17 @@ async function getAllData() {
 async function getUserData() {
     if(localStorageMode) {
         await getContactsFromLS();
-        // if(! contacts) {
-        //     resetToDemoData();
-        // }
     } else {
         await getContactsFromDB();
     }
 }
+
+// let testObj;
+// async function getDataFromDB() {
+//     testObj = await fetchDataFromFirebase('', true);
+//     console.log(testObj);
+// }
+
 
 async function getCategoriesFromDB() {
     categories = await fetchDataFromFirebase('categories/');

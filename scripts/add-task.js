@@ -95,7 +95,7 @@ async function renderTaskForm(fieldsWrapperId, task = null) {
         formId = 'editTaskForm';
     }
     await resetForm(formId);
-    console.log(contacts);
+    // console.log(contacts);
     await renderCategorySelectOptions(event);
     await setEditTaskValues(task, formId);
     await checkEditFormState(formId);
@@ -139,11 +139,11 @@ async function renderContactSelectOptions(listboxId = 'taskContactsListbox', sea
     let listbox = document.getElementById(listboxId);
     let combox = document.getElementById('selectContacts');
     listbox.innerHTML = '';
-    console.log(contacts);
+    // console.log(contacts);
     taskContacts = await Object.create(contacts);
     taskContacts = await sortContacts(taskContacts);
-    console.log(contacts);
-    console.log(taskContacts);
+    // console.log(contacts);
+    // console.log(taskContacts);
     if(searchVal === ' ') {
         combox.value = '';
         toggleDropdown(listbox);        
@@ -155,7 +155,7 @@ async function renderContactSelectOptions(listboxId = 'taskContactsListbox', sea
         openDropdown(listbox);
         taskContacts = await taskContacts.filter(contact => contact.name.toLowerCase().includes(searchVal));
     }
-    console.log(taskContacts);
+    // console.log(taskContacts);
     for (let index = 0; index < taskContacts.length; index++) {
         listbox.innerHTML += getContactSelectOptionTemplate(taskContacts[index], index);
         if(assignedContacts.length > 0) {
@@ -286,10 +286,10 @@ async function createTask(event) {
     task.subtasks = assignedSubtasks;
     tasks.push(task);
     await createTaskDB(task);
-    saveTasksToLS();
+    await saveTasksToLS();
     console.log(tasks);
     // resetAddTaskForm(event);
-    showFloatingMessage('addedTask');
+    await showFloatingMessage('addedTask');
     setTimeout(function() { 
         location.href = "/board.html";
     }, 1500);
@@ -317,8 +317,8 @@ async function saveTask(event) {
     console.log(tasks);
     let task = tasks[index];
     await updateTaskDB(task);
-    saveTasksToLS();
-    showFloatingMessage('text', 'Task successfully edited');
+    await saveTasksToLS();
+    await showFloatingMessage('text', 'Task successfully edited');
     setTimeout(function() { 
         closeTaskDialogue(event)
     }, 1000);
@@ -335,7 +335,7 @@ async function deleteTask(event, taskId = '') {
         tasks.splice(index, 1);
     }
     activeTaskId = '';
-    saveTasksToLS();
+    await saveTasksToLS();
     await deleteTaskFromDB(taskId);
     await showFloatingMessage('text', 'Task deleted');
     // console.log(currentPage);
