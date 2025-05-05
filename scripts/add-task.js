@@ -113,15 +113,15 @@ async function setEditTaskValues(task, formId) {
         assignedContacts = task.contactIds;
         await renderContactSelectOptions();
         await renderContactProfileBatches(assignedContacts);
-        if(task.categoryId) {
-            let index = await getCategoryIndexFromId(task.categoryId);
-            let categoryName = categories[index].name;
-            document.getElementById('categorySelect').value = categoryName;
-            document.getElementById('categorySelect').dataset.optionId = task.categoryId;
-            // document.getElementById('categoryOptionId-' + task.categoryId).setAttribute('aria-selected', 'true');
-            document.getElementById('categorySelect').classList.remove("clickable");
-            document.getElementById('categorySelect').setAttribute("disabled", '');
-        }
+        // if(task.categoryId) {
+        //     let index = await getCategoryIndexFromId(task.categoryId);
+        //     let categoryName = categories[index].name;
+        //     document.getElementById('categorySelect').value = categoryName;
+        //     document.getElementById('categorySelect').dataset.optionId = task.categoryId;
+        //     // document.getElementById('categoryOptionId-' + task.categoryId).setAttribute('aria-selected', 'true');
+        //     document.getElementById('categorySelect').classList.remove("clickable");
+        //     document.getElementById('categorySelect').setAttribute("disabled", '');
+        // }
         assignedSubtasks = task.subtasks;
         // renderSubtasks();
     }
@@ -371,25 +371,3 @@ function closeTaskDialogue(event) {
 }
 
 
-
-
-
-// TEMP STUFF
-async function renderTempTaskList() {
-    formMode = '';
-    let taskListRef = document.getElementById('tempTaskList');
-    taskListRef.innerHTML = '';
-    for (let index = 0; index < tasks.length; index++) {
-        taskListRef.innerHTML += await getTempTaskListTemplate(tasks[index]);
-    }
-}
-
-async function getTempTaskListTemplate(task) {
-    return `
-    <li class="flex-row gap justify-between align-center fw-bold">#${task.id} | ${task.title}
-        <button class="" style="margin-left: auto; text-decoration: underline;" onclick="showTask(event, '${task.id}')">Show</button>
-        <button class="" style="text-decoration: underline;" onclick="editTask(event, '${task.id}')">Edit</button>
-        <button class="" style="text-decoration: underline;" onclick="deleteTask(event, '${task.id}')">Delete</button>
-    </li>
-    `
-}

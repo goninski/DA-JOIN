@@ -130,9 +130,6 @@ form {
     flex-direction: column;
     --field-width: 422px;
 }
-form.task-form {
-    --field-width: 442px;
-}
 form.scrollable {
     position: absolute;
     inset: 0;
@@ -373,8 +370,14 @@ input[disabled] + .input-icon-wrapper.custom-select {
 
 
 /** TASK FORM SPECIFIC */
+.edit-task-form .hide-on-edit-mode {
+    display: none;
+}
 .task-form {
     gap: 64px;
+}
+form.task-form {
+    --field-width: 442px;
 }
 .task-form .field-groups {
     /* min-height: 380px;

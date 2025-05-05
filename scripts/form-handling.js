@@ -42,7 +42,8 @@ function getFormElementsArray(formId) {
 }
 
 async function resetForm(formId) {
-    document.getElementById(formId).reset();
+    let form = document.getElementById(formId);
+    form.reset();
     // invalidFields = [];
     listboxElements = [];
     let formElements = getFormElementsArray(formId);

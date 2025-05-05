@@ -120,7 +120,7 @@ function getTaskFormFieldsTemplate(task) {
             <ul id="profileBatches" class="profile-batches hide-if-empty" style="margin-top: 12px;"></ul>
         </div>
 
-        <div class="field-wrapper has-alert">
+        <div class="field-wrapper has-alert hide-on-edit-mode">
             <label for="categorySelect" class="required">Category</label>
             <div class="select custom-select">
                 <div class="input-wrapper custom-select">
