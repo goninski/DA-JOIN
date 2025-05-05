@@ -81,10 +81,10 @@ let tasksDemo = [
         "contactIds": ['1001', '1002', '1003'],
         "categoryId": '101',
         "subtasks": [
-            {"title": "Subtask 1.1","status": 1},
-            {"title": "Subtask 1.2","status": 0},
+            {"title": "Subtask 1.1","done": true},
+            {"title": "Subtask 1.2","done": false},
         ],
-        "status": "To do",
+        "done": "To do",
     },
     {
         "id": "10002",
@@ -95,10 +95,10 @@ let tasksDemo = [
         "contactIds": ['1004', '1006'],
         "categoryId": '102',
         "subtasks": [
-            {"title": "Subtask 2.1","status": 1},
-            {"title": "Subtask 2.2","status": 0},
+            {"title": "Subtask 2.1","done": true},
+            {"title": "Subtask 2.2","done": false},
         ],
-        "status": "In progress",
+        "done": "In progress",
     },
     {
         "id": "10003",
@@ -109,9 +109,9 @@ let tasksDemo = [
         "contactIds": ['1005', '1009'],
         "categoryId": '102',
         "subtasks": [
-            {"title": "Subtask 3.1","status": 1},
+            {"title": "Subtask 3.1","done": true},
         ],
-        "status": "Await Feedback",
+        "done": "Await Feedback",
     },
     {
         "id": "10004",
@@ -121,9 +121,9 @@ let tasksDemo = [
         "contactIds": ['1007', '1008'],
         "categoryId": '102',
         // "subtasks": [
-        //     {"title": "Subtask 3.1","status": 1},
+        //     {"title": "Subtask 3.1","done": true},
         // ],
-        "status": "Done",
+        "done": "Done",
     },
 ];
 

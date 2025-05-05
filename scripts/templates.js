@@ -136,29 +136,25 @@ function getTaskFormFieldsTemplate(task) {
             <div role="alert" class="validation-alert">This field is required</div>
         </div>
 
+        <div class="field-wrapper subtask-wrapper">
+            <label for="subtasks">Subtasks</label>
+            <div class="input-wrapper input-wrapper-subtasks">
+                <!--<input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask"> -->
+                <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask" maxlength="128" onfocus="focusInHandler(event)" oninput="validateAddSubtaskInput(event)" onkeydown="addSubtaskInputEventHandler(event)">
+                <div id="subtaskInputButtonAdd" class="input-icon-wrapper">
+                    <button onclick="addSubtaskEventHandlerPseudo(event)"><img src="/assets/icons/add.svg" class="icon-add"></button>
+                </div>
+                <div id="subtaskInputButtons" class="input-icon-wrapper hide">
+                    <button onclick="clearSubtaskEventHandler(event)"><img src="/assets/icons/cancel.svg" class="icon-cancel"></button>
+                    <div class="divider"></div>
+                    <button onclick="addSubtaskEventHandler(event)"><img src="/assets/icons/check.svg" class="icon-check"></button>
+                </div>
+            </div>
+            <ul id="assignedSubtasks" class="subtask-listing"></ul>
+        </div>
+        
     `
 }
-
-function tempSubtasks() {
-    `<div class="field-wrapper subtask-wrapper">
-    <label for="subtasks">Subtasks</label>
-    <div class="input-wrapper input-wrapper-subtasks">
-        <!--<input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask"> -->
-        <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask" onfocus="resetInputValidation(event)" oninput="validateSubtaskInput(event)" maxlength="128">
-        <div id="subtaskInputButtonAdd" class="input-icon-wrapper">
-            <button onclick="addSubtaskPseudo(event)"><img src="/assets/icons/add.svg" class="icon-add"></button>
-        </div>
-        <div id="subtaskInputButtons" class="input-icon-wrapper hide">
-            <button onclick="resetSubtaskInput(event)"><img src="/assets/icons/cancel.svg" class="icon-cancel"></button>
-            <div class="divider"></div>
-            <button onclick="addSubtask(event)"><img src="/assets/icons/check.svg" class="icon-check"></button>
-        </div>
-    </div>
-    <ul id="assignedSubtasks" class="subtask-listing"></ul>
-    </div>`
-}
-
-
 
 function getContactSelectOptionTemplate(contact, index) {
     return `
@@ -186,15 +182,15 @@ function getCategorySelectOptionTemplate(category, index) {
 function getSubtasksTemplate(subtask, index, taskId) {
     return `
     <li class="input-wrapper input-wrapper-subtask">
-        <input type="text" id="subtask-i-${index}" class="subtask-input" value="${subtask}">
-        <div class="input-icon-wrapper input-icon-wrapper-read">
-            <button onclick="editSubtask(event)"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div>
-            <button onclick="deleteSubtask(event, ${index})"><img src="/assets/icons/delete.svg" class="icon-delete"></button>
+        <input type="text" id="subtask-i-${index}" class="subtask-input" value="${subtask.title}" oninput="validateUpdateSubtaskInput(event)">
+        <div class="input-icon-wrapper input-icon-wrapper-read"">
+            <button onclick="editSubtaskEventHandler(event)"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div>
+            <button onclick="deleteSubtaskEventHandler(event, ${index})"><img src="/assets/icons/delete.svg" class="icon-delete"></button>
         </div>
         <div class="input-icon-wrapper input-icon-wrapper-edit">
-            <button onclick="deleteSubtask(event, ${index})"><img src="/assets/icons/delete.svg" class="icon-delete"></button>
+            <button onclick="deleteSubtaskEventHandler(event, ${index})"><img src="/assets/icons/delete.svg" class="icon-delete"></button>
             <div class="divider"></div>
-            <button onclick="saveSubtask(event, ${index})"><img src="/assets/icons/check.svg" class="icon-check"></button>
+            <button onclick="updateSubtaskEventHandler(event, ${index})"><img src="/assets/icons/check.svg" class="icon-check"></button>
         </div>
     </li>
     `

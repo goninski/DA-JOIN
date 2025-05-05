@@ -404,7 +404,6 @@ form.task-form {
 
 
 
-
 /** CUSTOM INPUT BUTTONS (VARIOUS) */
 
 .input-wrapper {
@@ -556,7 +555,7 @@ input:has(+ .input-icon-wrapper.simple) {
     border-bottom: solid 1px  var(--clr-light-blue);
     margin-top: 12px;
 }
-.subtask-listing:hover .input-wrapper-subtask:not(.edit-mode) .input-icon-wrapper-read {
+:is(.subtask-listing:hover) .input-wrapper-subtask:not(.edit-mode) .input-icon-wrapper-read {
     display: flex;
 }
 .subtask-listing li:hover {
@@ -567,6 +566,12 @@ input:has(+ .input-icon-wrapper.simple) {
     background-color: #EEEEEE;
     transform: scale(1.05);
     border-radius: 100%;
+}
+#subtaskInputButtonAdd {
+    pointer-events: none;
+}
+.input-wrapper-subtask.invalid .input-icon-wrapper-edit {
+    pointer-events: none;
 }
 
 

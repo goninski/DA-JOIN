@@ -378,6 +378,10 @@ function getCurrentFieldElements(element) {
     let fieldWrapper = element.closest('.field-wrapper');
     if(fieldWrapper) {
         currentFieldElements.fieldWrapper = fieldWrapper;
+        let input = fieldWrapper.querySelector('input');
+        if(input) {
+            currentFieldElements.input = input;
+        }
         let alert = fieldWrapper.querySelector('[role="alert"]');
         if(alert) {
             currentFieldElements.alert = alert;
@@ -442,6 +446,5 @@ function closeAllDropdowns(listboxElements, currentListbox = null) {
         }
     });
 }
-
 
 

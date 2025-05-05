@@ -195,11 +195,13 @@ async function renderSubtasks(wrapperId = 'assignedSubtasks') {
     for (let index = 0; index < assignedSubtasks.length; index++) {
         element.innerHTML += getSubtasksTemplate(assignedSubtasks[index], index, activeTaskId);
     }
-    for (let index = 0; index < assignedSubtasks.length; index++) {
-        let listItem = document.getElementById('subtask-i-' + index);
-        listItem.readOnly = true;
-        let wrapper = listItem.parentElement;
-        wrapper.classList.remove('edit-mode');
+    if(assignedSubtasks.length > 0) {
+        for (let index = 0; index < assignedSubtasks.length; index++) {
+            let listItem = document.getElementById('subtask-i-' + index);
+            listItem.readOnly = true;
+            let wrapper = listItem.parentElement;
+            wrapper.classList.remove('edit-mode');
+        }
     }
     console.log(assignedSubtasks);
 }
@@ -208,64 +210,157 @@ async function renderSubtasks(wrapperId = 'assignedSubtasks') {
 
 
 
-function validateSubtaskInput(event, id='inputSubtasks') {
-    // event.stopPropagation();
-    let subtask = event.currentTarget.value;
-    // let subtask = document.getElementById(id).value;
-    if(subtask.length <= 0 || subtask.length > 128) {
-        document.getElementById('subtaskInputButtonAdd').classList.remove('hide');
-        document.getElementById('subtaskInputButtons').classList.add('hide');
-    } else {
+// SUBTASK HANDLING
+
+function subtaskEventAllowed(event) {
+    return (['Enter', ' '].includes(event.key) || event.type === 'click');
+}
+
+function getCurrentSubtaskInputFromEvent(event) {
+    let wrapper = getClosestParentElementFromEvent(event, '.input-wrapper-subtask');
+    console.log(wrapper);
+    return wrapper.querySelector('input');
+}
+
+function getCurrentSubtaskInputWrapper(element) {
+    return getClosestParentElementFromElement(element, '.input-wrapper-subtask')
+}
+
+function getCurrentInputWrapper(element) {
+    return getClosestParentElementFromElement(element, '.input-wrapper')
+}
+
+function validateSubtaskInput(input) {
+    return (input.value.length > 0 && input.value.length <= 128);
+}
+
+function validateAddSubtaskInput(event) {
+    event.stopPropagation();
+    let input = event.currentTarget;
+    if(validateSubtaskInput(input)) {
         document.getElementById('subtaskInputButtonAdd').classList.add('hide');
         document.getElementById('subtaskInputButtons').classList.remove('hide');
+    } else {
+        document.getElementById('subtaskInputButtonAdd').classList.remove('hide');
+        document.getElementById('subtaskInputButtons').classList.add('hide');
     }
 }
 
-function addSubtaskPseudo(event) {
+function validateUpdateSubtaskInput(event) {
     event.stopPropagation();
+    let input = event.currentTarget;
+    if(validateSubtaskInput(input)) {
+        wrapper.classList.remove('invalid');
+    } else {
+        wrapper.classList.add('invalid');
+    }
 }
 
-async function addSubtask(event) {
-    console.log('addSubtask');
+function addSubtaskEventHandlerPseudo(event) {
     event.stopPropagation();
-    let element = getInputElement(event);
-    assignedSubtasks.push(element.value);
+    if(subtaskEventAllowed) {
+        event.preventDefault();
+    }
+}
+
+function addSubtaskInputEventHandler(event) {
+    event.stopPropagation();
+    if(['Enter'].includes(event.key)) {
+        if(validateSubtaskInput(input)) {
+            addSubtask(event.currentTarget);
+        }
+    };
+}
+
+function addSubtaskEventHandler(event) {
+    event.stopPropagation();
+    if(subtaskEventAllowed) {
+        event.preventDefault();
+        getCurrentFieldElements(event.target);
+        let input = currentFieldElements.input;
+        addSubtask(input);
+    }
+}
+
+async function addSubtask(element) {
+    console.log(element.value);
+    let subtask = {};
+    subtask.title = element.value;
+    subtask.done = false;
+    console.log(subtask);
+    assignedSubtasks.push(subtask);
+    console.log(assignedSubtasks);
     await renderSubtasks();
-    resetSubtaskInput(event, element);
+    clearSubtaskInput(element);
 }
 
-function editSubtask(event) {
+function clearSubtaskEventHandler(event) {
     event.stopPropagation();
-    let wrapper = getInputWrapperElement(event);
-    let element = getInputElement(event);
-    wrapper.classList.add('edit-mode');
-    element.readOnly = false;
+    // console.log('f) clearSubtaskEventHandler');
+    if(subtaskEventAllowed) {
+        event.preventDefault();
+        getCurrentFieldElements(event.target);
+        clearSubtaskInput(currentFieldElements.input);
+    }
 }
 
-function saveSubtask(event, index) {
-    event.stopPropagation();
-    let element = getInputElement(event);
-    assignedSubtasks[index] = element.value;
-    renderSubtasks();
-}
-
-function deleteSubtask(event, index) {
-    event.stopPropagation();
-    assignedSubtasks.splice(index, 1);
-    renderSubtasks();
-}
-
-function resetSubtaskInput(event, element) {
-    console.log('resetSubtaskInput');
-    event.stopPropagation();
-    event.preventDefault;
+function clearSubtaskInput(element) {
     element.value = '';
     document.getElementById('subtaskInputButtonAdd').classList.remove('hide');
     document.getElementById('subtaskInputButtons').classList.add('hide');
-    // element.focus();
-    // resetInputValidation(id);
-
+    element.focus();
 }
+
+function editSubtaskEventHandler(event) {
+    event.stopPropagation();
+    // console.log('f) editSubtaskEventHandler');
+    if(subtaskEventAllowed) {
+        event.preventDefault();
+        let input = getCurrentSubtaskInputFromEvent(event);
+        let wrapper = getCurrentSubtaskInputWrapper(input);
+        wrapper.classList.add('edit-mode');
+        input.readOnly = false;
+    }
+}
+
+function updateSubtaskEventHandler(event, index) {
+    event.stopPropagation();
+    // console.log('f) updateSubtaskEventHandler');
+    if(subtaskEventAllowed) {
+        event.preventDefault();
+        let input = getCurrentSubtaskInputFromEvent(event);
+        let wrapper = getCurrentSubtaskInputWrapper(input);
+        assignedSubtasks[index].title = input.value;
+        console.log(assignedSubtasks);
+        wrapper.classList.remove('edit-mode');
+        input.readOnly = true;
+        renderSubtasks();
+    }
+}
+
+function deleteSubtaskEventHandler(event, index) {
+    event.stopPropagation();
+    // console.log('f) deleteSubtaskEventHandler');
+    if(subtaskEventAllowed) {
+        event.preventDefault();
+        deleteSubtask(index);
+    }
+}
+
+function deleteSubtask(index) {
+    assignedSubtasks.splice(index, 1);
+    console.log(assignedSubtasks);
+    renderSubtasks();
+}
+
+// untested !!
+function toggleSubtaskStatus(index) {
+    let status = assignedSubtasks[index].done;
+    assignedSubtasks[index].done = !status;
+    renderSubtasks();
+}
+
+
 
 
 

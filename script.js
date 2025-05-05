@@ -45,6 +45,10 @@ function signOut() {
 // HELPER FUNCTIONS
 
 
+function getClosestParentElementFromElement(element, selector = '') {
+    return element.closest(selector);
+}
+
 function getClosestParentElementFromEvent(event, selector = '') {
     let element = event.currentTarget;
     if(element) {
