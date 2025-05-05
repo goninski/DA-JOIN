@@ -274,9 +274,8 @@ async function createTask(event) {
     event.stopPropagation();
     let taskInputs = getFormInputObj(event, 'addTaskForm');
     console.log(taskInputs);
-    lastTaskId++;
     let task = {};
-    task.id = lastTaskId;
+    task.id = await getNextTaskId();
     task.title = taskInputs.title;
     task.description = taskInputs.description;
     task.dueDate = taskInputs.dueDate;
@@ -306,7 +305,7 @@ async function saveTask(event) {
     if(taskInputs.title.length <= 0) {
         return;
     }
-    let index = getTaskIndexFromId(taskId);
+    let index = await getTaskIndexFromId(taskId);
     // console.log(index);
     tasks[index].title = taskInputs.title;
     tasks[index].description = taskInputs.description;

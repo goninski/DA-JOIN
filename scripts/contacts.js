@@ -155,15 +155,14 @@ async function setEditContactValues(contactId) {
     document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Save');
 }
 
-function submitContactsForm(event, contactId) {
+async function submitContactsForm(event, contactId) {
     event.stopPropagation();
     if(formMode == 'edit') {
-        submitUpdateContact(event, contactId);
+        await submitUpdateContact(event, contactId);
     } else {
-        lastContactId++;
-        contactId = lastContactId;
+        contactId = await getNextContactId();
         // contactId = getRandomString();
-        submitCreateContact(event, contactId);
+        await submitCreateContact(event, contactId);
     }
 }
 

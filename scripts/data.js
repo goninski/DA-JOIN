@@ -3,11 +3,12 @@ let localStorageMode = false;
 let categories = [];
 let contacts = [];
 let tasks = [];
-let lastId = '';
-let lastCategoryId = '';
-let lastContactId = '';
-let lastTaskId = '';
+// let lastId = '';
+// let lastCategoryId = '';
+// let lastContactId = '';
+// let lastTaskId = '';
 let dataArr = [];
+let authUserId = null;
 
 async function initData() {
     getMainTemplates();
@@ -101,58 +102,37 @@ async function getUserData() {
 
 async function getCategoriesFromDB() {
     categories = await fetchDataFromFirebase('categories/');
-    lastCategoryId = await getLastIdFromDB('categories');
-    // let x = await fetchDataFromFirebase('categories/');
-    // let y = await getLastIdFromDB('categories');
-    // console.log(x);
-    // console.log(y);
 }
 
 async function getContactsFromDB() {
     contacts = await fetchDataFromFirebase('users/');
-    lastContactId = await getLastIdFromDB('users');
-    // let x = await fetchDataFromFirebase('users/');
-    // let y = await getLastIdFromDB('users');
-    // console.log(x);
-    // console.log(y);
 }
 
 async function getTasksFromDB() {
     tasks = await fetchDataFromFirebase('tasks/');
-    lastTaskId = await getLastIdFromDB('tasks');
-    // let x = await fetchDataFromFirebase('tasks/');
-    // let y = await getLastIdFromDB('tasks');
-    // console.log(x);
-    // console.log(y);
-}
-
-async function getLastIdFromDB(type) {
-    let lastId = await fetchDataFromFirebase('lastId/' +  type, true);
-    // console.log(lastId);
-    return lastId;
 }
 
 async function saveCategoryToDB(category) {
-    let categoryId = category.id;
+    let categoryId
+    if(category.id && category.id > 0) {
+        categoryId = category.id;
+    } else {
+        return alert('Category not saved due missing Id !');
+    }
     await saveDataToFirebase('categories/' + categoryId, category);
-    await saveLastIdToDB('categories', lastCategoryId)
+    // await saveLastIdToDB('categories', lastCategoryId)
+}
+
+async function deleteCategoryFromDB(categoryId) {
+    await deleteFirebaseData('categories/' + categoryId);
 }
 
 async function saveContactToDB(contact, mode = 'add') {
     let contactId
     if(contact.id && contact.id > 0) {
         contactId = contact.id;
-        // console.log('i) has contactId');
     } else {
-        if(mode == 'add' && lastContactId > 0) {
-            // lastContactId = await getLastIdFromDB('users');
-            lastContactId++;
-            contactId = lastContactId;
-            // console.log('i) new contactId');
-            await saveLastIdToDB('users', contactId)
-        } else {
-            return alert('Contact is not saved due missing Id !');
-        }
+        return alert('Contact not saved due missing Id !');
     }
     await saveDataToFirebase('users/' + contactId, contact);
 }
@@ -165,12 +145,25 @@ async function updateContact(contact) {
     await saveContactToDB(contact, 'update');
 }
 
+async function deleteContactFromDB(contactId) {
+    await deleteFirebaseData('users/' + contactId);
+}
+
+async function getNextContactId() {
+    let lastId = await getLastIdFromObjArray(contacts);
+    return lastId + 1;
+}
+
+
+
 async function saveTaskToDB(task, mode = 'add') {
-    let taskId = task.id;
-    await saveDataToFirebase('tasks/' + taskId, task);
-    if(mode == 'add') {
-        await saveLastIdToDB('tasks', lastTaskId)
+    let taskId;
+    if(task.id && task.id > 0) {
+        taskId = task.id;
+    } else {
+        return alert('Task not saved due missing Id !');
     }
+    await saveDataToFirebase('tasks/' + taskId, task);
 }
 
 async function createTaskDB(task) {
@@ -181,25 +174,15 @@ async function updateTaskDB(task) {
     await saveTaskToDB(task, 'update');
 }
 
-async function deleteCategoryFromDB(categoryId) {
-    await deleteFirebaseData('categories/' + categoryId);
-}
-
-async function deleteContactFromDB(contactId) {
-    await deleteFirebaseData('users/' + contactId);
-}
-
 async function deleteTaskFromDB(taskId) {
-   await deleteFirebaseData('tasks/' + taskId);
+    await deleteFirebaseData('tasks/' + taskId);
+ }
+
+async function getNextTaskId() {
+    let lastId = await getLastIdFromObjArray(tasks);
+    return lastId + 1;
 }
 
-async function saveLastIdToDB(type, lastId) {
-    await saveDataToFirebase('lastId/' + type, lastId);
-}
-
-async function getLastIdFromObjArray(objArray) {
-    return Math.max(...objArray.map(item => item.id));
-}
 
 
 
@@ -234,37 +217,31 @@ async function saveAllDataToLS() {
 
 async function getCategoriesFromLS() {
     categories = await getFromLocalStorage('categories');
-    lastCategoryId = await getFromLocalStorage('lastCategoryId');
 }
 
 async function getContactsFromLS() {
     contacts = await getFromLocalStorage('contacts');
-    lastContactId = await getFromLocalStorage('lastContactId');
 }
 
 async function getTasksFromLS() {
     tasks = await getFromLocalStorage('tasks');
-    lastTaskId = await getFromLocalStorage('lastTaskId');
 }
 
 async function saveCategoriesToLS() {
     if(localStorageMode) {
         saveToLocalStorage('categories', categories);
-        saveToLocalStorage('lastCategoryId', lastCategoryId);
     }
 }
 
 async function saveContactsToLS() {
     if(localStorageMode) {
         saveToLocalStorage('contacts', contacts);
-        saveToLocalStorage('lastContactId', lastContactId);
     }
 }
 
 async function saveTasksToLS() {
     if(localStorageMode) {
         saveToLocalStorage('tasks', tasks);
-        saveToLocalStorage('lastTaskId', lastTaskId);
     }
 }
 

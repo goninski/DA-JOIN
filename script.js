@@ -35,6 +35,7 @@ function signIn() {
 }
 
 function signOut() {
+    autoUserId = null;
     window.location.href = "/login.html";
 }
 
@@ -115,6 +116,10 @@ function getInitialsOfFirstAndLastWord(string) {
 function getInitialOfLastWord(string) {
     let lastWord = getLastWord(string);
     return lastWord[0].toUpperCase();
+}
+
+async function getLastIdFromObjArray(objArray) {
+    return Math.max(...objArray.map(item => item.id));
 }
 
 function getRandomColor(format = 'hex') {

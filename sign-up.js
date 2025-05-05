@@ -21,15 +21,17 @@ async function addUser() {
     return;
   }
 
+  await getUserData(); // creates a 'contacts' object 
+  console.log(console); 
+  const nextUserId = await getNextContactId();
   const newUser = {
     name: nameInput,
     email: emailInput,
-    password: passwordInput
+    password: passwordInput,
+    id: nextUserId
   };
 
-  usersDatabase.push(newUser);
-  
-  await getUserData();
+  contacts.push(newUser);
   await createContact(newUser);
   signUpSuccessfull();
 

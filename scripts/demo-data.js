@@ -8,9 +8,6 @@ let categoriesDefault = [
         "name": "User Story"
     },
 ];
-// categories = categoriesDefault;
-// lastCategoryId = getLastIdFromObjArray(categories);
-// lastCategoryId = Math.max(...categories.map(category => category.id));
 
 let contactsDemo = [
     {
@@ -83,11 +80,10 @@ let tasksDemo = [
         "priority": "high",
         "contactIds": ['1001', '1002', '1003'],
         "categoryId": '101',
-        "subtasks": ["Subtask 1"],
-        // "subtasks": [
-        //     {"title": "Subtask 1","status": 1},
-        //     {"title": "Subtask 2","status": 0},
-        // ]
+        "subtasks": [
+            {"title": "Subtask 1.1","status": 1},
+            {"title": "Subtask 1.2","status": 0},
+        ],
         "status": "To do",
     },
     {
@@ -98,7 +94,10 @@ let tasksDemo = [
         "priority": "medium",
         "contactIds": ['1004', '1006'],
         "categoryId": '102',
-        "subtasks": ["Subtask 1","Subtask 2"],
+        "subtasks": [
+            {"title": "Subtask 2.1","status": 1},
+            {"title": "Subtask 2.2","status": 0},
+        ],
         "status": "In progress",
     },
     {
@@ -109,7 +108,9 @@ let tasksDemo = [
         "priority": "low",
         "contactIds": ['1005', '1009'],
         "categoryId": '102',
-        "subtasks": ["Subtask 1","Subtask 2","Subtask 3"],
+        "subtasks": [
+            {"title": "Subtask 3.1","status": 1},
+        ],
         "status": "Await Feedback",
     },
     {
@@ -120,11 +121,12 @@ let tasksDemo = [
         "priority": "low",
         "contactIds": ['1007', '1008'],
         "categoryId": '102',
-        // "subtasks": ["Subtask 1","Subtask 2","Subtask 3"],
+        // "subtasks": [
+        //     {"title": "Subtask 3.1","status": 1},
+        // ],
         "status": "Done",
     },
 ];
-
 
 
 async function resetToDemoData() {
@@ -133,9 +135,9 @@ async function resetToDemoData() {
     contacts = contactsDemo;
     contacts.sort((a, b) => a.name.localeCompare(b.name));
     tasks = tasksDemo;
-    lastCategoryId = await getLastIdFromObjArray(categories);
-    lastContactId = await getLastIdFromObjArray(contacts);
-    lastTaskId = await getLastIdFromObjArray(tasks);
+    // lastCategoryId = await getLastIdFromObjArray(categories);
+    // lastContactId = await getLastIdFromObjArray(contacts);
+    // lastTaskId = await getLastIdFromObjArray(tasks);
     contacts.forEach(function(contact) {
         if(! contact.initials) {
             contact.initials = getInitialsOfFirstAndLastWord(contact.name);
@@ -155,7 +157,7 @@ async function resetToDemoData() {
         await saveAllCategoriesToDB();
         await saveAllContactsToDB();
         await saveAllTasksToDB();
-        await saveLastIdToDB('users', lastContactId)
+        // await saveLastIdToDB('users', lastContactId)
         // await saveLastIdToDB('categories', lastCategoryId)
         // await saveLastIdToDB('tasks', lastTaskId)
         }
@@ -178,19 +180,16 @@ async function saveAllDataToDB() {
 }
 
 async function saveAllCategoriesToDB() {
-    console.log(categories);
     categories.forEach(function(category) {
         saveCategoryToDB(category);
     });
 }
 
 async function saveAllContactsToDB() {
-    // saveContactToDB(item);
     contacts.forEach(function(contact) {
         let contactId = contact.id;
         saveDataToFirebase('users/' + contactId, contact);
     });
-    saveLastIdToDB('users', lastContactId);
 }
 
 async function saveAllTasksToDB() {

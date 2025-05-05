@@ -12,9 +12,9 @@ window.onload = () => {
 };
 
 async function checkLogin(event) {
-    await getUserData(); // creates a 'contacts' object, use the function 'updateContact(contact)' to update a user
+    await getUserData(); // creates a 'contacts' object, use the function 'updateContact(contact)' to update a user if needed
     console.log(contacts);
-    // signIn();
+    signIn();
 }
   
 function guestLogin(event) {
