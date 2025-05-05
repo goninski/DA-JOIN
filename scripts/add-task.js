@@ -275,7 +275,7 @@ async function createTask(event) {
     let taskInputs = getFormInputObj(event, 'addTaskForm');
     console.log(taskInputs);
     let task = {};
-    task.id = await getNextTaskId();
+    task.id = await getNewTaskId();
     task.title = taskInputs.title;
     task.description = taskInputs.description;
     task.dueDate = taskInputs.dueDate;

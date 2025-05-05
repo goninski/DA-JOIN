@@ -160,7 +160,7 @@ async function submitContactsForm(event, contactId) {
     if(formMode == 'edit') {
         await submitUpdateContact(event, contactId);
     } else {
-        contactId = await getNextContactId();
+        contactId = await getNewContactId();
         // contactId = getRandomString();
         await submitCreateContact(event, contactId);
     }

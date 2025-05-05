@@ -23,7 +23,7 @@ async function addUser() {
 
   await getUserData(); // creates a 'contacts' object 
   console.log(console); 
-  const nextUserId = await getNextContactId();
+  const nextUserId = await getNewContactId();
   const newUser = {
     name: nameInput,
     email: emailInput,

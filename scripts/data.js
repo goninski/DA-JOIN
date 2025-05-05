@@ -149,7 +149,7 @@ async function deleteContactFromDB(contactId) {
     await deleteFirebaseData('users/' + contactId);
 }
 
-async function getNextContactId() {
+async function getNewContactId() {
     let lastId = await getLastIdFromObjArray(contacts);
     return lastId + 1;
 }
@@ -178,7 +178,7 @@ async function deleteTaskFromDB(taskId) {
     await deleteFirebaseData('tasks/' + taskId);
  }
 
-async function getNextTaskId() {
+async function getNewTaskId() {
     let lastId = await getLastIdFromObjArray(tasks);
     return lastId + 1;
 }
