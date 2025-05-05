@@ -51,10 +51,10 @@ async function showContactDetail(event, contactId) {
     // console.log(contactId);
     if(activeContactId != '' && activeContactId != contactId){
         document.getElementById('listContactId-' + activeContactId).classList.remove('active');
-        console.log('condition A');
+        // console.log('condition A');
         }
     if(contactId == '') {
-        console.log('condition B');
+        // console.log('condition B');
         return closeContactDetail(contactId);
     }
     document.getElementById('contactPageInner').classList.add('show-contact-detail');

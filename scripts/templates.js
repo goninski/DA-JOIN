@@ -32,14 +32,13 @@ function getSidebarTemplate() {
             </a>
         </div>
         <div class="sidebar-footer">
+            <div class="temp-links flex-col mb-10"> 
+                <a href="/">Home</a>
+                <a href="#" id="signOutBtnTemp" onclick="signOut()">Logout</a>
+                <a href="/data.html">Data Management</a>
+            </div>
             <a href="privacy-policy.html">Privacy Policy</a>
             <a href="legal-notice.html">Legal notice</a>
-            <div class="temp-links flex-col mt-10"> 
-                <a href="/">Start</a>
-                <a href="#" id="signOutBtnTemp" onclick="signOut()">Logout</a>
-                <a href="#" onclick="resetToDemoData()">Reset Demo Data</a>
-                <a href="board-fg-temp.html">Board FG Temp</a>
-            </div>
         </div>
     `
 }
