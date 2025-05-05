@@ -6,13 +6,13 @@ import { getDatabase, ref, child, get, set, update, remove } from "https://www.g
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInAnonymously, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCOB2IDXOJe-1pBfiPCOzAZAVymnVMBiTs",
-  authDomain: "da-join-449.firebaseapp.com",
-  databaseURL: "https://da-join-449-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "da-join-449",
-  storageBucket: "da-join-449.firebasestorage.app",
-  messagingSenderId: "972751449711",
-  appId: "1:972751449711:web:f8bc03c7e3056a61f1a79a"
+  apiKey: "",
+  authDomain: "",
+  databaseURL: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: ""
 };
 
 const app = initializeApp(firebaseConfig);
