@@ -38,7 +38,7 @@
                             placeholder="Name" id="sign-up-name" required>
                     </div>
 
-                    <div class="input-wrapper-signup-login margin-bottom-24px flex justify-between">
+                    <div class="input-wrapper-signup-login margin-bottom-24px flex justify-between" id="email-div-sign-up">
                         <input class="login-signup-input pictureinput mail-pic" type="email" name="email" id="email"
                             placeholder="Email" required>
                     </div>
@@ -48,7 +48,7 @@
                             minlength="8" placeholder="Password" required>
                     </div>
 
-                    <div class="input-wrapper-signup-login margin-bottom-24px flex justify-between">
+                    <div class="input-wrapper-signup-login margin-bottom-24px flex justify-between"  id="confirm-pwd-div-sign-up">
                         <input class="login-signup-input pictureinput pwd-pic" type="password" id="confirm_pwd"
                             name="pwd" minlength="8" placeholder="Confirm Password" required>
                     </div>
@@ -64,8 +64,7 @@
             </div>
 
             <div class="flex-row align-end justify-center gap-35">
-                <button id="signUpBtn" type="submit" value="Sign up" class="button btn-login-size btn-fourth" onclick="addUser()">Sign
-                    up</button>
+                <button id="signUpBtn" type="submit" value="Sign up" class="button btn-login-size btn-fourth" onclick="addUser()">Sign up</button>
             </div>
         </div>
     </section>
@@ -80,9 +79,6 @@
             <div class="overlay-sign-up-successfully-div">You Signed Up successfully</div>
         </div>
     </section>
-
-
-    <div id="floatingMsg" class="button btn-icon btn-primary floating-message hide"></div>
     
 
     <script src="sign-up.js"></script>
