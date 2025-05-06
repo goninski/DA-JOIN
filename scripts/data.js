@@ -48,8 +48,6 @@ async function firebaseObjToArray(fetchObj) {
 };
 
 async function saveDataToFirebase(fetchPath, dataArr, postMethode="PUT") {
-    let str = JSON.stringify(dataArr);
-    console.log(str);
     let response = await fetch(fetchUrl + fetchPath + '.json', {
         method: postMethode,
         header: {
@@ -169,13 +167,14 @@ async function saveTaskToDB(task, mode = 'add') {
 }
 
 async function createTaskDB(task) {
-    await setTaskProgress(task);
     await saveTaskToDB(task);
+    await setTaskProgress(task);
 }
 
 async function updateTaskDB(task) {
-    await setTaskProgress(task);
+    delete task.subtaskProgress;
     await saveTaskToDB(task, 'update');
+    await setTaskProgress(task);
 }
 
 async function deleteTaskFromDB(taskId) {

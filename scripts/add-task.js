@@ -287,8 +287,11 @@ async function addSubtask(element) {
     subtask.title = element.value;
     subtask.done = false;
     console.log(subtask);
-    assignedSubtasks.push(subtask);
+    if(! assignedSubtasks) {
+        assignedSubtasks = [];
+    }
     console.log(assignedSubtasks);
+    assignedSubtasks.push(subtask)
     await renderSubtasks();
     clearSubtaskInput(element);
 }
@@ -373,16 +376,11 @@ async function submitCreateTask(event) {
     task.title = taskInputs.title;
     task.dueDate = taskInputs.dueDate;
     task.priority = taskInputs.priority;
+    task.status = 'To do';
     task.categoryId = document.getElementById('categorySelect').dataset.optionId;
-    if(taskInputs.description.length > 0) {
-        task.description = taskInputs.description;
-    }
-    if(assignedContacts.length > 0) {
-        task.contactIds = assignedContacts;
-    }
-    if(assignedSubtasks.length > 0) {
-        task.subtasks = assignedSubtasks;
-    }
+    hasLength(taskInputs.description) ? task.description = taskInputs.description : delete task.description;
+    hasLength(assignedContacts) ? task.contactIds = assignedContacts : delete task.contactIds;
+    hasLength(assignedSubtasks) ? task.subtasks = assignedSubtasks : delete task.subtasks;
     tasks.push(task);
     await createTaskDB(task);
     await saveTasksToLS();
@@ -410,15 +408,9 @@ async function submitUpdateTask(event) {
     tasks[index].dueDate = taskInputs.dueDate;
     tasks[index].priority = taskInputs.priority;
     tasks[index].categoryId = document.getElementById('categorySelect').dataset.optionId;
-    if(taskInputs.description.length > 0) {
-        tasks[index].description = taskInputs.description;
-    }
-    if(assignedContacts.length > 0) {
-        tasks[index].contactIds = assignedContacts;
-    }
-    if(assignedSubtasks.length > 0) {
-        tasks[index].subtasks = assignedSubtasks;
-    }
+    hasLength(taskInputs.description) ? tasks[index].description = taskInputs.description : delete tasks[index].description;
+    hasLength(assignedContacts) ? tasks[index].contactIds = assignedContacts : delete tasks[index].contactIds;
+    hasLength(assignedSubtasks) ? tasks[index].subtasks = assignedSubtasks : delete tasks[index].subtasks;
     console.log(tasks);
     let task = tasks[index];
     console.log(task);

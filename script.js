@@ -44,6 +44,11 @@ function signOut() {
 
 // HELPER FUNCTIONS
 
+function hasLength(object) {
+    if(object && object.length > 0) {
+        return true;
+    }
+}
 
 function getClosestParentElementFromElement(element, selector = '') {
     return element.closest(selector);
