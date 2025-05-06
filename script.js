@@ -164,19 +164,3 @@ async function showFloatingMessage(template, msg = '') {
 }
 
 
-
-
-// console.log(currentPage);
-if(currentPage != '/login.html' && currentPage != '/logout.html') {
-    // renderTemporaryButtons();
-}
-
-function renderTemporaryButtons() {
-    let btn = document.createElement("button");
-    btn.innerHTML = 'Logout';
-    btn.style = 'color: white; position: fixed; bottom: 0; width: 232px; height: 48px;';
-    btn.addEventListener('click', signOut)
-    document.body.appendChild(btn);
-  };
-  
-

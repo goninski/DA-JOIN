@@ -214,7 +214,7 @@ async function submitUpdateContact(event, contactId) {
     }, 1000);
 }
 
-async function deleteContact(event, contactId) {
+async function submitDeleteContact(event, contactId) {
     event.stopPropagation();
     event.preventDefault();
     await deleteContactFromDB(contactId);

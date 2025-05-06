@@ -113,20 +113,19 @@ async function setEditTaskValues(task, formId) {
         assignedContacts = task.contactIds;
         await renderContactSelectOptions();
         await renderContactProfileBatches(assignedContacts);
-        // if(task.categoryId) {
-        //     let index = await getCategoryIndexFromId(task.categoryId);
-        //     let categoryName = categories[index].name;
-        //     document.getElementById('categorySelect').value = categoryName;
-        //     document.getElementById('categorySelect').dataset.optionId = task.categoryId;
-        //     // document.getElementById('categoryOptionId-' + task.categoryId).setAttribute('aria-selected', 'true');
-        //     document.getElementById('categorySelect').classList.remove("clickable");
-        //     document.getElementById('categorySelect').setAttribute("disabled", '');
-        // }
+        if(task.categoryId) {
+            let index = await getCategoryIndexFromId(task.categoryId);
+            let categoryName = categories[index].name;
+            document.getElementById('categorySelect').value = categoryName;
+            document.getElementById('categorySelect').dataset.optionId = task.categoryId;
+            document.getElementById('categorySelect').classList.remove("clickable");
+            document.getElementById('categorySelect').setAttribute("disabled", '');
+            document.getElementById('categoryOptionId-' + task.categoryId).setAttribute('aria-selected', 'true');
+        }
         assignedSubtasks = task.subtasks;
-        // renderSubtasks();
+        renderSubtasks();
     }
 }
-
 
 async function filterTaskContactOptions(event) {
     event.stopPropagation()
@@ -158,7 +157,7 @@ async function renderContactSelectOptions(listboxId = 'taskContactsListbox', sea
     // console.log(taskContacts);
     for (let index = 0; index < taskContacts.length; index++) {
         listbox.innerHTML += getContactSelectOptionTemplate(taskContacts[index], index);
-        if(assignedContacts.length > 0) {
+        if(assignedContacts && assignedContacts.length > 0) {
             let isChecked = assignedContacts.includes(taskContacts[index].id);
             setTimeout(function() {
                 document.getElementById('checkboxAssignedContact-' + taskContacts[index].id).checked = isChecked;
@@ -192,10 +191,10 @@ async function renderCategorySelectOptions(event = null, wrapperId = 'taskCatego
 async function renderSubtasks(wrapperId = 'assignedSubtasks') {
     let element = document.getElementById(wrapperId);
     element.innerHTML = '';
-    for (let index = 0; index < assignedSubtasks.length; index++) {
-        element.innerHTML += getSubtasksTemplate(assignedSubtasks[index], index, activeTaskId);
-    }
-    if(assignedSubtasks.length > 0) {
+    if(assignedSubtasks && assignedSubtasks.length > 0) {
+        for (let index = 0; index < assignedSubtasks.length; index++) {
+            element.innerHTML += getSubtasksTemplate(assignedSubtasks[index], index, activeTaskId);
+        }
         for (let index = 0; index < assignedSubtasks.length; index++) {
             let listItem = document.getElementById('subtask-i-' + index);
             listItem.readOnly = true;
@@ -203,7 +202,7 @@ async function renderSubtasks(wrapperId = 'assignedSubtasks') {
             wrapper.classList.remove('edit-mode');
         }
     }
-    console.log(assignedSubtasks);
+    // console.log(assignedSubtasks);
 }
 
 
@@ -364,7 +363,7 @@ function toggleSubtaskStatus(index) {
 
 
 
-async function createTask(event) {
+async function submitCreateTask(event) {
     console.log('createTask');
     event.stopPropagation();
     let taskInputs = getFormInputObj(event, 'addTaskForm');
@@ -372,13 +371,18 @@ async function createTask(event) {
     let task = {};
     task.id = await getNewTaskId();
     task.title = taskInputs.title;
-    task.description = taskInputs.description;
     task.dueDate = taskInputs.dueDate;
     task.priority = taskInputs.priority;
-    task.contactIds = assignedContacts;
     task.categoryId = document.getElementById('categorySelect').dataset.optionId;
-    // task.categoryId = Number(taskInputs.categorySelectId);
-    task.subtasks = assignedSubtasks;
+    if(taskInputs.description.length > 0) {
+        task.description = taskInputs.description;
+    }
+    if(assignedContacts.length > 0) {
+        task.contactIds = assignedContacts;
+    }
+    if(assignedSubtasks.length > 0) {
+        task.subtasks = assignedSubtasks;
+    }
     tasks.push(task);
     await createTaskDB(task);
     await saveTasksToLS();
@@ -390,7 +394,7 @@ async function createTask(event) {
     }, 1500);
 }
 
-async function saveTask(event) {
+async function submitUpdateTask(event) {
     event.stopPropagation();
     console.log(event.currentTarget);
     console.log(event.target);
@@ -401,16 +405,23 @@ async function saveTask(event) {
         return;
     }
     let index = await getTaskIndexFromId(taskId);
-    // console.log(index);
+   // console.log(index);
     tasks[index].title = taskInputs.title;
-    tasks[index].description = taskInputs.description;
     tasks[index].dueDate = taskInputs.dueDate;
     tasks[index].priority = taskInputs.priority;
-    tasks[index].contactIds = assignedContacts;
     tasks[index].categoryId = document.getElementById('categorySelect').dataset.optionId;
-    tasks[index].subtasks = assignedSubtasks;
+    if(taskInputs.description.length > 0) {
+        tasks[index].description = taskInputs.description;
+    }
+    if(assignedContacts.length > 0) {
+        tasks[index].contactIds = assignedContacts;
+    }
+    if(assignedSubtasks.length > 0) {
+        tasks[index].subtasks = assignedSubtasks;
+    }
     console.log(tasks);
     let task = tasks[index];
+    console.log(task);
     await updateTaskDB(task);
     await saveTasksToLS();
     await showFloatingMessage('text', 'Task successfully edited');
@@ -419,7 +430,7 @@ async function saveTask(event) {
     }, 1000);
 }
 
-async function deleteTask(event, taskId = '') {
+async function submitDeleteTask(event, taskId = '') {
     event.stopPropagation();
     if(taskId == '') {
         taskId = activeTaskId;

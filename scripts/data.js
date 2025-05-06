@@ -111,6 +111,7 @@ async function getContactsFromDB() {
 
 async function getTasksFromDB() {
     tasks = await fetchDataFromFirebase('tasks/');
+    await setTaskProgressForAllTasks();
 }
 
 async function saveCategoryToDB(category) {
@@ -168,10 +169,12 @@ async function saveTaskToDB(task, mode = 'add') {
 }
 
 async function createTaskDB(task) {
+    await setTaskProgress(task);
     await saveTaskToDB(task);
 }
 
 async function updateTaskDB(task) {
+    await setTaskProgress(task);
     await saveTaskToDB(task, 'update');
 }
 
@@ -184,7 +187,42 @@ async function getNewTaskId() {
     return lastId + 1;
 }
 
+async function setTaskProgressForAllTasks() {
+    if(tasks && tasks.length > 0) {
+        for (let index = 0; index < tasks.length; index++) {
+            let task = tasks[index];
+            setTaskProgress(task);
+            // console.log(task);
+        }
+    }
+    // console.log(tasks);
+}
 
+async function setTaskProgress(task) {
+    if(task) {
+        let doneSubtasks = 0;
+        let subtaskProgress = 0;
+        let subtaskCount = 0
+        // task.subtaskCount = subtaskCount;
+        if(task.subtasks && task.subtasks.length > 0) {
+            subtaskCount = task.subtasks.length;
+            // task.subtaskCount = subtaskCount;
+            task.subtasks.forEach(function(subtask) {
+                if(subtask.done) {
+                    doneSubtasks++;
+                }
+            });
+            subtaskProgress = (doneSubtasks / subtaskCount * 100) + '%';
+            // console.log(doneSubtasks);
+            // console.log(subtaskCount);
+            // console.log(subtaskProgress);
+            task.subtaskProgress = subtaskProgress;
+        } else {
+            delete task.subtasks;
+            delete task.subtaskProgress;
+        }
+    }
+}
 
 
 

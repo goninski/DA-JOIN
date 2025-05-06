@@ -1,6 +1,7 @@
 async function initBoards() {
     getMainTemplates();
     await getAllData();
+    console.log(tasks);
     await renderBoards();
 }
 

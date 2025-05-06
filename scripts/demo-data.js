@@ -78,13 +78,13 @@ let tasksDemo = [
         "description": "Description Task 1...",
         "dueDate": "2025-04-01",
         "priority": "high",
-        "contactIds": ['1001', '1002', '1003'],
         "categoryId": '101',
+        "contactIds": ['1001', '1002', '1003'],
         "subtasks": [
             {"title": "Subtask 1.1","done": true},
             {"title": "Subtask 1.2","done": false},
         ],
-        "done": "To do",
+        "status": "To do",
     },
     {
         "id": "10002",
@@ -92,13 +92,13 @@ let tasksDemo = [
         "description": "Description Task 2...",
         "dueDate": "2025-03-31",
         "priority": "medium",
-        "contactIds": ['1004', '1006'],
         "categoryId": '102',
+        "contactIds": ['1004', '1006'],
         "subtasks": [
             {"title": "Subtask 2.1","done": true},
             {"title": "Subtask 2.2","done": false},
         ],
-        "done": "In progress",
+        "status": "In progress",
     },
     {
         "id": "10003",
@@ -106,24 +106,24 @@ let tasksDemo = [
         "description": "Description Task 3...",
         "dueDate": '2025-05-05',
         "priority": "low",
-        "contactIds": ['1005', '1009'],
         "categoryId": '102',
+        "contactIds": ['1005', '1009'],
         "subtasks": [
             {"title": "Subtask 3.1","done": true},
         ],
-        "done": "Await Feedback",
+        "status": "Await Feedback",
     },
     {
         "id": "10004",
         "title": "Title Task 4...",
         "description": "Description Task 4...",
         "priority": "low",
-        "contactIds": ['1007', '1008'],
         "categoryId": '102',
+        "contactIds": ['1007', '1008'],
         // "subtasks": [
         //     {"title": "Subtask 3.1","done": true},
         // ],
-        "done": "Done",
+        "status": "Done",
     },
 ];
 
