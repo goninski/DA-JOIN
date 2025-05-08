@@ -182,7 +182,7 @@ function getCategorySelectOptionTemplate(category, index) {
 function getSubtasksTemplate(subtask, index, taskId) {
     return `
     <li class="input-wrapper input-wrapper-subtask">
-        <input type="text" id="subtask-i-${index}" class="subtask-input clickable" value="${subtask.title}" onmouseover="subtaskOnHover(event, 1)" onmouseleave="subtaskOnHover(event, 0)" oninput="validateUpdateSubtaskInput(event)">
+        <input type="text" id="subtask-i-${index}" class="subtask-input clickable" value="${subtask.title}" xonmouseover="subtaskOnHover(event, 1)" xonmouseleave="subtaskOnHover(event, 0)" oninput="validateUpdateSubtaskInput(event)">
         <div class="input-icon-wrapper input-icon-wrapper-read"">
             <button onclick="editSubtaskEventHandler(event)"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div>
             <button onclick="deleteSubtaskEventHandler(event, ${index})"><img src="/assets/icons/delete.svg" class="icon-delete"></button>
