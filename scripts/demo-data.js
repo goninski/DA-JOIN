@@ -173,7 +173,7 @@ async function saveAllCategories() {
 async function saveAllContacts() {
     console.log(contacts);
     contacts.forEach(function(contact) {
-        updateContact(contact);
+        updateContact(contact.id);
     });
 }
 

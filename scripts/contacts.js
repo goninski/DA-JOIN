@@ -197,19 +197,40 @@ async function submitUpdateContact(event, contactId) {
         return;
     }
     let index = await getContactIndexFromId(contactId);
-    contacts[index].name = formInputs.name;
-    contacts[index].email = formInputs.email;
-    contacts[index].phone = formInputs.phone;
-    contacts[index].initials = getInitialsOfFirstAndLastWord(formInputs.name);
-    await sortContacts(contacts);
     let contact = contacts[index];
-    // console.log(contact);
-    await updateContact(contact);
+    contact.id = contactId;
+    contact.name = formInputs.name;
+    contact.email = formInputs.email;
+    contact.phone = formInputs.phone;
+    contact.initials = getInitialsOfFirstAndLastWord(formInputs.name);
+    await sortContacts(contacts);
+    await updateContact(contactId);
     await showFloatingMessage('text', 'Contact successfully edited');
     setTimeout(function() { 
         closeContactsFormDialogue(event);
     }, 1000);
 }
+
+// async function submitUpdateContact(event, contactId) {
+//     event.stopPropagation();
+//     let formInputs = getFormInputObj(event, 'contactsForm');
+//     if(formInputs.name.length <= 0) {
+//         return;
+//     }
+//     let index = await getContactIndexFromId(contactId);
+//     contacts[index].name = formInputs.name;
+//     contacts[index].email = formInputs.email;
+//     contacts[index].phone = formInputs.phone;
+//     contacts[index].initials = getInitialsOfFirstAndLastWord(formInputs.name);
+//     await sortContacts(contacts);
+//     let contact = contacts[index];
+//     // console.log(contact);
+//     await updateContact(contact);
+//     await showFloatingMessage('text', 'Contact successfully edited');
+//     setTimeout(function() { 
+//         closeContactsFormDialogue(event);
+//     }, 1000);
+// }
 
 async function submitDeleteContact(event, contactId) {
     event.stopPropagation();

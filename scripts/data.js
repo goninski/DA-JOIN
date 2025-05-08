@@ -94,7 +94,9 @@ async function createContact(contact) {
     console.log(contacts);
 }
 
-async function updateContact(contact) {
+async function updateContact(contactId) {
+    let index = await getContactIndexFromId(contactId);
+    let contact = contacts[index];
     localStorageMode ? await saveContactsToLS() : await saveContactToDB(contact, 'update');
     console.log(contacts);
 }
@@ -141,7 +143,7 @@ async function setTaskProperties(task, taskInputs = null) {
         hasLength(taskInputs.contactIds) ? task.contactIds = taskInputs.contactIds : delete task.contactIds;
         hasLength(taskInputs.subtasks) ? task.subtasks = taskInputs.subtasks : delete task.subtasks;
     }
-    await setTaskProgress(task);
+    // await setTaskProgress(task);
     task.id = hasLength(task.id) ? task.id : await getNewContactId();
     task.status = hasLength(task.status) ? task.status : 'To do';
     await deleteEmptyProperties(task);
@@ -153,30 +155,52 @@ async function deleteEmptyProperties(task) {
     }
 }
 
-async function setTaskProgress(task) {
-    if(task) {
-        let doneSubtasks = 0;
-        let subtaskProgress = 0;
-        let subtaskCount = 0
-        // task.subtaskCount = subtaskCount;
-        if(task.subtasks && task.subtasks.length > 0) {
-            subtaskCount = task.subtasks.length;
-            // task.subtaskCount = subtaskCount;
-            task.subtasks.forEach(function(subtask) {
-                if(subtask.done) {
-                    doneSubtasks++;
-                }
-            });
-            subtaskProgress = (doneSubtasks / subtaskCount * 100) + '%';
-            // console.log(doneSubtasks);
-            // console.log(subtaskCount);
-            // console.log(subtaskProgress);
-            task.subtaskProgress = subtaskProgress;
-        } else {
-            delete task.subtasks;
-            delete task.subtaskProgress;
+// async function setTaskProgress(task) {
+//     if(task) {
+//         let doneSubtasks = 0;
+//         let subtaskCount = 0
+//         let subtaskProgress = '';
+//         let subtaskProgressCount = '';
+//         // task.subtaskCount = subtaskCount;
+//         if(task.subtasks && task.subtasks.length > 0) {
+//             subtaskCount = task.subtasks.length;
+//             // task.subtaskCount = subtaskCount;
+//             task.subtasks.forEach(function(subtask) {
+//                 if(subtask.done) {
+//                     doneSubtasks++;
+//                 }
+//             });
+//             subtaskProgress = (doneSubtasks / subtaskCount * 100) + '%';
+//             subtaskProgressCount = doneSubtasks + '/' + subtaskCount;
+//             // console.log(doneSubtasks);
+//             // console.log(subtaskCount);
+//             // console.log(subtaskProgress);
+//             task.subtaskProgress = subtaskProgress;
+//         } else {
+//             delete task.subtasks;
+//             delete task.subtaskCount;
+//             delete task.subtaskProgress;
+//             delete task.subtaskProgressCount;
+//         }
+//     }
+// }
+
+async function getSubtaskProgress(task, type = 'progress') {
+        if(!task.subtasks || task.subtasks.length <= 0) {
+            return null;
         }
-    }
+        let subtasksDone = 0;
+        task.subtasks.forEach(function(subtask) {
+            if(subtask.done) {
+                subtasksDone++;
+            }
+        });
+        let subtasksTotal = task.subtasks.length;
+        if(type == 'count') {
+            return (subtasksDone + '/' + subtasksTotal);
+        } else {
+            return (subtasksDone / subtasksTotal * 100);
+        }
 }
 
 
