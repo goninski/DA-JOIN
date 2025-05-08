@@ -367,13 +367,6 @@ function deleteSubtask(index) {
     renderSubtasks();
 }
 
-// untested !!
-function toggleSubtaskStatus(index) {
-    let status = assignedSubtasks[index].done;
-    assignedSubtasks[index].done = !status;
-    renderSubtasks();
-}
-
 
 
 
@@ -401,7 +394,7 @@ async function submitUpdateTask(event) {
     console.log(event.target);
     let taskId = activeTaskId;
     // console.log(taskId);
-    taskInputs = getFormInputObj(event, 'editTaskForm');
+    let taskInputs = getFormInputObj(event, 'editTaskForm');
     if(!hasLength(taskInputs.title)) { return;}
     taskInputs.categoryId = document.getElementById('categorySelect').dataset.optionId;
     hasLength(assignedContacts) ? taskInputs.contactIds = assignedContacts : null;

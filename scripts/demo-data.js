@@ -158,11 +158,6 @@ async function saveAllData() {
     await saveAllTasks();
 }
 
-async function deleteAllData() {
-    localStorageMode ? await deleteDataFromLS() : await deleteFirebaseData('');
-
-}
-
 async function saveAllCategories() {
     console.log(categories);
     categories.forEach(function(category) {

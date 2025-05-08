@@ -155,35 +155,62 @@ async function deleteEmptyProperties(task) {
     }
 }
 
-// async function setTaskProgress(task) {
-//     if(task) {
-//         let doneSubtasks = 0;
-//         let subtaskCount = 0
-//         let subtaskProgress = '';
-//         let subtaskProgressCount = '';
-//         // task.subtaskCount = subtaskCount;
-//         if(task.subtasks && task.subtasks.length > 0) {
-//             subtaskCount = task.subtasks.length;
-//             // task.subtaskCount = subtaskCount;
-//             task.subtasks.forEach(function(subtask) {
-//                 if(subtask.done) {
-//                     doneSubtasks++;
-//                 }
-//             });
-//             subtaskProgress = (doneSubtasks / subtaskCount * 100) + '%';
-//             subtaskProgressCount = doneSubtasks + '/' + subtaskCount;
-//             // console.log(doneSubtasks);
-//             // console.log(subtaskCount);
-//             // console.log(subtaskProgress);
-//             task.subtaskProgress = subtaskProgress;
-//         } else {
-//             delete task.subtasks;
-//             delete task.subtaskCount;
-//             delete task.subtaskProgress;
-//             delete task.subtaskProgressCount;
-//         }
-//     }
-// }
+async function updateTaskProperty(taskId, property, value) {
+    // console.log(taskInputs);
+    let index = await getTaskIndexFromId(taskId);
+    let task = tasks[index];
+    task[property] = value;
+    console.log(tasks);
+    localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task, 'update');
+}
+
+async function updateSubtaskStatus(taskId, subtaskIndex, value) {
+    // console.log(taskInputs);
+    let index = await getTaskIndexFromId(taskId);
+    let task = tasks[index];
+    task.subtasks[subtaskIndex].done = value;
+    console.log(tasks);
+    localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task, 'update');
+}
+
+
+// DELETE DATA
+
+async function deleteCategory(categoryId) {
+    localStorageMode ? await saveCategoriesToLS() : await deleteFirebaseData('categories/' + categoryId);
+}
+
+async function deleteContact(contactId) {
+    localStorageMode ? await saveContactsToLS() : await deleteFirebaseData('users/' + contactId);
+}
+
+async function deleteTask(taskId) {
+    localStorageMode ? await saveTasksToLS() : await deleteFirebaseData('tasks/' + taskId);
+}
+
+async function deleteAllData() {
+    localStorageMode ? await deleteDataFromLS() : await deleteFirebaseData('');
+
+}
+
+
+
+
+// SINGLE PROPERTY QUERIES/UPDATES
+
+async function changeTaskStatus(event = null, taskId, statusNew, statusOld = null) {
+    event ? event.stopPropagation() : null;
+    await updateTaskProperty(taskId, 'status', statusNew);
+    // renderBoard(statusNew);
+    // statusOld ? renderBoard(statusOld) : null;
+}
+
+async function toggleSubtaskStatus(event = null, taskId, subtaskIndex) {
+    event ? event.stopPropagation() : null;
+    let index = await getTaskIndexFromId(taskId);
+    let status = tasks[index].subtasks[subtaskIndex].done;
+    await updateSubtaskStatus(taskId, subtaskIndex, !status);
+}
 
 async function getSubtaskProgress(task, type = 'progress') {
         if(!task.subtasks || task.subtasks.length <= 0) {
@@ -204,20 +231,6 @@ async function getSubtaskProgress(task, type = 'progress') {
 }
 
 
-
-// DELETE DATA
-
-async function deleteCategory(categoryId) {
-    localStorageMode ? await saveCategoriesToLS() : await deleteFirebaseData('categories/' + categoryId);
-}
-
-async function deleteContact(contactId) {
-    localStorageMode ? await saveContactsToLS() : await deleteFirebaseData('users/' + contactId);
-}
-
-async function deleteTask(taskId) {
-    localStorageMode ? await saveTasksToLS() : await deleteFirebaseData('tasks/' + taskId);
-}
 
 
 

@@ -87,17 +87,18 @@ function getClosestParentElementFromId(id, selector = '') {
     return;
 }
 
-async function getTaskIndexFromId(taskId) {
-    return tasks.findIndex(task => task.id == taskId);
+async function getCategoryIndexFromId(categoryId) {
+    return categories.findIndex(category => category.id == categoryId);
 }
 
 async function getContactIndexFromId(contactId) {
     return contacts.findIndex(contact => contact.id == contactId);
 }
 
-async function getCategoryIndexFromId(categoryId) {
-    return categories.findIndex(category => category.id == categoryId);
+async function getTaskIndexFromId(taskId) {
+    return tasks.findIndex(task => task.id == taskId);
 }
+
 
 async function sortContacts(contacts) {
     return await contacts.sort((a, b) => a.name.localeCompare(b.name));
