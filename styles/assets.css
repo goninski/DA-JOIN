@@ -521,28 +521,44 @@ input:has(+ .input-icon-wrapper.simple) {
     display: flex;
     flex-direction: column;
     margin-block: 0;
-    margin-block-start: 4px;
+    margin-block-start: 10px;
     padding-inline: 0;
-    gap: 3px;
+    gap: 4px;
+    padding-bottom: 10px;
+    /* padding-right: 10px;
+    margin-right: -10px;
+    max-height: 150px;
+    overflow-y: auto;
+    scrollbar-color: #eee white */
 }
-.subtask-listing li,
-.subtask-edit {
+.subtask-listing li {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0;
-    min-height: 32px;
-    transition-duration: var(--transition-duration);
 }
 .subtask-listing li input {
     display: list-item;
+    height: 40px;
+    min-height: unset !important;
     /* margin-left: 28px; */
     /* width: 100%; */
-    background-color: #ededed !important;
+    /* background-color: #ededed !important; */
+    background-color: var(--bg-page) !important;
     border: none !important;
+    font-size: var(--fs-base) !important;
+    transition-duration: var(--transition-duration);
 }
-.subtask-listing .input-icon-wrapper {
-    display: none;
+.input-wrapper-subtask.edit-mode {
+    border-bottom: solid 1px  var(--clr-light-blue);
+}
+.input-wrapper-subtask input:hover {
+    background-color: #EEEEEE !important;
+    border-radius: 10px;
+}
+.input-wrapper-subtask.edit-mode input {
+    background-color: white !important;
+    border-radius: 0 !important;
 }
 .input-wrapper-subtask:not(.edit-mode) .input-icon-wrapper-edit {
     display: none;
@@ -553,27 +569,19 @@ input:has(+ .input-icon-wrapper.simple) {
 .input-wrapper-subtask.edit-mode .input-icon-wrapper-edit {
     display: flex; /* unset hide */
 }
-.input-wrapper-subtask.edit-mode {
-    background-color: white;
-    border-bottom: solid 1px  var(--clr-light-blue);
-    margin-top: 12px;
+/* .input-wrapper-subtask:not(.edit-mode) .subtask-input + .input-icon-wrapper-read {
+    display: none;      
+} */
+.input-wrapper-subtask:not(.edit-mode) .subtask-input:hover + .input-icon-wrapper-read {
+    display: flex;      
 }
-:is(.subtask-listing:hover) .input-wrapper-subtask:not(.edit-mode) .input-icon-wrapper-read {
-    display: flex;
-}
-.subtask-listing li:hover {
-    background-color: #EEEEEE;
-    border-radius: 10px;
-}
-.subtask-wrapper .input-icon-wrapper button:hover {
+/* .subtask-wrapper .input-icon-wrapper button:hover {
     background-color: #EEEEEE;
     transform: scale(1.05);
     border-radius: 100%;
-}
-#subtaskInputButtonAdd {
-    pointer-events: none;
-}
-.input-wrapper-subtask.invalid .input-icon-wrapper-edit {
+} */
+#subtaskInputButtonAdd,
+.input-wrapper-subtask.invalid .input-icon-wrapper-edit button:last-of-type {
     pointer-events: none;
 }
 

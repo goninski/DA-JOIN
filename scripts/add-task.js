@@ -247,11 +247,18 @@ function validateAddSubtaskInput(event) {
 
 function validateUpdateSubtaskInput(event) {
     event.stopPropagation();
+    console.log(event.currentTarget);
+    console.log(event.target);
     let input = event.currentTarget;
+    let wrapper = getCurrentSubtaskInputWrapper(input);
+    let updateBtn = wrapper.querySelector('.update-subtask-button');
+    console.log(updateBtn);
     if(validateSubtaskInput(input)) {
         wrapper.classList.remove('invalid');
+        updateBtn.tabIndex = 0;
     } else {
         wrapper.classList.add('invalid');
+        updateBtn.tabIndex = 1;
     }
 }
 
@@ -264,12 +271,15 @@ function addSubtaskEventHandlerPseudo(event) {
 
 function addSubtaskInputEventHandler(event) {
     event.stopPropagation();
+    let input = event.currentTarget;
     if(['Enter'].includes(event.key)) {
+        event.preventDefault();
         if(validateSubtaskInput(input)) {
-            addSubtask(event.currentTarget);
+            addSubtask(input);
         }
     };
 }
+
 
 function addSubtaskEventHandler(event) {
     event.stopPropagation();
@@ -277,6 +287,7 @@ function addSubtaskEventHandler(event) {
         event.preventDefault();
         getCurrentFieldElements(event.target);
         let input = currentFieldElements.input;
+        // console.log(currentFieldElements);
         addSubtask(input);
     }
 }
@@ -322,6 +333,7 @@ function editSubtaskEventHandler(event) {
         let wrapper = getCurrentSubtaskInputWrapper(input);
         wrapper.classList.add('edit-mode');
         input.readOnly = false;
+        input.focus();
     }
 }
 
