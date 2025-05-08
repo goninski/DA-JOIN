@@ -48,17 +48,20 @@ async function getTasks() {
 
 // async function getNewCategoryId() {
 //     let lastId = await getLastIdFromObjArray(categories);
-//     return lastId + 1;
+//     lastId++;
+//     return lastId.toString();
 // }
 
 async function getNewContactId() {
     let lastId = await getLastIdFromObjArray(contacts);
-    return lastId + 1;
+    lastId++;
+    return lastId.toString();
 }
 
 async function getNewTaskId() {
     let lastId = await getLastIdFromObjArray(tasks);
-    return lastId + 1;
+    lastId++;
+    return lastId.toString();
 }
 
 async function saveCategoryToDB(category) {
@@ -77,7 +80,7 @@ async function updateCategory(category) {
 }
 
 async function saveContactToDB(contact, mode = 'add') {
-    let contactId
+    let contactId;
     if(hasLength(contact.id)) {
         contactId = contact.id;
     } else {
@@ -100,46 +103,57 @@ async function saveTaskToDB(task, mode = 'add') {
     let taskId;
     if(hasLength(task.id)) {
         taskId = task.id;
+        await saveDataToFirebase('tasks/' + taskId, task);
     } else {
         return alert('Task not saved due missing Id !');
     }
-    await saveDataToFirebase('tasks/' + taskId, task);
 }
 
 async function createTask(taskInputs = null) {
     let task = {};
-    task.id =  await getNewContactId();
+    task.id =  await getNewTaskId();
+    console.log(task);
     await setTaskProperties(task, taskInputs);
+    console.log(task);
     tasks.push(task);
     localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task);
     console.log(tasks);
 }
 
-async function updateTask(task, taskInputs = null) {
+async function updateTask(taskId, taskInputs = null) {
+    // console.log(taskInputs);
+    let index = await getTaskIndexFromId(taskId);
+    let task = tasks[index];
     await setTaskProperties(task, taskInputs);
-    localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task, 'update');
     console.log(tasks);
+    localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task, 'update');
 }
 
 async function setTaskProperties(task, taskInputs = null) {
-    if(hasLength(taskInputs)) {
+    console.log(taskInputs);
+    if(taskInputs) {
         task.title = taskInputs.title;
+        task.description = taskInputs.description;
         task.dueDate = taskInputs.dueDate;
         task.priority = taskInputs.priority;
         task.categoryId = taskInputs.categoryId;
         task.status = hasLength(taskInputs.status) ? taskInputs.status : 'To do';
-        hasLength(taskInputs.description) ? task.description = taskInputs.description : delete task.description;
         hasLength(taskInputs.contactIds) ? task.contactIds = taskInputs.contactIds : delete task.contactIds;
         hasLength(taskInputs.subtasks) ? task.subtasks = taskInputs.subtasks : delete task.subtasks;
     }
     await setTaskProgress(task);
     task.id = hasLength(task.id) ? task.id : await getNewContactId();
     task.status = hasLength(task.status) ? task.status : 'To do';
-    // console.log(tasks);
+    await deleteEmptyProperties(task);
+}
+
+async function deleteEmptyProperties(task) {
+    if(!hasLength(task.description)) {
+        delete task.description;
+    }
 }
 
 async function setTaskProgress(task) {
-    // task = currentTask
     if(task) {
         let doneSubtasks = 0;
         let subtaskProgress = 0;

@@ -180,6 +180,6 @@ async function saveAllContacts() {
 async function saveAllTasks() {
     console.log(tasks);
     tasks.forEach(function(task) {
-        updateTask(task);
+        updateTask(task.id);
     });
 }

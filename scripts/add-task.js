@@ -377,7 +377,7 @@ async function submitCreateTask(event) {
     await createTask(taskInputs);
     // resetAddTaskForm(event);
     await showFloatingMessage('addedTask');
-    location.href = "/board.html";
+    // location.href = "/board.html";
     // setTimeout(function() { 
     //     location.href = "/board.html";
     // }, 1500);
@@ -394,10 +394,8 @@ async function submitUpdateTask(event) {
     taskInputs.categoryId = document.getElementById('categorySelect').dataset.optionId;
     hasLength(assignedContacts) ? taskInputs.contactIds = assignedContacts : null;
     hasLength(assignedSubtasks) ? taskInputs.subtasks = assignedSubtasks : null;
-    let index = await getTaskIndexFromId(taskId);
-    let task = tasks[index];
-   // console.log(index);
-   await updateTask(task, taskInputs);
+    console.log(taskInputs);
+    await updateTask(taskId, taskInputs);
     //console.log(task);
     //console.log(tasks);
     await showFloatingMessage('text', 'Task successfully edited');

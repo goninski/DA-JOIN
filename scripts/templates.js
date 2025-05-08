@@ -35,7 +35,7 @@ function getSidebarTemplate() {
             <div class="temp-links flex-col mb-10"> 
                 <a href="/">Home</a>
                 <a href="#" id="signOutBtnTemp" onclick="signOut()">Logout</a>
-                <a href="/data.html">Data Management</a>
+                <a href="/data.html">Data Handling</a>
             </div>
             <a href="privacy-policy.html">Privacy Policy</a>
             <a href="legal-notice.html">Legal notice</a>
