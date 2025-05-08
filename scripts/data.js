@@ -1,12 +1,8 @@
-const fetchUrl = "https://da-join-449-default-rtdb.europe-west1.firebasedatabase.app/"
 let localStorageMode = false;
+const fetchUrl = "https://da-join-449-default-rtdb.europe-west1.firebasedatabase.app/"
 let categories = [];
 let contacts = [];
 let tasks = [];
-// let lastId = '';
-// let lastCategoryId = '';
-// let lastContactId = '';
-// let lastTaskId = '';
 let dataArr = [];
 let authUserId = null;
 
@@ -18,6 +14,171 @@ async function initData() {
 
 async function renderAllData() {
     await renderTempTaskList();
+}
+
+
+
+// GET DATA
+
+async function getAllData() {
+    await getCategories();
+    await getContacts();
+    await getTasks();
+}
+
+async function getCategories() {
+    categories = localStorageMode ? await getFromLocalStorage('categories') : await fetchDataFromFirebase('categories/');
+}
+
+async function getContacts() {
+    contacts = localStorageMode ? await getFromLocalStorage('contacts') : await fetchDataFromFirebase('users/');
+}
+
+async function getUserData() {
+    await getContacts();
+}
+
+async function getTasks() {
+    tasks = localStorageMode ? await getFromLocalStorage('tasks') : await fetchDataFromFirebase('tasks/');
+}
+
+
+
+// SAVE DATA (CREATE/UPDATE)
+
+// async function getNewCategoryId() {
+//     let lastId = await getLastIdFromObjArray(categories);
+//     return lastId + 1;
+// }
+
+async function getNewContactId() {
+    let lastId = await getLastIdFromObjArray(contacts);
+    return lastId + 1;
+}
+
+async function getNewTaskId() {
+    let lastId = await getLastIdFromObjArray(tasks);
+    return lastId + 1;
+}
+
+async function saveCategoryToDB(category) {
+    let categoryId;
+    if(hasLength(category.id)) {
+        categoryId = category.id;
+    } else {
+        return alert('Category not saved due missing Id !');
+    }
+    await saveDataToFirebase('categories/' + categoryId, category);
+}
+
+async function updateCategory(category) {
+    localStorageMode ? await saveCategoriesToLS() : await saveCategoryToDB(category);
+    console.log(categories);
+}
+
+async function saveContactToDB(contact, mode = 'add') {
+    let contactId
+    if(hasLength(contact.id)) {
+        contactId = contact.id;
+    } else {
+        return alert('Contact not saved due missing Id !');
+    }
+    await saveDataToFirebase('users/' + contactId, contact);
+}
+
+async function createContact(contact) {
+    localStorageMode ? await saveContactsToLS() : await saveContactToDB(contact);
+    console.log(contacts);
+}
+
+async function updateContact(contact) {
+    localStorageMode ? await saveContactsToLS() : await saveContactToDB(contact, 'update');
+    console.log(contacts);
+}
+
+async function saveTaskToDB(task, mode = 'add') {
+    let taskId;
+    if(hasLength(task.id)) {
+        taskId = task.id;
+    } else {
+        return alert('Task not saved due missing Id !');
+    }
+    await saveDataToFirebase('tasks/' + taskId, task);
+}
+
+async function createTask(taskInputs = null) {
+    let task = {};
+    task.id =  await getNewContactId();
+    await setTaskProperties(task, taskInputs);
+    tasks.push(task);
+    localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task);
+    console.log(tasks);
+}
+
+async function updateTask(task, taskInputs = null) {
+    await setTaskProperties(task, taskInputs);
+    localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task, 'update');
+    console.log(tasks);
+}
+
+async function setTaskProperties(task, taskInputs = null) {
+    if(hasLength(taskInputs)) {
+        task.title = taskInputs.title;
+        task.dueDate = taskInputs.dueDate;
+        task.priority = taskInputs.priority;
+        task.categoryId = taskInputs.categoryId;
+        task.status = hasLength(taskInputs.status) ? taskInputs.status : 'To do';
+        hasLength(taskInputs.description) ? task.description = taskInputs.description : delete task.description;
+        hasLength(taskInputs.contactIds) ? task.contactIds = taskInputs.contactIds : delete task.contactIds;
+        hasLength(taskInputs.subtasks) ? task.subtasks = taskInputs.subtasks : delete task.subtasks;
+    }
+    await setTaskProgress(task);
+    task.id = hasLength(task.id) ? task.id : await getNewContactId();
+    task.status = hasLength(task.status) ? task.status : 'To do';
+    // console.log(tasks);
+}
+
+async function setTaskProgress(task) {
+    // task = currentTask
+    if(task) {
+        let doneSubtasks = 0;
+        let subtaskProgress = 0;
+        let subtaskCount = 0
+        // task.subtaskCount = subtaskCount;
+        if(task.subtasks && task.subtasks.length > 0) {
+            subtaskCount = task.subtasks.length;
+            // task.subtaskCount = subtaskCount;
+            task.subtasks.forEach(function(subtask) {
+                if(subtask.done) {
+                    doneSubtasks++;
+                }
+            });
+            subtaskProgress = (doneSubtasks / subtaskCount * 100) + '%';
+            // console.log(doneSubtasks);
+            // console.log(subtaskCount);
+            // console.log(subtaskProgress);
+            task.subtaskProgress = subtaskProgress;
+        } else {
+            delete task.subtasks;
+            delete task.subtaskProgress;
+        }
+    }
+}
+
+
+
+// DELETE DATA
+
+async function deleteCategory(categoryId) {
+    localStorageMode ? await saveCategoriesToLS() : await deleteFirebaseData('categories/' + categoryId);
+}
+
+async function deleteContact(contactId) {
+    localStorageMode ? await saveContactsToLS() : await deleteFirebaseData('users/' + contactId);
+}
+
+async function deleteTask(taskId) {
+    localStorageMode ? await saveTasksToLS() : await deleteFirebaseData('tasks/' + taskId);
 }
 
 
@@ -66,168 +227,9 @@ async function deleteFirebaseData(fetchPath="x") {
     dataObj = await response.json();
 }
 
-async function getAllDataFromDB() {
-    await getCategoriesFromDB();
-    await getContactsFromDB();
-    await getTasksFromDB();
-}
 
 
-
-// DATA HANDLING WRAPPER FUNCTIONS
-
-async function getAllData() {
-    if(localStorageMode) {
-        await getAllDataFromLS();
-    } else {
-        await getAllDataFromDB();
-    }
-}
-
-async function getUserData() {
-    if(localStorageMode) {
-        await getContactsFromLS();
-    } else {
-        await getContactsFromDB();
-    }
-}
-
-// let testObj;
-// async function getDataFromDB() {
-//     testObj = await fetchDataFromFirebase('', true);
-//     console.log(testObj);
-// }
-
-
-async function getCategoriesFromDB() {
-    categories = await fetchDataFromFirebase('categories/');
-}
-
-async function getContactsFromDB() {
-    contacts = await fetchDataFromFirebase('users/');
-}
-
-async function getTasksFromDB() {
-    tasks = await fetchDataFromFirebase('tasks/');
-    await setTaskProgressForAllTasks();
-}
-
-async function saveCategoryToDB(category) {
-    let categoryId
-    if(category.id && category.id > 0) {
-        categoryId = category.id;
-    } else {
-        return alert('Category not saved due missing Id !');
-    }
-    await saveDataToFirebase('categories/' + categoryId, category);
-    // await saveLastIdToDB('categories', lastCategoryId)
-}
-
-async function deleteCategoryFromDB(categoryId) {
-    await deleteFirebaseData('categories/' + categoryId);
-}
-
-async function saveContactToDB(contact, mode = 'add') {
-    let contactId
-    if(contact.id && contact.id > 0) {
-        contactId = contact.id;
-    } else {
-        return alert('Contact not saved due missing Id !');
-    }
-    await saveDataToFirebase('users/' + contactId, contact);
-}
-
-async function createContact(contact) {
-    await saveContactToDB(contact);
-}
-
-async function updateContact(contact) {
-    await saveContactToDB(contact, 'update');
-}
-
-async function deleteContactFromDB(contactId) {
-    await deleteFirebaseData('users/' + contactId);
-}
-
-async function getNewContactId() {
-    let lastId = await getLastIdFromObjArray(contacts);
-    return lastId + 1;
-}
-
-
-
-async function saveTaskToDB(task, mode = 'add') {
-    let taskId;
-    if(task.id && task.id > 0) {
-        taskId = task.id;
-    } else {
-        return alert('Task not saved due missing Id !');
-    }
-    await saveDataToFirebase('tasks/' + taskId, task);
-}
-
-async function createTaskDB(task) {
-    await saveTaskToDB(task);
-    await setTaskProgress(task);
-}
-
-async function updateTaskDB(task) {
-    delete task.subtaskProgress;
-    await saveTaskToDB(task, 'update');
-    await setTaskProgress(task);
-}
-
-async function deleteTaskFromDB(taskId) {
-    await deleteFirebaseData('tasks/' + taskId);
- }
-
-async function getNewTaskId() {
-    let lastId = await getLastIdFromObjArray(tasks);
-    return lastId + 1;
-}
-
-async function setTaskProgressForAllTasks() {
-    if(tasks && tasks.length > 0) {
-        for (let index = 0; index < tasks.length; index++) {
-            let task = tasks[index];
-            setTaskProgress(task);
-            // console.log(task);
-        }
-    }
-    // console.log(tasks);
-}
-
-async function setTaskProgress(task) {
-    if(task) {
-        let doneSubtasks = 0;
-        let subtaskProgress = 0;
-        let subtaskCount = 0
-        // task.subtaskCount = subtaskCount;
-        if(task.subtasks && task.subtasks.length > 0) {
-            subtaskCount = task.subtasks.length;
-            // task.subtaskCount = subtaskCount;
-            task.subtasks.forEach(function(subtask) {
-                if(subtask.done) {
-                    doneSubtasks++;
-                }
-            });
-            subtaskProgress = (doneSubtasks / subtaskCount * 100) + '%';
-            // console.log(doneSubtasks);
-            // console.log(subtaskCount);
-            // console.log(subtaskProgress);
-            task.subtaskProgress = subtaskProgress;
-        } else {
-            delete task.subtasks;
-            delete task.subtaskProgress;
-        }
-    }
-}
-
-
-
-
-
-// DATA HANDLING LOCAL STORAGE > TEMPORARY
+// LOCAL STORAGE HANDLING
 
 async function getFromLocalStorage(key){
     return await JSON.parse(localStorage.getItem(key));
@@ -241,50 +243,24 @@ async function clearLocalStorage(){
     localStorage.clear();
 }
 
-async function getAllDataFromLS() {
-    getCategoriesFromLS();
-    getContactsFromLS();
-    getTasksFromLS();
-}
-
-async function saveAllDataToLS() {
-    saveCategoriesToLS();
-    saveContactsToLS();
-    saveTasksToLS();
-}
-
-async function getCategoriesFromLS() {
-    categories = await getFromLocalStorage('categories');
-}
-
-async function getContactsFromLS() {
-    contacts = await getFromLocalStorage('contacts');
-}
-
-async function getTasksFromLS() {
-    tasks = await getFromLocalStorage('tasks');
-}
-
 async function saveCategoriesToLS() {
-    if(localStorageMode) {
-        saveToLocalStorage('categories', categories);
-    }
+    saveToLocalStorage('categories', categories);
 }
 
 async function saveContactsToLS() {
-    if(localStorageMode) {
-        saveToLocalStorage('contacts', contacts);
-    }
+    saveToLocalStorage('contacts', contacts);
 }
 
 async function saveTasksToLS() {
-    if(localStorageMode) {
-        saveToLocalStorage('tasks', tasks);
-    }
+    saveToLocalStorage('tasks', tasks);
 }
 
-
-
+async function deleteDataFromLS() {
+    // localStorage.clear();
+    localStorage.removeItem('categories');
+    localStorage.removeItem('contacts');
+    localStorage.removeItem('tasks');
+}
 
 
 
@@ -294,8 +270,10 @@ async function renderTempTaskList() {
     formMode = '';
     let taskListRef = document.getElementById('tempTaskList');
     taskListRef.innerHTML = '';
-    for (let index = 0; index < tasks.length; index++) {
-        taskListRef.innerHTML += await getTempTaskListTemplate(tasks[index]);
+    if(hasLength(tasks)) {
+        for (let index = 0; index < tasks.length; index++) {
+            taskListRef.innerHTML += await getTempTaskListTemplate(tasks[index]);
+        }
     }
 }
 
@@ -308,3 +286,9 @@ async function getTempTaskListTemplate(task) {
     </li>
     `
 }
+
+// let testObj;
+// async function getDataFromDB() {
+//     testObj = await fetchDataFromFirebase('', true);
+//     console.log(testObj);
+// }

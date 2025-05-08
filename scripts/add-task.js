@@ -371,25 +371,16 @@ async function submitCreateTask(event) {
     event.stopPropagation();
     let taskInputs = getFormInputObj(event, 'addTaskForm');
     console.log(taskInputs);
-    let task = {};
-    task.id = await getNewTaskId();
-    task.title = taskInputs.title;
-    task.dueDate = taskInputs.dueDate;
-    task.priority = taskInputs.priority;
-    task.status = 'To do';
-    task.categoryId = document.getElementById('categorySelect').dataset.optionId;
-    hasLength(taskInputs.description) ? task.description = taskInputs.description : delete task.description;
-    hasLength(assignedContacts) ? task.contactIds = assignedContacts : delete task.contactIds;
-    hasLength(assignedSubtasks) ? task.subtasks = assignedSubtasks : delete task.subtasks;
-    tasks.push(task);
-    await createTaskDB(task);
-    await saveTasksToLS();
-    console.log(tasks);
+    taskInputs.categoryId = document.getElementById('categorySelect').dataset.optionId;
+    hasLength(assignedContacts) ? taskInputs.contactIds = assignedContacts : null;
+    hasLength(assignedSubtasks) ? taskInputs.subtasks = assignedSubtasks : null;
+    await createTask(taskInputs);
     // resetAddTaskForm(event);
     await showFloatingMessage('addedTask');
-    setTimeout(function() { 
-        location.href = "/board.html";
-    }, 1500);
+    location.href = "/board.html";
+    // setTimeout(function() { 
+    //     location.href = "/board.html";
+    // }, 1500);
 }
 
 async function submitUpdateTask(event) {
@@ -399,27 +390,21 @@ async function submitUpdateTask(event) {
     let taskId = activeTaskId;
     // console.log(taskId);
     taskInputs = getFormInputObj(event, 'editTaskForm');
-    if(taskInputs.title.length <= 0) {
-        return;
-    }
+    if(!hasLength(taskInputs.title)) { return;}
+    taskInputs.categoryId = document.getElementById('categorySelect').dataset.optionId;
+    hasLength(assignedContacts) ? taskInputs.contactIds = assignedContacts : null;
+    hasLength(assignedSubtasks) ? taskInputs.subtasks = assignedSubtasks : null;
     let index = await getTaskIndexFromId(taskId);
-   // console.log(index);
-    tasks[index].title = taskInputs.title;
-    tasks[index].dueDate = taskInputs.dueDate;
-    tasks[index].priority = taskInputs.priority;
-    tasks[index].categoryId = document.getElementById('categorySelect').dataset.optionId;
-    hasLength(taskInputs.description) ? tasks[index].description = taskInputs.description : delete tasks[index].description;
-    hasLength(assignedContacts) ? tasks[index].contactIds = assignedContacts : delete tasks[index].contactIds;
-    hasLength(assignedSubtasks) ? tasks[index].subtasks = assignedSubtasks : delete tasks[index].subtasks;
-    console.log(tasks);
     let task = tasks[index];
-    console.log(task);
-    await updateTaskDB(task);
-    await saveTasksToLS();
+   // console.log(index);
+   await updateTask(task, taskInputs);
+    //console.log(task);
+    //console.log(tasks);
     await showFloatingMessage('text', 'Task successfully edited');
-    setTimeout(function() { 
-        closeTaskDialogue(event)
-    }, 1000);
+    closeTaskDialogue(event)
+    // setTimeout(function() { 
+    //     closeTaskDialogue(event)
+    // }, 1000);
 }
 
 async function submitDeleteTask(event, taskId = '') {
@@ -429,12 +414,11 @@ async function submitDeleteTask(event, taskId = '') {
     }
     console.log(taskId);
     let index = getTaskIndexFromId(taskId);
+    await deleteTask(taskId);
     if(index >= 0) {
         tasks.splice(index, 1);
     }
     activeTaskId = '';
-    await saveTasksToLS();
-    await deleteTaskFromDB(taskId);
     await showFloatingMessage('text', 'Task deleted');
     // console.log(currentPage);
     if(currentPage == '/board.html') {

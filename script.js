@@ -1,4 +1,21 @@
 let currentPage = window.location.pathname;
+let loggedInUser;
+
+
+if(! isAuthorized() ) {
+    window.location.href = "/login.html";
+}
+
+async function isAuthorized() {
+    if (loggedInUser == 'guest') {
+        return true;
+    }
+}
+
+async function getLoggedInUser() {
+    loggedInUser = 'guest';
+    // getUserId from URL parameter
+}
 
 function init() {
     getMainTemplates();
@@ -150,7 +167,7 @@ function getRandomString(length = 20) {
     return result.trim();
 }
 
-function showAlert(msg, duration = 250) {
+async function showAlert(msg, duration = 250) {
     setTimeout(function() { alert(msg) }, duration);
 }
 

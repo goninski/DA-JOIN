@@ -182,11 +182,9 @@ async function submitCreateContact(event, contactId) {
     contact.initials = getInitialsOfFirstAndLastWord(formInputs.name);
     contact.color = getRandomColor();
     contacts.push(contact);
-    sortContacts(contacts);
-    // console.log(contact);
-    await createContactDB(contact);
-    saveContactsToLS();
-    showFloatingMessage('text', 'Contact successfully created');
+    await sortContacts(contacts);
+    await createContact(contact);
+    await showFloatingMessage('text', 'Contact successfully created');
     setTimeout(function() { 
         closeContactsFormDialogue(event);
     }, 1000);
@@ -203,12 +201,11 @@ async function submitUpdateContact(event, contactId) {
     contacts[index].email = formInputs.email;
     contacts[index].phone = formInputs.phone;
     contacts[index].initials = getInitialsOfFirstAndLastWord(formInputs.name);
-    sortContacts(contacts);
+    await sortContacts(contacts);
     let contact = contacts[index];
     // console.log(contact);
-    await updateContactDB(contact);
-    saveContactsToLS();
-    showFloatingMessage('text', 'Contact successfully edited');
+    await updateContact(contact);
+    await showFloatingMessage('text', 'Contact successfully edited');
     setTimeout(function() { 
         closeContactsFormDialogue(event);
     }, 1000);
@@ -217,18 +214,16 @@ async function submitUpdateContact(event, contactId) {
 async function submitDeleteContact(event, contactId) {
     event.stopPropagation();
     event.preventDefault();
-    await deleteContactFromDB(contactId);
-    activeContactId = '';
+    await deleteContact(contactId);
     let index = await getContactIndexFromId(contactId);
     contacts.splice(index, 1);
-    removeDeletedContactsFromTasks(contactId);
-    // console.log(contacts);
-    saveContactsToLS();
-    // reloadPage(event);
-    showFloatingMessage('text', 'Contact deleted');
+    activeContactId = '';
+    await removeDeletedContactsFromTasks(contactId);
+    await showFloatingMessage('text', 'Contact deleted');
     setTimeout(function() { 
         closeContactsFormDialogue(event);
     }, 1000);
+    // reloadPage(event);
 }
 
 
