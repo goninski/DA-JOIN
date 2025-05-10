@@ -89,17 +89,39 @@ async function saveContactToDB(contact, mode = 'add') {
     await saveDataToFirebase('users/' + contactId, contact);
 }
 
+// async function createContact(contact) {
+//     localStorageMode ? await saveContactsToLS() : await saveContactToDB(contact);
+//     console.log(contacts);
+// }
+
+// async function updateContact(contactId) {
+//     let index = await getContactIndexFromId(contactId);
+//     let contact = contacts[index];
+//     localStorageMode ? await saveContactsToLS() : await saveContactToDB(contact, 'update');
+//     console.log(contacts);
+// }
+
 async function createContact(contact) {
+    await validateContactProperties(contact);
+    contacts.push(contact);
     localStorageMode ? await saveContactsToLS() : await saveContactToDB(contact);
-    console.log(contacts);
 }
 
-async function updateContact(contactId) {
-    let index = await getContactIndexFromId(contactId);
-    let contact = contacts[index];
+async function updateContact(contact) {
+    await validateContactProperties(contact);
+    await sortContacts(contacts);
     localStorageMode ? await saveContactsToLS() : await saveContactToDB(contact, 'update');
-    console.log(contacts);
 }
+
+async function validateContactProperties(contact) {
+    contact.id = hasLength(contact.id) ? contact.id : await getNewContactId();
+    !hasLength(contact.initials) ?  contact.initials = getInitialsOfFirstAndLastWord(contact.name) : null;
+    !hasLength(contact.color) ? contact.color = getRandomColor() : null;
+    !hasLength(contact.phone) ? delete contact.phone : null;
+}
+
+
+
 
 async function saveTaskToDB(task, mode = 'add') {
     let taskId;
@@ -112,7 +134,7 @@ async function saveTaskToDB(task, mode = 'add') {
 }
 
 async function createTask(task) {
-    await validateProperties(task);
+    await validateTaskProperties(task);
     tasks.push(task);
     console.log(currentTask);
     console.log(task);
@@ -122,14 +144,14 @@ async function createTask(task) {
 
 async function updateTask(task) {
     // console.log(taskInputs);
-    await validateProperties(task);
+    await validateTaskProperties(task);
     console.log(currentTask);
     console.log(task);
     console.log(tasks);
     localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task, 'update');
 }
 
-async function validateProperties(task) {
+async function validateTaskProperties(task) {
     task.id = hasLength(task.id) ? task.id : await getNewTaskId();
     task.status = hasLength(task.status) ? task.status : 'To do';
     !hasLength(task.description) ? delete task.description : null;
@@ -137,11 +159,11 @@ async function validateProperties(task) {
     !hasLength(task.subtasks) ? delete task.subtasks : null;
 }
 
-async function updateTaskProperty(taskId, property, value) {
+async function updateTaskProperty(taskId, property, value = null) {
     // console.log(taskInputs);
     let index = await getTaskIndexFromId(taskId);
     let task = tasks[index];
-    task[property] = value;
+    value === null ? delete task[property] : task[property] = value;
     console.log(tasks);
     localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task, 'update');
 }
@@ -163,10 +185,15 @@ async function deleteCategory(categoryId) {
 }
 
 async function deleteContact(contactId) {
+    let index = getContactIndexFromId(contactId);
+    index >= 0 ? contacts.splice(index, 1) : null;
     localStorageMode ? await saveContactsToLS() : await deleteFirebaseData('users/' + contactId);
+    removeDeletedContactsFromTasks(contactId);
 }
 
 async function deleteTask(taskId) {
+    let index = getTaskIndexFromId(taskId);
+    index >= 0 ? tasks.splice(index, 1) : null;
     localStorageMode ? await saveTasksToLS() : await deleteFirebaseData('tasks/' + taskId);
 }
 
@@ -174,6 +201,17 @@ async function deleteAllData() {
     localStorageMode ? await deleteDataFromLS() : await deleteFirebaseData('');
 
 }
+
+async function removeDeletedContactsFromTasks(deletedContactId) {
+    for (let i = 0; i < tasks.length; i++) {
+        let task = tasks[i]
+        let index = task.contactIds.indexOf(deletedContactId)
+        index >= 0 ? task.contactIds.splice(index, 1) : null;
+        await updateTaskProperty(task.id, 'contacts');
+    }
+}
+
+
 
 
 
@@ -274,8 +312,8 @@ async function renderTempTaskList() {
 async function getTempTaskListTemplate(task) {
     return `
     <li class="flex-row gap justify-between align-center fw-bold">#${task.id} | ${task.title}
-        <button class="" style="margin-left: auto; text-decoration: underline;" onclick="showTask(event, '${task.id}')">Show</button>
-        <button class="" style="text-decoration: underline;" onclick="editTask(event, '${task.id}')">Edit</button>
+        <button class="" style="margin-left: auto; text-decoration: underline;" onclick="showTaskBtn(event, '${task.id}')">Show</button>
+        <button class="" style="text-decoration: underline;" onclick="openEditTaskForm(event, '${task.id}')">Edit</button>
         <button class="" style="text-decoration: underline;" onclick="submitDeleteTask(event, '${task.id}')">Delete</button>
     </li>
     `

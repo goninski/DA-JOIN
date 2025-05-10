@@ -136,20 +136,14 @@ async function resetToDemoData() {
     contacts.sort((a, b) => a.name.localeCompare(b.name));
     tasks = tasksDemo;
     contacts.forEach(function(contact) {
-        if(! contact.initials) {
-            contact.initials = getInitialsOfFirstAndLastWord(contact.name);
-        }
-        if(! contact.color) {
-            contact.color = getRandomColor();
-        }
+        validateContactProperties(contact);
+        // !contact.initials ?  contact.initials = getInitialsOfFirstAndLastWord(contact.name) : null;
+        // !contact.color ? contact.color = getRandomColor() : null;
     });
     await saveAllData()
     await showAlert('Data Reset successfull. Please reload the page !', 1000);
     // location.reload()
-    // window.location.href = "/board.html";
-    // setTimeout(function() { 
-    //     window.location.href = "/board.html";
-    //   }, 1000);
+    // setTimeout(function() {window.location.href = "/board.html";}, 1000);
 }
 
 async function saveAllData() {
@@ -168,7 +162,7 @@ async function saveAllCategories() {
 async function saveAllContacts() {
     console.log(contacts);
     contacts.forEach(function(contact) {
-        updateContact(contact.id);
+        updateContact(contact);
     });
 }
 

@@ -1,25 +1,22 @@
 let currentTask = {};
-// let activeTaskId = '';
 let taskContacts = [];
 let assignedContacts = [];
 let assignedSubtasks = [];
 
-
 async function initAddTask() {
     getMainTemplates();
     await getAllData();
-    await addTask(event, 'add-task-page');
+    await openAddTaskForm(event, 'add-task-page');
 }
 
 function openAddTaskPage() {
     window.location.href = "/add-task.html";
 }
 
-async function addTask(event = null, source = 'board') {
+async function openAddTaskForm(event = null, source = 'board') {
     event ? event.stopPropagation() : null;
     formMode = 'add';
     currentTask = {};
-    // activeTaskId = '';
     await showTaskDialogue('addTaskFormWrapper', source);
     await renderTaskForm('addTaskFieldGroups');
     if( source == 'add-task-page') {
@@ -30,11 +27,9 @@ async function addTask(event = null, source = 'board') {
     }
 }
 
-async function showTask(event, taskId) {
+async function showTaskBtn(event, taskId) {
     event ? event.stopPropagation() : null;
     formMode = 'show';
-    // taskId == '' ? taskId = activeTaskId : null;
-    // console.log(tasks);
     let index = await getTaskIndexFromId(taskId);
     currentTask = tasks[index];
     console.log(currentTask);
@@ -43,10 +38,9 @@ async function showTask(event, taskId) {
     document.getElementById('taskDialogue').classList.add('show-task');
 }
 
-async function editTask(event, taskId) {
+async function openEditTaskForm(event, taskId) {
     event.stopPropagation();
     formMode = 'edit';
-    // taskId == '' ? taskId = activeTaskId : activeTaskId = taskId;
     let index = await getTaskIndexFromId(taskId);
     currentTask = tasks[index];
     console.log(currentTask);
@@ -186,10 +180,10 @@ async function renderCategorySelectOptions(event = null, wrapperId = 'taskCatego
 }
 
 async function submitCreateTask(event) {
-    console.log('createTask');
     event.stopPropagation();
-    let taskInputs = getFormInputObj(event, 'addTaskForm');
-    await setTaskProperties(currentTask, taskInputs);
+    event.preventDefault();
+    let formInputs = await getFormInputObj('addTaskForm');
+    await setTaskProperties(currentTask, formInputs);
     await createTask(currentTask);
     // resetAddTaskForm(event);
     await showFloatingMessage('addedTask');
@@ -198,37 +192,38 @@ async function submitCreateTask(event) {
 
 async function submitUpdateTask(event) {
     event.stopPropagation();
-    let taskInputs = getFormInputObj(event, 'editTaskForm');
-    await setTaskProperties(currentTask, taskInputs);
+    event.preventDefault();
+    let formInputs = await getFormInputObj('editTaskForm');
+    await setTaskProperties(currentTask, formInputs);
     await updateTask(currentTask);
     await showFloatingMessage('text', 'Task successfully edited');
-    setTimeout(function() {closeTaskDialogue(event)}, 1000);
+    setTimeout(function() {closeTaskDialogue(event)}, 500);
 }
 
-async function setTaskProperties(currentTask, taskInputs ) {
-    if(hasLength(taskInputs.title)) {
-        currentTask.title = taskInputs.title;
-        currentTask.description = taskInputs.description;
-        currentTask.dueDate = taskInputs.dueDate;
-        currentTask.priority = taskInputs.priority;
+async function setTaskProperties(currentTask, formInputs ) {
+    if(hasLength(formInputs.title)) {
+        currentTask.title = formInputs.title;
+        currentTask.description = formInputs.description;
+        currentTask.dueDate = formInputs.dueDate;
+        currentTask.priority = formInputs.priority;
         currentTask.categoryId = document.getElementById('categorySelect').dataset.optionId;
         currentTask.contactIds = assignedContacts;
         currentTask.subtasks = assignedSubtasks;
+    } else {
+        console.log('error: no form inputs !');
     }
-    console.log(currentTask);
-    console.log(tasks);
 }
 
 async function submitDeleteTask(event, taskId) {
     event.stopPropagation();
-    let index = getTaskIndexFromId(taskId);
     await deleteTask(taskId);
-    index >= 0 ? tasks.splice(index, 1) : null;
+    // let index = getTaskIndexFromId(taskId);
+    // index >= 0 ? tasks.splice(index, 1) : null;
     currentTask = {};
     await showFloatingMessage('text', 'Task deleted');
     // console.log(currentPage);
     currentPage == '/board.html' ? await renderBoards() : null; // does not work !?
-    setTimeout(function() {closeTaskDialogue(event)}, 1000);
+    setTimeout(function() {closeTaskDialogue(event)}, 500);
 }
 
 async function resetAddTaskForm(event) {
@@ -252,191 +247,5 @@ function closeTaskDialogue(event) {
     renderBoards();
     formMode = '';
 }
-
-
-
-
-
-
-
-
-
-
-
-
-// async function renderSubtasks(wrapperId = 'assignedSubtasks') {
-//     let element = document.getElementById(wrapperId);
-//     element.innerHTML = '';
-//     if(assignedSubtasks && assignedSubtasks.length > 0) {
-//         for (let index = 0; index < assignedSubtasks.length; index++) {
-//             element.innerHTML += getSubtasksTemplate(assignedSubtasks[index], index, activeTaskId);
-//         }
-//         for (let index = 0; index < assignedSubtasks.length; index++) {
-//             let listItem = document.getElementById('subtask-i-' + index);
-//             listItem.readOnly = true;
-//             let wrapper = listItem.parentElement;
-//             wrapper.classList.remove('edit-mode');
-//         }
-//     }
-//     // console.log(assignedSubtasks);
-// }
-
-
-
-
-
-// // SUBTASK HANDLING
-
-// function subtaskEventAllowed(event) {
-//     return (['Enter', ' '].includes(event.key) || event.type === 'click');
-// }
-
-// function getCurrentSubtaskInputFromEvent(event) {
-//     let wrapper = getClosestParentElementFromEvent(event, '.input-wrapper-subtask');
-//     console.log(wrapper);
-//     return wrapper.querySelector('input');
-// }
-
-// function getCurrentSubtaskInputWrapper(element) {
-//     return getClosestParentElementFromElement(element, '.input-wrapper-subtask')
-// }
-
-// function getCurrentInputWrapper(element) {
-//     return getClosestParentElementFromElement(element, '.input-wrapper')
-// }
-
-// function validateSubtaskInput(input) {
-//     return (input.value.length > 0 && input.value.length <= 128);
-// }
-
-// function onInputAddSubtask(event) {
-//     event.stopPropagation();
-//     let input = event.currentTarget;
-//     if(validateSubtaskInput(input)) {
-//         document.getElementById('subtaskInputButtonAdd').classList.add('hide');
-//         document.getElementById('subtaskInputButtons').classList.remove('hide');
-//     } else {
-//         document.getElementById('subtaskInputButtonAdd').classList.remove('hide');
-//         document.getElementById('subtaskInputButtons').classList.add('hide');
-//     }
-// }
-
-// function onInputUpdateSubtask(event) {
-//     event.stopPropagation();
-//     console.log(event.currentTarget);
-//     console.log(event.target);
-//     let input = event.currentTarget;
-//     let wrapper = getCurrentSubtaskInputWrapper(input);
-//     let updateBtn = wrapper.querySelector('.update-subtask-button');
-//     console.log(updateBtn);
-//     if(validateSubtaskInput(input)) {
-//         wrapper.classList.remove('invalid');
-//         updateBtn.tabIndex = 0;
-//     } else {
-//         wrapper.classList.add('invalid');
-//         updateBtn.tabIndex = 1;
-//     }
-// }
-
-// function addSubtaskEventHandlerPseudo(event) {
-//     event.stopPropagation();
-//     subtaskEventAllowed ? event.preventDefault() : null;
-// }
-
-// function addSubtaskInputEventHandler(event) {
-//     event.stopPropagation();
-//     let input = event.currentTarget;
-//     if(['Enter'].includes(event.key)) {
-//         event.preventDefault();
-//         validateSubtaskInput(input) ? addSubtask(input) : null;
-//     };
-// }
-
-// function addSubtaskEventHandler(event) {
-//     event.stopPropagation();
-//     if(subtaskEventAllowed) {
-//         event.preventDefault();
-//         getCurrentFieldElements(event.target);
-//         let input = currentFieldElements.input;
-//         // console.log(currentFieldElements);
-//         addSubtask(input);
-//     }
-// }
-
-// async function addSubtask(element) {
-//     console.log(element.value);
-//     let subtask = {};
-//     subtask.title = element.value;
-//     subtask.done = false;
-//     console.log(subtask);
-//     !assignedSubtasks ? assignedSubtasks = [] : null;
-//     console.log(assignedSubtasks);
-//     assignedSubtasks.push(subtask)
-//     await renderSubtasks();
-//     clearSubtaskInput(element);
-// }
-
-// function clearSubtaskEventHandler(event) {
-//     event.stopPropagation();
-//     // console.log('f) clearSubtaskEventHandler');
-//     if(subtaskEventAllowed) {
-//         event.preventDefault();
-//         getCurrentFieldElements(event.target);
-//         clearSubtaskInput(currentFieldElements.input);
-//     }
-// }
-
-// function clearSubtaskInput(element) {
-//     element.value = '';
-//     document.getElementById('subtaskInputButtonAdd').classList.remove('hide');
-//     document.getElementById('subtaskInputButtons').classList.add('hide');
-//     element.focus();
-// }
-
-// function editSubtaskEventHandler(event) {
-//     event.stopPropagation();
-//     // console.log('f) editSubtaskEventHandler');
-//     if(subtaskEventAllowed) {
-//         event.preventDefault();
-//         let input = getCurrentSubtaskInputFromEvent(event);
-//         let wrapper = getCurrentSubtaskInputWrapper(input);
-//         wrapper.classList.add('edit');
-//         wrapper.classList.remove('read-only');
-//         input.readOnly = false;
-//         input.focus();
-//     }
-// }
-
-// function updateSubtaskEventHandler(event, index) {
-//     event.stopPropagation();
-//     // console.log('f) updateSubtaskEventHandler');
-//     if(subtaskEventAllowed) {
-//         event.preventDefault();
-//         let input = getCurrentSubtaskInputFromEvent(event);
-//         let wrapper = getCurrentSubtaskInputWrapper(input);
-//         assignedSubtasks[index].title = input.value;
-//         // console.log(assignedSubtasks);
-//         wrapper.classList.remove('edit');
-//         wrapper.classList.add('read-only');
-//         input.readOnly = true;
-//         renderSubtasks();
-//     }
-// }
-
-// function deleteSubtaskEventHandler(event, index) {
-//     event.stopPropagation();
-//     // console.log('f) deleteSubtaskEventHandler');
-//     if(subtaskEventAllowed) {
-//         event.preventDefault();
-//         deleteSubtask(index);
-//     }
-// }
-
-// function deleteSubtask(index) {
-//     assignedSubtasks.splice(index, 1);
-//     console.log(assignedSubtasks);
-//     renderSubtasks();
-// }
-
 
 

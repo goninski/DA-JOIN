@@ -176,16 +176,18 @@ function setSubmitBtnState(formId) {
     invalidFields.length > 0 ? submitBtn.setAttribute('disabled', '') : submitBtn.removeAttribute('disabled');
 }
 
-function getFormData(formId) {
+async function getFormData(formId) {
     let form = document.getElementById(formId);
     let formData = new FormData(form);
     console.log(formData);
     return formData;
 }
 
-function getFormInputObj(event, formId) {
-    event ? event.preventDefault() : null;
-    let formData = getFormData(formId);
+async function getFormInputObj(formId) {
+    // event ? event.preventDefault() : null;
+    console.log(formId);
+    let formData = await getFormData(formId);
+    console.log(formData);
     let formInputObj = Object.fromEntries(formData);
     console.log(formInputObj);
     return formInputObj;

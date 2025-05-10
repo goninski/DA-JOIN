@@ -59,7 +59,7 @@ function getTaskDetailsWrapperTemplate(task) {
     return `
     <h3 class="mb">${task.title}</h3>                        
         <div class="edit-buttons flex-row align-center justify-end">
-            <button onclick="editTask(event, '${task.id}')"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
+            <button onclick="openEditTaskForm(event, '${task.id}')"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
             <button onclick="submitDeleteTask(event, '${task.id}')"><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
         </div>
     </div>
@@ -240,7 +240,7 @@ function getContactDetailProfileBatchTemplate(contact) {
         <div class="profile-title flex-col">
             <h2 class="">${contact.name}</h2>                        
             <div class="edit-buttons flex-row align-center">
-                <button onclick="editContact(event, '${contact.id}')"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
+                <button onclick="openEditContactForm(event, '${contact.id}')"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
                 <button id="btnDelete" onclick="submitDeleteContact(event, '${contact.id}')"><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
             </div>
         </div>
