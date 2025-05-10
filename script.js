@@ -1,20 +1,23 @@
 let currentPage = window.location.pathname;
-let loggedInUser;
+let loggedInUserId = '0';
 
-
-if(! isAuthorized() ) {
-    window.location.href = "/login.html";
+if(currentPage != '/login.html' && currentPage != '/sign-up.html') {
+    checkAuth();
 }
 
-async function isAuthorized() {
-    if (loggedInUser == 'guest') {
-        return true;
-    }
+async function checkAuth() {
+    let user = await getUserFromURL();
+    console.log(user);
+    // (user == null || !user == loggedInUserId) ? window.location.href = "/login.html" : null;
+    // ....doesnt work !!
 }
 
-async function getLoggedInUser() {
-    loggedInUser = 'guest';
-    // getUserId from URL parameter
+async function getUserFromURL() {
+    let urlSearch = window.location.search;
+    let urlParams = new URLSearchParams(urlSearch);
+    // console.log(urlSearch);
+    // console.log(urlParams);
+    return urlParams.get('user');
 }
 
 function init() {
@@ -45,14 +48,17 @@ function getSidebar() {
     sidebarMobRef.classList.add('show--ss-mob');
 }
 
-function signIn() {
-    setTimeout(function() { 
-        window.location.href = "/summary.html";
-      }, 1000);
+async function signIn() {
+    if(loggedInUserId == '') {return;}
+    !loggedInUserId == 'guest' ? await updateContactProperty(loggedInUserId, 'loggedIn', true) : null;
+    console.log(loggedInUserId);
+    setTimeout(function() {window.location.href = "/summary.html?user=" + loggedInUserId;}, 1000);
+    // checkAuth();
 }
 
-function signOut() {
-    autoUserId = null;
+async function signOut() {
+    !loggedInUserId == 'guest' ? await updateContactProperty(loggedInUserId, 'loggedIn', null) : null;
+    loggedInUserId = '0';
     window.location.href = "/login.html";
 }
 

@@ -14,11 +14,13 @@ window.onload = () => {
 async function checkLogin(event) {
     await getUserData(); // creates a 'contacts' object, use the function 'updateContact(contact)' to update a user if needed
     console.log(contacts);
+    loggedInUserId = '1005'; //change to correct id
     signIn();
 }
   
-function guestLogin(event) {
-    signIn();
+async function guestLogin(event) {
+    loggedInUserId = 'guest';
+    await signIn();
 }
 
 

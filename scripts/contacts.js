@@ -4,11 +4,6 @@ let lastListContactId = '';
 async function initContacts() {
     getMainTemplates();
     await getUserData();
-    // console.log(contacts);
-    // if(!contacts) {
-    //     contacts = [];
-    //     console.log('error: contacts undefined !');
-    // }
     await renderContactList();
 }
 
