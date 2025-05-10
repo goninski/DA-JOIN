@@ -18,7 +18,8 @@ function documentEventHandler(event) {
 
 function focusInHandler(event) {
     event.stopPropagation();
-    // let element = event.currentTarget;
+    let element = event.currentTarget;
+    getCurrentFieldElements(element);
     // console.log('f) focusInHandler');
     // console.log(element);
     resetInputValidation(event);
@@ -31,6 +32,7 @@ function focusOutHandler(event) {
     // console.log(element);
     // closeAllDropdowns(listboxElements);
     validateInput(element);
+    currentFieldElements.listbox ? closeDropdown(currentFieldElements.listbox) : null;
 }
 
 function getFormElementsArray(formId) {
@@ -144,39 +146,26 @@ function setFieldValidity(element) {
     let isValidElement = validateElement(element);
     let fieldWrapper = getFieldWrapperFromId(element.id);
     if(fieldWrapper){
-        if(isValidElement) {
-            fieldWrapper.classList.remove('invalid');
-        } else {
-            fieldWrapper.classList.add('invalid');
-        }
+        isValidElement ? fieldWrapper.classList.remove('invalid') : fieldWrapper.classList.add('invalid');
     }
     setPlaceholderStyle(element);
 }
 
 function setPlaceholderStyle(element) {
     if(element.hasAttribute('data-placeholder-style')) {
-        if(element.value == '') {
-            element.dataset.placeholderStyle = 'true';
-        } else {
-            element.dataset.placeholderStyle = 'false';
-        }
+        element.value == '' ? element.dataset.placeholderStyle = 'true' : element.dataset.placeholderStyle = 'false';
     }
 }
 
 function removePlaceholderStyle(event) {
-    event.stopPropagation();
+    // event.stopPropagation();
     let element = event.currentTarget;
-    if(element.hasAttribute('data-placeholder-style')) {
-        element.dataset.placeholderStyle = 'false';
-    }
+    element.hasAttribute('data-placeholder-style') ? element.dataset.placeholderStyle = 'false' : null;
 }
 
 function resetInputValidation(event) {
-    // event.stopPropagation();
     let fieldWrapper = getFieldWrapperFromEvent(event);
-    if(fieldWrapper){
-        fieldWrapper.classList.remove('invalid');
-    }
+    fieldWrapper ? fieldWrapper.classList.remove('invalid') : null;
 }
 
 function setSubmitBtnState(formId) {
@@ -184,11 +173,7 @@ function setSubmitBtnState(formId) {
     let form = document.getElementById(formId);
     let submitBtn = form.querySelector('[type="submit"]');
     submitBtn.setAttribute('disabled', '');
-    if(invalidFields.length > 0) {
-        submitBtn.setAttribute('disabled', '');
-    } else {
-        submitBtn.removeAttribute('disabled');
-    }
+    invalidFields.length > 0 ? submitBtn.setAttribute('disabled', '') : submitBtn.removeAttribute('disabled');
 }
 
 function getFormData(formId) {
@@ -199,9 +184,7 @@ function getFormData(formId) {
 }
 
 function getFormInputObj(event, formId) {
-    if(event) {
-        event.preventDefault();
-    }
+    event ? event.preventDefault() : null;
     let formData = getFormData(formId);
     let formInputObj = Object.fromEntries(formData);
     console.log(formInputObj);
@@ -266,17 +249,12 @@ function toggleDropdown(element) {
     let isExpanded = getBooleanFromString(listbox.getAttribute('aria-expanded'));
     isExpanded = !isExpanded;
     listbox.setAttribute('aria-expanded', isExpanded);
-    if(!isExpanded) {
-        validateInput(currentFieldElements.combox);
-    }
+    !isExpanded ? validateInput(currentFieldElements.combox) : null;
 }
 
 function focusCurrentCombox(element) {
     getCurrentFieldElements(element);
-    combox = currentFieldElements.combox;
-    if(combox) {
-        combox.focus();
-    }
+    currentFieldElements.combox ? currentFieldElements.combox.focus() : null;
 }
 
 function dropdownOptionClickHandler(event) {
@@ -285,7 +263,7 @@ function dropdownOptionClickHandler(event) {
     let option = event.currentTarget.closest('[role="option"]');
     // console.log(option);
     if(option) {
-        getCurrentFieldElements(option);
+        getCurrentFieldElements(option);         
         let options = currentFieldElements.options;
         options.forEach(element => {
             element.setAttribute('aria-selected', 'false');
@@ -333,16 +311,12 @@ function setDropdownOption(combox, option, activeOption = null) {
     combox.value = option.textContent;
     combox.setAttribute('data-option-id', option.dataset.optionId);
     combox.setAttribute('data-active-index', option.dataset.index);
-    if(activeOption) {
-        activeOption.setAttribute('aria-selected', 'false');
-    }
+    activeOption ? activeOption.setAttribute('aria-selected', 'false') : null;
     option.setAttribute('aria-selected', 'true');
 }
 
 function getSelectedDropdownIndex(event, index, length, loop = false) {
-    if(!index) {
-        index = -1;
-    }
+    !index ? index = -1 : null;
     if(event.key === 'ArrowDown' ) {
         index = getNextIndex(index, length, loop);
     } else if (event.key === 'ArrowUp' ) {
@@ -355,18 +329,14 @@ function getNextIndex(index, length, loop = false) {
     if(index < length - 1 ) {
         index++;
     } else {
-        if(loop) {
-            index = 0;
-        }
+        loop ? index = 0 : null;
     }
     return index;
 }
 
 function getPreviousIndex(index, length, loop = false) {
     if(index <= 0) {
-        if(loop) {
-            index = length - 1;
-        }
+        loop ? index = length - 1 : null;
     } else {
         index--;
     }
@@ -441,9 +411,7 @@ function closeDropdown(listbox) {
 
 function closeAllDropdowns(listboxElements, currentListbox = null) {
     listboxElements.forEach(function(listbox) {
-        if(listbox !== currentListbox) {
-            closeDropdown(listbox);
-        }
+        listbox !== currentListbox ? closeDropdown(listbox) : null;
     });
 }
 

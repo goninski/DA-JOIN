@@ -111,48 +111,30 @@ async function saveTaskToDB(task, mode = 'add') {
     }
 }
 
-async function createTask(taskInputs = null) {
-    let task = {};
-    task.id =  await getNewTaskId();
-    console.log(task);
-    await setTaskProperties(task, taskInputs);
-    console.log(task);
+async function createTask(task) {
+    await validateProperties(task);
     tasks.push(task);
-    localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task);
+    console.log(currentTask);
+    console.log(task);
     console.log(tasks);
+    localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task);
 }
 
-async function updateTask(taskId, taskInputs = null) {
+async function updateTask(task) {
     // console.log(taskInputs);
-    let index = await getTaskIndexFromId(taskId);
-    let task = tasks[index];
-    await setTaskProperties(task, taskInputs);
+    await validateProperties(task);
+    console.log(currentTask);
+    console.log(task);
     console.log(tasks);
     localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task, 'update');
 }
 
-async function setTaskProperties(task, taskInputs = null) {
-    console.log(taskInputs);
-    if(taskInputs) {
-        task.title = taskInputs.title;
-        task.description = taskInputs.description;
-        task.dueDate = taskInputs.dueDate;
-        task.priority = taskInputs.priority;
-        task.categoryId = taskInputs.categoryId;
-        task.status = hasLength(taskInputs.status) ? taskInputs.status : 'To do';
-        hasLength(taskInputs.contactIds) ? task.contactIds = taskInputs.contactIds : delete task.contactIds;
-        hasLength(taskInputs.subtasks) ? task.subtasks = taskInputs.subtasks : delete task.subtasks;
-    }
-    // await setTaskProgress(task);
-    task.id = hasLength(task.id) ? task.id : await getNewContactId();
+async function validateProperties(task) {
+    task.id = hasLength(task.id) ? task.id : await getNewTaskId();
     task.status = hasLength(task.status) ? task.status : 'To do';
-    await deleteEmptyProperties(task);
-}
-
-async function deleteEmptyProperties(task) {
-    if(!hasLength(task.description)) {
-        delete task.description;
-    }
+    !hasLength(task.description) ? delete task.description : null;
+    !hasLength(task.contacts) ? delete task.contacts : null;
+    !hasLength(task.subtasks) ? delete task.subtasks : null;
 }
 
 async function updateTaskProperty(taskId, property, value) {
@@ -192,45 +174,6 @@ async function deleteAllData() {
     localStorageMode ? await deleteDataFromLS() : await deleteFirebaseData('');
 
 }
-
-
-
-
-// SINGLE PROPERTY QUERIES/UPDATES
-
-async function changeTaskStatus(event = null, taskId, statusNew, statusOld = null) {
-    event ? event.stopPropagation() : null;
-    await updateTaskProperty(taskId, 'status', statusNew);
-    // renderBoard(statusNew);
-    // statusOld ? renderBoard(statusOld) : null;
-}
-
-async function toggleSubtaskStatus(event = null, taskId, subtaskIndex) {
-    event ? event.stopPropagation() : null;
-    let index = await getTaskIndexFromId(taskId);
-    let status = tasks[index].subtasks[subtaskIndex].done;
-    await updateSubtaskStatus(taskId, subtaskIndex, !status);
-}
-
-async function getSubtaskProgress(task, type = 'progress') {
-        if(!task.subtasks || task.subtasks.length <= 0) {
-            return null;
-        }
-        let subtasksDone = 0;
-        task.subtasks.forEach(function(subtask) {
-            if(subtask.done) {
-                subtasksDone++;
-            }
-        });
-        let subtasksTotal = task.subtasks.length;
-        if(type == 'count') {
-            return (subtasksDone + '/' + subtasksTotal);
-        } else {
-            return (subtasksDone / subtasksTotal * 100);
-        }
-}
-
-
 
 
 
@@ -333,7 +276,7 @@ async function getTempTaskListTemplate(task) {
     <li class="flex-row gap justify-between align-center fw-bold">#${task.id} | ${task.title}
         <button class="" style="margin-left: auto; text-decoration: underline;" onclick="showTask(event, '${task.id}')">Show</button>
         <button class="" style="text-decoration: underline;" onclick="editTask(event, '${task.id}')">Edit</button>
-        <button class="" style="text-decoration: underline;" onclick="deleteTask(event, '${task.id}')">Delete</button>
+        <button class="" style="text-decoration: underline;" onclick="submitDeleteTask(event, '${task.id}')">Delete</button>
     </li>
     `
 }

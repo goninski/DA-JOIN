@@ -170,7 +170,7 @@ label.required::after,
     content: "*";
     color: var(--clr-warning);
 }
-input:not([type="checkbox"], [type="radio"]):not(.search-input):not(.login-signup-input),
+input:not([type="checkbox"], [type="radio"]):not(.search-input, .subtask-input[read-only]):not(.login-signup-input),
 textarea, select {
     padding: 12px 21px;
     border-radius: 10px;
@@ -531,57 +531,67 @@ input:has(+ .input-icon-wrapper.simple) {
     overflow-y: auto;
     scrollbar-color: #eee white */
 }
-.subtask-listing li {
+.input-wrapper-subtask {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0;
 }
-.subtask-listing li input {
-    display: list-item;
+.input-wrapper-subtask input {
     height: 40px;
     min-height: unset !important;
-    /* margin-left: 28px; */
-    /* width: 100%; */
-    /* background-color: #ededed !important; */
     background-color: var(--bg-page) !important;
     border: none !important;
     font-size: var(--fs-base) !important;
     transition-duration: var(--transition-duration);
 }
-.input-wrapper-subtask.edit-mode {
-    border-bottom: solid 1px  var(--clr-light-blue);
+.input-wrapper-subtask.read-only .list-bullet {
+    position: absolute;
+    left: 24px;
 }
-.input-wrapper-subtask input:hover {
+.input-wrapper-subtask.read-only input {
+    padding-left: 44px !important;
+}
+.input-wrapper-subtask.read-only input:hover {
     background-color: #EEEEEE !important;
     border-radius: 10px;
 }
-.input-wrapper-subtask.edit-mode input {
+.input-wrapper-subtask.read-only .input-icon-wrapper.read-only {
+    /* display: none; */
+}
+.input-wrapper-subtask.read-only .input-icon-wrapper.edit {
+    display: none;
+}
+.input-wrapper-subtask.read-only input:hover + .input-icon-wrapper.read-only {
+    display: flex;      
+}
+.input-wrapper-subtask.edit {
+    border-bottom: solid 1px  var(--clr-light-blue);
+}
+.input-wrapper-subtask.edit .list-bullet {
+    position: relative;
+    display: none;
+}
+.input-wrapper-subtask.edit input {
     background-color: white !important;
     border-radius: 0 !important;
 }
-.input-wrapper-subtask:not(.edit-mode) .input-icon-wrapper-edit {
+.input-wrapper-subtask.edit .input-icon-wrapper.read-only {
     display: none;
 }
-.input-wrapper-subtask.edit-mode .input-icon-wrapper-read {
-    display: none;
-}
-.input-wrapper-subtask.edit-mode .input-icon-wrapper-edit {
-    display: flex; /* unset hide */
-}
+.input-wrapper-subtask.edit .input-icon-wrapper.edit {
+    display: flex;
+} */
 /* .input-wrapper-subtask:not(.edit-mode) .subtask-input + .input-icon-wrapper-read {
     display: none;      
 } */
-.input-wrapper-subtask:not(.edit-mode) .subtask-input:hover + .input-icon-wrapper-read {
-    display: flex;      
-}
 /* .subtask-wrapper .input-icon-wrapper button:hover {
     background-color: #EEEEEE;
     transform: scale(1.05);
     border-radius: 100%;
 } */
 #subtaskInputButtonAdd,
-.input-wrapper-subtask.invalid .input-icon-wrapper-edit button:last-of-type {
+.input-wrapper-subtask.invalid .input-icon-wrapper.edit button:last-of-type {
     pointer-events: none;
 }
 
