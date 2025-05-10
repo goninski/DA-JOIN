@@ -187,3 +187,30 @@ async function showFloatingMessage(template, msg = '') {
 }
 
 
+async function runSlideInAnimation(element, timeout = 0) {
+    element.classList.remove('slide-out');
+    element.classList.add('slide-in');
+    if(timeout > 0) {
+        setTimeout(function() {
+            element.style = '';
+            // element.classList.remove('slide-out');
+        }, timeout);
+    } else {
+        element.style = '';
+    }
+}
+
+async function runSlideOutAnimation(element, timeout = 0) {
+    element.classList.remove('slide-in');
+    element.classList.add('slide-out');
+    if(timeout > 0) {
+        setTimeout(function() {
+            element.style = 'display: none';
+            // element.classList.remove('slide-out');
+        }, timeout);
+    } else {
+        element.style = 'display: none';
+    }
+}
+
+

@@ -89,18 +89,6 @@ async function saveContactToDB(contact, mode = 'add') {
     await saveDataToFirebase('users/' + contactId, contact);
 }
 
-// async function createContact(contact) {
-//     localStorageMode ? await saveContactsToLS() : await saveContactToDB(contact);
-//     console.log(contacts);
-// }
-
-// async function updateContact(contactId) {
-//     let index = await getContactIndexFromId(contactId);
-//     let contact = contacts[index];
-//     localStorageMode ? await saveContactsToLS() : await saveContactToDB(contact, 'update');
-//     console.log(contacts);
-// }
-
 async function createContact(contact) {
     await validateContactProperties(contact);
     contacts.push(contact);
@@ -109,13 +97,22 @@ async function createContact(contact) {
 
 async function updateContact(contact) {
     await validateContactProperties(contact);
-    await sortContacts(contacts);
+    // await sortContacts(contacts);
+    localStorageMode ? await saveContactsToLS() : await saveContactToDB(contact, 'update');
+}
+
+async function updateContactProperty(contactId, property, value = null) {
+    let index = await getContactIndexFromId(contactId);
+    console.log(index);
+    let contact = contacts[index];
+    value === null ? delete contact[property] : contact[property] = value;
+    console.log(contacts);
     localStorageMode ? await saveContactsToLS() : await saveContactToDB(contact, 'update');
 }
 
 async function validateContactProperties(contact) {
     contact.id = hasLength(contact.id) ? contact.id : await getNewContactId();
-    !hasLength(contact.initials) ?  contact.initials = getInitialsOfFirstAndLastWord(contact.name) : null;
+    contact.initials = getInitialsOfFirstAndLastWord(contact.name);
     !hasLength(contact.color) ? contact.color = getRandomColor() : null;
     !hasLength(contact.phone) ? delete contact.phone : null;
 }
@@ -181,14 +178,17 @@ async function updateSubtaskStatus(taskId, subtaskIndex, value) {
 // DELETE DATA
 
 async function deleteCategory(categoryId) {
+    let index = getCategoryIndexFromId(categoryId);
+    index >= 0 ? categories.splice(index, 1) : null;
     localStorageMode ? await saveCategoriesToLS() : await deleteFirebaseData('categories/' + categoryId);
+    // await removeDeletedCategoryFromTasks(categoryId);
 }
 
 async function deleteContact(contactId) {
     let index = getContactIndexFromId(contactId);
     index >= 0 ? contacts.splice(index, 1) : null;
     localStorageMode ? await saveContactsToLS() : await deleteFirebaseData('users/' + contactId);
-    removeDeletedContactsFromTasks(contactId);
+    await removeDeletedContactsFromTasks(contactId);
 }
 
 async function deleteTask(taskId) {

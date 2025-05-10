@@ -57,6 +57,16 @@
     --height-between-header-footer: calc(100vh - (var(--height-header) + var(--height-footer))); */
 }
 
+
+@keyframes slide-in-right{
+  from{margin-right:-100%} to{margin-right:0;}
+}
+
+@keyframes slide-out-right{
+  from{margin-right:0} to{margin-right:-100%;}
+}
+
+
 html {
     background-color: var(--bg-page);
 }

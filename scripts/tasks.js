@@ -59,11 +59,15 @@ async function showTaskDialogue(elementId, source = 'board') {
         document.getElementById('addTaskFormWrapper').style = 'display: none;';
         document.getElementById('editTaskFormWrapper').style = 'display: none;';
         document.getElementById(elementId).style = '';
-        document.getElementById('taskDialogue').classList.remove('show-task');
-        document.getElementById('taskDialogue').classList.remove('add-task');
-        document.getElementById('taskDialogue').classList.remove('edit-task');
-        // document.getElementById('taskDialogue').classList.remove('form-scrollable');
-        document.getElementById('taskDialogue').style = '';
+        let dialogue = document.getElementById('taskDialogue');
+        dialogue.classList.remove('show-task');
+        dialogue.classList.remove('add-task');
+        dialogue.classList.remove('edit-task');
+        // dialogue.classList.remove('form-scrollable');
+        await runSlideInAnimation(dialogue);
+        // dialogue.classList.remove('slide-out');
+        // dialogue.classList.add('slide-in');
+        // dialogue.style = '';
     }
 }
 
@@ -240,12 +244,13 @@ async function resetAddTaskForm(event) {
     event.preventDefault();
 }
 
-function closeTaskDialogue(event) {
+async function closeTaskDialogue(event) {
     event.stopPropagation();
     (formMode == 'add' || formMode == 'edit') ? resetAddTaskForm(event) : null;
-    document.getElementById('taskDialogue').style = 'display: none';
-    renderBoards();
     formMode = '';
+    let dialogue = document.getElementById('taskDialogue');
+    await runSlideOutAnimation(dialogue, 200);
+    await renderBoards();
 }
 
 

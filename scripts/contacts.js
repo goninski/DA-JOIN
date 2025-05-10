@@ -99,7 +99,8 @@ async function openEditContactForm(event, contactId) {
 
 async function openContactsForm(formMode, contactId = '') {
     await resetForm('contactsForm');
-    document.getElementById('addContactDialogue').style = '';
+    let dialogue = document.getElementById('addContactDialogue');
+    await runSlideInAnimation(dialogue);
     document.getElementById('addNewContactBtnFloating').style = 'display: none;';
     document.body.style = 'overflow: hidden;';
     if(formMode == 'add'){
@@ -120,14 +121,16 @@ function resetContactsForm(event) {
 async function closeContactsFormDialogue(event) {
     event.stopPropagation();
     resetForm('contactsForm');
-    document.getElementById('addContactDialogue').style = 'display: none;';
+    formMode = '';
+    let dialogue = document.getElementById('addContactDialogue');
     document.getElementById('addNewContactBtnFloating').style = '';
     // document.body.style = '';
-    formMode = '';
+    await runSlideOutAnimation(dialogue, 200);
     await renderContactList();
     await showContactDetail(event, lastListContactId);
     // reloadPage(event);
 }
+
 
 async function setAddContactValues() {
     document.getElementById('dialogueProfileBatch').innerHTML = '<img src="/assets/icons/profile-placeholder.svg" alt="profile-placeholder">';

@@ -20,19 +20,20 @@ function focusInHandler(event) {
     event.stopPropagation();
     let element = event.currentTarget;
     getCurrentFieldElements(element);
-    // console.log('f) focusInHandler');
+    console.log('f) focusInHandler');
     // console.log(element);
     resetInputValidation(event);
 }
 
 function focusOutHandler(event) {
     event.stopPropagation();
+    event.preventDefault();
     let element = event.currentTarget;
     console.log('f) focusOutHandler');
     // console.log(element);
     // closeAllDropdowns(listboxElements);
     validateInput(element);
-    currentFieldElements.listbox ? closeDropdown(currentFieldElements.listbox) : null;
+    // currentFieldElements.listbox ? closeDropdown(currentFieldElements.listbox) : null;
 }
 
 function getFormElementsArray(formId) {
@@ -217,7 +218,7 @@ function getFieldWrapperFromId(id) {
 
 function dropdownEventHandler(event) {
     event.stopPropagation();
-    // console.log('f) dropdownEventHandler');
+    console.log('f) dropdownEventHandler');
     // console.log(event.key);
     // console.log(event.type);
     // console.log(event.target);
@@ -238,7 +239,7 @@ function dropdownEventHandler(event) {
             return dropdownOptionKeyHandler(event, false);
         }
         if(['Tab'].includes(event.key)) {
-            return toggleDropdown(listbox);
+            // return toggleDropdown(listbox);
         }
     }
 }

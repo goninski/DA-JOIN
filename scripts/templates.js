@@ -152,7 +152,7 @@ function getTaskFormFieldsTemplate(task) {
             </div>
             <ul id="assignedSubtasks" class="subtask-listing"></ul>
         </div>
-        
+       
     `
 }
 

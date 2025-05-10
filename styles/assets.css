@@ -646,6 +646,12 @@ input:has(+ .input-icon-wrapper.simple) {
 
 /*** DIALOGUES */
 
+.dialogue.slide-in {
+    animation: slide-in-right 175ms ease-in;
+}
+.dialogue.slide-out {
+    animation: slide-out-right 175ms ease-in;
+}
 .dialogue {
     position: fixed;
     top: 0;
@@ -687,6 +693,7 @@ button.close-dialogue .light {
     /* align-items: stretch; */
     /* overflow-y: auto; */
 }
+
 .task-dialogue:not(.add-task) .dialogue-inner {
     padding: 48px 40px;
     max-width: 525px;
