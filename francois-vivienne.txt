@@ -12,6 +12,7 @@ let user = {};
 user.name = 'blablabla';
 user.title = 'bliblibli';
 user.password = 'blublublu';
+user.loggedIn = true;
 await createContact(user);
 
 ---
