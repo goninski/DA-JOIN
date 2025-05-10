@@ -6,7 +6,7 @@ console.log(contacts);
 
 ----
 
-neuen User erstellen:
+neuen User erstellen (für sign up):
 
 let user = {};
 user.name = 'blablabla';
@@ -14,6 +14,8 @@ user.title = 'bliblibli';
 user.password = 'blublublu';
 user.loggedIn = true;
 await createContact(user);
+loggedInUserId = user.Id
+signIn();
 
 ---
 
