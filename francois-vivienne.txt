@@ -1,6 +1,7 @@
 
 
 User abrufen:
+
 await getUserData();
 console.log(contacts);
 
@@ -8,26 +9,30 @@ console.log(contacts);
 
 neuen User erstellen (für sign up):
 
+getUserData();  // muss vorher aufgerufen sein
+
 let user = {};
+user.id = getNewContactId();
 user.name = 'blablabla';
 user.title = 'bliblibli';
 user.password = 'blublublu';
 user.loggedIn = true;
 await createContact(user);
-signUp();
+loggedInUserId = user.Id
+await signUp();
 
 ---
 
 User einloggen:
-die globale Variable 'loggedInUserId' anpassen und signIn aufrufen
 
 loggedInUserId = user.Id
-signIn();
+await signIn();
 
 ---
 
 User ausloggen:
-einfach 'signOut()' aufrufen
+
+await signOut();
 
 ---
 

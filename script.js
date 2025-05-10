@@ -48,6 +48,10 @@ function getSidebar() {
     sidebarMobRef.classList.add('show--ss-mob');
 }
 
+async function signUp() {
+    await signIn()
+}
+
 async function signIn() {
     if(loggedInUserId == '') {return;}
     !loggedInUserId == 'guest' ? await updateContactProperty(loggedInUserId, 'loggedIn', true) : null;
