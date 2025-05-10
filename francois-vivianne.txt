@@ -1,0 +1,31 @@
+
+
+User abrufen:
+await getUserData();
+console.log(contacts);
+
+----
+
+neuen User erstellen:
+
+let user = {};
+user.name = 'blablabla';
+user.title = 'bliblibli';
+user.password = 'blublublu';
+await createContact(user);
+
+---
+
+User einloggen:
+die globale Variable 'loggedInUserId' anpassen und signIn aufrufen
+
+loggedInUserId = user.Id
+signIn();
+
+---
+
+User ausloggen:
+einfach 'signOut()' aufrufen
+
+---
+
