@@ -7,11 +7,13 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="board.css" />
   <script src="./scripts/auth.js"></script>
-  <script src="scripts/data.js"></script>
-  <script src="scripts/templates.js"></script>
+  <script src="./scripts/data.js"></script>
+  <script src="./scripts/templates.js"></script>
   <script src="script.js"></script>
-  <script src="scripts/form-handling.js"></script>
-  <script src="scripts/add-task.js"></script>
+  <script src="./scripts/form-handling.js"></script>
+  <script src="./scripts/subtasks.js"></script>
+  <script src="./scripts/tasks.js"></script>
+  <!-- <script src="boards.js"></script> -->
   <script src="scripts/boards.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 </head>
@@ -37,7 +39,7 @@
                 <img src="./assets/icons/search.png" alt="Search Icon" />
               </div>
             </div>
-            <button class="add-task-button" onclick="addTask(event)">
+            <button class="add-task-button" onclick="openAddTaskForm(event)">
               Add task <img src="./assets/icons/add.png" alt="" />
             </button>
           </div>

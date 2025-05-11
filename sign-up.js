@@ -3,11 +3,15 @@ const emailField = document.getElementById('email');
 const passwordField = document.getElementById('pwd');
 const confirmPwdField = document.getElementById('confirm_pwd');
 
-function addUser() {
+function addUser(event) {
+  event.preventDefault();
+
   const nameInput = nameField.value.trim();
   const emailInput = emailField.value.trim();
   const passwordInput = passwordField.value.trim();
   const passwordRepeatInput = confirmPwdField.value.trim();
+
+  if (!checkValidity()) return;
 
   resetErrorStyles();
 
@@ -29,6 +33,15 @@ function addUser() {
   localStorage.setItem("users", JSON.stringify(users));
 
   showSignUpSuccessOverlay();
+}
+
+function checkValidity() {
+  const form = document.getElementById("signup-form");
+  if (!form.checkValidity()) {
+    form.reportValidity(); 
+    return false;
+  }
+  return true;
 }
 
 function checkInputfields(name, email, password, passwordRepeat) {

@@ -130,69 +130,45 @@ let tasksDemo = [
 
 async function resetToDemoData() {
     if(! window.confirm('All data will be reset to default demo data! OK?')) { return; }
+    await deleteAllData();
     categories = categoriesDefault;
     contacts = contactsDemo;
     contacts.sort((a, b) => a.name.localeCompare(b.name));
     tasks = tasksDemo;
-    // lastCategoryId = await getLastIdFromObjArray(categories);
-    // lastContactId = await getLastIdFromObjArray(contacts);
-    // lastTaskId = await getLastIdFromObjArray(tasks);
     contacts.forEach(function(contact) {
-        if(! contact.initials) {
-            contact.initials = getInitialsOfFirstAndLastWord(contact.name);
-        }
-        if(! contact.color) {
-            contact.color = getRandomColor();
-        }
+        validateContactProperties(contact);
+        // !contact.initials ?  contact.initials = getInitialsOfFirstAndLastWord(contact.name) : null;
+        // !contact.color ? contact.color = getRandomColor() : null;
     });
-    if(localStorageMode) {
-        await clearLocalStorage();
-        await saveCategoriesToLS();
-        await saveContactsToLS();
-        await saveTasksToLS();
-    } else {
-        await clearLocalStorage();
-        await deleteAllDataFromDB();
-        await saveAllCategoriesToDB();
-        await saveAllContactsToDB();
-        await saveAllTasksToDB();
-        // await saveLastIdToDB('users', lastContactId)
-        // await saveLastIdToDB('categories', lastCategoryId)
-        // await saveLastIdToDB('tasks', lastTaskId)
-        }
-    showAlert('Data Reset successfull. Please reload the page !', 1000);
+    await saveAllData()
+    await showAlert('Data Reset successfull. Please reload the page !', 1000);
     // location.reload()
+    // setTimeout(function() {window.location.href = "/board.html";}, 1000);
 }
 
-
-
-async function deleteAllDataFromDB(fetchPath="") {
-    await deleteFirebaseData(fetchPath);
+async function saveAllData() {
+    await saveAllCategories();
+    await saveAllContacts();
+    await saveAllTasks();
 }
 
-async function saveAllDataToDB() {
-    await getAllData();
-    await deleteAllDataFromDB();
-    await saveAllCategoriesToDB();
-    await saveAllContactsToDB();
-    await saveAllTasksToDB();
-}
-
-async function saveAllCategoriesToDB() {
+async function saveAllCategories() {
+    console.log(categories);
     categories.forEach(function(category) {
-        saveCategoryToDB(category);
+        updateCategory(category);
     });
 }
 
-async function saveAllContactsToDB() {
+async function saveAllContacts() {
+    console.log(contacts);
     contacts.forEach(function(contact) {
-        let contactId = contact.id;
-        saveDataToFirebase('users/' + contactId, contact);
+        updateContact(contact);
     });
 }
 
-async function saveAllTasksToDB() {
-    tasks.forEach(function(item) {
-        saveTaskToDB(item);
+async function saveAllTasks() {
+    console.log(tasks);
+    tasks.forEach(function(task) {
+        updateTask(task);
     });
 }

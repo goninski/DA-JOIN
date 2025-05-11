@@ -1,9 +1,11 @@
 async function initBoards() {
-  getMainTemplates();
-  await getAllData();
-  console.log(tasks);
-  await renderBoards();
-}
+    getMainTemplates();
+    await getContacts()
+    await checkAuth();
+    await getTaskData()
+    await renderBoards();
+    console.log(tasks);
+  }
 
 async function renderBoards() {
   await renderTempTaskList();

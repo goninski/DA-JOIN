@@ -32,6 +32,7 @@
             </div>
 
             <div class="flex-col login-email-part-sign-up center gap_16px">
+                <form id="signup-form">
                 <div class="flex-col">
                     <div class="input-wrapper-signup-login margin-bottom-24px flex justify-between">
                         <input class="login-signup-input pictureinput person-pic" type="text" minlength="3"
@@ -64,8 +65,9 @@
             </div>
 
             <div class="flex-row align-end justify-center gap-35">
-                <button id="signUpBtn" type="submit" value="Sign up" class="button btn-login-size btn-fourth" onclick="addUser()">Sign up</button>
+                <button id="signUpBtn" type="submit" value="Sign up" class="button btn-login-size btn-fourth" onclick="addUser(event)">Sign up</button>
             </div>
+        </form>
         </div>
     </section>
 

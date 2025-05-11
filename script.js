@@ -1,12 +1,48 @@
 let currentPage = window.location.pathname;
+let loggedInUserId = null;
 
-function init() {
-    getMainTemplates();
+async function checkAuth() {
+    let urlUserId = await getUserFromURL();
+    let isLoggedIn = await userIsLoggedIn(urlUserId);
+    // console.log(urlUserId);
+    // console.log(isLoggedIn);
+    !isLoggedIn ? window.location.href = "/login.html" : null;
 }
 
-function initSummary() {
+async function getUserFromURL() {
+    let urlSearch = window.location.search;
+    let urlParams = new URLSearchParams(urlSearch);
+    let user = urlParams.get('user');
+    // console.log(urlSearch);
+    // console.log(urlParams);
+    // console.log(user);
+    loggedInUserId = hasLength(user) ? user.toString() : null;
+    console.log(loggedInUserId);
+}
+
+async function userIsLoggedIn(userId) {
+    return true; // temporary true for all
+    if(userId == 'guest') {
+        return true;
+    }
+    let index = contacts.findIndex(user => user.id == userId && user.loggedIn == true);
+    // console.log(index);
+    if(index >= 0) {
+        return true;
+    } else {
+        return false;        
+    }
+}
+
+// function init() {
+//     getMainTemplates();
+// }
+
+async function initSummary() {
     getMainTemplates();
-    getAllData();
+    await getUserData();
+    await checkAuth();
+    await getTaskData();
 }
 
 function getMainTemplates() {
@@ -28,14 +64,21 @@ function getSidebar() {
     sidebarMobRef.classList.add('show--ss-mob');
 }
 
-function signIn() {
-    setTimeout(function() { 
-        window.location.href = "/summary.html";
-      }, 1000);
+async function signUp() {
+    await signIn()
 }
 
-function signOut() {
-    autoUserId = null;
+async function signIn() {
+    if(loggedInUserId == '') {return;}
+    !loggedInUserId == 'guest' ? await updateContactProperty(loggedInUserId, 'loggedIn', true) : null;
+    console.log(loggedInUserId);
+    setTimeout(function() {window.location.href = "/summary.html?user=" + loggedInUserId;}, 1000);
+    // checkAuth();
+}
+
+async function signOut() {
+    (hasLength(loggedInUserId) || !loggedInUserId == 'guest') ? await updateContactProperty(loggedInUserId, 'loggedIn', null) : null;
+    loggedInUserId = null;
     window.location.href = "/login.html";
 }
 
@@ -70,17 +113,18 @@ function getClosestParentElementFromId(id, selector = '') {
     return;
 }
 
-async function getTaskIndexFromId(taskId) {
-    return tasks.findIndex(task => task.id == taskId);
+async function getCategoryIndexFromId(categoryId) {
+    return categories.findIndex(category => category.id == categoryId);
 }
 
 async function getContactIndexFromId(contactId) {
     return contacts.findIndex(contact => contact.id == contactId);
 }
 
-async function getCategoryIndexFromId(categoryId) {
-    return categories.findIndex(category => category.id == categoryId);
+async function getTaskIndexFromId(taskId) {
+    return tasks.findIndex(task => task.id == taskId);
 }
+
 
 async function sortContacts(contacts) {
     return await contacts.sort((a, b) => a.name.localeCompare(b.name));
@@ -150,7 +194,7 @@ function getRandomString(length = 20) {
     return result.trim();
 }
 
-function showAlert(msg, duration = 250) {
+async function showAlert(msg, duration = 250) {
     setTimeout(function() { alert(msg) }, duration);
 }
 
@@ -166,6 +210,33 @@ async function showFloatingMessage(template, msg = '') {
         element.classList.add('hide');
         element.innerHTML = '';
 }, 1500);
+}
+
+
+async function runSlideInAnimation(element, timeout = 0) {
+    element.classList.remove('slide-out');
+    element.classList.add('slide-in');
+    if(timeout > 0) {
+        setTimeout(function() {
+            element.style = '';
+            // element.classList.remove('slide-out');
+        }, timeout);
+    } else {
+        element.style = '';
+    }
+}
+
+async function runSlideOutAnimation(element, timeout = 0) {
+    element.classList.remove('slide-in');
+    element.classList.add('slide-out');
+    if(timeout > 0) {
+        setTimeout(function() {
+            element.style = 'display: none';
+            // element.classList.remove('slide-out');
+        }, timeout);
+    } else {
+        element.style = 'display: none';
+    }
 }
 
 

@@ -35,7 +35,7 @@ function getSidebarTemplate() {
             <div class="temp-links flex-col mb-10"> 
                 <a href="/">Home</a>
                 <a href="#" id="signOutBtnTemp" onclick="signOut()">Logout</a>
-                <a href="/data.html">Data Management</a>
+                <a href="/data.html">Data Handling</a>
             </div>
             <a href="privacy-policy.html">Privacy Policy</a>
             <a href="legal-notice.html">Legal notice</a>
@@ -59,7 +59,7 @@ function getTaskDetailsWrapperTemplate(task) {
     return `
     <h3 class="mb">${task.title}</h3>                        
         <div class="edit-buttons flex-row align-center justify-end">
-            <button onclick="editTask(event, '${task.id}')"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
+            <button onclick="openEditTaskForm(event, '${task.id}')"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
             <button onclick="submitDeleteTask(event, '${task.id}')"><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
         </div>
     </div>
@@ -140,7 +140,7 @@ function getTaskFormFieldsTemplate(task) {
             <label for="subtasks">Subtasks</label>
             <div class="input-wrapper input-wrapper-subtasks">
                 <!--<input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask"> -->
-                <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask" maxlength="128" onfocus="focusInHandler(event)" oninput="validateAddSubtaskInput(event)" onkeydown="addSubtaskInputEventHandler(event)">
+                <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask" maxlength="128" onfocus="focusInHandler(event)" oninput="onInputAddSubtask(event)" onkeydown="addSubtaskInputEventHandler(event)">
                 <div id="subtaskInputButtonAdd" class="input-icon-wrapper">
                     <button onclick="addSubtaskEventHandlerPseudo(event)"><img src="/assets/icons/add.svg" class="icon-add"></button>
                 </div>
@@ -152,7 +152,7 @@ function getTaskFormFieldsTemplate(task) {
             </div>
             <ul id="assignedSubtasks" class="subtask-listing"></ul>
         </div>
-        
+       
     `
 }
 
@@ -181,16 +181,17 @@ function getCategorySelectOptionTemplate(category, index) {
 
 function getSubtasksTemplate(subtask, index, taskId) {
     return `
-    <li class="input-wrapper input-wrapper-subtask">
-        <input type="text" id="subtask-i-${index}" class="subtask-input" value="${subtask.title}" oninput="validateUpdateSubtaskInput(event)">
-        <div class="input-icon-wrapper input-icon-wrapper-read"">
+    <li class="input-wrapper input-wrapper-subtask read-only">
+        <div class="list-bullet">&#x2022</div>
+        <input type="text" id="subtask-i-${index}" class="subtask-input clickable" value="${subtask.title}" xonmouseover="subtaskOnHover(event, 1)" xonmouseleave="subtaskOnHover(event, 0)" oninput="onInputUpdateSubtask(event)">
+        <div class="input-icon-wrapper read-only">
             <button onclick="editSubtaskEventHandler(event)"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div>
             <button onclick="deleteSubtaskEventHandler(event, ${index})"><img src="/assets/icons/delete.svg" class="icon-delete"></button>
         </div>
-        <div class="input-icon-wrapper input-icon-wrapper-edit">
-            <button onclick="deleteSubtaskEventHandler(event, ${index})"><img src="/assets/icons/delete.svg" class="icon-delete"></button>
+        <div class="input-icon-wrapper edit">
+            <button class="delete-subtask-button" onclick="deleteSubtaskEventHandler(event, ${index})"><img src="/assets/icons/delete.svg" class="icon-delete"></button>
             <div class="divider"></div>
-            <button onclick="updateSubtaskEventHandler(event, ${index})"><img src="/assets/icons/check.svg" class="icon-check"></button>
+            <button class="update-subtask-button" onclick="updateSubtaskEventHandler(event, ${index})"><img src="/assets/icons/check.svg" class="icon-check"></button>
         </div>
     </li>
     `
@@ -239,7 +240,7 @@ function getContactDetailProfileBatchTemplate(contact) {
         <div class="profile-title flex-col">
             <h2 class="">${contact.name}</h2>                        
             <div class="edit-buttons flex-row align-center">
-                <button onclick="editContact(event, '${contact.id}')"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
+                <button onclick="openEditContactForm(event, '${contact.id}')"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
                 <button id="btnDelete" onclick="submitDeleteContact(event, '${contact.id}')"><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
             </div>
         </div>
