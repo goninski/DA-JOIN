@@ -77,8 +77,8 @@ async function signIn() {
 }
 
 async function signOut() {
-    !loggedInUserId == 'guest' ? await updateContactProperty(loggedInUserId, 'loggedIn', null) : null;
-    loggedInUserId = '0';
+    (hasLength(loggedInUserId) || !loggedInUserId == 'guest') ? await updateContactProperty(loggedInUserId, 'loggedIn', null) : null;
+    loggedInUserId = null;
     window.location.href = "/login.html";
 }
 
