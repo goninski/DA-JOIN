@@ -12,7 +12,6 @@
   <script src="script.js"></script>
   <script src="scripts/form-handling.js"></script>
   <script src="scripts/add-task.js"></script>
-  <!-- <script src="boards.js"></script> -->
   <script src="scripts/boards.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 </head>
@@ -74,7 +73,7 @@
 
         <div class="column" id="inprogress">
           <div class="task-list">
-            <div class="task user-story">
+            <div class="task user-story clickable-task">
               <div class="user-story-task">User Story</div>
                <div class="task-heading">Kochwelt Page & Recipe Recommender</div>
                <div class="task-description">Build start page with recipe recommendation...</div>
@@ -86,14 +85,14 @@
 
         <div class="column" id="awaitfeedback">
           <div class="task-list">
-            <div class="task-1">
+            <div class="task-1 clickable-task">
               <div class="technical-task">Technical Task</div>
               <p class="task-heading">HTML Base Template Creation</p>
               <p class="task-description">Create reusable HTML base teamplates...</p>
               <img src="./assets/icons/template-creation.png" alt="">
             </div>
 
-            <div class="task-2">
+            <div class="task-2 clickable-task">
               <div class="user-story-task">User Story</div>
               <p class="task-heading">Daily Kochwelt Recipe</p>
               <p class="task-description">Implement daily recipe and portion calculator....</p>
@@ -104,7 +103,7 @@
 
         <div class="column" id="done">
           <div class="task-list">
-            <div class="task">
+            <div class="task clickable-task">
               <div class="technical-task">Technical Task</div>
               <p class="task-heading">CSS Architecture Planning</p>
               <p class="task-description">Define CSS naming conventions and structure...</p>
@@ -112,6 +111,15 @@
               <img src="./assets/icons/architecture.png" alt="">
             </div>
           </div>
+        </div>
+      </div>
+
+      <div id="task-overlay" style="display:none;" onclick="closeOverlay()">
+        <div id="overlay-content" onclick="event.stopPropagation();">
+          <span onclick="closeOverlay()" style="cursor:pointer; float:right;">&times;</span>
+          <div class="technical-task" id="overlay-tasks">Task</div>
+          <h2 id="overlay-title">Titel</h2>
+          <p id="overlay-description">Beschreibung</p>
         </div>
       </div>
 
