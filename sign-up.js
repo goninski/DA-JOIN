@@ -126,5 +126,34 @@ function showSignUpSuccessOverlay() {
   }, 800);
 }
 
+function onPasswordInput(inputElement) {
+  const wrapper = inputElement.parentElement;
+  const icon = wrapper.querySelector('.pwd-icon'); 
+
+  if (!icon) return; 
+  if (inputElement.value.trim().length > 0) {
+    icon.classList.remove('pwd-pic');
+    icon.classList.add('eye-pic');
+  } else {
+    icon.classList.remove('eye-pic', 'eye-text-pic');
+    icon.classList.add('pwd-pic');
+    inputElement.type = 'password'; 
+  }
+}
+
+function togglePasswordVisibility(inputId, iconElement) {
+  const input = document.getElementById(inputId);
+
+  if (input.type === 'password') {
+    input.type = 'text';
+    iconElement.classList.remove('eye-pic');
+    iconElement.classList.add('eye-text-pic');
+  } else {
+    input.type = 'password';
+    iconElement.classList.remove('eye-text-pic');
+    iconElement.classList.add('eye-pic');
+  }
+}
+
 // window.onload = function () { console.log(usersDatabase); }
 
