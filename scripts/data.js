@@ -22,8 +22,8 @@ async function renderAllData() {
 // GET DATA
 
 async function getAllData() {
-    await getCategories();
     await getContacts();
+    await getCategories();
     await getTasks();
 }
 
@@ -35,12 +35,17 @@ async function getContacts() {
     contacts = localStorageMode ? await getFromLocalStorage('contacts') : await fetchDataFromFirebase('users/');
 }
 
+async function getTasks() {
+    tasks = localStorageMode ? await getFromLocalStorage('tasks') : await fetchDataFromFirebase('tasks/');
+}
+
 async function getUserData() {
     await getContacts();
 }
 
-async function getTasks() {
-    tasks = localStorageMode ? await getFromLocalStorage('tasks') : await fetchDataFromFirebase('tasks/');
+async function getTaskData() {
+    await getCategories();
+    await getTasks();
 }
 
 

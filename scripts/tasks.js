@@ -5,7 +5,9 @@ let assignedSubtasks = [];
 
 async function initAddTask() {
     getMainTemplates();
-    await getAllData();
+    await getContacts();
+    await checkAuth();
+    await getTaskData();
     await openAddTaskForm(event, 'add-task-page');
 }
 

@@ -3,7 +3,8 @@ let lastListContactId = '';
 
 async function initContacts() {
     getMainTemplates();
-    await getUserData();
+    await getContacts();
+    await checkAuth();
     await renderContactList();
 }
 

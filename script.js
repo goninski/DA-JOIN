@@ -1,32 +1,48 @@
 let currentPage = window.location.pathname;
-let loggedInUserId = '0';
-
-if(currentPage != '/login.html' && currentPage != '/sign-up.html') {
-    checkAuth();
-}
+let loggedInUserId = null;
 
 async function checkAuth() {
-    let user = await getUserFromURL();
-    console.log(user);
-    // (user == null || !user == loggedInUserId) ? window.location.href = "/login.html" : null;
-    // ....doesnt work !!
+    let urlUserId = await getUserFromURL();
+    let isLoggedIn = await userIsLoggedIn(urlUserId);
+    // console.log(urlUserId);
+    // console.log(isLoggedIn);
+    !isLoggedIn ? window.location.href = "/login.html" : null;
 }
 
 async function getUserFromURL() {
     let urlSearch = window.location.search;
     let urlParams = new URLSearchParams(urlSearch);
+    let user = urlParams.get('user');
     // console.log(urlSearch);
     // console.log(urlParams);
-    return urlParams.get('user');
+    // console.log(user);
+    loggedInUserId = hasLength(user) ? user.toString() : null;
+    console.log(loggedInUserId);
 }
 
-function init() {
-    getMainTemplates();
+async function userIsLoggedIn(userId) {
+    return true; // temporary true for all
+    if(userId == 'guest') {
+        return true;
+    }
+    let index = contacts.findIndex(user => user.id == userId && user.loggedIn == true);
+    // console.log(index);
+    if(index >= 0) {
+        return true;
+    } else {
+        return false;        
+    }
 }
 
-function initSummary() {
+// function init() {
+//     getMainTemplates();
+// }
+
+async function initSummary() {
     getMainTemplates();
-    getAllData();
+    await getUserData();
+    await checkAuth();
+    await getTaskData();
 }
 
 function getMainTemplates() {
