@@ -118,7 +118,7 @@ async function updateContactProperty(contactId, property, value = null) {
 
 async function validateContactProperties(contact) {
     contact.id = hasLength(contact.id) ? contact.id : await getNewContactId();
-    contact.initials = getInitialsOfFirstAndLastWord(contact.name);
+    contact.initials = await getInitialsOfFirstAndLastWord(contact.name);
     !hasLength(contact.color) ? contact.color = getRandomColor() : null;
     !hasLength(contact.phone) ? delete contact.phone : null;
 }

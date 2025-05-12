@@ -34,17 +34,6 @@ async function userIsLoggedIn(userId) {
     }
 }
 
-// function init() {
-//     getMainTemplates();
-// }
-
-async function initSummary() {
-    getMainTemplates();
-    await getUserData();
-    await checkAuth();
-    await getTaskData();
-}
-
 function getMainTemplates() {
     getHeader();
     getSidebar();
@@ -192,6 +181,19 @@ function getRandomString(length = 20) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result.trim();
+}
+
+function formatDateToYYYYMMDD(date) {
+    let year = date.getFullYear();
+    let month = ('0'+ (date.getMonth() + 1)).slice(-2);
+    let day = ('0' + date.getDate()).slice(-2);
+    let formattedDate = year + '-' + month + '-' + day;
+    // console.log(formattedDate);
+    return formattedDate;
+}
+
+function addDaysToDate(date, days) {
+    return new Date(date.getTime() + days * 24 * 60 * 60 * 1000);
 }
 
 async function showAlert(msg, duration = 250) {

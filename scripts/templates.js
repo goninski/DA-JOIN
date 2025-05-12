@@ -254,13 +254,14 @@ function getContactProfileBatchTemplate(contact) {
 }
 
 function getContactDetailInfoTemplate(contact) {
+    let hidePhone = hasLength(contact.phone) ? '' : 'hide';
     return `
         <h3 class="fs-lg fw-regular flex-col justifiy-center">Contact Information</h3>                        
         <div class="contact-property flex-col">
             <div class="label" >Email</div>
             <a href="mailto:${contact.email}" class="email">${contact.email}</a>
         </div>
-        <div class="contact-property flex-col">
+        <div class="contact-property flex-col ${hidePhone}">
             <div class="label">Phone</div>
             <div class="phone">${contact.phone}</div>
         </div>

@@ -76,7 +76,7 @@ let tasksDemo = [
         "id": "10001",
         "title": "Title Task 1...",
         "description": "Description Task 1...",
-        "dueDate": "2025-04-01",
+        "dueDate": "past-2",
         "priority": "high",
         "categoryId": '101',
         "contactIds": ['1001', '1002', '1003'],
@@ -90,7 +90,7 @@ let tasksDemo = [
         "id": "10002",
         "title": "Title Task 2...",
         "description": "Description Task 2...",
-        "dueDate": "2025-03-31",
+        "dueDate": "today",
         "priority": "medium",
         "categoryId": '102',
         "contactIds": ['1004', '1006'],
@@ -104,7 +104,7 @@ let tasksDemo = [
         "id": "10003",
         "title": "Title Task 3...",
         "description": "Description Task 3...",
-        "dueDate": '2025-05-05',
+        "dueDate": 'future-2',
         "priority": "low",
         "categoryId": '102',
         "contactIds": ['1005', '1009'],
@@ -117,6 +117,7 @@ let tasksDemo = [
         "id": "10004",
         "title": "Title Task 4...",
         "description": "Description Task 4...",
+        "dueDate": 'future-7',
         "priority": "low",
         "categoryId": '102',
         "contactIds": ['1007', '1008'],
@@ -137,8 +138,9 @@ async function resetToDemoData() {
     tasks = tasksDemo;
     contacts.forEach(function(contact) {
         validateContactProperties(contact);
-        // !contact.initials ?  contact.initials = getInitialsOfFirstAndLastWord(contact.name) : null;
-        // !contact.color ? contact.color = getRandomColor() : null;
+    });
+    tasks.forEach(function(task) {
+        setUsefulDemoDueDates(task);
     });
     await saveAllData()
     await showAlert('Data Reset successfull. Please reload the page !', 1000);
@@ -172,3 +174,19 @@ async function saveAllTasks() {
         updateTask(task);
     });
 }
+
+function setUsefulDemoDueDates(task) {
+    let dateType = task.dueDate.split('-')[0];
+    if(!isNaN(dateType)) {
+        return;
+    }
+    let currentDate = new Date();
+    let days = task.dueDate.split('-')[1];
+    if(dateType == 'today') {
+        days = 0;
+    } else if(dateType == 'past') {
+        days = days * -1;
+    }
+    task.dueDate = formatDateToYYYYMMDD(addDaysToDate(currentDate, days));
+}
+
