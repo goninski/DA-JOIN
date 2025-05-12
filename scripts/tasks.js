@@ -252,10 +252,12 @@ async function resetAddTaskForm(event) {
 
 async function closeTaskDialogue(event) {
     event.stopPropagation();
+    event.preventDefault();
     (formMode == 'add' || formMode == 'edit') ? resetAddTaskForm(event) : null;
     formMode = '';
     let dialogue = document.getElementById('taskDialogue');
     await runSlideOutAnimation(dialogue, 200);
+    console.log(renderTasks);
     await renderBoards(renderTasks);
 }
 

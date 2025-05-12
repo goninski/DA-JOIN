@@ -18,6 +18,24 @@ async function setSearchBase() {
   // console.log(tasks);
 }
 
+async function validateSearchInput(searchVal) {
+  return (searchVal >= 2);
+}
+
+async function filterTasks(event) {
+  event.preventDefault();
+  console.log('f) filterTasks');
+  let taskSearchInput = document.getElementById('taskSearchInput');
+  let searchVal = taskSearchInput.value.toLowerCase();
+  renderTasks = tasks.filter(task => (task.searchBase).toLowerCase().includes(searchVal));
+  // console.log(renderTasks);
+  if(renderTasks.length <= 0) {
+    await showFloatingMessage('text', 'no Tasks found !');
+    taskSearchInput.value = '';
+  }
+  await renderBoards(renderTasks);
+}
+
 async function renderBoards(renderTasks) {
   let boardsWrapper = document.getElementById('boardsWrapper');
   boardsWrapper.innerHTML = '';
@@ -26,7 +44,7 @@ async function renderBoards(renderTasks) {
     boardsWrapper.innerHTML += getBoardTemplate(board);
     let boardTaskList = document.getElementById('boardTaskList-' + board);
     boardTaskList.innerHTML = '';
-    hasLength(renderTasks) ? await renderBoardTasks(renderTasks, board, boardTaskList) : null;
+    hasLength(renderTasks) ? await renderBoardTasks(renderTasks, board, boardTaskList) : await renderBoardTasks(tasks, board, boardTaskList);
   }
 }
 
@@ -35,7 +53,9 @@ async function renderBoardTasks(renderTasks, board, boardTaskList) {
   for (let index = 0; index < boardTasks.length; index++) {
     let task = boardTasks[index];
     let catIndex = await getCategoryIndexFromId(task.categoryId);
-    let category = categories[catIndex].name;
+    let category = categories[catIndex];
+    task.subtaskCount = await getSubtaskProgress(task, 'count');
+    task.subtaskProgress = await getSubtaskProgress(task, 'progress');
     boardTaskList.innerHTML += getBoardTasksTemplate(task, category);
   }
 }
@@ -55,24 +75,6 @@ async function listenTaskSearchInput(event) {
     taskSearchBtn.tabIndex = -1;
     taskSearchBtn.classList.add('not-clickable');
   }
-}
-
-async function validateSearchInput(searchVal) {
-  return (searchVal >= 2);
-}
-
-async function filterTasks(event) {
-  event.preventDefault();
-  console.log('f) filterTasks');
-  let taskSearchInput = document.getElementById('taskSearchInput');
-  let searchVal = taskSearchInput.value.toLowerCase();
-  renderTasks = tasks.filter(task => (task.searchBase).toLowerCase().includes(searchVal));
-  // console.log(renderTasks);
-  if(renderTasks.length <= 0) {
-    await showFloatingMessage('text', 'no Tasks found !');
-    taskSearchInput.value = '';
-  }
-  await renderBoards(renderTasks);
 }
 
 function addBoardTask(event, board) {

@@ -79,11 +79,13 @@ function getBoardTemplate(board) {
 }
 
 function getBoardTasksTemplate(task, category) {
+    let hideSubtask = task.subtaskCount == null ? 'hide': null;
     return `
         <div class="task user-story clickable-task" onclick="showTaskBtn(event, '${task.id}')">
-            <div class="user-story-task">${category}</div>
+            <div class="user-story-task" style="background-color: ${category.color};">${category.name}</div>
             <div class="task-heading">${task.title}</div>
             <div class="task-description">${task.description}</div>
+            <div class="hide subtask-progess ${hideSubtask}">${task.subtaskCount} Subtasks</div>
             <img class="img-progress-bar" src="./assets/icons/Progress_1-2.png" alt="Progress Bar">
             <img src="./assets/icons/kochwelt.png" alt="">
         </div>

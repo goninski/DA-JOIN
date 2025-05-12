@@ -1,11 +1,13 @@
 let categoriesDefault = [
     {
         "id": "101",
-        "name": "Technical Task"
+        "name": "Technical Task",
+        "color": "#1FD7C1"
     },
     {
         "id": "102",
-        "name": "User Story"
+        "name": "User Story",
+        "color": "#0038FF"
     },
 ];
 
@@ -284,9 +286,10 @@ async function resetToDemoData() {
         setUsefulDemoDueDates(task);
     });
     await saveAllData()
-    await showAlert('Data Reset successfull. Please reload the page !', 1000);
+    await showAlert('Data Reset successfull !', 1000);
+    // await showAlert('Data Reset successfull. Please reload the page !', 1000);
     // location.reload()
-    // setTimeout(function() {window.location.href = "/board.html";}, 1000);
+    setTimeout(function() {window.location.href = "/board.html";}, 1000);
 }
 
 async function saveAllData() {
