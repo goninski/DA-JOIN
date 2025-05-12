@@ -71,7 +71,148 @@ let contactsDemo = [
     },
 ];
 
-let tasksDemo = [
+const tasksDemo = [
+  {
+    "id": "10001",
+    "title": "Fix login page bug",
+    "description": "Users are unable to login when using Safari browser. Investigate and fix the issue.",
+    "categoryId": "101",
+    "priority": "high",
+    "contactIds": ["1003", "1008", "1010"],
+    "status": "inProgress",
+    "dueDate": "past-2",
+    "subtasks": [
+      { "title": "Reproduce the bug in Safari", "done": true },
+      { "title": "Debug authentication flow", "done": true },
+      { "title": "Implement fix for cross-browser compatibility", "done": false }
+    ]
+  },
+  {
+    "id": "10002",
+    "title": "Implement dark mode",
+    "description": "Add a dark mode option to the application settings.",
+    "categoryId": "102",
+    "priority": "medium",
+    "contactIds": ["1005", "1001"],
+    "status": "todo",
+    "dueDate": "future-5",
+    "subtasks": [
+      { "title": "Design dark theme color palette", "done": false },
+      { "title": "Create theme switching component", "done": false }
+    ]
+  },
+  {
+    "id": "10003",
+    "title": "Optimize database queries",
+    "description": "Review and optimize slow database queries.",
+    "categoryId": "101",
+    "priority": "high",
+    "contactIds": ["1002", "1007", "1009", "1004"],
+    "status": "done",
+    "dueDate": "past-1",
+    "subtasks": [
+      { "title": "Identify slowest queries via profiling", "done": true },
+      { "title": "Rewrite queries with proper indexing", "done": true }
+    ]
+  },
+  {
+    "id": "10004",
+    "title": "Add password reset feature",
+    "description": "Users should be able to reset their password via email.",
+    "categoryId": "102",
+    "priority": "medium",
+    "contactIds": ["1006"],
+    "status": "awaitFeedback",
+    "dueDate": "today",
+    "subtasks": [
+      { "title": "Design email template", "done": true },
+      { "title": "Implement token generation logic", "done": false }
+    ]
+  },
+  {
+    "id": "10005",
+    "title": "Update API documentation",
+    "description": "Document all new endpoints added in the last release.",
+    "categoryId": "101",
+    "priority": "low",
+    "contactIds": ["1001", "1003", "1005"],
+    "status": "todo",
+    "dueDate": "future-14",
+    "subtasks": []
+  },
+  {
+    "id": "10006",
+    "title": "Improve mobile responsiveness",
+    "description": "Enhance the UI for mobile devices.",
+    "categoryId": "102",
+    "priority": "high",
+    "contactIds": ["1004", "1009"],
+    "status": "inProgress",
+    "dueDate": "future-3",
+    "subtasks": [
+      { "title": "Audit current breakpoints", "done": true },
+      { "title": "Fix navbar collapsing issues", "done": false }
+    ]
+  },
+  {
+    "id": "10007",
+    "title": "Fix memory leak in dashboard",
+    "description": "The dashboard component is causing memory leaks.",
+    "categoryId": "101",
+    "priority": "high",
+    "contactIds": ["1002", "1006", "1010"],
+    "status": "done",
+    "dueDate": "past-7",
+    "subtasks": [
+      { "title": "Profile memory usage with Chrome DevTools", "done": true },
+      { "title": "Clean up useEffect hooks", "done": true }
+    ]
+  },
+  {
+    "id": "10008",
+    "title": "Create user profile page",
+    "description": "Design and implement a user profile page.",
+    "categoryId": "102",
+    "priority": "medium",
+    "contactIds": ["1007", "1008"],
+    "status": "awaitFeedback",
+    "dueDate": "future-10",
+    "subtasks": [
+      { "title": "Design profile layout", "done": true },
+      { "title": "Build avatar upload component", "done": false }
+    ]
+  },
+  {
+    "id": "10009",
+    "title": "Migrate to latest React version",
+    "description": "Update the project to use React 18.",
+    "categoryId": "101",
+    "priority": "medium",
+    "contactIds": ["1003", "1005", "1009"],
+    "status": "inProgress",
+    "dueDate": "future-7",
+    "subtasks": [
+      { "title": "Update package.json dependencies", "done": true },
+      { "title": "Test for breaking changes", "done": false }
+    ]
+  },
+  {
+    "id": "10010",
+    "title": "Add search functionality",
+    "description": "Implement a global search feature.",
+    "categoryId": "102",
+    "priority": "high",
+    "contactIds": ["1001", "1004", "1007", "1010"],
+    "status": "todo",
+    "dueDate": "future-21",
+    "subtasks": [
+      { "title": "Design search bar UI", "done": false },
+      { "title": "Implement API endpoint for search", "done": false }
+    ]
+  }
+];
+
+let tasksDemoOld = [
     {
         "id": "10001",
         "title": "Title Task 1...",
