@@ -86,12 +86,12 @@ function getBoardTasksTemplate(task, category) {
             <div class="task-heading">${task.title}</div>
             <div class="task-description">${task.description}</div>
             <div class="hide subtask-progess ${hideSubtask}">${task.subtaskCount} Subtasks</div>
-            <img class="img-progress-bar" src="./assets/icons/Progress_1-2.png" alt="Progress Bar">
-            <img src="./assets/icons/kochwelt.png" alt="">
+            <img class="img-progress-bar ${hideSubtask}" src="./assets/icons/Progress_1-2.png" alt="Progress Bar">
+            <ul id="profileBatchesTaskBoard-${task.id}" class="profile-batches task-board hide-if-empty"></ul>
+            <img class="hide" src="./assets/icons/kochwelt.png" alt="">
         </div>
     `
 }
-
 
 
 

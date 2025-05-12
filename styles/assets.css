@@ -626,6 +626,16 @@ input:has(+ .input-icon-wrapper.simple) {
     height: 120px;
     font-size: 47px;
 }
+.profile-batches.task-board {
+    margin-top: -8px;
+}
+.profile-batches.task-board .profile-batch {
+    width: 32px;
+    height: 32px;
+    min-width: unset;
+    margin-right: -20px;
+    border-width: 1px;
+}
 .edit-buttons {
     gap: 24px;
 }

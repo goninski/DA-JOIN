@@ -57,6 +57,7 @@ async function renderBoardTasks(renderTasks, board, boardTaskList) {
     task.subtaskCount = await getSubtaskProgress(task, 'count');
     task.subtaskProgress = await getSubtaskProgress(task, 'progress');
     boardTaskList.innerHTML += getBoardTasksTemplate(task, category);
+    await renderContactProfileBatches(task.contactIds, elementId = 'profileBatchesTaskBoard-' + task.id);
   }
 }
 
