@@ -11,7 +11,6 @@ async function initSummary() {
 
 async function resetTaskSummaryObj() {
   taskSummary = {};
-  taskSummary.daySegment = 'Good day';
   taskSummary.upcoming = 0
   taskSummary.upcomingDeadline = '';
   taskSummary.upcomingUrgent = 0
