@@ -1,4 +1,6 @@
 let boards = ['todo', 'inProgress', 'awaitFeedback', 'done'];
+let renderTasks = {};
+let taskBoards = {};
 
 async function initBoards() {
     getMainTemplates();
@@ -8,7 +10,7 @@ async function initBoards() {
     await setSearchBase();
     await renderBoards(tasks);
     //await renderTempTaskList(tasks);
-    //addTaskClickListeners();
+    // addTaskClickListeners();
 }
 
 async function setSearchBase() {
@@ -29,7 +31,7 @@ async function renderBoards(renderTasks) {
 }
 
 async function renderBoardTasks(renderTasks, board, boardTaskList) {
-  let boardTasks = await renderTasks.filter(task => task.status == board);
+  boardTasks = await renderTasks.filter(task => task.status == board);
   for (let index = 0; index < boardTasks.length; index++) {
     let task = boardTasks[index];
     let catIndex = await getCategoryIndexFromId(task.categoryId);
@@ -64,7 +66,7 @@ async function filterTasks(event) {
   console.log('f) filterTasks');
   let taskSearchInput = document.getElementById('taskSearchInput');
   let searchVal = taskSearchInput.value.toLowerCase();
-  let renderTasks = tasks.filter(task => (task.searchBase).toLowerCase().includes(searchVal));
+  renderTasks = tasks.filter(task => (task.searchBase).toLowerCase().includes(searchVal));
   // console.log(renderTasks);
   if(renderTasks.length <= 0) {
     await showFloatingMessage('text', 'no Tasks found !');
@@ -76,6 +78,11 @@ async function filterTasks(event) {
 function addBoardTask(event, board) {
   openAddTaskForm(event, 'board', board);
 }
+
+
+
+
+
 
 
 function addTaskClickListeners() {

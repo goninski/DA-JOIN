@@ -253,7 +253,7 @@ async function closeTaskDialogue(event) {
     formMode = '';
     let dialogue = document.getElementById('taskDialogue');
     await runSlideOutAnimation(dialogue, 200);
-    await renderBoards();
+    await renderBoards(renderTasks);
 }
 
 
