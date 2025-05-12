@@ -18,18 +18,22 @@ async function renderBoards(renderTasks) {
 }
 
 function listenTaskSearchInput(event) {
-  console.log('f) listenTaskSearchInput');
+  // console.log('f) listenTaskSearchInput');
   let taskSearchInput = document.getElementById('taskSearchInput');
   let taskSearchBtn = document.getElementById('taskSearchBtn');
   let searchVal = taskSearchInput.value;
   console.log(searchVal);
-  if(searchVal.length >= 2) {
+  if(validateSearchInput(searchVal)) {
     taskSearchBtn.tabIndex = 0;
     taskSearchBtn.classList.remove('not-clickable');
   } else {
     taskSearchBtn.tabIndex = -1;
     taskSearchBtn.classList.add('not-clickable');
   }
+}
+
+async function validateSearchInput(searchVal) {
+  return (searchVal >= 2);
 }
 
 async function filterTasks(event) {
