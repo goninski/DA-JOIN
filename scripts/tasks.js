@@ -127,6 +127,7 @@ async function setEditTaskValues(currentTask, formId) {
 async function filterTaskContactOptions(event) {
     event.stopPropagation()
     let searchVal = document.getElementById('selectContacts').value;
+    searchVal = searchVal.toLowerCase();
     console.log(searchVal);
     await renderContactSelectOptions('taskContactsListbox', searchVal);
 }

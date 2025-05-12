@@ -17,15 +17,16 @@ async function renderBoards(renderTasks) {
   addTaskClickListeners();
 }
 
-function listenTaskSearchInput(event) {
+async function listenTaskSearchInput(event) {
   // console.log('f) listenTaskSearchInput');
   let taskSearchInput = document.getElementById('taskSearchInput');
   let taskSearchBtn = document.getElementById('taskSearchBtn');
-  let searchVal = taskSearchInput.value;
+  let searchVal = taskSearchInput.value.toLowerCase();
   console.log(searchVal);
   if(validateSearchInput(searchVal)) {
     taskSearchBtn.tabIndex = 0;
     taskSearchBtn.classList.remove('not-clickable');
+    await filterTasks(event);
   } else {
     taskSearchBtn.tabIndex = -1;
     taskSearchBtn.classList.add('not-clickable');
