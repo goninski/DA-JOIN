@@ -304,13 +304,13 @@ async function deleteDataFromLS() {
 
 
 // TEMP STUFF
-async function renderTempTaskList() {
+async function renderTempTaskList(renderTasks = tasks) {
     formMode = '';
     let taskListRef = document.getElementById('tempTaskList');
     taskListRef.innerHTML = '';
-    if(hasLength(tasks)) {
-        for (let index = 0; index < tasks.length; index++) {
-            taskListRef.innerHTML += await getTempTaskListTemplate(tasks[index]);
+    if(hasLength(renderTasks)) {
+        for (let index = 0; index < renderTasks.length; index++) {
+            taskListRef.innerHTML += await getTempTaskListTemplate(renderTasks[index]);
         }
     }
 }

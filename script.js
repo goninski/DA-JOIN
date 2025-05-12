@@ -200,7 +200,7 @@ async function showAlert(msg, duration = 250) {
     setTimeout(function() { alert(msg) }, duration);
 }
 
-async function showFloatingMessage(template, msg = '') {
+async function showFloatingMessage(template, msg = '', timeout = 1500) {
     let element = document.getElementById("floatingMsg");
     if(template == 'addedTask') {
         element.innerHTML = getFloatingMessageTaskAddedTemplate();
@@ -211,7 +211,7 @@ async function showFloatingMessage(template, msg = '') {
     setTimeout(function() { 
         element.classList.add('hide');
         element.innerHTML = '';
-}, 1500);
+}, timeout);
 }
 
 

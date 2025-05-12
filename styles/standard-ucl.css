@@ -338,7 +338,7 @@
 }
 .cursor-pointer-auto,
 .not-clickable {
-    cursor: none;
+    cursor: auto;
 }
 .hide-if-empty:empty,
 .hide {

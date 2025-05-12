@@ -3,13 +3,47 @@ async function initBoards() {
     await getContacts()
     await checkAuth();
     await getTaskData()
-    await renderBoards();
-    console.log(tasks);
-  }
+    await setSearchBase();
+    await renderBoards(tasks);
+}
 
-async function renderBoards() {
-  await renderTempTaskList();
+async function setSearchBase() {
+  tasks.forEach(task => task.searchBase = (task.title + ' ' + task.description));
+  // console.log(tasks);
+}
+
+async function renderBoards(renderTasks) {
+  await renderTempTaskList(renderTasks);
   addTaskClickListeners();
+}
+
+function listenTaskSearchInput(event) {
+  console.log('f) listenTaskSearchInput');
+  let taskSearchInput = document.getElementById('taskSearchInput');
+  let taskSearchBtn = document.getElementById('taskSearchBtn');
+  let searchVal = taskSearchInput.value;
+  console.log(searchVal);
+  if(searchVal.length >= 2) {
+    taskSearchBtn.tabIndex = 0;
+    taskSearchBtn.classList.remove('not-clickable');
+  } else {
+    taskSearchBtn.tabIndex = -1;
+    taskSearchBtn.classList.add('not-clickable');
+  }
+}
+
+async function filterTasks(event) {
+  event.preventDefault();
+  console.log('f) filterTasks');
+  let taskSearchInput = document.getElementById('taskSearchInput');
+  let searchVal = taskSearchInput.value.toLowerCase();
+  let renderTasks = tasks.filter(task => (task.searchBase).toLowerCase().includes(searchVal));
+  // console.log(renderTasks);
+  if(renderTasks.length <= 0) {
+    await showFloatingMessage('text', 'no Tasks found !');
+    taskSearchInput.value = '';
+  }
+  await renderBoards(renderTasks);
 }
 
 function addTaskClickListeners() {
