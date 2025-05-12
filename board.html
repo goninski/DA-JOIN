@@ -6,14 +6,12 @@
   <title>Board</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="board.css" />
-  <script src="./scripts/auth.js"></script>
   <script src="./scripts/data.js"></script>
   <script src="./scripts/templates.js"></script>
   <script src="script.js"></script>
   <script src="./scripts/form-handling.js"></script>
   <script src="./scripts/subtasks.js"></script>
   <script src="./scripts/tasks.js"></script>
-  <!-- <script src="boards.js"></script> -->
   <script src="scripts/boards.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 </head>
@@ -65,55 +63,53 @@
         </div>
       </div>
 
-      <!-- TASK BOARD -->
-      <div id="boardsWrapper" class="flex-col">
-        <div class="board">
-          <div class="column" id="boardTodo">
-            <div class="task-list"></div>
-            <div class="no-task">
-              <p class="no-task-to-do">No tasks To Do</p>
+      <!-- TASK BOARDS -->
+      <div id="boardsWrapper" class="boards-wrapper">
+        <div class="column" id="boardTodo">
+          <div class="task-list"></div>
+          <div class="no-task">
+            <p class="no-task-to-do">No tasks To Do</p>
+          </div>
+        </div>
+
+        <div class="column" id="boardInProgress">
+          <div class="task-list">
+            <div class="task user-story clickable-task">
+              <div class="user-story-task">User Story</div>
+              <div class="task-heading">Kochwelt Page & Recipe Recommender</div>
+              <div class="task-description">Build start page with recipe recommendation...</div>
+              <img class="img-progress-bar" src="./assets/icons/Progress_1-2.png" alt="Progress Bar">
+              <img src="./assets/icons/kochwelt.png" alt="">
             </div>
           </div>
+        </div>
 
-          <div class="column" id="boardInProgress">
-            <div class="task-list">
-              <div class="task user-story clickable-task">
-                <div class="user-story-task">User Story</div>
-                <div class="task-heading">Kochwelt Page & Recipe Recommender</div>
-                <div class="task-description">Build start page with recipe recommendation...</div>
-                <img class="img-progress-bar" src="./assets/icons/Progress_1-2.png" alt="Progress Bar">
-                <img src="./assets/icons/kochwelt.png" alt="">
-              </div>
+        <div class="column" id="boardAwaitFeedback">
+          <div class="task-list">
+            <div class="task-1 clickable-task">
+              <div class="technical-task">Technical Task</div>
+              <p class="task-heading">HTML Base Template Creation</p>
+              <p class="task-description">Create reusable HTML base teamplates...</p>
+              <img src="./assets/icons/template-creation.png" alt="">
+            </div>
+
+            <div class="task-2 clickable-task">
+              <div class="user-story-task">User Story</div>
+              <p class="task-heading">Daily Kochwelt Recipe</p>
+              <p class="task-description">Implement daily recipe and portion calculator....</p>
+              <img src="./assets/icons/daily-kochwelt.png" alt="">
             </div>
           </div>
+        </div>
 
-          <div class="column" id="boardAwaitFeedback">
-            <div class="task-list">
-              <div class="task-1 clickable-task">
-                <div class="technical-task">Technical Task</div>
-                <p class="task-heading">HTML Base Template Creation</p>
-                <p class="task-description">Create reusable HTML base teamplates...</p>
-                <img src="./assets/icons/template-creation.png" alt="">
-              </div>
-
-              <div class="task-2 clickable-task">
-                <div class="user-story-task">User Story</div>
-                <p class="task-heading">Daily Kochwelt Recipe</p>
-                <p class="task-description">Implement daily recipe and portion calculator....</p>
-                <img src="./assets/icons/daily-kochwelt.png" alt="">
-              </div>
-            </div>
-          </div>
-
-          <div class="column" id="boardDone">
-            <div class="task-list">
-              <div class="task clickable-task">
-                <div class="technical-task">Technical Task</div>
-                <p class="task-heading">CSS Architecture Planning</p>
-                <p class="task-description">Define CSS naming conventions and structure...</p>
-                <img class="img-progress-bar" src="./assets/icons/progress_2-2.png" alt="Progress Bar">
-                <img src="./assets/icons/architecture.png" alt="">
-              </div>
+        <div class="column" id="boardDone">
+          <div class="task-list">
+            <div class="task clickable-task">
+              <div class="technical-task">Technical Task</div>
+              <p class="task-heading">CSS Architecture Planning</p>
+              <p class="task-description">Define CSS naming conventions and structure...</p>
+              <img class="img-progress-bar" src="./assets/icons/progress_2-2.png" alt="Progress Bar">
+              <img src="./assets/icons/architecture.png" alt="">
             </div>
           </div>
         </div>
