@@ -15,7 +15,7 @@ function openAddTaskPage() {
     window.location.href = "/add-task.html";
 }
 
-async function openAddTaskForm(event = null, source = 'board') {
+async function openAddTaskForm(event = null, source = 'board', board = 'todo') {
     event ? event.stopPropagation() : null;
     formMode = 'add';
     currentTask = {};

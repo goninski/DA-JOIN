@@ -13,6 +13,7 @@
   <script src="./scripts/subtasks.js"></script>
   <script src="./scripts/tasks.js"></script>
   <script src="scripts/boards.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 </head>
 
 <body onload="initBoards()" class="board-page">
@@ -46,16 +47,22 @@
         <div class="board-metrics" style="margin-top: 20px;">
           <div class="display-flex">
             <p class="board-description">To do</p>
-            <img class="board-plus-button" src="./assets/icons/plus button.png" alt="Plus Button" />
+            <button onclick="addBoardTask(event, 'todo')">
+              <img class="board-plus-button" src="./assets/icons/plus button.png" alt="Plus Button" />
+            </button>
           </div>
           <div class="display-flex">
             <p class="board-description">In progress</p>
-            <img class="board-plus-button" src="./assets/icons/plus button.png" alt="Plus Button" />
+            <button onclick="addBoardTask(event, 'inProgress')">
+              <img class="board-plus-button" src="./assets/icons/plus button.png" alt="Plus Button" />
+            </button>
           </div>
           <div class="display-flex">
             <p class="board-description">Await Feedback</p>
-            <img class="board-plus-button" src="./assets/icons/plus button.png" alt="Plus Button" />
-          </div>
+            <button onclick="addBoardTask(event, 'awaitFeedback')">
+              <img class="board-plus-button" src="./assets/icons/plus button.png" alt="Plus Button" />
+            </button>
+        </div>
           <div class="display-flex">
             <p class="board-description">Done</p>
           </div>

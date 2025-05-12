@@ -84,7 +84,7 @@ let tasksDemo = [
             {"title": "Subtask 1.1","done": true},
             {"title": "Subtask 1.2","done": false},
         ],
-        "status": "To do",
+        "status": "todo",
     },
     {
         "id": "10002",
@@ -98,7 +98,7 @@ let tasksDemo = [
             {"title": "Subtask 2.1","done": true},
             {"title": "Subtask 2.2","done": false},
         ],
-        "status": "In progress",
+        "status": "inProgress",
     },
     {
         "id": "10003",
@@ -111,7 +111,7 @@ let tasksDemo = [
         "subtasks": [
             {"title": "Subtask 3.1","done": true},
         ],
-        "status": "Await Feedback",
+        "status": "awaitFeedback",
     },
     {
         "id": "10004",
@@ -124,7 +124,7 @@ let tasksDemo = [
         // "subtasks": [
         //     {"title": "Subtask 3.1","done": true},
         // ],
-        "status": "Done",
+        "status": "done",
     },
 ];
 

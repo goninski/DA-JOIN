@@ -1,3 +1,5 @@
+let boards = ['todo', 'inProgress', 'awaitFeedback', 'done'];
+
 async function initBoards() {
     getMainTemplates();
     await getContacts()
@@ -5,6 +7,8 @@ async function initBoards() {
     await getTaskData()
     await setSearchBase();
     await renderBoards(tasks);
+    //await renderTempTaskList(tasks);
+    //addTaskClickListeners();
 }
 
 async function setSearchBase() {
@@ -13,9 +17,27 @@ async function setSearchBase() {
 }
 
 async function renderBoards(renderTasks) {
-  await renderTempTaskList(renderTasks);
-  addTaskClickListeners();
+  let boardsWrapper = document.getElementById('boardsWrapper');
+  boardsWrapper.innerHTML = '';
+  for (let index = 0; index < boards.length; index++) {
+    let board = boards[index];
+    boardsWrapper.innerHTML += getBoardTemplate(board);
+    let boardTaskList = document.getElementById('boardTaskList-' + board);
+    boardTaskList.innerHTML = '';
+    hasLength(renderTasks) ? await renderBoardTasks(renderTasks, board, boardTaskList) : null;
+  }
 }
+
+async function renderBoardTasks(renderTasks, board, boardTaskList) {
+  let boardTasks = await renderTasks.filter(task => task.status == board);
+  for (let index = 0; index < boardTasks.length; index++) {
+    let task = boardTasks[index];
+    let catIndex = await getCategoryIndexFromId(task.categoryId);
+    let category = categories[catIndex].name;
+    boardTaskList.innerHTML += getBoardTasksTemplate(task, category);
+  }
+}
+
 
 async function listenTaskSearchInput(event) {
   // console.log('f) listenTaskSearchInput');
@@ -50,6 +72,11 @@ async function filterTasks(event) {
   }
   await renderBoards(renderTasks);
 }
+
+function addBoardTask(event, board) {
+  openAddTaskForm(event, 'board', board);
+}
+
 
 function addTaskClickListeners() {
   document.querySelectorAll('.clickable-task').forEach(task => {
