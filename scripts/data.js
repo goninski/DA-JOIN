@@ -156,7 +156,7 @@ async function updateTask(task) {
 
 async function validateTaskProperties(task) {
     task.id = hasLength(task.id) ? task.id : await getNewTaskId();
-    task.status = hasLength(task.status) ? task.status : 'To do';
+    task.status = hasLength(task.status) ? task.status : 'todo';
     !hasLength(task.description) ? delete task.description : null;
     !hasLength(task.contacts) ? delete task.contacts : null;
     !hasLength(task.subtasks) ? delete task.subtasks : null;
