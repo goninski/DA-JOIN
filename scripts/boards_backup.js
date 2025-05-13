@@ -1,6 +1,7 @@
 let boards = ['todo', 'inProgress', 'awaitFeedback', 'done'];
 let renderTasks = {};
 let taskBoards = {};
+let currentDragTaskId;
 
 async function initBoards() {
     getMainTemplates();
@@ -46,6 +47,7 @@ async function renderBoards(renderTasks) {
     boardTaskList.innerHTML = '';
     hasLength(renderTasks) ? await renderBoardTasks(renderTasks, board, boardTaskList) : await renderBoardTasks(tasks, board, boardTaskList);
   }
+  console.log(renderTasks);
 }
 
 async function renderBoardTasks(renderTasks, board, boardTaskList) {
@@ -60,7 +62,6 @@ async function renderBoardTasks(renderTasks, board, boardTaskList) {
     await renderContactProfileBatches(task.contactIds, elementId = 'profileBatchesTaskBoard-' + task.id);
   }
 }
-
 
 async function listenTaskSearchInput(event) {
   // console.log('f) listenTaskSearchInput');
@@ -80,6 +81,27 @@ async function listenTaskSearchInput(event) {
 
 function addBoardTask(event, board) {
   openAddTaskForm(event, 'board', board);
+}
+
+function allowDrop(event) {
+  event.preventDefault();
+}
+
+function taskDrag(event, taskId) {
+  currentDragTaskId = taskId;
+  console.log(currentDragTaskId);
+  console.log(renderTasks);
+}
+
+async function taskDrop(event, board) {
+  console.log(renderTasks);
+  let index = await tasks.findIndex(task => task.id == currentDragTaskId);
+  // let index = await getTaskIndexFromId(currentDragElement);
+  console.log(index);
+  tasks[index].status = board;
+  await updateTaskProperty(currentDragTaskId, 'status', board);
+  console.log(tasks);
+  await renderBoards(tasks);
 }
 
 

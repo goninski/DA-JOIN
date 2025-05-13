@@ -543,6 +543,7 @@ input:has(+ .input-icon-wrapper.simple) {
     background-color: var(--bg-page) !important;
     border: none !important;
     font-size: var(--fs-base) !important;
+    padding-right: 90px !important;
     transition-duration: var(--transition-duration);
 }
 .input-wrapper-subtask.read-only .list-bullet {
