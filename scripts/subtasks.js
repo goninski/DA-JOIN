@@ -194,6 +194,6 @@ async function getSubtaskProgress(task, type = 'progress') {
         if(type == 'count') {
             return (subtasksDone + '/' + subtasksTotal);
         } else {
-            return (subtasksDone / subtasksTotal * 100);
+            return Math.round(subtasksDone / subtasksTotal * 100);
         }
 }
