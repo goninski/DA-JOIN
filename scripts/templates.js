@@ -78,7 +78,15 @@ function getBoardTemplate(board) {
 `
 }
 
-function getBoardNoTaskTemplate(board) {
+function getBoardNoTaskTemplate() {
+    return `
+        <div class="board-task no-task hide">
+            <p class="no-task-to-do">No tasks To Do</p>
+        </div>
+`
+}
+
+function xgetBoardNoTaskTemplate(board) {
     return `
         <div id="boardEmptyTaskList-${board}" class="task-list hide" ondragover="allowDrop(event)" ondrop="taskDrop(event, '${board}')">
             <div class="board-task no-task">
