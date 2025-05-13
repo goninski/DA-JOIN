@@ -72,10 +72,18 @@ function getTaskDetailsWrapperTemplate(task) {
 function getBoardTemplate(board) {
     return `
         <div class="board" id="board-${board}">
-          <div id="boardTaskList-${board}" class="task-list" ondragover="allowDrop(event)" ondrop="taskDrop(event, '${board}')">
-          </div>
+  
+            <div id="boardTaskList-${board}" class="task-list" ondragover="allowDrop(event)" ondrop="taskDrop(event, '${board}')">
+            </div>
+    
+            <div id="boardEmptyTaskList-${board}" class="task-list hide" ondragover="allowDrop(event)" ondrop="taskDrop(event, '${board}')">
+                <div class="board-task no-task">
+                    <p class="no-task-to-do">No tasks To Do</p>
+                </div>
+            </div>
+
         </div>
-    `
+`
 }
 
 function getBoardTasksTemplate(task, category) {
