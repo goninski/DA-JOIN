@@ -140,124 +140,130 @@
     width: 100%;
     max-width: 1208px;
     flex-grow: 1;
-    box-sizing: border-box;
     overflow-x: auto;
     padding-top: 20px;
 }
   
-  .column {
-    background: #F6F7F8;
-    border-radius: 8px;
-    width: 250px;
-    min-height: 500px;
-  }
-  
-  .column h2 {
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  
-  .task-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
+.board {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  border-radius: 8px;
+  width: 250px;
+}
 
-  .task {
-    background: #FFFFFF;
-    border-radius: 6px;
-    padding: 16px;
-    cursor: grab;
-    user-select: none;
-    border-radius: 26px;
-  }
-  
-  .task-1 {
-    background: #FFFFFF;
-    border-radius: 6px;
-    padding: 16px;
-    cursor: grab;
-    user-select: none;
-    border-radius: 26px;
-  }
+/* .column {
+  background: #F6F7F8;
+  border-radius: 8px;
+  width: 250px;
+  min-height: 500px;
+} */
 
-  .task-2 {
-    background: #FFFFFF;
-    border-radius: 6px;
-    padding: 16px;
-    cursor: grab;
-    user-select: none;
-    border-radius: 26px;
-  }
+.column h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
 
-  .no-task {
-    background-color: #E7E7E7;
-    border-color: #A8A8A8;
-    border: 1px;
-    border-radius: 10px;
-    height: 48px;
-    width: 246px;
-    border-style: dotted;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(4px);
-  }
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
-  .no-task-to-do {
-    margin: 0;
-    font-weight: 400;
-    size: 16px;
-    color: #A8A8A8;
-  }
+.board-task {
+  background: #FFFFFF;
+  border-radius: 6px;
+  padding: 16px;
+  cursor: grab;
+  user-select: none;
+  border-radius: 26px;
+}
 
+/* .task-1 {
+  background: #FFFFFF;
+  border-radius: 6px;
+  padding: 16px;
+  cursor: grab;
+  user-select: none;
+  border-radius: 26px;
+}
+
+.task-2 {
+  background: #FFFFFF;
+  border-radius: 6px;
+  padding: 16px;
+  cursor: grab;
+  user-select: none;
+  border-radius: 26px;
+} */
+
+.no-task {
+  background-color: #E7E7E7;
+  border-color: #A8A8A8;
+  border: 1px;
+  border-radius: 10px;
+  height: 48px;
+  width: 246px;
+  border-style: dotted;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.no-task-to-do {
+  margin: 0;
+  font-weight: 400;
+  size: 16px;
+  color: #A8A8A8;
+}
+/* 
 .user-story {
-    height: 263px;
-    width: 252px;
+  height: 263px;
+  width: 252px;
+} */
+
+.board-task-category {
+  height: 27px;
+  width: 113px;
+  border-radius: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  color: #FFFFFF;
+  font-weight: 400;
+  font-size: 16px;
+  margin-bottom: 24px;
 }
 
-.user-story-task {
-    background-color: rgba(0, 56, 255, 1);
-    height: 27px;
-    width: 113px;
-    border-radius: 8px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    padding-left: 16px;
-    padding-right: 16px;
-    color: #FFFFFF;
-    font-weight: 400;
-    font-size: 16px;
-    margin-bottom: 24px;
-}
-
-.technical-task {
-    background-color: #1FD7C1;
-    width: 144px;
-    height: 27px;
-    border-radius: 8px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    padding-left: 16px;
-    padding-right: 16px;
-    gap: 10px;
-    font-weight: 400;
-    font-size: 16px;
-    color: #FFFFFF;
-    white-space: nowrap;
-}
+/* .technical-task {
+  background-color: #1FD7C1;
+  width: 144px;
+  height: 27px;
+  border-radius: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
+  gap: 10px;
+  font-weight: 400;
+  font-size: 16px;
+  color: #FFFFFF;
+  white-space: nowrap;
+} */
 
 .task-heading {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
 }
 
 .task-description {
-    color: #A8A8A8;
-    font-size: 16px;
-    font-weight: 400;
-    margin-bottom: 24px;
+  color: #A8A8A8;
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 24px;
 }
 
 .img-progress-bar {
