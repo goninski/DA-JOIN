@@ -262,20 +262,37 @@ input::placeholder {
     transform: translate(0, 0);
 }
 
-
 .pictureinput {
     background-repeat: no-repeat;
-    background-position: right 0px center; /* Rechts mittig platzieren */
-    background-size: 20px 20px; /* Größe des Bildes anpassen */
-    padding-right: 40px; /* Platz für das Bild lassen */
+    background-position: right 0px center; 
+    background-size: 20px 20px; 
+    padding-right: 40px; 
     height: 40px;
     font-size: 16px;
     height: 24px;
     width: 380px;
   }
 
+  .pwd-icon {
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
   .pwd-pic{
     background-image: url('./assets/img/lock.png');
+  }
+
+  .eye-pic{
+    background-image: url('./assets/img/eye.png');
+    cursor: pointer;
+  }
+
+  .eye-text-pic{
+    background-image: url('./assets/img/eye-text.png');
+    cursor: pointer;
   }
   
   .mail-pic{

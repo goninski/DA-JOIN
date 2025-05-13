@@ -126,6 +126,7 @@ function addTaskClickListeners() {
 }
 
 
+// da es 2 boards.js gab habe ich diesen Code von der anderen hierher kopiert /fg 4.5.25
 document.querySelectorAll('.task-list').forEach(taskList => {
   new Sortable(taskList, {
     group: 'shared',
@@ -133,7 +134,6 @@ document.querySelectorAll('.task-list').forEach(taskList => {
     ghostClass: 'ghost'
   });
 });
-
 
 document.querySelectorAll('.clickable-task').forEach(task => {
   task.addEventListener('click', () => {
@@ -145,7 +145,6 @@ document.querySelectorAll('.clickable-task').forEach(task => {
     document.getElementById('task-overlay').style.display = 'flex';
   });
 });
-
 
 function closeOverlay() {
   document.getElementById('task-overlay').style.display = 'none';

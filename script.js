@@ -34,17 +34,6 @@ async function userIsLoggedIn(userId) {
     }
 }
 
-// function init() {
-//     getMainTemplates();
-// }
-
-async function initSummary() {
-    getMainTemplates();
-    await getUserData();
-    await checkAuth();
-    await getTaskData();
-}
-
 function getMainTemplates() {
     getHeader();
     getSidebar();
@@ -194,11 +183,24 @@ function getRandomString(length = 20) {
     return result.trim();
 }
 
+function formatDateToYYYYMMDD(date) {
+    let year = date.getFullYear();
+    let month = ('0'+ (date.getMonth() + 1)).slice(-2);
+    let day = ('0' + date.getDate()).slice(-2);
+    let formattedDate = year + '-' + month + '-' + day;
+    // console.log(formattedDate);
+    return formattedDate;
+}
+
+function addDaysToDate(date, days) {
+    return new Date(date.getTime() + days * 24 * 60 * 60 * 1000);
+}
+
 async function showAlert(msg, duration = 250) {
     setTimeout(function() { alert(msg) }, duration);
 }
 
-async function showFloatingMessage(template, msg = '') {
+async function showFloatingMessage(template, msg = '', timeout = 1500) {
     let element = document.getElementById("floatingMsg");
     if(template == 'addedTask') {
         element.innerHTML = getFloatingMessageTaskAddedTemplate();
@@ -209,7 +211,7 @@ async function showFloatingMessage(template, msg = '') {
     setTimeout(function() { 
         element.classList.add('hide');
         element.innerHTML = '';
-}, 1500);
+}, timeout);
 }
 
 

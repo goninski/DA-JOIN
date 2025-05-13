@@ -67,6 +67,32 @@ function getTaskDetailsWrapperTemplate(task) {
 }
 
 
+// BOARDS
+
+function getBoardTemplate(board) {
+    return `
+        <div class="column" id="board-${board}">
+          <div id="boardTaskList-${board}" class="task-list" ondragover="allowDrop(event)" ondrop="taskDrop(event, '${board}')">
+          </div>
+        </div>
+    `
+}
+
+function getBoardTasksTemplate(task, category) {
+    let hideSubtask = task.subtaskCount == null ? 'hide': null;
+    return `
+        <div class="task user-story clickable-task" onclick="showTaskBtn(event, '${task.id}')" draggable="true" ondragstart="taskDrag(event, '${task.id}')">
+            <div class="user-story-task" style="background-color: ${category.color};">${category.name}</div>
+            <div class="task-heading">${task.title}</div>
+            <div class="task-description">${task.description}</div>
+            <div class="hide subtask-progess ${hideSubtask}">${task.subtaskCount} Subtasks</div>
+            <img class="img-progress-bar ${hideSubtask}" src="./assets/icons/Progress_1-2.png" alt="Progress Bar">
+            <ul id="profileBatchesTaskBoard-${task.id}" class="profile-batches task-board hide-if-empty"></ul>
+            <img class="hide" src="./assets/icons/kochwelt.png" alt="">
+        </div>
+    `
+}
+
 
 
 // TASK FORM INNER
@@ -254,13 +280,14 @@ function getContactProfileBatchTemplate(contact) {
 }
 
 function getContactDetailInfoTemplate(contact) {
+    let hidePhone = hasLength(contact.phone) ? '' : 'hide';
     return `
         <h3 class="fs-lg fw-regular flex-col justifiy-center">Contact Information</h3>                        
         <div class="contact-property flex-col">
             <div class="label" >Email</div>
             <a href="mailto:${contact.email}" class="email">${contact.email}</a>
         </div>
-        <div class="contact-property flex-col">
+        <div class="contact-property flex-col ${hidePhone}">
             <div class="label">Phone</div>
             <div class="phone">${contact.phone}</div>
         </div>

@@ -83,8 +83,12 @@
 }
 
 .checkbox-wrapper {
-    width: 231px;
-    height: 24px;
+  width: 231px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
 }
 
 .overlay-sign-up-successfully {
@@ -127,4 +131,3 @@
 .input-error {
     border: 1px solid red;
 }
-  

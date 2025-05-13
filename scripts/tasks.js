@@ -2,6 +2,7 @@ let currentTask = {};
 let taskContacts = [];
 let assignedContacts = [];
 let assignedSubtasks = [];
+let taskStatus = 'todo';
 
 async function initAddTask() {
     getMainTemplates();
@@ -15,10 +16,11 @@ function openAddTaskPage() {
     window.location.href = "/add-task.html";
 }
 
-async function openAddTaskForm(event = null, source = 'board') {
+async function openAddTaskForm(event = null, source = 'board', board = 'todo') {
     event ? event.stopPropagation() : null;
     formMode = 'add';
     currentTask = {};
+    taskStatus = source == 'board' ? board : 'todo';
     await showTaskDialogue('addTaskFormWrapper', source);
     await renderTaskForm('addTaskFieldGroups');
     if( source == 'add-task-page') {
@@ -127,6 +129,7 @@ async function setEditTaskValues(currentTask, formId) {
 async function filterTaskContactOptions(event) {
     event.stopPropagation()
     let searchVal = document.getElementById('selectContacts').value;
+    searchVal = searchVal.toLowerCase();
     console.log(searchVal);
     await renderContactSelectOptions('taskContactsListbox', searchVal);
 }
@@ -215,6 +218,7 @@ async function setTaskProperties(currentTask, formInputs ) {
         currentTask.categoryId = document.getElementById('categorySelect').dataset.optionId;
         currentTask.contactIds = assignedContacts;
         currentTask.subtasks = assignedSubtasks;
+        !hasLength(currentTask.status) ? currentTask.status = taskStatus : null;
     } else {
         console.log('error: no form inputs !');
     }
@@ -248,11 +252,13 @@ async function resetAddTaskForm(event) {
 
 async function closeTaskDialogue(event) {
     event.stopPropagation();
+    event.preventDefault();
     (formMode == 'add' || formMode == 'edit') ? resetAddTaskForm(event) : null;
     formMode = '';
     let dialogue = document.getElementById('taskDialogue');
     await runSlideOutAnimation(dialogue, 200);
-    await renderBoards();
+    console.log(renderTasks);
+    await renderBoards(renderTasks);
 }
 
 

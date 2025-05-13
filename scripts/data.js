@@ -118,7 +118,7 @@ async function updateContactProperty(contactId, property, value = null) {
 
 async function validateContactProperties(contact) {
     contact.id = hasLength(contact.id) ? contact.id : await getNewContactId();
-    contact.initials = getInitialsOfFirstAndLastWord(contact.name);
+    contact.initials = await getInitialsOfFirstAndLastWord(contact.name);
     !hasLength(contact.color) ? contact.color = getRandomColor() : null;
     !hasLength(contact.phone) ? delete contact.phone : null;
 }
@@ -156,7 +156,7 @@ async function updateTask(task) {
 
 async function validateTaskProperties(task) {
     task.id = hasLength(task.id) ? task.id : await getNewTaskId();
-    task.status = hasLength(task.status) ? task.status : 'To do';
+    task.status = hasLength(task.status) ? task.status : 'todo';
     !hasLength(task.description) ? delete task.description : null;
     !hasLength(task.contacts) ? delete task.contacts : null;
     !hasLength(task.subtasks) ? delete task.subtasks : null;
@@ -304,13 +304,13 @@ async function deleteDataFromLS() {
 
 
 // TEMP STUFF
-async function renderTempTaskList() {
+async function renderTempTaskList(renderTasks = tasks) {
     formMode = '';
     let taskListRef = document.getElementById('tempTaskList');
     taskListRef.innerHTML = '';
-    if(hasLength(tasks)) {
-        for (let index = 0; index < tasks.length; index++) {
-            taskListRef.innerHTML += await getTempTaskListTemplate(tasks[index]);
+    if(hasLength(renderTasks)) {
+        for (let index = 0; index < renderTasks.length; index++) {
+            taskListRef.innerHTML += await getTempTaskListTemplate(renderTasks[index]);
         }
     }
 }
