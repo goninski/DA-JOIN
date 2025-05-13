@@ -108,7 +108,7 @@
     margin: 0 12px;
 }
 
-.board-metrics {
+.board-status-bar-wrapper {
     display: flex;
     width: 1208px;
     height: 24px;
@@ -121,7 +121,7 @@
     color: #42526E;
 }
 
-.display-flex {
+.board-status-bar {
     display: flex;
     align-items: center;
     width: 244px;
