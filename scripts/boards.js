@@ -45,7 +45,7 @@ async function renderBoards(renderTasks) {
     boardsWrapper.innerHTML += getBoardTemplate(board);
     let boardTaskList = document.getElementById('boardTaskList-' + board);
     let boardTaskCount = 0; // add number of tasks
-    boardTaskList.innerHTML = boardTaskCount <= 0 ? '' : getBoardNoTaskTemplate(board);
+    boardTaskList.innerHTML = boardTaskCount <= 0 ? '' : getBoardNoTaskTemplate();
     hasLength(renderTasks) ? await renderBoardTasks(renderTasks, board, boardTaskList) : await renderBoardTasks(tasks, board, boardTaskList);
   }
   console.log(renderTasks);

@@ -80,7 +80,7 @@ function getBoardTemplate(board) {
 
 function getBoardNoTaskTemplate() {
     return `
-        <div class="board-task no-task hide">
+        <div class="board-task no-task">
             <p class="no-task-to-do">No tasks To Do</p>
         </div>
 `
