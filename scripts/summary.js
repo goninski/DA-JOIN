@@ -28,7 +28,7 @@ async function setTaskSummaryObj() {
   await setUpcomings();
   await setTaskCounts();
   setDaySegment();
-  console.log(taskSummary);
+  // console.log(taskSummary);
 }
 
 async function setUpcomings() {

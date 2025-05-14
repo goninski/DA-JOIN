@@ -71,21 +71,42 @@ function getTaskDetailsWrapperTemplate(task) {
 
 function getBoardTemplate(board) {
     return `
-        <div class="column" id="board-${board}">
-          <div id="boardTaskList-${board}" class="task-list" ondragover="allowDrop(event)" ondrop="taskDrop(event, '${board}')">
-          </div>
+        <div class="board" id="board-${board}">
+            <div id="boardTaskList-${board}" class="task-list" ondragover="allowDrop(event)" ondrop="taskDrop(event, '${board}')">
+            </div>
         </div>
-    `
+`
+}
+
+function getBoardNoTaskTemplate() {
+    return `
+        <div class="board-task no-task">
+            <p class="no-task-to-do">No tasks To Do</p>
+        </div>
+`
+}
+
+function xgetBoardNoTaskTemplate(board) {
+    return `
+        <div id="boardEmptyTaskList-${board}" class="task-list hide" ondragover="allowDrop(event)" ondrop="taskDrop(event, '${board}')">
+            <div class="board-task no-task">
+                <p class="no-task-to-do">No tasks To Do</p>
+            </div>
+        </div>
+`
 }
 
 function getBoardTasksTemplate(task, category) {
     let hideSubtask = task.subtaskCount == null ? 'hide': null;
     return `
-        <div class="task user-story clickable-task" onclick="showTaskBtn(event, '${task.id}')" draggable="true" ondragstart="taskDrag(event, '${task.id}')">
-            <div class="user-story-task" style="background-color: ${category.color};">${category.name}</div>
+        <div class="board-task clickable-task" onclick="showTaskBtn(event, '${task.id}')" draggable="true" ondragstart="taskDrag(event, '${task.id}')">
+            <div class="board-task-category" style="background-color: ${category.color};">${category.name}</div>
             <div class="task-heading">${task.title}</div>
             <div class="task-description">${task.description}</div>
-            <div class="hide subtask-progess ${hideSubtask}">${task.subtaskCount} Subtasks</div>
+            <div class="flex-row justify-between">
+                <div class="subtask-progess ${hideSubtask}">Progress ${task.subtaskProgress}%</div>
+                <div class="subtask-progess ${hideSubtask}">${task.subtaskCount} Subtasks</div>
+            </div>
             <img class="img-progress-bar ${hideSubtask}" src="./assets/icons/Progress_1-2.png" alt="Progress Bar">
             <ul id="profileBatchesTaskBoard-${task.id}" class="profile-batches task-board hide-if-empty"></ul>
             <img class="hide" src="./assets/icons/kochwelt.png" alt="">

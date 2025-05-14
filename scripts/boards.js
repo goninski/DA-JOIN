@@ -1,6 +1,7 @@
 let boards = ['todo', 'inProgress', 'awaitFeedback', 'done'];
-let renderTasks = {};
-let taskBoards = {};
+let renderTasks = [];
+let boardTasks = [];
+// let taskBoards = [];
 let currentDragTaskId;
 
 async function initBoards() {
@@ -52,14 +53,18 @@ async function renderBoards(renderTasks) {
 
 async function renderBoardTasks(renderTasks, board, boardTaskList) {
   boardTasks = await renderTasks.filter(task => task.status == board);
-  for (let index = 0; index < boardTasks.length; index++) {
-    let task = boardTasks[index];
-    let catIndex = await getCategoryIndexFromId(task.categoryId);
-    let category = categories[catIndex];
-    task.subtaskCount = await getSubtaskProgress(task, 'count');
-    task.subtaskProgress = await getSubtaskProgress(task, 'progress');
-    boardTaskList.innerHTML += getBoardTasksTemplate(task, category);
-    await renderContactProfileBatches(task.contactIds, elementId = 'profileBatchesTaskBoard-' + task.id);
+  if(hasLength(boardTasks)) {
+    for (let index = 0; index < boardTasks.length; index++) {
+      let task = boardTasks[index];
+      let catIndex = await getCategoryIndexFromId(task.categoryId);
+      let category = categories[catIndex];
+      task.subtaskCount = await getSubtaskProgress(task, 'count');
+      task.subtaskProgress = await getSubtaskProgress(task, 'progress');
+      boardTaskList.innerHTML += getBoardTasksTemplate(task, category);
+      await renderContactProfileBatches(task.contactIds, elementId = 'profileBatchesTaskBoard-' + task.id);
+    }
+  } else {
+    boardTaskList.innerHTML = getBoardNoTaskTemplate();
   }
 }
 

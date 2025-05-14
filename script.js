@@ -54,7 +54,8 @@ function getSidebar() {
 }
 
 async function signUp() {
-    await signIn()
+    window.location.href = "/login.html";
+    // await signIn()
 }
 
 async function signIn() {
@@ -66,7 +67,9 @@ async function signIn() {
 }
 
 async function signOut() {
-    (hasLength(loggedInUserId) || !loggedInUserId == 'guest') ? await updateContactProperty(loggedInUserId, 'loggedIn', null) : null;
+    if(hasLength(loggedInUserId) && loggedInUserId != 'guest') {
+        updateContactProperty(loggedInUserId, 'loggedIn', null);
+    }
     loggedInUserId = null;
     window.location.href = "/login.html";
 }
