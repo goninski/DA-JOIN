@@ -125,7 +125,6 @@
 .board {
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
   /* border-radius: 8px; */
   width: 100%;
 }
@@ -164,6 +163,7 @@
   flex-direction: column;
   gap: 16px;
   max-width: 252px;
+  flex-shrink: 0;
 }
 
 .board-task {
