@@ -108,28 +108,27 @@
     margin: 0 12px;
 }
 
-.board-status-bar-wrapper {
-    display: flex;
-    width: 1208px;
-    height: 24px;
-    gap: 35px;
+
+
+
+.board {
+  width: 100%;
+  max-width: 244px;
 }
 
-.board-description {
-    font-weight: 700;
-    font-size: 20px;
-    color: #42526E;
-}
-
-.board-status-bar {
+.board-title-bar {
     display: flex;
     align-items: center;
-    width: 244px;
-    height: 24px;
     justify-content: space-between;
+    height: 24px;
+    margin-bottom: 15px;
 }
-
-.board-plus-button {
+.board-title {
+    font-weight: 700;
+    font-size: var(--fs-lg);
+    color: hsl(218, 25%, 35%);
+}
+.board-add-task-button {
     height: 24px;
     width: 24px;
 }

@@ -7,6 +7,7 @@ let tasks = [];
 let dataArr = [];
 let authUserId = null;
 
+
 async function initData() {
     getMainTemplates();
     await getAllData();

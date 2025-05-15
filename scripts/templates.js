@@ -71,8 +71,14 @@ function getTaskDetailsWrapperTemplate(task) {
 
 function getBoardTemplate(board) {
     return `
-        <div class="board" id="board-${board}">
-            <div id="boardTaskList-${board}" class="task-list" ondragover="allowDrop(event)" ondrop="taskDrop(event, '${board}')">
+        <div class="board" id="board-${board.id}">
+            <div class="board-title-bar">
+                <h3 class="board-title">${board.label}</h3>
+                <button onclick="addBoardTask(event, 'todo')">
+                    <img class="board-add-task-button" src="./assets/icons/plus button.png" alt="Plus Button" />
+                </button>
+            </div>
+            <div id="boardTaskList-${board.id}" class="task-list" ondragover="allowDrop(event)" ondrop="taskDrop(event, '${board.name}')">
             </div>
         </div>
 `
@@ -82,16 +88,6 @@ function getBoardNoTaskTemplate() {
     return `
         <div class="board-task no-task">
             <p class="no-task-to-do">No tasks To Do</p>
-        </div>
-`
-}
-
-function xgetBoardNoTaskTemplate(board) {
-    return `
-        <div id="boardEmptyTaskList-${board}" class="task-list hide" ondragover="allowDrop(event)" ondrop="taskDrop(event, '${board}')">
-            <div class="board-task no-task">
-                <p class="no-task-to-do">No tasks To Do</p>
-            </div>
         </div>
 `
 }

@@ -1,7 +1,11 @@
-let boards = ['todo', 'inProgress', 'awaitFeedback', 'done'];
+let boards = [
+    {id: 'todo', label: 'To do'},
+    {id: 'inProgress', label: 'In progress'},
+    {id: 'awaitFeedback', label: 'Await Feedback'},
+    {id: 'done', label: 'Done'},
+];
 let renderTasks = [];
 let boardTasks = [];
-// let taskBoards = [];
 let currentDragTaskId;
 
 async function initBoards() {
@@ -44,9 +48,9 @@ async function renderBoards(renderTasks) {
   for (let index = 0; index < boards.length; index++) {
     let board = boards[index];
     boardsWrapper.innerHTML += getBoardTemplate(board);
-    let boardTaskList = document.getElementById('boardTaskList-' + board);
+    let boardTaskList = document.getElementById('boardTaskList-' + board.id);
     boardTaskList.innerHTML = '';
-    hasLength(renderTasks) ? await renderBoardTasks(renderTasks, board, boardTaskList) : await renderBoardTasks(tasks, board, boardTaskList);
+    hasLength(renderTasks) ? await renderBoardTasks(renderTasks, board.id, boardTaskList) : await renderBoardTasks(tasks, board, boardTaskList);
   }
   console.log(renderTasks);
 }
