@@ -114,13 +114,13 @@ async function taskDrop(event, boardId) {
 }
 
 function horizontalDragScroll(event, wrapperSelector = '.board-task-list') {
+  event.stopPropagation();
   if(window.matchMedia("(min-width: 1440px)").matches) return;
-  console.log('active...')
+  console.log(event.type);
   let scrollWrapper = getClosestParentElementFromEvent(event, wrapperSelector);
   let isDown = false;
   let startX;
   let scrollLeft;
-  console.log(event.type);
   let type = event.type;
   switch(type) {
     case 'mousedown':
