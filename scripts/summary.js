@@ -7,7 +7,6 @@ async function initSummary() {
     await checkAuth();
     await getTaskData();
     await setSummaryObj();
-    console.log(summary);
 }
 
 async function resetSummaryObj() {
@@ -21,7 +20,7 @@ async function resetSummaryObj() {
   summary.taskCountDone = 0;
   summary.taskCountUrgent = 0
   summary.upcomingDeadline = '';
-}
+} 
 
 async function setSummaryObj() {
   resetSummaryObj();
@@ -29,7 +28,7 @@ async function setSummaryObj() {
   await setUpcomings();
   await setTaskCounts();
   setWelcomeMsg();
-  // console.log(summary);
+  console.log(summary);
 }
 
 async function setUpcomings() {
@@ -46,7 +45,7 @@ async function setUpcomings() {
 }
 
 async function setTaskCounts() {
-  summary.taskCountinBoard = hasLength(tasks) ? tasks.length : 0;
+  summary.taskCountInBoard = hasLength(tasks) ? tasks.length : 0;
   tasks.forEach(task => {
     task.status == 'todo' ? summary.taskCountTodo++ : null;
     task.status == 'inProgress' ? summary.taskCountInProgress++ : null;
@@ -58,18 +57,11 @@ async function setTaskCounts() {
 
 async function getUserNameById(loggedInUserId) {
   let filteredArr = contacts.filter(contact => contact.id == loggedInUserId);
-  return hasLength(filteredArr) ? filteredArr.name : 'Dear Guest';
+  return hasLength(filteredArr) ? filteredArr.name : '';
 }
 
 function setWelcomeMsg() {
-  let currentDate = new Date();
-  let hours = currentDate.getHours();
-  let daySegment = 'afternoon';
-  if(hours >=0 && hours < 12) {
-    daySegment = 'morning';
-  } else if(hours >= 18) {
-    daySegment = 'evening';
-  }
-  summary.welcomeMsg = 'Good ' + daySegment + ', ';
+  let daySegment = getDaySegment();
+  let msgSuffix = summary.userName == '' ? '!' : ',';
+  summary.welcomeMsg = 'Good ' + daySegment + msgSuffix;
 }
-

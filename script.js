@@ -203,6 +203,18 @@ function formatDateToFromStringDBToFull(dateStringDB) {
     return formattedDate;
 }
 
+function getDaySegment() {
+  let currentDate = new Date();
+  let hours = currentDate.getHours();
+  let daySegment = 'afternoon';
+  if(hours >=0 && hours < 12) {
+    daySegment = 'morning';
+  } else if(hours >= 18) {
+    daySegment = 'evening';
+  }
+  return daySegment;
+}
+
 function addDaysToDate(date, days) {
     return new Date(date.getTime() + days * 24 * 60 * 60 * 1000);
 }
