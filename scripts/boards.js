@@ -50,7 +50,7 @@ async function renderBoards(renderTasks) {
     boardsWrapper.innerHTML += getBoardTemplate(board);
     let boardTaskList = document.getElementById('boardTaskList-' + board.id);
     boardTaskList.innerHTML = '';
-    hasLength(renderTasks) ? await renderBoardTasks(renderTasks, board.id, boardTaskList) : await renderBoardTasks(tasks, boardId, boardTaskList);
+    hasLength(renderTasks) ? await renderBoardTasks(renderTasks, board.id, boardTaskList) : await renderBoardTasks(tasks, board.id, boardTaskList);
   }
   console.log(renderTasks);
 }
