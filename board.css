@@ -118,8 +118,8 @@
   flex-grow: 1;
   width: 100%;
   /* max-width: 1208px; */
-  overflow-x: auto;
   /* padding-top: 20px; */
+  overflow: auto;
   scrollbar-width: none;
 }
 .board {
@@ -162,6 +162,8 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  /* overflow-y: auto; */
+  /* scrollbar-width: none; */
 }
 
 .board-task {
@@ -293,14 +295,18 @@
   .boards-wrapper {
     flex-direction: column;
     align-items: start;
+    overflow: hidden;
   }
   .boards-wrapper {
     flex-direction: column;
   }
   .board-task-list {
     flex-direction: row;
+    overflow: auto;
+    scrollbar-width: none;
   }
 }
+
 
 @media(max-width: 1179px) {
   .board-page-title-wrapper {
