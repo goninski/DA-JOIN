@@ -78,7 +78,7 @@ function getBoardTemplate(board) {
                     <img class="board-add-task-button" src="./assets/icons/plus button.png" alt="Plus Button" />
                 </button>
             </div>
-            <div id="boardTaskList-${board.id}" class="task-list" ondragover="allowDrop(event)" ondrop="taskDrop(event, '${board.name}')">
+            <div id="boardTaskList-${board.id}" class="board-task-list" ondragover="allowDrop(event)" ondrop="taskDrop(event, '${board.id}')">
             </div>
         </div>
 `
@@ -86,9 +86,7 @@ function getBoardTemplate(board) {
 
 function getBoardNoTaskTemplate() {
     return `
-        <div class="board-task no-task">
-            <p class="no-task-to-do">No tasks To Do</p>
-        </div>
+        <div class="board-no-task">No tasks To Do</div>
 `
 }
 

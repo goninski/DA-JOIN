@@ -111,11 +111,23 @@
 
 
 
-.board {
-  width: 100%;
-  max-width: 244px;
+.boards-wrapper {
+    display: flex;
+    gap: 24px;
+    flex-grow: 1;
+    width: 100%;
+    max-width: 1208px;
+    overflow-x: auto;
+    padding-top: 20px;
 }
-
+.board {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  /* border-radius: 8px; */
+  width: 100%;
+  max-width: 252px;
+}
 .board-title-bar {
     display: flex;
     align-items: center;
@@ -133,24 +145,6 @@
     width: 24px;
 }
 
-.boards-wrapper {
-    display: flex;
-    gap: 26px;
-    width: 100%;
-    max-width: 1208px;
-    flex-grow: 1;
-    overflow-x: auto;
-    padding-top: 20px;
-}
-  
-.board {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  border-radius: 8px;
-  width: 250px;
-}
-
 /* .column {
   background: #F6F7F8;
   border-radius: 8px;
@@ -158,25 +152,46 @@
   min-height: 500px;
 } */
 
-.column h2 {
+/* .column h2 {
   text-align: center;
   margin-bottom: 10px;
-}
+} */
 
-.task-list {
+.board-task-list {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
 .board-task {
-  background: #FFFFFF;
-  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   padding: 16px;
-  cursor: grab;
-  user-select: none;
   border-radius: 26px;
+  background: #FFFFFF;
+  cursor: grab;
+  /* user-select: none; */
 }
+
+.board-no-task {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  width: 100%;
+  background-color: #E7E7E7;
+  border: dotted 1px #A8A8A8;
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+}
+
+/* .no-task-to-do {
+  margin: 0;
+  font-weight: 400;
+  size: 16px;
+  color: #A8A8A8;
+} */
 
 /* .task-1 {
   background: #FFFFFF;
@@ -196,27 +211,6 @@
   border-radius: 26px;
 } */
 
-.no-task {
-  background-color: #E7E7E7;
-  border-color: #A8A8A8;
-  border: 1px;
-  border-radius: 10px;
-  height: 48px;
-  width: 246px;
-  border-style: dotted;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(4px);
-  z-index: -1;
-}
-
-.no-task-to-do {
-  margin: 0;
-  font-weight: 400;
-  size: 16px;
-  color: #A8A8A8;
-}
 /* 
 .user-story {
   height: 263px;
