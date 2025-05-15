@@ -304,16 +304,20 @@
   .board-task-list {
     flex-direction: row;
   }
-  /* .board-task-list {
+  .board-task-list {
     overflow-y: hidden;
-    cursor: pointer;
-    transform: scale(0.98);
+    overflow-x: scroll;
+    white-space: nowrap;
+    cursor: grab;
     transition: all 0.2s;
   }
   .board-task-list.active {
     cursor: grabbing;
-    transform: scale(1);
-  } */
+    transform: scale(1.02);
+  }
+  .board-task {
+    white-space: normal;
+  }
 }
 
 @media(max-width: 1179px) {

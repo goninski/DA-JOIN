@@ -92,6 +92,7 @@ function getBoardNoTaskTemplate() {
 
 function getBoardTasksTemplate(task, category) {
     let hideDescription = task.description == null ? 'hide': null;
+    let hideBatches = task.contactIds == null ? 'hide': null;
     let hideSubtask = task.subtaskCount == null ? 'hide': null;
     return `
         <div class="board-task clickable-task" onclick="showTaskBtn(event, '${task.id}')" draggable="true" ondragstart="taskDrag(event, '${task.id}')">

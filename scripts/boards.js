@@ -113,14 +113,18 @@ async function taskDrop(event, boardId) {
   await renderBoards(tasks);
 }
 
+
+
+// https://codepen.io/toddwebdev/pen/yExKoj
+let isDown = false;
+let startX;
+let scrollLeft;
+
 function horizontalDragScroll(event, wrapperSelector = '.board-task-list') {
   event.stopPropagation();
   if(window.matchMedia("(min-width: 1440px)").matches) return;
-  console.log(event.type);
+  // console.log(event.type);
   let scrollWrapper = getClosestParentElementFromEvent(event, wrapperSelector);
-  let isDown = false;
-  let startX;
-  let scrollLeft;
   let type = event.type;
   switch(type) {
     case 'mousedown':
@@ -143,7 +147,7 @@ function horizontalDragScroll(event, wrapperSelector = '.board-task-list') {
       const x = event.pageX - scrollWrapper.offsetLeft;
       const walk = (x - startX) * 3; //scroll-fast
       scrollWrapper.scrollLeft = scrollLeft - walk;
-      console.log(walk);
+      // console.log(walk);
       break;
   }
 
