@@ -119,7 +119,6 @@
   width: 100%;
   /* max-width: 1208px; */
   /* padding-top: 20px; */
-  overflow: auto;
   scrollbar-width: none;
 }
 .board {
@@ -295,7 +294,7 @@
   .boards-wrapper {
     flex-direction: column;
     align-items: start;
-    overflow: hidden;
+    overflow-y: auto;
   }
   .boards-wrapper {
     flex-direction: column;
