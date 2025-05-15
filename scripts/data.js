@@ -11,7 +11,7 @@ let authUserId = null;
 async function initData() {
     getMainTemplates();
     await getAllData();
-    await renderAllData();
+    // await renderAllData();
 }
 
 async function renderAllData() {
@@ -34,6 +34,7 @@ async function getCategories() {
 
 async function getContacts() {
     contacts = localStorageMode ? await getFromLocalStorage('contacts') : await fetchDataFromFirebase('users/');
+    await sortContacts(contacts);
 }
 
 async function getTasks() {
@@ -156,6 +157,7 @@ async function updateTask(task) {
 }
 
 async function validateTaskProperties(task) {
+    delete task.searchBase;
     task.id = hasLength(task.id) ? task.id : await getNewTaskId();
     task.status = hasLength(task.status) ? task.status : 'todo';
     !hasLength(task.description) ? delete task.description : null;
@@ -168,7 +170,8 @@ async function updateTaskProperty(taskId, property, value = null) {
     let index = await getTaskIndexFromId(taskId);
     let task = tasks[index];
     value === null ? delete task[property] : task[property] = value;
-    console.log(tasks);
+    await updateTask(task);
+    // console.log(tasks);
     localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task, 'update');
 }
 

@@ -90,18 +90,20 @@ function getBoardNoTaskTemplate() {
 `
 }
 
-function getBoardTasksTemplate(task, category) {
+async function getBoardTasksTemplate(task, category) {
+    let subtaskCount = await getSubtaskProgress(task, 'count');
+    let subtaskProgress = await getSubtaskProgress(task, 'progress');
     let hideDescription = task.description == null ? 'hide': null;
-    let hideBatches = task.contactIds == null ? 'hide': null;
-    let hideSubtask = task.subtaskCount == null ? 'hide': null;
+    // let hideBatches = task.contactIds == null ? 'hide': null;
+    let hideSubtask = subtaskCount == null ? 'hide': null;
     return `
         <div class="board-task clickable-task" onclick="showTaskBtn(event, '${task.id}')" draggable="true" ondragstart="taskDrag(event, '${task.id}')">
             <div class="board-task-category" style="background-color: ${category.color};">${category.name}</div>
             <div class="task-heading">${task.title}</div>
             <div class="task-description ${hideDescription}">${task.description}</div>
             <div class="flex-row justify-between">
-                <div class="subtask-progess ${hideSubtask}">Progress ${task.subtaskProgress}%</div>
-                <div class="subtask-progess ${hideSubtask}">${task.subtaskCount} Subtasks</div>
+                <div class="subtask-progess ${hideSubtask}">Progress ${subtaskProgress}%</div>
+                <div class="subtask-progess ${hideSubtask}">${subtaskCount} Subtasks</div>
             </div>
             <img class="img-progress-bar ${hideSubtask}" src="./assets/icons/Progress_1-2.png" alt="Progress Bar">
             <ul id="profileBatchesTaskBoard-${task.id}" class="profile-batches task-board hide-if-empty"></ul>

@@ -139,8 +139,9 @@ async function renderContactSelectOptions(listboxId = 'taskContactsListbox', sea
     let combox = document.getElementById('selectContacts');
     listbox.innerHTML = '';
     // console.log(contacts);
-    taskContacts = await Object.create(contacts);
-    taskContacts = await sortContacts(taskContacts);
+    taskContacts = contacts;
+    // taskContacts = await Object.create(contacts);
+    // taskContacts = await sortContacts(taskContacts);
     // console.log(contacts);
     // console.log(taskContacts);
     if(searchVal === ' ') {
