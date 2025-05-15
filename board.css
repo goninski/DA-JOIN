@@ -162,8 +162,8 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  /* overflow-y: auto; */
-  /* scrollbar-width: none; */
+  overflow: auto;
+  scrollbar-width: none;
 }
 
 .board-task {
@@ -302,8 +302,6 @@
   }
   .board-task-list {
     flex-direction: row;
-    overflow: auto;
-    scrollbar-width: none;
   }
 }
 
