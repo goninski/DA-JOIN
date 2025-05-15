@@ -78,7 +78,7 @@ function getBoardTemplate(board) {
                     <img class="board-add-task-button" src="./assets/icons/plus button.png" alt="plus-icon" title="add Task to ${board.label}-Board">
                 </button>
             </div>
-            <div id="boardTaskList-${board.id}" class="board-task-list" ondragover="allowDrop(event)" ondrop="taskDrop(event, '${board.id}')">
+            <div id="boardTaskList-${board.id}" class="board-task-list" ondragover="allowDrop(event)" ondrop="taskDrop(event, '${board.id}')" onmousedown="horizontalDragScroll(event)" onmouseup="horizontalDragScroll(event)" onmouseleave="horizontalDragScroll(event)" onmousemove="horizontalDragScroll(event)">
             </div>
         </div>
 `

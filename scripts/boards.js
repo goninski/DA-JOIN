@@ -113,6 +113,41 @@ async function taskDrop(event, boardId) {
   await renderBoards(tasks);
 }
 
+function horizontalDragScroll(event, wrapperSelector = '.board-task-list') {
+  if(window.matchMedia("(min-width: 1440px)").matches) return;
+  console.log('active...')
+  let scrollWrapper = getClosestParentElementFromEvent(event, wrapperSelector);
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+  console.log(event.type);
+  let type = event.type;
+  switch(type) {
+    case 'mousedown':
+      isDown = true;
+      scrollWrapper.classList.add('active');
+      startX = event.pageX - scrollWrapper.offsetLeft;
+      scrollLeft = scrollWrapper.scrollLeft;
+      break;
+    case 'mouseleave':
+      isDown = false;
+      scrollWrapper.classList.remove('active');
+      break;
+    case 'mouseup':
+      isDown = false;
+      scrollWrapper.classList.remove('active');
+      break;
+    case 'mousemove':
+      if(!isDown) return;
+      event.preventDefault();
+      const x = event.pageX - scrollWrapper.offsetLeft;
+      const walk = (x - startX) * 3; //scroll-fast
+      scrollWrapper.scrollLeft = scrollLeft - walk;
+      console.log(walk);
+      break;
+  }
+
+}
 
 
 

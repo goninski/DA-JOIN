@@ -119,6 +119,7 @@
   width: 100%;
   /* max-width: 1208px; */
   /* padding-top: 20px; */
+  overflow-y: auto;
   scrollbar-width: none;
 }
 .board {
@@ -161,7 +162,8 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
   scrollbar-width: none;
 }
 
@@ -302,8 +304,17 @@
   .board-task-list {
     flex-direction: row;
   }
+  /* .board-task-list {
+    overflow-y: hidden;
+    cursor: pointer;
+    transform: scale(0.98);
+    transition: all 0.2s;
+  }
+  .board-task-list.active {
+    cursor: grabbing;
+    transform: scale(1);
+  } */
 }
-
 
 @media(max-width: 1179px) {
   .board-page-title-wrapper {
