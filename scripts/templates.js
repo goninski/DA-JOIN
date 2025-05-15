@@ -106,8 +106,11 @@ async function getBoardTasksTemplate(task, category) {
                 <div class="subtask-progess ${hideSubtask}">${subtaskCount} Subtasks</div>
             </div>
             <img class="img-progress-bar ${hideSubtask}" src="./assets/icons/Progress_1-2.png" alt="Progress Bar">
-            <ul id="profileBatchesTaskBoard-${task.id}" class="profile-batches task-board hide-if-empty"></ul>
-            <img class="hide" src="./assets/icons/kochwelt.png" alt="">
+            <div class="flex-row align-center"> 
+                <ul id="profileBatchesTaskBoard-${task.id}" class="profile-batches task-board hide-if-empty"></ul>
+                <img class="hide" src="./assets/icons/kochwelt.png" alt="">
+                <div class="task-priority ml-auto">${task.priority}</div>
+            </div>
         </div>
     `
 }

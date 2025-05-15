@@ -329,6 +329,6 @@ function setUsefulDemoDueDates(task) {
     } else if(dateType == 'past') {
         days = days * -1;
     }
-    task.dueDate = formatDateToFromStringDBToFull(addDaysToDate(currentDate, days));
+    task.dueDate = formatDateToStringDB(addDaysToDate(currentDate, days));
 }
 
