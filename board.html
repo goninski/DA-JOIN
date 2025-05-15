@@ -27,22 +27,19 @@
     <div class="main-inner-absolute board-page-inner">
 
       <!-- HEADLINE-BEREICH -->
-      <div class="headline-board">
-        <div class="top-row" style="display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center;">
-          <div class="page-title">Board</div>
-          <div style="gap: 32px; display: flex;">
-            <div class="input-wrapper-board">
-              <input id="taskSearchInput" type="text" placeholder="Find Task" class="search-input" oninput="listenTaskSearchInput(event)"/>
-              <div class="input-divider"></div>
-              <button id="taskSearchBtn" class="input-img not-clickable" tabindex="-1" onclick="filterTasks(event)">
-                <img src="./assets/icons/search.png" alt="Search Icon" />
-              </button>
-            </div>
-            <button class="add-task-button" onclick="openAddTaskForm(event)">
-              Add task <img src="./assets/icons/add.png" alt="" />
-            </button>
-          </div>
+      <div class="board-page-title-wrapper">
+        <div class="page-title mr-auto">Board</div>
+        <div class="board-search-input-wrapper">
+          <input id="taskSearchInput" type="text" placeholder="Find Task" class="search-input" oninput="listenTaskSearchInput(event)"/>
+          <div class="input-divider"></div>
+          <button id="taskSearchBtn" class="input-img not-clickable" tabindex="-1" onclick="filterTasks(event)">
+            <img src="./assets/icons/search.png" alt="Search Icon" />
+          </button>
         </div>
+        <button class="add-task-button" onclick="openAddTaskForm(event)">
+          Add task <img src="./assets/icons/add.png" alt="" />
+        </button>
+      </div>
 
         <!-- <div class="board-metrics board-status-bar-wrapper" style="margin-top: 20px;">
           <div class="board-status-bar">
