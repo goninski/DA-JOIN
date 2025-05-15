@@ -1,57 +1,58 @@
-let currentFormattedDate = formatDateToYYYYMMDD(new Date());
-let taskSummary = {};
+let currentFormattedDate = formatDateToStringDB(new Date());
+let summary = {};
 
 async function initSummary() {
     getMainTemplates();
     await getUserData();
     await checkAuth();
     await getTaskData();
-    await setTaskSummaryObj();
+    await setSummaryObj();
+    console.log(summary);
 }
 
-async function resetTaskSummaryObj() {
-  taskSummary = {};
-  taskSummary.upcoming = 0
-  taskSummary.upcomingDeadline = '';
-  taskSummary.upcomingUrgent = 0
-  taskSummary.inBoard = 0;
-  taskSummary.todo = 0;
-  taskSummary.inProgress = 0;
-  taskSummary.awaitFeedback = 0;
-  taskSummary.done = 0;
-  // taskSummary.priorityHigh = 0
+async function resetSummaryObj() {
+  summary = {};
+  summary.taskCountUpcoming = 0
+  summary.taskCountUpcomingUrgent = 0
+  summary.taskCountInBoard = 0;
+  summary.taskCountTodo = 0;
+  summary.taskCountInProgress = 0;
+  summary.taskCountAwaitFeedback = 0;
+  summary.taskCountDone = 0;
+  summary.taskCountUrgent = 0
+  summary.upcomingDeadline = '';
 }
 
-async function setTaskSummaryObj() {
-  resetTaskSummaryObj();
-  taskSummary.userName = await getUserNameById(loggedInUserId);
+async function setSummaryObj() {
+  resetSummaryObj();
+  summary.userName = await getUserNameById(loggedInUserId);
   await setUpcomings();
   await setTaskCounts();
-  setDaySegment();
-  // console.log(taskSummary);
+  setWelcomeMsg();
+  // console.log(summary);
 }
 
 async function setUpcomings() {
   let futureTasks = tasks.filter(task => task.dueDate >= currentFormattedDate);
   if(hasLength(futureTasks)) {
-    let sortedTasks = futureTasks.sort((a, b) => a.dueDate.localeCompare(b.dueDate));
-    let upcomingDeadline = sortedTasks[0].dueDate;
+    await futureTasks.sort((a, b) => a.dueDate.localeCompare(b.dueDate));
+    let upcomingDeadline = futureTasks[0].dueDate;
     let upcomingTasks = futureTasks.filter(task => task.dueDate == upcomingDeadline);
-    hasLength(upcomingTasks) ? taskSummary.upcoming = upcomingTasks.length : null;
-    taskSummary.upcomingDeadline = upcomingDeadline;
+    summary.taskCountUpcoming = hasLength(upcomingTasks) ? upcomingTasks.length : 0;
+    summary.upcomingDeadline = hasLength(upcomingDeadline) ? formatDateToFromStringDBToFull(upcomingDeadline) : 'no Upcoming Deadling';
     let upcomingUrgentTasks = upcomingTasks.filter(task => task.priority == 'high');
-    hasLength(upcomingUrgentTasks) ? taskSummary.upcomingUrgent = upcomingUrgentTasks.length : null;
+    summary.taskCountUpcomingUrgent = hasLength(upcomingUrgentTasks) ? upcomingUrgentTasks.length : 0;
   }
 }
 
 async function setTaskCounts() {
-  taskSummary.inBoard = hasLength(tasks) ? tasks.length : 0;
+  summary.taskCountinBoard = hasLength(tasks) ? tasks.length : 0;
   tasks.forEach(task => {
-    task.status == 'To do' ? taskSummary.todo++ : null;
-    task.status == 'in Progress' ? taskSummary.inProgress++ : null;
-    task.status == 'Await Feedback' ? taskSummary.awaitFeedback++ : null;
-    task.status == 'Done' ? taskSummary.done++ : null;
-    // task.priority == 'high' ? taskSummary.priorityHigh++ : null;
+    task.status == 'todo' ? summary.taskCountTodo++ : null;
+    task.status == 'inProgress' ? summary.taskCountInProgress++ : null;
+    task.status == 'awaitFeedback' ? summary.taskCountAwaitFeedback++ : null;
+    task.status == 'done' ? summary.taskCountDone++ : null;
+    task.priority == 'high' ? summary.taskCountUrgent++ : null;
   });
 }
 
@@ -60,15 +61,15 @@ async function getUserNameById(loggedInUserId) {
   return hasLength(filteredArr) ? filteredArr.name : 'Dear Guest';
 }
 
-function setDaySegment() {
+function setWelcomeMsg() {
   let currentDate = new Date();
   let hours = currentDate.getHours();
-  let daySegment = 'Good afternoon';
+  let daySegment = 'afternoon';
   if(hours >=0 && hours < 12) {
-    daySegment = 'Good morning';
+    daySegment = 'morning';
   } else if(hours >= 18) {
-    daySegment = 'Good evening';
+    daySegment = 'evening';
   }
-  taskSummary.daySegment = daySegment;
+  summary.welcomeMsg = 'Good ' + daySegment + ', ';
 }
 
