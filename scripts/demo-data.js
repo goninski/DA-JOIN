@@ -272,8 +272,8 @@ let tasksDemoOld = [
 ];
 
 
-async function resetToDemoData() {
-    if(! window.confirm('All data will be reset to default demo data! OK?')) { return; }
+async function resetData() {
+    // if(! window.confirm('All data will be reset to default demo data! OK?')) { return; }
     await deleteAllData();
     categories = categoriesDefault;
     contacts = contactsDemo;
@@ -286,10 +286,8 @@ async function resetToDemoData() {
         setUsefulDemoDueDates(task);
     });
     await saveAllData()
-    await showAlert('Data Reset successfull !', 1000);
-    // await showAlert('Data Reset successfull. Please reload the page !', 1000);
-    // location.reload()
-    setTimeout(function() {window.location.href = "/board.html";}, 1000);
+    await showFloatingMessage('text', 'Dummy Data Reset successfull !');
+    setTimeout(() => {window.location.href = "/board.html";}, 1500);
 }
 
 async function saveAllData() {
@@ -331,6 +329,6 @@ function setUsefulDemoDueDates(task) {
     } else if(dateType == 'past') {
         days = days * -1;
     }
-    task.dueDate = formatDateToYYYYMMDD(addDaysToDate(currentDate, days));
+    task.dueDate = formatDateToStringDB(addDaysToDate(currentDate, days));
 }
 

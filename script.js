@@ -17,7 +17,7 @@ async function getUserFromURL() {
     // console.log(urlParams);
     // console.log(user);
     loggedInUserId = hasLength(user) ? user.toString() : null;
-    console.log(loggedInUserId);
+    // console.log(loggedInUserId);
 }
 
 async function userIsLoggedIn(userId) {
@@ -186,13 +186,33 @@ function getRandomString(length = 20) {
     return result.trim();
 }
 
-function formatDateToYYYYMMDD(date) {
+function formatDateToStringDB(date) {
     let year = date.getFullYear();
     let month = ('0'+ (date.getMonth() + 1)).slice(-2);
     let day = ('0' + date.getDate()).slice(-2);
     let formattedDate = year + '-' + month + '-' + day;
     // console.log(formattedDate);
     return formattedDate;
+}
+
+function formatDateToFromStringDBToFull(dateStringDB) {
+    let timeStamp = Date.parse(dateStringDB);
+    let date = new Date(timeStamp);
+    let formattedDate = date.toLocaleString('en-US', { month: 'long', day: 'numeric' , year: 'numeric'});
+    // console.log(formattedDate);
+    return formattedDate;
+}
+
+function getDaySegment() {
+  let currentDate = new Date();
+  let hours = currentDate.getHours();
+  let daySegment = 'afternoon';
+  if(hours >=0 && hours < 12) {
+    daySegment = 'morning';
+  } else if(hours >= 18) {
+    daySegment = 'evening';
+  }
+  return daySegment;
 }
 
 function addDaysToDate(date, days) {

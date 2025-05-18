@@ -5,6 +5,7 @@ async function initContacts() {
     getMainTemplates();
     await getContacts();
     await checkAuth();
+    // await sortContacts(contacts);
     await renderContactList();
 }
 

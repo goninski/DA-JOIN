@@ -2,13 +2,14 @@
     top: 80px;
 }
 
-.headline-board {
+.board-page-title-wrapper {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     gap: 30px;
     width: 100%;
-    max-width: 1056px;
-    justify-content: space-between;
-    flex-direction: column;
+    /* max-width: 1056px; */
+    margin-bottom: 62px;
 }
 
 .black {
@@ -69,7 +70,7 @@
     height: 24px;
 }
 
-.input-wrapper-board {
+.board-search-input-wrapper {
     display: flex;
     align-items: center;
     width: 312px;
@@ -79,7 +80,7 @@
     border-radius: 10px;
     padding: 0 12px;
     box-sizing: border-box;
-  }
+}
 
   .input-wrapper-board:focus-within {
     border-color: #29ABE2;
@@ -108,48 +109,41 @@
     margin: 0 12px;
 }
 
-.board-status-bar-wrapper {
-    display: flex;
-    width: 1208px;
-    height: 24px;
-    gap: 35px;
-}
 
-.board-description {
-    font-weight: 700;
-    font-size: 20px;
-    color: #42526E;
-}
 
-.board-status-bar {
-    display: flex;
-    align-items: center;
-    width: 244px;
-    height: 24px;
-    justify-content: space-between;
-}
-
-.board-plus-button {
-    height: 24px;
-    width: 24px;
-}
 
 .boards-wrapper {
-    display: flex;
-    gap: 26px;
-    width: 100%;
-    max-width: 1208px;
-    flex-grow: 1;
-    overflow-x: auto;
-    padding-top: 20px;
+  display: flex;
+  gap: 24px;
+  flex-grow: 1;
+  width: 100%;
+  /* max-width: 1208px; */
+  /* padding-top: 20px; */
+  overflow-y: auto;
+  scrollbar-width: none;
 }
-  
 .board {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-  border-radius: 8px;
-  width: 250px;
+  /* border-radius: 8px; */
+  width: 100%;
+}
+.board-title-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* height: 24px; */
+    margin-bottom: 15px;
+    width: 100%;
+}
+.board-title {
+    font-weight: 700;
+    font-size: var(--fs-lg);
+    color: hsl(218, 25%, 35%);
+}
+.board-add-task-button {
+    height: 24px;
+    width: 24px;
 }
 
 /* .column {
@@ -159,25 +153,50 @@
   min-height: 500px;
 } */
 
-.column h2 {
+/* .column h2 {
   text-align: center;
   margin-bottom: 10px;
-}
+} */
 
-.task-list {
+.board-task-list {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
 }
 
 .board-task {
-  background: #FFFFFF;
-  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: 252px;
   padding: 16px;
-  cursor: grab;
-  user-select: none;
   border-radius: 26px;
+  background: #FFFFFF;
+  cursor: grab;
+  /* user-select: none; */
 }
+
+.board-no-task {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  background-color: #E7E7E7;
+  border: dotted 1px #A8A8A8;
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+}
+
+/* .no-task-to-do {
+  margin: 0;
+  font-weight: 400;
+  size: 16px;
+  color: #A8A8A8;
+} */
 
 /* .task-1 {
   background: #FFFFFF;
@@ -197,27 +216,6 @@
   border-radius: 26px;
 } */
 
-.no-task {
-  background-color: #E7E7E7;
-  border-color: #A8A8A8;
-  border: 1px;
-  border-radius: 10px;
-  height: 48px;
-  width: 246px;
-  border-style: dotted;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(4px);
-  z-index: -1;
-}
-
-.no-task-to-do {
-  margin: 0;
-  font-weight: 400;
-  size: 16px;
-  color: #A8A8A8;
-}
 /* 
 .user-story {
   height: 263px;
@@ -291,6 +289,46 @@
   width: 90%;
 }
 
+
+
+
+@media(max-width: 1439px) {
+  .boards-wrapper {
+    flex-direction: column;
+    align-items: start;
+    overflow-y: auto;
+  }
+  .boards-wrapper {
+    flex-direction: column;
+  }
+  .board-task-list {
+    flex-direction: row;
+  }
+  .board-task-list {
+    overflow-y: hidden;
+    overflow-x: scroll;
+    white-space: nowrap;
+    cursor: grab;
+    transition: all 0.2s;
+  }
+  .board-task-list.active {
+    cursor: grabbing;
+    transform: scale(1.02);
+  }
+  .board-task {
+    white-space: normal;
+  }
+}
+
+@media(max-width: 1179px) {
+  .board-page-title-wrapper {
+    flex-direction: column;
+    align-items: start;
+  }
+  .board-search-input-wrapper {
+      width: 100%;
+  }
+}
 
 @media(min-width: 1440px) {
     .board-page-inner {

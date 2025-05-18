@@ -72,8 +72,14 @@ function getTaskDetailsWrapperTemplate(task, category) {
 
 function getBoardTemplate(board) {
     return `
-        <div class="board" id="board-${board}">
-            <div id="boardTaskList-${board}" class="task-list" ondragover="allowDrop(event)" ondrop="taskDrop(event, '${board}')">
+        <div class="board" id="board-${board.id}">
+            <div class="board-title-bar">
+                <h3 class="board-title">${board.label}</h3>
+                <button onclick="addBoardTask(event, 'todo')">
+                    <img class="board-add-task-button" src="./assets/icons/plus button.png" alt="plus-icon" title="add Task to ${board.label}-Board">
+                </button>
+            </div>
+            <div id="boardTaskList-${board.id}" class="board-task-list" ondragover="allowDrop(event)" ondrop="taskDrop(event, '${board.id}')" onmousedown="horizontalDragScroll(event)" onmouseup="horizontalDragScroll(event)" onmouseleave="horizontalDragScroll(event)" onmousemove="horizontalDragScroll(event)">
             </div>
         </div>
 `
@@ -81,36 +87,31 @@ function getBoardTemplate(board) {
 
 function getBoardNoTaskTemplate() {
     return `
-        <div class="board-task no-task">
-            <p class="no-task-to-do">No tasks To Do</p>
-        </div>
+        <div class="board-no-task">No tasks To Do</div>
 `
 }
 
-function xgetBoardNoTaskTemplate(board) {
-    return `
-        <div id="boardEmptyTaskList-${board}" class="task-list hide" ondragover="allowDrop(event)" ondrop="taskDrop(event, '${board}')">
-            <div class="board-task no-task">
-                <p class="no-task-to-do">No tasks To Do</p>
-            </div>
-        </div>
-`
-}
-
-function getBoardTasksTemplate(task, category) {
-    let hideSubtask = task.subtaskCount == null ? 'hide': null;
+async function getBoardTasksTemplate(task, category) {
+    let subtaskCount = await getSubtaskProgress(task, 'count');
+    let subtaskProgress = await getSubtaskProgress(task, 'progress');
+    let hideDescription = task.description == null ? 'hide': null;
+    // let hideBatches = task.contactIds == null ? 'hide': null;
+    let hideSubtask = subtaskCount == null ? 'hide': null;
     return `
         <div class="board-task clickable-task" onclick="showTaskBtn(event, '${task.id}')" draggable="true" ondragstart="taskDrag(event, '${task.id}')">
             <div class="board-task-category" style="background-color: ${category.color};">${category.name}</div>
             <div class="task-heading">${task.title}</div>
-            <div class="task-description">${task.description}</div>
+            <div class="task-description ${hideDescription}">${task.description}</div>
             <div class="flex-row justify-between">
-                <div class="subtask-progess ${hideSubtask}">Progress ${task.subtaskProgress}%</div>
-                <div class="subtask-progess ${hideSubtask}">${task.subtaskCount} Subtasks</div>
+                <div class="subtask-progess ${hideSubtask}">Progress ${subtaskProgress}%</div>
+                <div class="subtask-progess ${hideSubtask}">${subtaskCount} Subtasks</div>
             </div>
             <img class="img-progress-bar ${hideSubtask}" src="./assets/icons/Progress_1-2.png" alt="Progress Bar">
-            <ul id="profileBatchesTaskBoard-${task.id}" class="profile-batches task-board hide-if-empty"></ul>
-            <img class="hide" src="./assets/icons/kochwelt.png" alt="">
+            <div class="flex-row align-center"> 
+                <ul id="profileBatchesTaskBoard-${task.id}" class="profile-batches task-board hide-if-empty"></ul>
+                <img class="hide" src="./assets/icons/kochwelt.png" alt="">
+                <div class="task-priority ml-auto">${task.priority}</div>
+            </div>
         </div>
     `
 }

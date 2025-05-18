@@ -1,24 +1,10 @@
-body {
+/* body {
     background-color: #F6F7F8;
 }
 
 header {
     background-color: #FFFFFF;
-}
-
-.headline-summary {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    left: 328px;
-    top: 206px;
-    gap: 30px;
-}
-
-.headline-key-metrics {
-    font-size: 27px;
-    font-weight: 400;
-}
+} */
 
 .greeting-user {
     position: absolute;
@@ -41,6 +27,20 @@ header {
 
 .greeting {
     margin: 0px;
+}
+
+.headline-summary {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    left: 328px;
+    top: 206px;
+    gap: 30px;
+}
+
+.headline-key-metrics {
+    font-size: 27px;
+    font-weight: 400;
 }
 
 .key-metrics {
@@ -227,4 +227,6 @@ header {
     height: 48px;
     text-align: center;
 }
-    
+
+
+
