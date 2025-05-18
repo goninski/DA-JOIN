@@ -113,88 +113,30 @@ async function taskDrop(event, boardId) {
   tasks[index].status = boardId;
   await updateTaskProperty(currentDragTaskId, 'status', boardId);
   console.log(tasks);
-  await renderBoards();
+  await renderBoards(tasks);
 }
 
 
+document.querySelectorAll('.task-list').forEach(taskList => {
+  new Sortable(taskList, {
+    group: 'shared',
+    animation: 150,
+    ghostClass: 'ghost'
+  });
+});
 
-// https://codepen.io/toddwebdev/pen/yExKoj
-let isDown = false;
-let startX;
-let scrollLeft;
-
-function horizontalDragScroll(event, wrapperSelector = '.board-task-list') {
-  event.stopPropagation();
-  if(window.matchMedia("(min-width: 1440px)").matches) return;
-  // console.log(event.type);
-  let scrollWrapper = getClosestParentElementFromEvent(event, wrapperSelector);
-  let type = event.type;
-  switch(type) {
-    case 'mousedown':
-      isDown = true;
-      scrollWrapper.classList.add('active');
-      startX = event.pageX - scrollWrapper.offsetLeft;
-      scrollLeft = scrollWrapper.scrollLeft;
-      break;
-    case 'mouseleave':
-      isDown = false;
-      scrollWrapper.classList.remove('active');
-      break;
-    case 'mouseup':
-      isDown = false;
-      scrollWrapper.classList.remove('active');
-      break;
-    case 'mousemove':
-      if(!isDown) return;
-      event.preventDefault();
-      const x = event.pageX - scrollWrapper.offsetLeft;
-      const walk = (x - startX) * 3; //scroll-fast
-      scrollWrapper.scrollLeft = scrollLeft - walk;
-      // console.log(walk);
-      break;
-  }
-
-}
-
-
-
-
-
-
-// function addTaskClickListeners() {
-//   document.querySelectorAll('.clickable-task').forEach(task => {
-//     task.addEventListener('click', () => {
-//       const title = task.querySelector('.task-heading')?.textContent || "Kein Titel";
-//       const description = task.querySelector('.task-description')?.textContent || "Keine Beschreibung";
-//       const tasks = task.querySelector('.technical-task')?.textContent || "Keine Beschreibung";
-
-//       document.getElementById('overlay-tasks').textContent = tasks;
-//       document.getElementById('overlay-title').textContent = title;
-//       document.getElementById('overlay-description').textContent = description;
-//       document.getElementById('task-overlay').style.display = 'flex';
-//     });
-//   });
-// }
-
-// // da es 2 boards.js gab habe ich diesen Code von der anderen hierher kopiert /fg 4.5.25
-// document.querySelectorAll('.task-list').forEach(taskList => {
-//   new Sortable(taskList, {
-//     group: 'shared',
-//     animation: 150,
-//     ghostClass: 'ghost'
-//   });
-// });
 
 // document.querySelectorAll('.clickable-task').forEach(task => {
 //   task.addEventListener('click', () => {
 //     const title = task.querySelector('.task-heading')?.textContent || "Kein Titel";
 //     const description = task.querySelector('.task-description')?.textContent || "Keine Beschreibung";
 
-//     document.getElementById('overlay-title').textContent = title;
-//     document.getElementById('overlay-description').textContent = description;
-//     document.getElementById('task-overlay').style.display = 'flex';
+    document.getElementById('overlay-title').textContent = title;
+    document.getElementById('overlay-description').textContent = description;
+    document.getElementById('task-overlay').style.display = 'flex';
 //   });
 // });
+
 
 // function closeOverlay() {
 //   document.getElementById('task-overlay').style.display = 'none';
