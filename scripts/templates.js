@@ -68,14 +68,16 @@ function getTaskDetailsWrapperTemplate(task) {
 
 
 // BOARDS
+//                    <img src="./assets/icons/add.svg" alt="plus-icon">
 
 function getBoardTemplate(board) {
+    let addTaskBtn = getIconTemplatePlus();
     return `
         <div class="board" id="board-${board.id}">
             <div class="board-title-bar">
                 <h3 class="board-title">${board.label}</h3>
-                <button onclick="addBoardTask(event, 'todo')">
-                    <img class="board-add-task-button" src="./assets/icons/plus button.png" alt="plus-icon" title="add Task to ${board.label}-Board">
+                <button class="add-task-button-board" title="add Task to ${board.label}-Board" onclick="addBoardTask(event, 'todo')">
+                    ${addTaskBtn}
                 </button>
             </div>
             <div id="boardTaskList-${board.id}" class="board-task-list" ondragover="allowDrop(event)" ondrop="taskDrop(event, '${board.id}')" onmousedown="horizontalDragScroll(event)" onmouseup="horizontalDragScroll(event)" onmouseleave="horizontalDragScroll(event)" onmousemove="horizontalDragScroll(event)">
@@ -396,6 +398,17 @@ function trashKeepForNow() {
 
 
 // ICON TEMPLATES
+
+function getIconTemplatePlus(text = "") {
+    return `
+        ${text}
+        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1.6665" y="1.5" width="22" height="22" rx="7" stroke="var(--icon-color)" stroke-width="2"/>
+        <path d="M12.6665 8.5V16.5" stroke="var(--icon-color)" stroke-width="2" stroke-linecap="round"/>
+        <path d="M16.6665 12.5754L8.6665 12.5754" stroke="var(--icon-color)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    `
+}
 
 function getIconTemplateClose(text = "") {
     return `

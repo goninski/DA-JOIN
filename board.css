@@ -17,7 +17,7 @@
     margin: 0;
 }
 
-.add-task-button {
+/* .add-task-button {
     background-color: #2A3647;
     color: white;
     border-radius: 10px;
@@ -36,6 +36,10 @@
 
 .add-task-button:hover {
     background-color: #29ABE2;
+} */
+
+.add-task-button img {
+  height: 19px;
 }
 
 .board-input {
@@ -129,21 +133,23 @@
   width: 100%;
 }
 .board-title-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    /* height: 24px; */
-    margin-bottom: 15px;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* height: 24px; */
+  margin-bottom: 15px;
+  width: 100%;
 }
 .board-title {
-    font-weight: 700;
-    font-size: var(--fs-lg);
-    color: hsl(218, 25%, 35%);
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  color: hsl(218, 25%, 35%);
 }
-.board-add-task-button {
-    height: 24px;
-    width: 24px;
+.add-task-button-board {
+  --icon-color: var(--clr-main);
+}
+.add-task-button-board:hover {
+  --icon-color: var(--clr-light-blue);
 }
 
 /* .column {
@@ -327,6 +333,25 @@
   }
   .board-search-input-wrapper {
       width: 100%;
+  }
+  .add-task-button {
+    height: 40px;
+    min-width: 40px;
+    justify-content: center;
+    padding: 0;
+    position: absolute;
+    top: 16px;
+    right: 0;
+  }
+  .add-task-button:hover {
+    background-color: var(--clr-main);
+  }
+  .add-task-button .btn-label {
+    display: none;
+  }
+  .add-task-button-board svg {
+    height: 30px;
+    width: 30px;
   }
 }
 
