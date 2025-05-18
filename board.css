@@ -206,6 +206,15 @@
   height: 32px;
 }
 
+.profile-batches.task-board .profile-batch {
+    width: 32px;
+    height: 32px;
+    min-width: unset;
+    margin-right: -20px;
+    border-width: 1px;
+    padding-top: 1px;
+}
+
 .board-task-priority {
   width: 17px;
   height: auto;
