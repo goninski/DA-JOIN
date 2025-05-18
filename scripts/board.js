@@ -82,9 +82,9 @@ async function renderBoardTasks(renderTasks, boardId, boardTaskList) {
       let task = boardTasks[index];
       let catIndex = await getCategoryIndexFromId(task.categoryId);
       let category = categories[catIndex];
-      // task.subtaskCount = await getSubtaskProgress(task, 'count');
-      // task.subtaskProgress = await getSubtaskProgress(task, 'progress');
-      boardTaskList.innerHTML += await getBoardTasksTemplate(task, category);
+      let subtaskCount = await getSubtaskProgress(task, 'count');
+      let subtaskProgressWidth = (128 * await getSubtaskProgress(task, 'progress') / 100) + 'px';
+      boardTaskList.innerHTML += await getBoardTasksTemplate(task, category, subtaskCount, subtaskProgressWidth);
       await renderContactProfileBatches(task.contactIds, elementId = 'profileBatchesTaskBoard-' + task.id);
     }
   } else {

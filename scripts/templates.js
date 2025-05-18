@@ -69,7 +69,6 @@ function getTaskDetailsWrapperTemplate(task, category) {
 
 
 // BOARDS
-//                    <img src="./assets/icons/add.svg" alt="plus-icon">
 
 function getBoardTemplate(board) {
     let addTaskBtn = getIconTemplatePlus();
@@ -93,9 +92,7 @@ function getBoardNoTaskTemplate() {
 `
 }
 
-async function getBoardTasksTemplate(task, category) {
-    let subtaskCount = await getSubtaskProgress(task, 'count');
-    let subtaskProgress = await getSubtaskProgress(task, 'progress');
+async function getBoardTasksTemplate(task, category, subtaskCount, subtaskProgressWidth) {
     let hideDescription = task.description == null ? 'hide': null;
     // let hideBatches = task.contactIds == null ? 'hide': null;
     let hideSubtask = subtaskCount == null ? 'hide': null;
@@ -104,9 +101,9 @@ async function getBoardTasksTemplate(task, category) {
             <div class="board-task-category" style="background-color: ${category.color};">${category.name}</div>
             <div class="task-heading">${task.title}</div>
             <div class="task-description ${hideDescription}">${task.description}</div>
-            <div class="flex-row justify-between ${hideSubtask}">
+            <div class="flex-row justify-between align-center ${hideSubtask}">
                 <div class="subtask-progress-bar">
-                    <div class="subtask-progress-done"></div>
+                    <div class="subtask-progress-done" style="width: ${subtaskProgressWidth}"></div>
                 </div>
                 <div class="subtask-progress-count">${subtaskCount} Subtasks</div>
             </div>
