@@ -1,10 +1,14 @@
-let boards = ['todo', 'inProgress', 'awaitFeedback', 'done'];
+let boards = [
+    {id: 'todo', label: 'To do'},
+    {id: 'inProgress', label: 'In progress'},
+    {id: 'awaitFeedback', label: 'Await Feedback'},
+    {id: 'done', label: 'Done'},
+];
 let renderTasks = [];
 let boardTasks = [];
-// let taskBoards = [];
 let currentDragTaskId;
 
-async function initBoards() {
+async function initBoard() {
     getMainTemplates();
     await getContacts()
     await checkAuth();
@@ -44,15 +48,15 @@ async function renderBoards(renderTasks) {
   for (let index = 0; index < boards.length; index++) {
     let board = boards[index];
     boardsWrapper.innerHTML += getBoardTemplate(board);
-    let boardTaskList = document.getElementById('boardTaskList-' + board);
+    let boardTaskList = document.getElementById('boardTaskList-' + board.id);
     boardTaskList.innerHTML = '';
-    hasLength(renderTasks) ? await renderBoardTasks(renderTasks, board, boardTaskList) : await renderBoardTasks(tasks, board, boardTaskList);
+    hasLength(renderTasks) ? await renderBoardTasks(renderTasks, board.id, boardTaskList) : await renderBoardTasks(tasks, board.id, boardTaskList);
   }
   console.log(renderTasks);
 }
 
-async function renderBoardTasks(renderTasks, board, boardTaskList) {
-  boardTasks = await renderTasks.filter(task => task.status == board);
+async function renderBoardTasks(renderTasks, boardId, boardTaskList) {
+  boardTasks = await renderTasks.filter(task => task.status == boardId);
   if(hasLength(boardTasks)) {
     for (let index = 0; index < boardTasks.length; index++) {
       let task = boardTasks[index];
@@ -60,7 +64,7 @@ async function renderBoardTasks(renderTasks, board, boardTaskList) {
       let category = categories[catIndex];
       task.subtaskCount = await getSubtaskProgress(task, 'count');
       task.subtaskProgress = await getSubtaskProgress(task, 'progress');
-      boardTaskList.innerHTML += getBoardTasksTemplate(task, category);
+      boardTaskList.innerHTML += await getBoardTasksTemplate(task, category);
       await renderContactProfileBatches(task.contactIds, elementId = 'profileBatchesTaskBoard-' + task.id);
     }
   } else {
@@ -84,8 +88,8 @@ async function listenTaskSearchInput(event) {
   }
 }
 
-function addBoardTask(event, board) {
-  openAddTaskForm(event, 'board', board);
+function addBoardTask(event, boardId) {
+  openAddTaskForm(event, 'board', boardId);
 }
 
 function allowDrop(event) {
@@ -98,59 +102,53 @@ function taskDrag(event, taskId) {
   console.log(renderTasks);
 }
 
-async function taskDrop(event, board) {
+async function taskDrop(event, boardId) {
   console.log(renderTasks);
   let index = await tasks.findIndex(task => task.id == currentDragTaskId);
   // let index = await getTaskIndexFromId(currentDragElement);
   console.log(index);
-  tasks[index].status = board;
-  await updateTaskProperty(currentDragTaskId, 'status', board);
+  tasks[index].status = boardId;
+  await updateTaskProperty(currentDragTaskId, 'status', boardId);
   console.log(tasks);
   await renderBoards(tasks);
 }
 
 
 
+// https://codepen.io/toddwebdev/pen/yExKoj
+let isDown = false;
+let startX;
+let scrollLeft;
 
+function horizontalDragScroll(event, wrapperSelector = '.board-task-list') {
+  event.stopPropagation();
+  if(window.matchMedia("(min-width: 1440px)").matches) return;
+  // console.log(event.type);
+  let scrollWrapper = getClosestParentElementFromEvent(event, wrapperSelector);
+  let type = event.type;
+  switch(type) {
+    case 'mousedown':
+      isDown = true;
+      scrollWrapper.classList.add('active');
+      startX = event.pageX - scrollWrapper.offsetLeft;
+      scrollLeft = scrollWrapper.scrollLeft;
+      break;
+    case 'mouseleave':
+      isDown = false;
+      scrollWrapper.classList.remove('active');
+      break;
+    case 'mouseup':
+      isDown = false;
+      scrollWrapper.classList.remove('active');
+      break;
+    case 'mousemove':
+      if(!isDown) return;
+      event.preventDefault();
+      const x = event.pageX - scrollWrapper.offsetLeft;
+      const walk = (x - startX) * 3; //scroll-fast
+      scrollWrapper.scrollLeft = scrollLeft - walk;
+      // console.log(walk);
+      break;
+  }
 
-
-
-function addTaskClickListeners() {
-  document.querySelectorAll('.clickable-task').forEach(task => {
-    task.addEventListener('click', () => {
-      const title = task.querySelector('.task-heading')?.textContent || "Kein Titel";
-      const description = task.querySelector('.task-description')?.textContent || "Keine Beschreibung";
-      const tasks = task.querySelector('.technical-task')?.textContent || "Keine Beschreibung";
-
-      document.getElementById('overlay-tasks').textContent = tasks;
-      document.getElementById('overlay-title').textContent = title;
-      document.getElementById('overlay-description').textContent = description;
-      document.getElementById('task-overlay').style.display = 'flex';
-    });
-  });
-}
-
-
-// da es 2 boards.js gab habe ich diesen Code von der anderen hierher kopiert /fg 4.5.25
-document.querySelectorAll('.task-list').forEach(taskList => {
-  new Sortable(taskList, {
-    group: 'shared',
-    animation: 150,
-    ghostClass: 'ghost'
-  });
-});
-
-document.querySelectorAll('.clickable-task').forEach(task => {
-  task.addEventListener('click', () => {
-    const title = task.querySelector('.task-heading')?.textContent || "Kein Titel";
-    const description = task.querySelector('.task-description')?.textContent || "Keine Beschreibung";
-
-    document.getElementById('overlay-title').textContent = title;
-    document.getElementById('overlay-description').textContent = description;
-    document.getElementById('task-overlay').style.display = 'flex';
-  });
-});
-
-function closeOverlay() {
-  document.getElementById('task-overlay').style.display = 'none';
 }

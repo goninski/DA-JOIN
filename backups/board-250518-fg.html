@@ -12,10 +12,11 @@
   <script src="./scripts/form-handling.js"></script>
   <script src="./scripts/subtasks.js"></script>
   <script src="./scripts/tasks.js"></script>
-  <script src="./scripts/board.js"></script>
+  <script src="./scripts/boards.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script> -->
 </head>
 
-<body onload="initBoard()" class="board-page">
+<body onload="initBoards()" class="board-page">
 
   <header id="header" class="section"></header>
 
@@ -25,7 +26,7 @@
   <main class="main-content">
     <div class="main-inner-absolute board-page-inner">
 
-      <!-- TITLE AREA -->
+      <!-- HEADLINE-BEREICH -->
       <div class="board-page-title-wrapper">
         <div class="page-title mr-auto">Board</div>
         <div class="board-search-input-wrapper">
@@ -41,7 +42,7 @@
         </button>
       </div>
 
-      <!-- BOARDS -->
+      <!-- TASK BOARDS -->
       <div id="boardsWrapper" class="boards-wrapper">
   
       <div id="task-overlay" style="display:none;" onclick="closeOverlay()">
