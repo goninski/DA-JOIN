@@ -1,4 +1,3 @@
-
 async function renderSubtasks(assignedSubtasks, wrapperId = 'assignedSubtasks') {
     let element = document.getElementById(wrapperId);
     element.innerHTML = '';

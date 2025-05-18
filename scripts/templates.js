@@ -55,13 +55,14 @@ function getSidebarMobTemplate() {
 }
 
 
-function getTaskDetailsWrapperTemplate(task) {
+function getTaskDetailsWrapperTemplate(task, category) {
     return `
     <h3 class="mb">${task.title}</h3>                        
         <div class="edit-buttons flex-row align-center justify-end">
             <button onclick="openEditTaskForm(event, '${task.id}')"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
             <button onclick="submitDeleteTask(event, '${task.id}')"><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
         </div>
+         
     </div>
     `
 }
