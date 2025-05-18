@@ -5,7 +5,7 @@ let boards = [
     {id: 'done', label: 'Done'},
 ];
 let renderTasks = [];
-// let boardTasks = [];
+let boardTasks = [];
 let currentDragTaskId;
 
 async function initBoards() {
@@ -13,37 +13,19 @@ async function initBoards() {
     await getContacts()
     await checkAuth();
     await getTaskData()
-    renderTasks = tasks;
     await setSearchBase();
-    await renderBoards();
+    await renderBoards(tasks);
     //await renderTempTaskList(tasks);
     // addTaskClickListeners();
 }
 
-async function listenTaskSearchInput(event) {
-  // console.log('f) listenTaskSearchInput');
-  let taskSearchInput = document.getElementById('taskSearchInput');
-  let taskSearchBtn = document.getElementById('taskSearchBtn');
-  let searchVal = taskSearchInput.value.toLowerCase();
-  console.log(searchVal);
-  if(searchVal.length > 0) {
-    taskSearchBtn.tabIndex = 0;
-    taskSearchBtn.classList.remove('not-clickable');
-    await filterTasks(event);
-  } else {
-    taskSearchBtn.tabIndex = -1;
-    taskSearchBtn.classList.add('not-clickable');
-    await renderBoards();
-  }
+async function setSearchBase() {
+  tasks.forEach(task => task.searchBase = (task.title + ' ' + task.description));
+  // console.log(tasks);
 }
 
-// async function validateSearchInput(searchVal) {
-//   return (searchVal >= 2);
-// }
-
-async function setSearchBase() {
-  renderTasks = tasks.forEach(task => task.searchBase = (task.title + ' ' + task.description));
-  // console.log(tasks);
+async function validateSearchInput(searchVal) {
+  return (searchVal >= 2);
 }
 
 async function filterTasks(event) {
@@ -51,18 +33,16 @@ async function filterTasks(event) {
   console.log('f) filterTasks');
   let taskSearchInput = document.getElementById('taskSearchInput');
   let searchVal = taskSearchInput.value.toLowerCase();
-  let filteredTasks = tasks.filter(task => (task.searchBase).toLowerCase().includes(searchVal));
-  if(hasLength(filteredTasks)) {
-    renderTasks = filteredTasks;
-  } else {
-    await showFloatingMessage('text', 'no Tasks found !', 1500);
-    setTimeout(() => {taskSearchInput.value = ''}, 1500)
-    renderTasks = tasks;    
+  renderTasks = tasks.filter(task => (task.searchBase).toLowerCase().includes(searchVal));
+  // console.log(renderTasks);
+  if(renderTasks.length <= 0) {
+    await showFloatingMessage('text', 'no Tasks found !');
+    taskSearchInput.value = '';
   }
-  await renderBoards();
+  await renderBoards(renderTasks);
 }
 
-async function renderBoards() {
+async function renderBoards(renderTasks) {
   let boardsWrapper = document.getElementById('boardsWrapper');
   boardsWrapper.innerHTML = '';
   for (let index = 0; index < boards.length; index++) {
@@ -72,22 +52,39 @@ async function renderBoards() {
     boardTaskList.innerHTML = '';
     hasLength(renderTasks) ? await renderBoardTasks(renderTasks, board.id, boardTaskList) : await renderBoardTasks(tasks, board.id, boardTaskList);
   }
+  console.log(renderTasks);
 }
 
 async function renderBoardTasks(renderTasks, boardId, boardTaskList) {
-  let boardTasks = await renderTasks.filter(task => task.status == boardId);
+  boardTasks = await renderTasks.filter(task => task.status == boardId);
   if(hasLength(boardTasks)) {
     for (let index = 0; index < boardTasks.length; index++) {
       let task = boardTasks[index];
       let catIndex = await getCategoryIndexFromId(task.categoryId);
       let category = categories[catIndex];
-      // task.subtaskCount = await getSubtaskProgress(task, 'count');
-      // task.subtaskProgress = await getSubtaskProgress(task, 'progress');
+      task.subtaskCount = await getSubtaskProgress(task, 'count');
+      task.subtaskProgress = await getSubtaskProgress(task, 'progress');
       boardTaskList.innerHTML += await getBoardTasksTemplate(task, category);
       await renderContactProfileBatches(task.contactIds, elementId = 'profileBatchesTaskBoard-' + task.id);
     }
   } else {
     boardTaskList.innerHTML = getBoardNoTaskTemplate();
+  }
+}
+
+async function listenTaskSearchInput(event) {
+  // console.log('f) listenTaskSearchInput');
+  let taskSearchInput = document.getElementById('taskSearchInput');
+  let taskSearchBtn = document.getElementById('taskSearchBtn');
+  let searchVal = taskSearchInput.value.toLowerCase();
+  console.log(searchVal);
+  if(validateSearchInput(searchVal)) {
+    taskSearchBtn.tabIndex = 0;
+    taskSearchBtn.classList.remove('not-clickable');
+    await filterTasks(event);
+  } else {
+    taskSearchBtn.tabIndex = -1;
+    taskSearchBtn.classList.add('not-clickable');
   }
 }
 
@@ -117,26 +114,84 @@ async function taskDrop(event, boardId) {
 }
 
 
-document.querySelectorAll('.task-list').forEach(taskList => {
-  new Sortable(taskList, {
-    group: 'shared',
-    animation: 150,
-    ghostClass: 'ghost'
-  });
-});
 
+// https://codepen.io/toddwebdev/pen/yExKoj
+let isDown = false;
+let startX;
+let scrollLeft;
+
+function horizontalDragScroll(event, wrapperSelector = '.board-task-list') {
+  event.stopPropagation();
+  if(window.matchMedia("(min-width: 1440px)").matches) return;
+  // console.log(event.type);
+  let scrollWrapper = getClosestParentElementFromEvent(event, wrapperSelector);
+  let type = event.type;
+  switch(type) {
+    case 'mousedown':
+      isDown = true;
+      scrollWrapper.classList.add('active');
+      startX = event.pageX - scrollWrapper.offsetLeft;
+      scrollLeft = scrollWrapper.scrollLeft;
+      break;
+    case 'mouseleave':
+      isDown = false;
+      scrollWrapper.classList.remove('active');
+      break;
+    case 'mouseup':
+      isDown = false;
+      scrollWrapper.classList.remove('active');
+      break;
+    case 'mousemove':
+      if(!isDown) return;
+      event.preventDefault();
+      const x = event.pageX - scrollWrapper.offsetLeft;
+      const walk = (x - startX) * 3; //scroll-fast
+      scrollWrapper.scrollLeft = scrollLeft - walk;
+      // console.log(walk);
+      break;
+  }
+
+}
+
+
+
+
+
+
+// function addTaskClickListeners() {
+//   document.querySelectorAll('.clickable-task').forEach(task => {
+//     task.addEventListener('click', () => {
+//       const title = task.querySelector('.task-heading')?.textContent || "Kein Titel";
+//       const description = task.querySelector('.task-description')?.textContent || "Keine Beschreibung";
+//       const tasks = task.querySelector('.technical-task')?.textContent || "Keine Beschreibung";
+
+//       document.getElementById('overlay-tasks').textContent = tasks;
+//       document.getElementById('overlay-title').textContent = title;
+//       document.getElementById('overlay-description').textContent = description;
+//       document.getElementById('task-overlay').style.display = 'flex';
+//     });
+//   });
+// }
+
+// // da es 2 boards.js gab habe ich diesen Code von der anderen hierher kopiert /fg 4.5.25
+// document.querySelectorAll('.task-list').forEach(taskList => {
+//   new Sortable(taskList, {
+//     group: 'shared',
+//     animation: 150,
+//     ghostClass: 'ghost'
+//   });
+// });
 
 // document.querySelectorAll('.clickable-task').forEach(task => {
 //   task.addEventListener('click', () => {
 //     const title = task.querySelector('.task-heading')?.textContent || "Kein Titel";
 //     const description = task.querySelector('.task-description')?.textContent || "Keine Beschreibung";
 
-    document.getElementById('overlay-title').textContent = title;
-    document.getElementById('overlay-description').textContent = description;
-    document.getElementById('task-overlay').style.display = 'flex';
+//     document.getElementById('overlay-title').textContent = title;
+//     document.getElementById('overlay-description').textContent = description;
+//     document.getElementById('task-overlay').style.display = 'flex';
 //   });
 // });
-
 
 // function closeOverlay() {
 //   document.getElementById('task-overlay').style.display = 'none';
