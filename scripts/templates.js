@@ -99,17 +99,17 @@ async function getBoardTasksTemplate(task, category, subtaskCount, subtaskProgre
     return `
         <div class="board-task clickable-task" onclick="showTaskBtn(event, '${task.id}')" draggable="true" ondragstart="taskDrag(event, '${task.id}')">
             <div class="board-task-category" style="background-color: ${category.color};">${category.name}</div>
-            <div class="task-heading">${task.title}</div>
-            <div class="task-description ${hideDescription}">${task.description}</div>
-            <div class="flex-row justify-between align-center ${hideSubtask}">
-                <div class="subtask-progress-bar">
-                    <div class="subtask-progress-done" style="width: ${subtaskProgressWidth}"></div>
+            <div class="board-task-heading">${task.title}</div>
+            <div class="board-task-description ${hideDescription}">${task.description}</div>
+            <div class="board-subtask-info flex-row justify-between align-center ${hideSubtask}">
+                <div class="board-task-progress-bar">
+                    <div class="board-task-progress-done" style="width: ${subtaskProgressWidth}"></div>
                 </div>
-                <div class="subtask-progress-count">${subtaskCount} Subtasks</div>
+                <div class="board-subtask-count">${subtaskCount} Subtasks</div>
             </div>
-            <div class="flex-row align-center"> 
+            <div class="board-task-user flex-row align-center"> 
                 <ul id="profileBatchesTaskBoard-${task.id}" class="profile-batches task-board hide-if-empty"></ul>
-                <div class="task-priority ml-auto">${task.priority}</div>
+                <img src="./assets/icons/prio-${task.priority}.svg" class="board-task-priority ml-auto">
             </div>
         </div>
     `

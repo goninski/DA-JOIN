@@ -92,6 +92,7 @@ async function renderBoardTasks(renderTasks, boardId, boardTaskList) {
   }
 }
 
+
 function addBoardTask(event, boardId) {
   openAddTaskForm(event, 'board', boardId);
 }
