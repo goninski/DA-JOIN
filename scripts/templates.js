@@ -112,7 +112,6 @@ async function getBoardTasksTemplate(task, category) {
             </div>
             <div class="flex-row align-center"> 
                 <ul id="profileBatchesTaskBoard-${task.id}" class="profile-batches task-board hide-if-empty"></ul>
-                <img class="hide" src="./assets/icons/kochwelt.png" alt="">
                 <div class="task-priority ml-auto">${task.priority}</div>
             </div>
         </div>
