@@ -226,7 +226,7 @@ function getTaskFormFieldsTemplate(task) {
                 <!--<input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask"> -->
                 <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask" maxlength="128" onfocus="focusInHandler(event)" oninput="onInputAddSubtask(event)" onkeydown="addSubtaskInputEventHandler(event)">
                 <div id="subtaskInputButtonAdd" class="input-icon-wrapper">
-                    <button onclick="addSubtaskEventHandlerPseudo(event)"><img src="/assets/icons/add.svg" class="icon-add"></button>
+                    <button class="xnot-clickable" tabindex="-1" onclick="addSubtaskEventHandlerPseudo(event)"><img src="/assets/icons/add.svg" class="icon-add"></button>
                 </div>
                 <div id="subtaskInputButtons" class="input-icon-wrapper hide">
                     <button onclick="clearSubtaskEventHandler(event)"><img src="/assets/icons/cancel.svg" class="icon-cancel"></button>
