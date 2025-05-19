@@ -55,19 +55,19 @@ async function getTaskData() {
 // SAVE DATA (CREATE/UPDATE)
 
 // async function getNewCategoryId() {
-//     let lastId = await getLastIdFromObjArray(categories);
+//     let lastId = await getMaxIdFromObjArray(categories);
 //     lastId++;
 //     return lastId.toString();
 // }
 
 async function getNewContactId() {
-    let lastId = await getLastIdFromObjArray(contacts);
+    let lastId = await getMaxIdFromObjArray(contacts);
     lastId++;
     return lastId.toString();
 }
 
 async function getNewTaskId() {
-    let lastId = await getLastIdFromObjArray(tasks);
+    let lastId = await getMaxIdFromObjArray(tasks);
     lastId++;
     return lastId.toString();
 }

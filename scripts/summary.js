@@ -37,7 +37,7 @@ async function setUpcomings() {
     let upcomingDeadline = futureTasks[0].dueDate;
     let upcomingTasks = futureTasks.filter(task => task.dueDate == upcomingDeadline);
     summary.taskCountUpcoming = hasLength(upcomingTasks) ? upcomingTasks.length : 0;
-    summary.upcomingDeadline = hasLength(upcomingDeadline) ? formatDateToFromStringDBToFull(upcomingDeadline) : 'no Upcoming Deadling';
+    summary.upcomingDeadline = hasLength(upcomingDeadline) ? formatDateFromStringDBToFull(upcomingDeadline) : 'no Upcoming Deadling';
     let upcomingUrgentTasks = upcomingTasks.filter(task => task.priority == 'high');
     summary.taskCountUpcomingUrgent = hasLength(upcomingUrgentTasks) ? upcomingUrgentTasks.length : 0;
   }
