@@ -34,6 +34,10 @@ async function userIsLoggedIn(userId) {
     }
 }
 
+function init() {
+    getMainTemplates();
+}
+
 function getMainTemplates() {
     getHeader();
     getSidebar();

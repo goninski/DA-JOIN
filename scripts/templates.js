@@ -76,7 +76,7 @@ function getBoardTemplate(board) {
         <div class="board" id="board-${board.id}">
             <div class="board-title-bar">
                 <h3 class="board-title">${board.label}</h3>
-                <button class="add-task-button-board" title="add Task to ${board.label}-Board" onclick="addBoardTask(event, 'todo')">
+                <button class="add-task-button-board" title="add new Task" onclick="addBoardTask(event, 'todo')">
                     ${addTaskBtn}
                 </button>
             </div>

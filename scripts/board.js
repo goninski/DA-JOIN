@@ -6,9 +6,11 @@ let boards = [
 ];
 
 let renderTasks = [];
-// let boardTasks = [];
 let currentDragTaskId;
 
+/**
+ * 
+ */
 async function initBoard() {
     getMainTemplates();
     await getContacts()

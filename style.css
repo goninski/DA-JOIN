@@ -115,6 +115,10 @@ main, header, footer {
     flex-grow: 1;
     max-width: var(--ct-w);
 }
+.main-inner-absolute.scrollable {
+    overflow-y: auto;
+    scrollbar-width: none;
+}
 :where(.main-inner-absolute):not(.inset) {
     top: 110px;
     bottom: var(--py-sec);
@@ -192,6 +196,13 @@ main, header, footer {
     text-decoration: none;
 }
 
+.terms-page .page-title-wrapper {
+    margin-bottom: 32px;
+}
+
+.terms-page h2:not(.skip-top-margin) {
+    margin-top: 24px;
+}
 
 
 /** TEMP */
