@@ -1,6 +1,10 @@
 let currentFormattedDate = formatDateToStringDB(new Date());
 let summary = {};
 
+
+/**
+ * on page load
+ */
 async function initSummary() {
     getMainTemplates();
     await getUserData();
@@ -9,19 +13,10 @@ async function initSummary() {
     await setSummaryObj();
 }
 
-async function resetSummaryObj() {
-  summary = {};
-  summary.taskCountUpcoming = 0
-  summary.taskCountUpcomingUrgent = 0
-  summary.taskCountInBoard = 0;
-  summary.taskCountTodo = 0;
-  summary.taskCountInProgress = 0;
-  summary.taskCountAwaitFeedback = 0;
-  summary.taskCountDone = 0;
-  summary.taskCountUrgent = 0
-  summary.upcomingDeadline = '';
-} 
 
+/**
+ * set the summary object- this object serves all dynamic data for the summary page
+ */
 async function setSummaryObj() {
   resetSummaryObj();
   summary.userName = await getUserNameById(loggedInUserId);
@@ -31,6 +26,10 @@ async function setSummaryObj() {
   console.log(summary);
 }
 
+
+/**
+ * set upcoming task values on summary object
+ */
 async function setUpcomings() {
   let futureTasks = tasks.filter(task => task.dueDate >= currentFormattedDate);
   if(hasLength(futureTasks)) {
@@ -44,6 +43,10 @@ async function setUpcomings() {
   }
 }
 
+
+/**
+ * set various task counts on summary object
+ */
 async function setTaskCounts() {
   summary.taskCountInBoard = hasLength(tasks) ? tasks.length : 0;
   tasks.forEach(task => {
@@ -55,13 +58,42 @@ async function setTaskCounts() {
   });
 }
 
-async function getUserNameById(loggedInUserId) {
-  let filteredArr = contacts.filter(contact => contact.id == loggedInUserId);
-  return hasLength(filteredArr) ? filteredArr.name : '';
-}
 
+/**
+ * set welcome message on summary object
+ * 
+ * @param {string} loggedInUserId - the id of the logged in user
+ */
 function setWelcomeMsg() {
   let daySegment = getDaySegment();
   let msgSuffix = summary.userName == '' ? '!' : ',';
   summary.welcomeMsg = 'Good ' + daySegment + msgSuffix;
+}
+
+
+/**
+ * reset the summary object
+ */
+async function resetSummaryObj() {
+  summary = {};
+  summary.taskCountUpcoming = 0
+  summary.taskCountUpcomingUrgent = 0
+  summary.taskCountInBoard = 0;
+  summary.taskCountTodo = 0;
+  summary.taskCountInProgress = 0;
+  summary.taskCountAwaitFeedback = 0;
+  summary.taskCountDone = 0;
+  summary.taskCountUrgent = 0
+  summary.upcomingDeadline = '';
+} 
+
+
+/**
+ * helper: get the user name by id
+ * 
+ * @param {string} loggedInUserId - the id of the logged in user
+ */
+async function getUserNameById(loggedInUserId) {
+  let filteredArr = contacts.filter(contact => contact.id == loggedInUserId);
+  return hasLength(filteredArr) ? filteredArr.name : '';
 }
