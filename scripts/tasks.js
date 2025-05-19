@@ -28,7 +28,7 @@ function openAddTaskPage() {
 /**
  * Event handler: opens add task form
  * 
- * @param {event} event - click, optional
+ * @param {event} event - onclick/sub
  * @param {string} source - source from where the form was opened (add-task-page, board)
  * @param {string} boardId - id of the board from which the form was opened
  */
@@ -51,11 +51,12 @@ async function openAddTaskForm(event = null, source = 'board', boardId = 'todo')
 /**
  * Event handler: opens task details in dialogue, click task (board)
  * 
- * @param {event} event - click
+ * @param {event} event - onclick
  * @param {string} taskId - id of the clicked task
  */
 async function showTaskDetail(event, taskId) {
-    event ? event.stopPropagation() : null;
+    event.stopPropagation();
+    // event ? event.stopPropagation() : null;
     formMode = 'show';
     let index = await getTaskIndexFromId(taskId);
     currentTask = tasks[index];
@@ -69,7 +70,7 @@ async function showTaskDetail(event, taskId) {
 /**
  * Event handler: opens edit task form in dialogue, edit task button (board)
  * 
- * @param {event} event - click
+ * @param {event} event - onclick
  * @param {string} taskId - id of the clicked task
  */
 async function openEditTaskForm(event, taskId) {
@@ -271,7 +272,7 @@ async function renderCategorySelectOptions(event = null, wrapperId = 'taskCatego
 /**
  * Event handler: submit create task
  * 
- * @param {event} event - onsubmit
+ * @param {event} event - onsubmit form
  */
 async function submitCreateTask(event) {
     event.stopPropagation();
@@ -288,7 +289,7 @@ async function submitCreateTask(event) {
 /**
  * Event handler: submit update task
  * 
- * @param {event} event - onsubmit
+ * @param {event} event - onsubmit form
  */
 async function submitUpdateTask(event) {
     event.stopPropagation();
