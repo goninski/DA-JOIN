@@ -7,6 +7,40 @@ document.addEventListener('keydown', documentEventHandler);
 
 
 /**
+ * Helper: sets and returns an object with all relevant elements within a field wrapper
+ * (e.g. wrapper, input, alert, combox, listbox)
+ * 
+ * @param {element} element - a dom element within a field wrapper
+ */
+function getCurrentFieldElements(element) {
+    currentFieldElements = {};
+    let fieldWrapper = element.closest('.field-wrapper');
+    if(fieldWrapper) {
+        currentFieldElements.fieldWrapper = fieldWrapper;
+        let input = fieldWrapper.querySelector('input');
+        if(input) {
+            currentFieldElements.input = input;
+        }
+        let alert = fieldWrapper.querySelector('[role="alert"]');
+        if(alert) {
+            currentFieldElements.alert = alert;
+        }
+        let combox = fieldWrapper.querySelector('[role="combox"]');
+        if(combox) {
+            currentFieldElements.combox = combox;
+        }
+        let listbox = fieldWrapper.querySelector('[role="listbox"]');
+        if(listbox) {
+            currentFieldElements.listbox = listbox;
+            currentFieldElements.options = getCurrentSelectOptions(listbox);
+        }
+    }
+    // console.log(currentFieldElements);
+    return currentFieldElements;
+}
+
+
+/**
  * Document Event handler: close dropdowns on outslide click or ESC
  * 
  * @param {event} event - click, ESC
@@ -345,8 +379,13 @@ function resetFormElements(element) {
 
 
 
-// SELECTION HANDLER (DROPDOWNS)
 
+
+/**
+ * Event handler: dropdown (custom select)
+ * 
+ * @param {event} event - onclick, onkeydown (single select only)
+ */
 function dropdownEventHandler(event) {
     event.stopPropagation();
     console.log('f) dropdownEventHandler');
@@ -375,22 +414,12 @@ function dropdownEventHandler(event) {
     }
 }
 
-function toggleDropdown(element) {                      
-    getCurrentFieldElements(element);
-    let listbox = currentFieldElements.listbox;
-    closeAllDropdowns(listboxElements, listbox);
-    currentFieldElements.fieldWrapper.classList.toggle('select-expanded');
-    let isExpanded = getBooleanFromString(listbox.getAttribute('aria-expanded'));
-    isExpanded = !isExpanded;
-    listbox.setAttribute('aria-expanded', isExpanded);
-    !isExpanded ? validateInput(currentFieldElements.combox) : null;
-}
 
-function focusCurrentCombox(element) {
-    getCurrentFieldElements(element);
-    currentFieldElements.combox ? currentFieldElements.combox.focus() : null;
-}
-
+/**
+ * Event handler: dropdown single option (custom single select, e.g. category)
+ * 
+ * @param {event} event - onclick
+ */
 function dropdownOptionClickHandler(event) {
     event.stopPropagation();
     console.log('f) dropdownOptionClickHandler');
@@ -410,6 +439,13 @@ function dropdownOptionClickHandler(event) {
     }
 }
 
+
+/**
+ * Event handler: dropdown multiple option (custom multiple select for assigned contacts)
+ * 
+ * @param {event} event - onchange (on checkbox input)
+ * @param {string} contactId - contact id of the selected contact option
+ */
 async function dropdownOptionClickHandlerMultiple(event, contactId) {
     event.stopPropagation();
     console.log('f) dropdownOptionClickHandlerMultiple');
@@ -429,18 +465,14 @@ async function dropdownOptionClickHandlerMultiple(event, contactId) {
     }
 }
 
-function dropdownOptionKeyHandler(event, loop = false) {
-    getCurrentFieldElements(event.currentTarget);
-    let combox = currentFieldElements.combox;
-    let options = currentFieldElements.options;
-    let activeIndex = combox.dataset.activeIndex;
-    index = getSelectedDropdownIndex(event, activeIndex, options.length, loop);
-    setDropdownOption(combox, options[index], options[activeIndex]);
-}
 
-// function dropdownOptionKeyHandlerMultiple(event, loop = false) {
-// }
-
+/**
+ * Set dropdown option (custom single select)
+ * 
+ * @param {element} combox - combox dom element
+ * @param {element} option - option dom element
+ * @param {element} activeOption - active option dom element 
+ */
 function setDropdownOption(combox, option, activeOption = null) {
     combox.value = option.textContent;
     combox.setAttribute('data-option-id', option.dataset.optionId);
@@ -449,61 +481,13 @@ function setDropdownOption(combox, option, activeOption = null) {
     option.setAttribute('aria-selected', 'true');
 }
 
-function getSelectedDropdownIndex(event, index, length, loop = false) {
-    !index ? index = -1 : null;
-    if(event.key === 'ArrowDown' ) {
-        index = getNextIndex(index, length, loop);
-    } else if (event.key === 'ArrowUp' ) {
-        index = getPreviousIndex(index, length, loop);
-    }
-    return index;
-}
 
-function getNextIndex(index, length, loop = false) {
-    if(index < length - 1 ) {
-        index++;
-    } else {
-        loop ? index = 0 : null;
-    }
-    return index;
-}
-
-function getPreviousIndex(index, length, loop = false) {
-    if(index <= 0) {
-        loop ? index = length - 1 : null;
-    } else {
-        index--;
-    }
-    return index;
-}
-
-function getCurrentFieldElements(element) {
-    currentFieldElements = {};
-    let fieldWrapper = element.closest('.field-wrapper');
-    if(fieldWrapper) {
-        currentFieldElements.fieldWrapper = fieldWrapper;
-        let input = fieldWrapper.querySelector('input');
-        if(input) {
-            currentFieldElements.input = input;
-        }
-        let alert = fieldWrapper.querySelector('[role="alert"]');
-        if(alert) {
-            currentFieldElements.alert = alert;
-        }
-        let combox = fieldWrapper.querySelector('[role="combox"]');
-        if(combox) {
-            currentFieldElements.combox = combox;
-        }
-        let listbox = fieldWrapper.querySelector('[role="listbox"]');
-        if(listbox) {
-            currentFieldElements.listbox = listbox;
-            currentFieldElements.options = getCurrentSelectOptions(listbox);
-        }
-    }
-    // console.log(currentFieldElements);
-    return currentFieldElements;
-}
-
+/**
+ * Helper: returns an array with all option elements of a listbox (custom select)
+ * 
+ * @param {element} listbox - a listbox dom element
+ * @param {boolean} multiple - is multiple select (currently not in use)
+ */
 function getCurrentSelectOptions(listbox, multiple = false) {
     let selectOptions = [];
     let options = listbox.querySelectorAll('[role="option"]');
@@ -514,6 +498,13 @@ function getCurrentSelectOptions(listbox, multiple = false) {
     return selectOptions;
 }
 
+
+/**
+ * Helper: returns an array with all option values of a listbox (custom select)
+ * 
+ * @param {element} listbox - a listbox dom element
+ * @param {boolean} multiple - is multiple select (currently not in use)
+ */
 function getCurrentSelectOptionValues(listbox, multiple = false) {
     let selectOptionValues = [];
     let options = listbox.querySelectorAll('[role="option"]');
@@ -527,6 +518,29 @@ function getCurrentSelectOptionValues(listbox, multiple = false) {
     return selectOptionValues;
 }
 
+
+/**
+ * Toggle dropdown (custom select) of a specific element
+ * 
+ * @param {element} element - dom element
+ */
+function toggleDropdown(element) {                      
+    getCurrentFieldElements(element);
+    let listbox = currentFieldElements.listbox;
+    closeAllDropdowns(listboxElements, listbox);
+    currentFieldElements.fieldWrapper.classList.toggle('select-expanded');
+    let isExpanded = getBooleanFromString(listbox.getAttribute('aria-expanded'));
+    isExpanded = !isExpanded;
+    listbox.setAttribute('aria-expanded', isExpanded);
+    !isExpanded ? validateInput(currentFieldElements.combox) : null;
+}
+
+
+/**
+ * Helper: opens a dropdown (custom select)
+ * 
+ * @param {element} listbox - a listbox dom element
+ */
 function openDropdown(listbox) {
     let fieldWrapper = getFieldWrapperFromElement(listbox);
     if(fieldWrapper) {
@@ -535,6 +549,12 @@ function openDropdown(listbox) {
     }
 }
 
+
+/**
+ * Helper: closes a dropdown (custom select)
+ * 
+ * @param {element} listbox - a listbox dom element
+ */
 function closeDropdown(listbox) {
     let fieldWrapper = getFieldWrapperFromElement(listbox);
     if(fieldWrapper) {
@@ -543,10 +563,93 @@ function closeDropdown(listbox) {
     }
 }
 
+
+/**
+ * Helper: closes all dropdowns (custom select) except the current
+ * 
+ * @param {element} listboxElements - array of all listbox elements
+ * @param {element} currentListbox - the current listbox, optional
+ */
 function closeAllDropdowns(listboxElements, currentListbox = null) {
     listboxElements.forEach(function(listbox) {
         listbox !== currentListbox ? closeDropdown(listbox) : null;
     });
+}
+
+
+/**
+ * Focus dropdown (custom select) of a specific element 
+ * 
+ * @param {element} element - dom element
+ */
+function focusCurrentCombox(element) {
+    getCurrentFieldElements(element);
+    currentFieldElements.combox ? currentFieldElements.combox.focus() : null;
+}
+
+
+
+
+
+
+
+/**
+ * Event handler: arrow down/up navigation of custom single select >> sub of dropdownEventHandler
+ * 
+ * @param {event} event - onkeydown (ArrowDown/Up)
+ * @param {boolean} loop - loop the index
+ */
+function dropdownOptionKeyHandler(event, loop = false) {
+    getCurrentFieldElements(event.currentTarget);
+    let combox = currentFieldElements.combox;
+    let options = currentFieldElements.options;
+    let activeIndex = combox.dataset.activeIndex;
+    index = getSelectedDropdownIndex(event, activeIndex, options.length, loop);
+    setDropdownOption(combox, options[index], options[activeIndex]);
+}
+
+
+/**
+ * Helper: get selected dropdown index >> sub of dropdownOptionKeyHandler 
+ * 
+ * @param {event} event - onkeydown ArrowDown/Up
+ * @param {number} index - current option index
+ * @param {number} length - total number of options
+ * @param {boolean} loop - loop the index
+ */
+function getSelectedDropdownIndex(event, index, length, loop = false) {
+    !index ? index = -1 : null;
+    if(event.key === 'ArrowDown' ) {
+        index = getNextIndex(index, length, loop);
+    } else if (event.key === 'ArrowUp' ) {
+        index = getPreviousIndex(index, length, loop);
+    }
+    return index;
+}
+
+/**
+ * Helper: get next dropdown index >> sub of getSelectedDropdownIndex
+ */
+function getNextIndex(index, length, loop = false) {
+    if(index < length - 1 ) {
+        index++;
+    } else {
+        loop ? index = 0 : null;
+    }
+    return index;
+}
+
+
+/**
+ * Helper: get previous dropdown index >> sub of getSelectedDropdownIndex
+ */
+function getPreviousIndex(index, length, loop = false) {
+    if(index <= 0) {
+        loop ? index = length - 1 : null;
+    } else {
+        index--;
+    }
+    return index;
 }
 
 
