@@ -41,6 +41,83 @@ function getCurrentFieldElements(element) {
 
 
 /**
+ * Helper: get field wrapper element from element
+ * 
+ * @param {element} element - dom element
+ */
+function getFieldWrapperFromElement(element) {
+    return element.closest('.field-wrapper');
+}
+
+
+/**
+ * Helper: get field wrapper element from event
+ * 
+ * @param {event} event - current target
+ */
+function getFieldWrapperFromEvent(event) {
+    return getClosestParentElementFromEvent(event, '.field-wrapper');
+}
+
+
+/**
+ * Helper: get field wrapper element from id
+ * 
+ * @param {string} id - id of the current element
+ */
+function getFieldWrapperFromId(id) {
+    return getClosestParentElementFromId(id, '.field-wrapper');
+}
+
+
+/**
+ * Helper: get FormData
+ * 
+ * @param {string} formId - id of the form
+ */
+async function getFormData(formId) {
+    let form = document.getElementById(formId);
+    let formData = new FormData(form);
+    console.log(formData);
+    return formData;
+}
+
+
+/**
+ * Helper: get formInputs as object
+ * 
+ * @param {string} formId - id of the form
+ */
+async function getFormInputObj(formId) {
+    // event ? event.preventDefault() : null;
+    console.log(formId);
+    let formData = await getFormData(formId);
+    console.log(formData);
+    let formInputObj = Object.fromEntries(formData);
+    console.log(formInputObj);
+    return formInputObj;
+}
+
+
+/**
+ * Returns an array (invalidFields) containing all form element id's with an invalid input
+ * 
+ * @param {string} formId - id of the form element
+ */
+function getInvalidInputIds(formId) {
+    invalidFields = [];
+    let formElements = getFormElementsArray(formId);
+    formElements.forEach(function(element) {
+        let isValidElement = validateElement(element);
+        if(!isValidElement) {
+            invalidFields.push(element.id);
+        }
+    });
+    // console.log(invalidFields);
+}
+
+
+/**
  * Document Event handler: close dropdowns on outslide click or ESC
  * 
  * @param {event} event - click, ESC
@@ -252,83 +329,6 @@ function setSubmitBtnState(formId) {
     let submitBtn = form.querySelector('[type="submit"]');
     submitBtn.setAttribute('disabled', '');
     invalidFields.length > 0 ? submitBtn.setAttribute('disabled', '') : submitBtn.removeAttribute('disabled');
-}
-
-
-/**
- * Returns an array (invalidFields) containing all form element id's with an invalid input
- * 
- * @param {string} formId - id of the form element
- */
-function getInvalidInputIds(formId) {
-    invalidFields = [];
-    let formElements = getFormElementsArray(formId);
-    formElements.forEach(function(element) {
-        let isValidElement = validateElement(element);
-        if(!isValidElement) {
-            invalidFields.push(element.id);
-        }
-    });
-    // console.log(invalidFields);
-}
-
-
-/**
- * Helper: get FormData
- * 
- * @param {string} formId - id of the form
- */
-async function getFormData(formId) {
-    let form = document.getElementById(formId);
-    let formData = new FormData(form);
-    console.log(formData);
-    return formData;
-}
-
-
-/**
- * Helper: get formInputs as object
- * 
- * @param {string} formId - id of the form
- */
-async function getFormInputObj(formId) {
-    // event ? event.preventDefault() : null;
-    console.log(formId);
-    let formData = await getFormData(formId);
-    console.log(formData);
-    let formInputObj = Object.fromEntries(formData);
-    console.log(formInputObj);
-    return formInputObj;
-}
-
-
-/**
- * Helper: get field wrapper element from element
- * 
- * @param {element} element - dom element
- */
-function getFieldWrapperFromElement(element) {
-    return element.closest('.field-wrapper');
-}
-
-
-/**
- * Helper: get field wrapper element from event
- * 
- * @param {event} event - current target
- */
-function getFieldWrapperFromEvent(event) {
-    return getClosestParentElementFromEvent(event, '.field-wrapper');
-}
-
-
-/**
- * Helper: get field wrapper element from id
- * 
- * @param {string} id - id of the current element
- */
-function getFieldWrapperFromId(id) {
-    return getClosestParentElementFromId(id, '.field-wrapper');
 }
 
 
