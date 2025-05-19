@@ -1,6 +1,10 @@
 let currentContact = {};
 let lastListContactId = '';
 
+
+/**
+ * on page load contacts.html
+ */
 async function initContacts() {
     getMainTemplates();
     await getContacts();
@@ -10,6 +14,9 @@ async function initContacts() {
 }
 
 
+/**
+ * Render the contact list, alphabetically, grouped by first letter of names
+ */
 async function renderContactList() {
     contactListRef = document.getElementById('contactList');
     contactListRef.innerHTML = '';
@@ -24,6 +31,13 @@ async function renderContactList() {
     }
 }
 
+
+/**
+ * Render contact group items within the contact list (subfunction of renderContactList)
+ * 
+ * @param {object} contactGroup - contactGroup object (of contactsGrouped)
+ * @param {string} groupName - name of the group (first letter of name)
+ */
 async function renderContactGroupItems(contactGroup, groupName) {
     let contactListGroupRef = document.getElementById('contactListGroup-' + groupName);
     contactListGroupRef.innerHTML = '';
@@ -34,6 +48,12 @@ async function renderContactGroupItems(contactGroup, groupName) {
     }
 }
 
+
+/**
+ * Helper: returns a alphabetically grouped (by first letter of name) and sorted object for the contact list
+ * 
+ * @param {object} contacts - the global contacts object
+ */
 async function groupContacts(contacts) {
     await sortContacts(contacts);
     let contactsGroupedObj = await Map.groupBy(contacts, contact => contact.name[0].toUpperCase());
@@ -42,6 +62,7 @@ async function groupContacts(contacts) {
     // console.log(contactsGrouped);
     return contactsGrouped;
 }
+
 
 async function showContactDetail(event, contactId) {
     event.stopPropagation();
@@ -70,6 +91,12 @@ async function showContactDetail(event, contactId) {
     document.getElementById('contactInfo').innerHTML = getContactDetailInfoTemplate(currentContact);
 }
 
+
+/**
+ * Event handler: close current contact details (screen < 1180px)
+ * 
+ * @param {string} contactId - id of the current contact
+ */
 function closeContactDetail(contactId) {
     document.getElementById('contactPageInner').classList.remove('show-contact-detail');
     document.getElementById('floatingContact').innerHTML = '';
@@ -79,6 +106,12 @@ function closeContactDetail(contactId) {
     }
 }
 
+
+/**
+ * Event handler: add new contact, add new contact button/s
+ * 
+ * @param {event} event - click
+ */
 async function openAddNewContactForm(event) {
     event.stopPropagation();
     formMode = 'add';
@@ -87,6 +120,13 @@ async function openAddNewContactForm(event) {
 
 }
 
+
+/**
+ * Event handler: edit current contact, edit contact button
+ * 
+ * @param {event} event - click
+ * @param {string} contactId - id of the current contact (currently no in use due global variable)
+ */
 async function openEditContactForm(event, contactId) {
     event.stopPropagation();
     formMode = 'edit';
@@ -94,6 +134,13 @@ async function openEditContactForm(event, contactId) {
     await openContactsForm(formMode, currentContact.id);
 }
 
+
+/**
+ * Opens the dialogue to add/edit a contact
+ * 
+ * @param {string} formMode - form mode (add, edit)
+ * @param {string} contactId - id of the current contact (empty for new contact)
+ */
 async function openContactsForm(formMode, contactId = '') {
     await resetForm('contactsForm');
     let dialogue = document.getElementById('addContactDialogue');
@@ -108,6 +155,12 @@ async function openContactsForm(formMode, contactId = '') {
     }
 }
 
+
+/**
+ * Event handler: reset contacts form, on cancel button
+ * 
+ * @param {event} event - click
+ */
 function resetContactsForm(event) {
     event.stopPropagation();
     event.preventDefault();
@@ -115,6 +168,12 @@ function resetContactsForm(event) {
     resetForm('contactsForm');
 }
 
+
+/**
+ * Event handler: close add/edit contacts form dialogue, on close button
+ * 
+ * @param {event} event - click
+ */
 async function closeContactsFormDialogue(event) {
     event.stopPropagation();
     resetForm('contactsForm');
@@ -129,6 +188,9 @@ async function closeContactsFormDialogue(event) {
 }
 
 
+/**
+ * Set specific values for add contact mode
+ */
 async function setAddContactValues() {
     document.getElementById('dialogueProfileBatch').innerHTML = '<img src="/assets/icons/profile-placeholder.svg" alt="profile-placeholder">';
     document.getElementById('dialogueTeaser').style = '';
@@ -138,6 +200,12 @@ async function setAddContactValues() {
     document.getElementById('btnReset').innerHTML = getIconTemplateCancel('Cancel');
 }
 
+
+/**
+ * Set specific values for edit contact mode
+ * 
+ * @param {string} contactId - id of the current contact
+ */
 async function setEditContactValues(contactId) {
     document.getElementById('dialogueTeaser').style = 'display: none;';
     document.getElementById('dialogueTitle').innerHTML = 'Edit Contact';
@@ -153,12 +221,24 @@ async function setEditContactValues(contactId) {
     document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Save');
 }
 
+
+/**
+ * Event handler: submit contacts form
+ * 
+ * @param {event} event - submit
+ */
 async function submitContactsForm(event) {
     event.stopPropagation();
     event.preventDefault();
     formMode == 'edit' ? await submitUpdateContact(event) : await submitCreateContact(event);
 }
 
+
+/**
+ * Submites the add contact form
+ * 
+ * @param {event} event - submit (from submitContactsForm)
+ */
 async function submitCreateContact(event) {
     event.stopPropagation();
     let formInputs = await getFormInputObj('contactsForm');
@@ -169,6 +249,12 @@ async function submitCreateContact(event) {
     setTimeout(function() {closeContactsFormDialogue(event);}, 1000);
 }
 
+
+/**
+ * Submites the edit contact form
+ * 
+ * @param {event} event - submit (from submitContactsForm)
+ */
 async function submitUpdateContact(event) {
     event.stopPropagation();
     let formInputs = await getFormInputObj('contactsForm');
@@ -178,6 +264,13 @@ async function submitUpdateContact(event) {
     setTimeout(function() {closeContactsFormDialogue(event)}, 1000);
 }
 
+
+/**
+ * Helper: sets contact properties of the created/edited contact object
+ * 
+ * @param {object} currentContact - current contact object
+ * @param {object} formInputs - current form inputs object
+ */
 async function setContactProperties(currentContact, formInputs ) {
     if(hasLength(formInputs.name)) {
         currentContact.name = formInputs.name;
@@ -190,6 +283,13 @@ async function setContactProperties(currentContact, formInputs ) {
     console.log(contacts);
 }
 
+
+/**
+ * Event handler: delete contact, on delete button
+ * 
+ * @param {event} event - click
+ * @param {string} contactId - id of the current contact
+ */
 async function submitDeleteContact(event, contactId) {
     event.stopPropagation();
     event.preventDefault();

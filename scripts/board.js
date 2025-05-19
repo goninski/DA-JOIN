@@ -13,7 +13,7 @@ let dragScrollScrollLeft;
 
 
 /**
- * On page load
+ * On page load board.html
  */
 async function initBoard() {
     getMainTemplates();
@@ -124,7 +124,7 @@ async function renderBoardTasks(renderTasks, boardId, boardTaskList) {
 
 
 /**
- * Event handler on button 'add task to current board'
+ * Event handler: add task to current board, on button
  * 
  * @param {event} event - click
  * @param {string} boardId - id of the current board

@@ -3,7 +3,7 @@ let summary = {};
 
 
 /**
- * on page load
+ * on page load summary.html
  */
 async function initSummary() {
     getMainTemplates();
@@ -89,7 +89,7 @@ async function resetSummaryObj() {
 
 
 /**
- * helper: get the user name by id
+ * helper: returns the user name by id
  * 
  * @param {string} loggedInUserId - the id of the logged in user
  */
