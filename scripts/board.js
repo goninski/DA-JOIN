@@ -7,9 +7,13 @@ let boards = [
 
 let renderTasks = [];
 let currentDragTaskId;
+let dragScrollMouseIsDown = false;
+let dragScrollStartX;
+let dragScrollScrollLeft;
+
 
 /**
- * 
+ * On page load
  */
 async function initBoard() {
     getMainTemplates();
@@ -23,6 +27,12 @@ async function initBoard() {
     // addTaskClickListeners();
 }
 
+
+/**
+ * Listen on search input and start actions based on input
+ * 
+ * @param {event} event - oninput event
+ */
 async function listenTaskSearchInput(event) {
   // console.log('f) listenTaskSearchInput');
   let taskSearchInput = document.getElementById('taskSearchInput');
@@ -40,15 +50,21 @@ async function listenTaskSearchInput(event) {
   }
 }
 
-// async function validateSearchInput(searchVal) {
-//   return (searchVal >= 2);
-// }
 
+/**
+ * set task title and description as search base
+ */
 async function setSearchBase() {
   renderTasks = tasks.forEach(task => task.searchBase = (task.title + ' ' + task.description));
   // console.log(tasks);
 }
 
+
+/**
+ * Filter board tasks based on search input
+ * 
+ * @param {event} event - oninput event
+ */
 async function filterTasks(event) {
   event.preventDefault();
   console.log('f) filterTasks');
@@ -65,6 +81,10 @@ async function filterTasks(event) {
   await renderBoards();
 }
 
+
+/**
+ * Render tasks boards
+ */
 async function renderBoards() {
   let boardsWrapper = document.getElementById('boardsWrapper');
   boardsWrapper.innerHTML = '';
@@ -77,6 +97,14 @@ async function renderBoards() {
   }
 }
 
+
+/**
+ * Render board tasks
+ * 
+ * @param {object} renderTask - task object (of renderTasks)
+ * @param {string} boardId - id of the current board
+ * @param {element} boardTaskList - html element of the task list wrapper
+ */
 async function renderBoardTasks(renderTasks, boardId, boardTaskList) {
   let boardTasks = await renderTasks.filter(task => task.status == boardId);
   if(hasLength(boardTasks)) {
@@ -95,20 +123,46 @@ async function renderBoardTasks(renderTasks, boardId, boardTaskList) {
 }
 
 
+/**
+ * Event handler on button 'add task to current board'
+ * 
+ * @param {event} event - click
+ * @param {string} boardId - id of the current board
+ */
 function addBoardTask(event, boardId) {
   openAddTaskForm(event, 'board', boardId);
 }
 
-function allowDrop(event) {
-  event.preventDefault();
-}
 
+/**
+ * Event handler: task drag start, on board task
+ * 
+ * @param {event} event - ondragstart
+ * @param {string} taskId - current task id
+ */
 function taskDrag(event, taskId) {
   currentDragTaskId = taskId;
   console.log(currentDragTaskId);
   console.log(renderTasks);
 }
 
+
+/**
+ * Event handler: allow task drop, on board tasklist
+ * 
+ * @param {event} event - ondragover
+ */
+function allowDrop(event) {
+  event.preventDefault();
+}
+
+
+/**
+ * Event handler: task drop, on board tasklist
+ * 
+ * @param {event} event - ondrop
+ * @param {string} boardId - id of the target board
+ */
 async function taskDrop(event, boardId) {
   console.log(renderTasks);
   let index = await tasks.findIndex(task => task.id == currentDragTaskId);
@@ -121,42 +175,54 @@ async function taskDrop(event, boardId) {
 }
 
 
-
-// https://codepen.io/toddwebdev/pen/yExKoj
-let isDown = false;
-let startX;
-let scrollLeft;
-
-function horizontalDragScroll(event, wrapperSelector = '.board-task-list') {
+/**
+ * Event handler: calls horizontal drag scroll for task board (screen < 1440px) 
+ * 
+ * @param {event} event - onmousedown, onmouseup, onmouseleave, onmousemove
+ */
+function horizontalBoardDragScroll(event) {
   event.stopPropagation();
-  if(window.matchMedia("(min-width: 1440px)").matches) return;
-  // console.log(event.type);
-  let scrollWrapper = getClosestParentElementFromEvent(event, wrapperSelector);
+  if(window.matchMedia("(min-width: 1440px)").matches) {
+    return;
+  }
+  return horizontalDragScroll(event, '.board-task-list');
+}
+
+
+/**
+ * Event handler: general horizontal drag scroll
+ * unstable !!  based on: https://codepen.io/toddwebdev/pen/yExKoj
+ * 
+ * @param {event} event - onmousedown, onmouseup, onmouseleave, onmousemove
+ * @param {string} wrapperSelector - css selector of the drag scroll element
+ */
+function horizontalDragScroll(event, wrapperSelector) {
+  event.stopPropagation();
+  let dragScrollWrapper = getClosestParentElementFromEvent(event, wrapperSelector);
   let type = event.type;
   switch(type) {
     case 'mousedown':
-      isDown = true;
-      scrollWrapper.classList.add('active');
-      startX = event.pageX - scrollWrapper.offsetLeft;
-      scrollLeft = scrollWrapper.scrollLeft;
+      dragScrollMouseIsDown = true;
+      dragScrollWrapper.classList.add('active');
+      dragScrollStartX = event.pageX - dragScrollWrapper.offsetLeft;
+      dragScrollScrollLeft = dragScrollWrapper.dragScrollScrollLeft;
       break;
     case 'mouseleave':
-      isDown = false;
-      scrollWrapper.classList.remove('active');
+      dragScrollMouseIsDown = false;
+      dragScrollWrapper.classList.remove('active');
       break;
     case 'mouseup':
-      isDown = false;
-      scrollWrapper.classList.remove('active');
+      dragScrollMouseIsDown = false;
+      dragScrollWrapper.classList.remove('active');
       break;
     case 'mousemove':
-      if(!isDown) return;
+      if(!dragScrollMouseIsDown) return;
       event.preventDefault();
-      const x = event.pageX - scrollWrapper.offsetLeft;
-      const walk = (x - startX) * 3; //scroll-fast
-      scrollWrapper.scrollLeft = scrollLeft - walk;
+      const x = event.pageX - dragScrollWrapper.offsetLeft;
+      const walk = (x - dragScrollStartX) * 3; //scroll-fast
+      dragScrollWrapper.dragScrollScrollLeft = dragScrollScrollLeft - walk;
       // console.log(walk);
       break;
   }
-
 }
 
