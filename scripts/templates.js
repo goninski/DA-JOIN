@@ -1,3 +1,6 @@
+/**
+ * Returns the html of the global header
+ */
 function getHeaderTemplate() {
     return `
         <div class="ct-container flex-row gap justify-between align-center flex-wrap--ss-mob">
@@ -10,6 +13,10 @@ function getHeaderTemplate() {
     `
 }
 
+
+/**
+ * Returns the html of the global sidebar (screen > 735px)
+ */
 function getSidebarTemplate() {
     return `
         <div class="sidebar-logo">
@@ -43,6 +50,10 @@ function getSidebarTemplate() {
     `
 }
 
+
+/**
+ * Returns the html of the global mobile bottom bar (screen <= 735px)
+ */
 function getSidebarMobTemplate() {
     return `
         <div class="link-wrapper temp flex-row flex-grow gap-05 justify-around align-center"> 
@@ -55,21 +66,11 @@ function getSidebarMobTemplate() {
 }
 
 
-function getTaskDetailsWrapperTemplate(task, category) {
-    return `
-    <h3 class="mb">${task.title}</h3>                        
-        <div class="edit-buttons flex-row align-center justify-end">
-            <button onclick="openEditTaskForm(event, '${task.id}')"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
-            <button onclick="submitDeleteTask(event, '${task.id}')"><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
-        </div>
-         
-    </div>
-    `
-}
-
-
-// BOARDS
-
+/**
+ * Returns the html of a single status board
+ * 
+ * @param {object} board - a board object (of boards)
+ */
 function getBoardTemplate(board) {
     let addTaskBtn = getIconTemplatePlus();
     return `
@@ -86,12 +87,25 @@ function getBoardTemplate(board) {
 `
 }
 
+
+/**
+ * Returns the html of the no-task drop zone (for boards with no tasks assigned)
+ */
 function getBoardNoTaskTemplate() {
     return `
         <div class="board-no-task">No tasks To Do</div>
 `
 }
 
+
+/**
+ * Returns the html of a single task of a status board
+ * 
+ * @param {object} task - a task object (of tasks)
+ * @param {object} category - the category object (of categories) for the current task
+ * @param {string} subtaskCount - number of subtasks and subtasks done for the current task
+ * @param {string} subtaskProressWidth - the px-width for the subtask progress bar style (done subtasks)
+ */
 async function getBoardTasksTemplate(task, category, subtaskCount, subtaskProgressWidth) {
     let hideDescription = task.description == null ? 'hide': null;
     // let hideBatches = task.contactIds == null ? 'hide': null;
@@ -116,9 +130,31 @@ async function getBoardTasksTemplate(task, category, subtaskCount, subtaskProgre
 }
 
 
+/**
+ * Returns the html of the task details (within status board dialogue)
+ * ...this template has to be completed yet !
+ * 
+ * @param {object} task - a task object (of tasks)
+ * @param {object} category - the category object (of categories) for the current task
+ */
+function getTaskDetailsWrapperTemplate(task, category) {
+    return `
+    <h3 class="mb">${task.title}</h3>                        
+        <div class="edit-buttons flex-row align-center justify-end">
+            <button onclick="openEditTaskForm(event, '${task.id}')"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
+            <button onclick="submitDeleteTask(event, '${task.id}')"><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
+        </div>
+         
+    </div>
+    `
+}
 
-// TASK FORM INNER
 
+/**
+ * Returns the html of the add and edit task forms (form inner content)
+ * 
+ * @param {object} task - a task object (of tasks) > currently not in use
+ */
 function getTaskFormFieldsTemplate(task) {
     return `
     <div class="field-group flex-col flex-grow">
@@ -204,6 +240,13 @@ function getTaskFormFieldsTemplate(task) {
     `
 }
 
+
+/**
+ * Returns the html of the multiple select datalist for the user/contact assignment in the task forms
+ * 
+ * @param {object} contact - a contact object (of contacts)
+ * @param {number} index - the listing index of the current contact
+ */
 function getContactSelectOptionTemplate(contact, index) {
     return `
     <li class="select-option" role="option" data-index="${index}" onclick="event.stopPropagation()">
@@ -220,6 +263,13 @@ function getContactSelectOptionTemplate(contact, index) {
     `
 }
 
+
+/**
+ * Returns the html of the select datalist for the category assigment in the task forms
+ * 
+ * @param {object} category - a category object (of categories)
+ * @param {number} index - the listing index of the current category
+ */
 function getCategorySelectOptionTemplate(category, index) {
     return `
     <li id="categoryOptionId-${category.id}" class="select-option" role="option" onclick="dropdownOptionClickHandler(event)" aria-selected="false" data-index="${index}" data-option-id="${category.id}">${category.name}
@@ -227,6 +277,14 @@ function getCategorySelectOptionTemplate(category, index) {
     `
 }
 
+
+/**
+ * Returns the html of the listed subtasks in the task forms
+ * 
+ * @param {object} subtask - current subtask object
+ * @param {number} index - listing index of the current subtask
+ * @param {string} taskId - current task id > currently not in use
+ */
 function getSubtasksTemplate(subtask, index, taskId) {
     return `
     <li class="input-wrapper input-wrapper-subtask read-only">
@@ -246,9 +304,9 @@ function getSubtasksTemplate(subtask, index, taskId) {
 }
 
 
-
-// CONTACTS FORM
-
+/**
+ * Returns the html of the cancel and submit button in the add contact form
+ */
 function getAddContactSubmitButtonsTemplate() {
     return `
         <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetContactsForm(event)">Cancel</button>
@@ -256,6 +314,12 @@ function getAddContactSubmitButtonsTemplate() {
     `
 }
 
+
+/**
+ * Returns the html of the delete and submit button in the edit contact form
+ * 
+ * @param {string} contactId - contact id of the contact to edit
+ */
 function getEditContactSubmitButtonsTemplate(contactId) {
     return `
         <button id="dialogueBtnDelete" class="button btn-delete btn-icon btn-secondary" onclick="submitDeleteContact(event, '${contactId}')">Delete</button>
@@ -263,6 +327,12 @@ function getEditContactSubmitButtonsTemplate(contactId) {
     `
 }
 
+
+/**
+ * Returns the html of the contact list on the contact page
+ * 
+ * @param {string} groupName - group name (first name letter) of a contact group (grouped by first name letter)
+ */
 function getContactListTemplate(groupName) {
     return `
         <h3 class="contact-letter flex-row align-center"> &ensp;${groupName}</h3>
@@ -270,6 +340,12 @@ function getContactListTemplate(groupName) {
     `
 }
 
+
+/**
+ * Returns the html of a single contact in the contact list
+ * 
+ * @param {object} contact - contact object (of contacts)
+ */
 function getContactListGroupTemplate(contact) {
     return `
         <li id="listContactId-${contact.id}" class="contact-item flex-row align-center" onclick="showContactDetail(event, '${contact.id}')">
@@ -282,6 +358,12 @@ function getContactListGroupTemplate(contact) {
     `
 }
 
+
+/**
+ * Returns the html of the contact name and profile batch (within the detail view of a selected contact via contact list)
+ * 
+ * @param {object} contact - current contact object
+ */
 function getContactDetailProfileBatchTemplate(contact) {
     return `
         <div class="profile-batch profile-batch-large" style="--profile-color: ${contact.color};">${contact.initials}</div>
@@ -295,12 +377,12 @@ function getContactDetailProfileBatchTemplate(contact) {
     `
 }
 
-function getContactProfileBatchTemplate(contact) {
-    return `
-        <li class="profile-batch" style="--profile-color: ${contact.color};">${contact.initials}</li>
-    `
-}
 
+/**
+ * Returns the html of further contact informations (within the detail view of a selected contact via contact list)
+ * 
+ * @param {object} contact - current contact object
+ */
 function getContactDetailInfoTemplate(contact) {
     let hidePhone = hasLength(contact.phone) ? '' : 'hide';
     return `
@@ -316,10 +398,32 @@ function getContactDetailInfoTemplate(contact) {
     `
 }
 
+
+/**
+ * Returns the html of a single contact profile batch (for multiple usage)
+ * 
+ * @param {object} contact - current contact object
+ */
+function getContactProfileBatchTemplate(contact) {
+    return `
+        <li class="profile-batch" style="--profile-color: ${contact.color};">${contact.initials}</li>
+    `
+}
+
+
+/**
+ * Returns the html of a floating text confirmation popup (for multiple usage)
+ * 
+ * @param {string} msg - message
+ */
 function getFloatingMessageTextTemplate(msg) {
     return `${msg}`
 }
 
+
+/**
+ * Returns the html of the floating added task confirmation popup
+ */
 function getFloatingMessageTaskAddedTemplate() {
     return `
     Task added to board
@@ -328,75 +432,12 @@ function getFloatingMessageTaskAddedTemplate() {
 }
 
 
-
-
-
-// TRASH
-
-
-function trashKeepForNow() {
-    return `
-
-    <div class="field-wrapper has-alert">
-        <label for="selectDefault" class="required">Default Select (temp)</label>
-        <select class="select">
-            <option>Option 1</option>
-            <option>Option 2</option>
-            <option>Option 3</option>
-            <option>Option 4</option>
-        </select>
-        <div class="validation-alert">This field is required</div>
-    </div>
-
-    <div class="field-wrapper has-alert">
-        <label for="temp" class="required">Temp</label>
-        <input type="text" id="inputTemp" name="temp" placeholder="Placeholder" xrequired maxlength="128" onfocus="resetInputValidation(event)" onfocusout="focusOutHandler(event)">
-        <div class="validation-alert">This field is required</div>
-    </div>
--->
-
-
-    <div class="select-btn focus" onclick="renderContactSelectOptions(event)">
-        <span class="select-text">Select contacts to assign</span>
-        <span class="input-icon-wrapper custom-select"><img src="/assets/icons/arrow-drop-down.svg" class="icon"></span>
-    </div>
-
-
-    <div class="select-btn focus" onclick="renderContactSelectOptions(event)">
-        <span class="select-text">Select contacts to assign</span>
-        <span class="input-icon-wrapper custom-select"><img src="/assets/icons/arrow-drop-down.svg" class="icon"></span>
-    </div>
-
-
-    '<ul id="assignedSubtasks" class="subtask-listing">
-        <li id="subtask-01"><span class="text">Subtask 1</span>
-            <div class="input-icon-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-delete"></button></div>
-        </li>
-        <li id="subtask-02"><span class="text">Subtask 2</span>
-            <div class="input-icon-wrapper"><button onclick="editSubtask()"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div><button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-delete"></button></div>
-        </li>
-    </ul>'
-
-    <li><span class="text">${subtask}</span>
-        <div class="input-icon-wrapper"><button onclick="editSubtask(event, ${index})"><img src="/assets/icons/edit.svg" class="icon-edit"></button><div class="divider"></div><button onclick="deleteSubtask(event, ${index})"><img src="/assets/icons/delete.svg" class="icon-delete"></button></div>
-    </li>
-
-    <div id="subtaskEdit" class="subtask-edit mt-50">Subtask XY
-        <div id="subtaskEditButtons" class="input-icon-wrapper">
-            <button onclick="deleteSubtask()"><img src="/assets/icons/delete.svg" class="icon-delete"></button>
-            <div class="divider"></div>
-            <button onclick="saveSubtaskEdits()"><img src="/assets/icons/check.svg" class="icon-check"></button>
-        </div>
-    </div>
-    `
-}
-
-
-
-
-
-// ICON TEMPLATES
-
+/**
+ * Returns the html of a svg plus icon (for multiple usage, mainly for buttons)
+  * (the color contains a css variable for flexible styling)
+* 
+ * @param {string} text - optional text before the icon
+ */
 function getIconTemplatePlus(text = "") {
     return `
         ${text}
@@ -408,6 +449,13 @@ function getIconTemplatePlus(text = "") {
     `
 }
 
+
+/**
+ * Returns the html of a svg close icon (for multiple usage, mainly for buttons)
+ * (the color contains a css variable for flexible styling)
+ * 
+ * @param {string} text - optional text before the icon
+ */
 function getIconTemplateClose(text = "") {
     return `
         ${text}
@@ -417,6 +465,13 @@ function getIconTemplateClose(text = "") {
     `
 }
 
+
+/**
+ * Returns the html of a svg cancel icon (for multiple usage, mainly for buttons)
+ * (the color contains a css variable for flexible styling)
+ * 
+ * @param {string} text - optional text before the icon
+ */
 function getIconTemplateCancel(text = "") {
     return `
         ${text}
@@ -426,6 +481,13 @@ function getIconTemplateCancel(text = "") {
     `
 }
 
+
+/**
+ * Returns the html of a svg check icon (for multiple usage, mainly for buttons)
+ * (the color contains a css variable for flexible styling)
+ * 
+ * @param {string} text - optional text before the icon
+ */
 function getIconTemplateCheck(text = "") {
     return `
         ${text}
@@ -435,6 +497,13 @@ function getIconTemplateCheck(text = "") {
     `
 }
 
+
+/**
+ * Returns the html of a svg high priority icon (for multiple usage, mainly for buttons)
+ * (the color contains a css variable for flexible styling)
+ * 
+ * @param {string} text - optional text before the icon
+ */
 function getIconTemplatePrioHigh(text = "") {
     return `
         ${text}
@@ -445,6 +514,13 @@ function getIconTemplatePrioHigh(text = "") {
     `
 }
 
+
+/**
+ * Returns the html of a svg medium priority icon (for multiple usage, mainly for buttons)
+ * (the color contains a css variable for flexible styling)
+ * 
+ * @param {string} text - optional text before the icon
+ */
 function getIconTemplatePrioMedium(text = "") {
     return `
         ${text}
@@ -455,6 +531,13 @@ function getIconTemplatePrioMedium(text = "") {
     `
 }
 
+
+/**
+ * Returns the html of a svg low priority icon (for multiple usage, mainly for buttons)
+ * (the color contains a css variable for flexible styling)
+ * 
+ * @param {string} text - optional text before the icon
+ */
 function getIconTemplatePrioLow(text = "") {
     return `
         ${text}
