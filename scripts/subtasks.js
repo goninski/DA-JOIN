@@ -1,3 +1,9 @@
+/**
+ * Render subtasks within add/edit task form >> sub of render task form
+ * 
+ * @param {array} assignedSubtasks - array 
+ * @param {*} wrapperId 
+ */
 async function renderSubtasks(assignedSubtasks, wrapperId = 'assignedSubtasks') {
     let element = document.getElementById(wrapperId);
     element.innerHTML = '';

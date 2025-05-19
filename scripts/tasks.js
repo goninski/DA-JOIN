@@ -4,6 +4,10 @@ let assignedContacts = [];
 let assignedSubtasks = [];
 let taskStatus = 'todo';
 
+
+/**
+ * On page load add-task.html
+ */
 async function initAddTask() {
     getMainTemplates();
     await getContacts();
@@ -12,15 +16,27 @@ async function initAddTask() {
     await openAddTaskForm(event, 'add-task-page');
 }
 
+
+/**
+ * Redirect to add-task page
+ */
 function openAddTaskPage() {
     window.location.href = "/add-task.html";
 }
 
-async function openAddTaskForm(event = null, source = 'board', board = 'todo') {
+
+/**
+ * Event handler: opens add task form
+ * 
+ * @param {event} event - click, optional
+ * @param {string} source - source from where the form was opened (add-task-page, board)
+ * @param {string} boardId - id of the board from which the form was opened
+ */
+async function openAddTaskForm(event = null, source = 'board', boardId = 'todo') {
     event ? event.stopPropagation() : null;
     formMode = 'add';
     currentTask = {};
-    taskStatus = source == 'board' ? board : 'todo';
+    taskStatus = source == 'board' ? boardId : 'todo';
     await showTaskDialogue('addTaskFormWrapper', source);
     await renderTaskForm('addTaskFieldGroups');
     if( source == 'add-task-page') {
@@ -31,7 +47,14 @@ async function openAddTaskForm(event = null, source = 'board', board = 'todo') {
     }
 }
 
-async function showTaskBtn(event, taskId) {
+
+/**
+ * Event handler: opens task details in dialogue, click task (board)
+ * 
+ * @param {event} event - click
+ * @param {string} taskId - id of the clicked task
+ */
+async function showTaskDetail(event, taskId) {
     event ? event.stopPropagation() : null;
     formMode = 'show';
     let index = await getTaskIndexFromId(taskId);
@@ -42,6 +65,13 @@ async function showTaskBtn(event, taskId) {
     document.getElementById('taskDialogue').classList.add('show-task');
 }
 
+
+/**
+ * Event handler: opens edit task form in dialogue, edit task button (board)
+ * 
+ * @param {event} event - click
+ * @param {string} taskId - id of the clicked task
+ */
 async function openEditTaskForm(event, taskId) {
     event.stopPropagation();
     formMode = 'edit';
@@ -55,6 +85,13 @@ async function openEditTaskForm(event, taskId) {
     // setEditTaskValues(task);
 }
 
+
+/**
+ * Helper: opens task dialogue (board)
+ * 
+ * @param {string} elementId - id of the inner dialogue wrapper
+ * @param {string} source - source from where the dialoge was opened (add-task-page, board)
+ */
 async function showTaskDialogue(elementId, source = 'board') {
     if(source == 'board') {
         document.getElementById('addTaskFieldGroups').innerHTML = '';
@@ -75,6 +112,13 @@ async function showTaskDialogue(elementId, source = 'board') {
     }
 }
 
+
+/**
+ * Render task form
+ * 
+ * @param {string} fieldsWrapperId - id of the fields wrapper element
+ * @param {object} currentTask - current task (if edit mode)
+ */
 async function renderTaskForm(fieldsWrapperId, currentTask = null) {
     // console.log(task);
     assignedContacts = [];
@@ -100,6 +144,13 @@ async function renderTaskForm(fieldsWrapperId, currentTask = null) {
     await checkEditFormState(formId);
 }
 
+
+/**
+ * Set edit task form values
+ * 
+ * @param {object} currentTask - current task (if edit mode)
+ * @param {string} formId - id of the form (currently not in use)
+ */
 async function setEditTaskValues(currentTask, formId) {
     if(formMode == 'edit') {
         document.getElementById('inputTitle').value = currentTask.title;
@@ -126,6 +177,12 @@ async function setEditTaskValues(currentTask, formId) {
     }
 }
 
+
+/**
+ * Event handler: filter contact select options on task form, on 'assigned to' input 
+ * 
+ * @param {event} event - oninput
+ */
 async function filterTaskContactOptions(event) {
     event.stopPropagation()
     let searchVal = document.getElementById('selectContacts').value;
@@ -134,6 +191,13 @@ async function filterTaskContactOptions(event) {
     await renderContactSelectOptions('taskContactsListbox', searchVal);
 }
 
+
+/**
+ * Render contact select options on task form
+ * 
+ * @param {string} listboxId - id of the listbox for render
+ * @param {string} searchVal - search value (filter)
+ */
 async function renderContactSelectOptions(listboxId = 'taskContactsListbox', searchVal = '') {
     let listbox = document.getElementById(listboxId);
     let combox = document.getElementById('selectContacts');
@@ -167,6 +231,13 @@ async function renderContactSelectOptions(listboxId = 'taskContactsListbox', sea
     }
 }
 
+
+/**
+ * Render assigned contact profile batches on task form
+ * 
+ * @param {array} contactIds - array of assigned contact id's
+ * @param {string} elementId - id of the render wrapper
+ */
 async function renderContactProfileBatches(contactIds = [], elementId = 'profileBatches') {
     let element = document.getElementById(elementId);
     element.innerHTML = '';
@@ -178,8 +249,15 @@ async function renderContactProfileBatches(contactIds = [], elementId = 'profile
     }
 }
 
+
+/**
+ * Render category select options on task form
+ * 
+ * @param {event} event - currently not in use
+ * @param {string} wrapperId - id of the render wrapper
+ */
 async function renderCategorySelectOptions(event = null, wrapperId = 'taskCategoriesSelectOptionsWrapper') {
-    if(event) {event.stopPropagation();}
+    event ? event.stopPropagation() : null;
     let optionsWrapper = document.getElementById(wrapperId);
     optionsWrapper.innerHTML = '';
     categories = await sortCategories(categories);
@@ -189,6 +267,12 @@ async function renderCategorySelectOptions(event = null, wrapperId = 'taskCatego
     }
 }
 
+
+/**
+ * Event handler: submit create task
+ * 
+ * @param {event} event - onsubmit
+ */
 async function submitCreateTask(event) {
     event.stopPropagation();
     event.preventDefault();
@@ -200,6 +284,12 @@ async function submitCreateTask(event) {
     setTimeout(function() {location.href = "/board.html";}, 1500);
 }
 
+
+/**
+ * Event handler: submit update task
+ * 
+ * @param {event} event - onsubmit
+ */
 async function submitUpdateTask(event) {
     event.stopPropagation();
     event.preventDefault();
@@ -210,6 +300,13 @@ async function submitUpdateTask(event) {
     setTimeout(function() {closeTaskDialogue(event)}, 500);
 }
 
+
+/**
+ * Helper: set task properties
+ * 
+ * @param {object} currentTask - current task object
+ * @param {object} formInputs - current form inputs object
+ */
 async function setTaskProperties(currentTask, formInputs ) {
     if(hasLength(formInputs.title)) {
         currentTask.title = formInputs.title;
@@ -225,6 +322,13 @@ async function setTaskProperties(currentTask, formInputs ) {
     }
 }
 
+
+/**
+ * Event handler: submit delete task, delete button (board)
+ * 
+ * @param {event} event - onclick
+ * @param {string} taskId - id of the current task
+ */
 async function submitDeleteTask(event, taskId) {
     event.stopPropagation();
     await deleteTask(taskId);
@@ -237,6 +341,12 @@ async function submitDeleteTask(event, taskId) {
     setTimeout(function() {closeTaskDialogue(event)}, 500);
 }
 
+
+/**
+ * Event handler: reset add task form, clear button
+ * 
+ * @param {event} event - onclick
+ */
 async function resetAddTaskForm(event) {
     event.stopPropagation();
     let formId = 'addTaskForm';
@@ -251,6 +361,12 @@ async function resetAddTaskForm(event) {
     event.preventDefault();
 }
 
+
+/**
+ * Event handler: close task dialogue, close button (board)
+ * 
+ * @param {event} event - onclick
+ */
 async function closeTaskDialogue(event) {
     event.stopPropagation();
     event.preventDefault();
