@@ -136,18 +136,65 @@ async function getBoardTasksTemplate(task, category, subtaskCount, subtaskProgre
  * 
  * @param {object} task - a task object (of tasks)
  * @param {object} category - the category object (of categories) for the current task
+ * 
  */
+const category = categories.find(c => c.id === task.categoryId);
+
 function getTaskDetailsWrapperTemplate(task, category) {
-    return `
-    <h3 class="mb">${task.title}</h3>                        
-        <div class="edit-buttons flex-row align-center justify-end">
-            <button onclick="openEditTaskForm(event, '${task.id}')"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
-            <button onclick="submitDeleteTask(event, '${task.id}')"><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
-        </div>
-         
+  const dueDate = new Date(task.dueDate).toLocaleDateString('en-GB'); 
+
+  const assignedHtml = task.assignedTo?.map(person => `
+    <div class="assigned-person flex-row align-center gap">
+      <div class="avatar" style="background-color: ${person.color};">${person.initials}</div>
+      <div class="name">${person.name}</div>
     </div>
-    `
+  `).join('') || '';
+
+  const subtasksHtml = task.subtasks?.map(st => `
+    <label class="subtask-item flex-row align-center gap">
+      <input type="checkbox" ${st.done ? 'checked' : ''} disabled />
+      ${st.title}
+    </label>
+  `).join('') || '';
+
+  return `
+    <div class="task-details-wrapper">
+      <div class="task-category" style="background-color: ${category};">${category}</div>
+      <h3 class="mb">${task.title}</h3>  
+      <p class="task-description">${task.description || 'No description available.'}</p>
+
+      <div class="task-meta">
+        <div class="task-meta-item">
+          <strong>Due Date:</strong> ${dueDate}
+        </div>
+        <div class="task-meta-item">
+          <strong>Priority:</strong> 
+          <img src="./assets/icons/prio-${task.priority}.svg" alt="${task.priority}" title="${task.priority}">
+        </div>
+      </div>
+
+      <div class="assigned-to mt">
+        <strong>Assigned To:</strong>
+        ${assignedHtml}
+      </div>
+
+      <div class="subtasks mt">
+        <strong>Subtasks</strong>
+        ${subtasksHtml}
+      </div>
+
+      <div class="edit-buttons flex-row align-center justify-end mt">
+        <button onclick="openEditTaskForm(event, '${task.id}')">
+          <img src="assets/icons/edit.svg" alt="edit-icon">Edit
+        </button>
+        <button onclick="submitDeleteTask(event, '${task.id}')">
+          <img src="assets/icons/delete.svg" alt="delete-icon">Delete
+        </button>
+      </div>
+    </div>
+  `;
 }
+
 
 
 /**
