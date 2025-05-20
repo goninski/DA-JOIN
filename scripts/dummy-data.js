@@ -11,7 +11,7 @@ let categoriesDefault = [
     },
 ];
 
-let contactsDemo = [
+let contactsDummy = [
     {
         "id": "1001",
         "name": "Roger Federer",
@@ -73,7 +73,7 @@ let contactsDemo = [
     },
 ];
 
-const tasksDemo = [
+const tasksDummy = [
   {
     "id": "10001",
     "title": "Fix login page bug",
@@ -214,88 +214,52 @@ const tasksDemo = [
   }
 ];
 
-let tasksDemoOld = [
-    {
-        "id": "10001",
-        "title": "Title Task 1...",
-        "description": "Description Task 1...",
-        "dueDate": "past-2",
-        "priority": "high",
-        "categoryId": '101',
-        "contactIds": ['1001', '1002', '1003'],
-        "subtasks": [
-            {"title": "Subtask 1.1","done": true},
-            {"title": "Subtask 1.2","done": false},
-        ],
-        "status": "todo",
-    },
-    {
-        "id": "10002",
-        "title": "Title Task 2...",
-        "description": "Description Task 2...",
-        "dueDate": "today",
-        "priority": "medium",
-        "categoryId": '102',
-        "contactIds": ['1004', '1006'],
-        "subtasks": [
-            {"title": "Subtask 2.1","done": true},
-            {"title": "Subtask 2.2","done": false},
-        ],
-        "status": "inProgress",
-    },
-    {
-        "id": "10003",
-        "title": "Title Task 3...",
-        "description": "Description Task 3...",
-        "dueDate": 'future-2',
-        "priority": "low",
-        "categoryId": '102',
-        "contactIds": ['1005', '1009'],
-        "subtasks": [
-            {"title": "Subtask 3.1","done": true},
-        ],
-        "status": "awaitFeedback",
-    },
-    {
-        "id": "10004",
-        "title": "Title Task 4...",
-        "description": "Description Task 4...",
-        "dueDate": 'future-7',
-        "priority": "low",
-        "categoryId": '102',
-        "contactIds": ['1007', '1008'],
-        // "subtasks": [
-        //     {"title": "Subtask 3.1","done": true},
-        // ],
-        "status": "done",
-    },
-];
+
+/**
+ * On page load data.html
+ */
+async function initData() {
+    getMainTemplates();
+    // await getAllData();
+    // await renderAllData();
+}
 
 
+/**
+ * Delete all data and load a the fresh set of dummy data
+ */
 async function resetData() {
-    // if(! window.confirm('All data will be reset to default demo data! OK?')) { return; }
+    // if(! window.confirm('All data will be reset to default dummy data! OK?')) { return; }
     await deleteAllData();
     categories = categoriesDefault;
-    contacts = contactsDemo;
+    contacts = contactsDummy;
     contacts.sort((a, b) => a.name.localeCompare(b.name));
-    tasks = tasksDemo;
+    tasks = tasksDummy;
     contacts.forEach(function(contact) {
         validateContactProperties(contact);
     });
     tasks.forEach(function(task) {
-        setUsefulDemoDueDates(task);
+        convertRelationalDueDatesToDateStringDB(task);
     });
     await saveAllData()
     await showFloatingMessage('text', 'Dummy Data Reset successfull !');
     setTimeout(() => {window.location.href = "/board.html";}, 1500);
 }
 
+
+/**
+ * Save all data 
+ */
 async function saveAllData() {
     await saveAllCategories();
     await saveAllContacts();
     await saveAllTasks();
 }
 
+
+/**
+ * Save all categories 
+ */
 async function saveAllCategories() {
     console.log(categories);
     categories.forEach(function(category) {
@@ -303,6 +267,10 @@ async function saveAllCategories() {
     });
 }
 
+
+/**
+ * Save all contacts
+ */
 async function saveAllContacts() {
     console.log(contacts);
     contacts.forEach(function(contact) {
@@ -310,6 +278,10 @@ async function saveAllContacts() {
     });
 }
 
+
+/**
+ * Save all Tasks
+ */
 async function saveAllTasks() {
     console.log(tasks);
     tasks.forEach(function(task) {
@@ -317,7 +289,25 @@ async function saveAllTasks() {
     });
 }
 
-function setUsefulDemoDueDates(task) {
+
+/**
+ * Delete all data from local storage
+ */
+async function deleteDataFromLS() {
+    // localStorage.clear();
+    localStorage.removeItem('categories');
+    localStorage.removeItem('contacts');
+    localStorage.removeItem('tasks');
+}
+
+
+/**
+ * Helper: convert relational dummy due dates (today, past, future etc.) to real dates (string for DB)
+ * 
+ * @param {object} task - a task object
+ * @returns {string}
+ */
+function convertRelationalDueDatesToDateStringDB(task) {
     let dateType = task.dueDate.split('-')[0];
     if(!isNaN(dateType)) {
         return;

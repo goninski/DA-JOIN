@@ -22,9 +22,9 @@ async function renderSubtasks(assignedSubtasks, wrapperId = 'assignedSubtasks') 
 
 
 /**
- * Helper: checks allowed event keys/types 
+ * Helper: validate allowed event keys/types
  * 
- * @param {event} event - sub
+ * @param {event} event - inherit
  * @returns {boolean} 
  */
 function subtaskEventAllowed(event) {
@@ -33,9 +33,9 @@ function subtaskEventAllowed(event) {
 
 
 /**
- * Helper: get current subtask input element, subtask buttons
+ * Helper: return current subtask input element
  * 
- * @param {event} event - sub
+ * @param {event} event - inherit
  */
 function getCurrentSubtaskInputFromEvent(event) {
     let wrapper = getClosestParentElementFromEvent(event, '.input-wrapper-subtask');
@@ -45,9 +45,9 @@ function getCurrentSubtaskInputFromEvent(event) {
 
 
 /**
- * Helper: get current subtask input wrapper element
+ * Helper: return current subtask input wrapper element
  * 
- * @param {element} element - current dom element
+ * @param {element} element - current element
  */
 function getCurrentSubtaskInputWrapper(element) {
     return getClosestParentElementFromElement(element, '.input-wrapper-subtask')
@@ -55,9 +55,9 @@ function getCurrentSubtaskInputWrapper(element) {
 
 
 /**
- * Helper: get current input wrapper element
+ * Helper: return current input wrapper element
  * 
- * @param {element} element - current dom element
+ * @param {element} element - current element
  */
 function getCurrentInputWrapper(element) {
     return getClosestParentElementFromElement(element, '.input-wrapper')
@@ -67,7 +67,7 @@ function getCurrentInputWrapper(element) {
 /**
  * Helper: validate subtask input
  * 
- * @param {element} input - input dom element
+ * @param {element} input - input element
  * @returns {boolean}
  */
 function validateSubtaskInput(input) {
@@ -76,9 +76,9 @@ function validateSubtaskInput(input) {
 
 
 /**
- * Event handler: set states of add new subtask buttons based on input
+ * Event handler: set states of add-new-subtask-buttons based on input
  * 
- * @param {event} event - oninput
+ * @param {event} event - oninput (input)
  */
 function onInputAddSubtask(event) {
     event.stopPropagation();
@@ -94,9 +94,9 @@ function onInputAddSubtask(event) {
 
 
 /**
- * Event handler: add new subtask, via key on input
+ * Event handler: add new subtask via ENTER key
  * 
- * @param {event} event - onkeydown
+ * @param {event} event - onkeydown (input)
  */
 function addSubtaskInputEventHandler(event) {
     event.stopPropagation();
@@ -109,9 +109,9 @@ function addSubtaskInputEventHandler(event) {
 
 
 /**
- * Event handler: add new subtask, via button
+ * Event handler: add new subtask via button
  * 
- * @param {event} event - onclick
+ * @param {event} event - onclick (check icon button)
  */
 function addSubtaskEventHandler(event) {
     event.stopPropagation();
@@ -129,7 +129,7 @@ function addSubtaskEventHandler(event) {
  * ??? is this button for decoration only?  
  * ??? why is the event not prevented
  * 
- * @param {event} event - onclick
+ * @param {event} event - onclick (plus icon button)
  */
 function addSubtaskEventHandlerPseudo(event) {
     event.preventDefault();
@@ -158,9 +158,9 @@ async function addSubtask(element) {
 
 
 /**
- * Event handler: clear subtask input, clear button
+ * Event handler: clear subtask input
  * 
- * @param {event} event - onclick
+ * @param {event} event - onclick (x icon button)
  */
 function clearSubtaskEventHandler(event) {
     event.stopPropagation();
@@ -187,9 +187,9 @@ function clearSubtaskInput(element) {
 
 
 /**
- * Event handler: set states of subtask input based on input
+ * Event handler: set states of subtask input, based on input
  * 
- * @param {event} event - oninput
+ * @param {event} event - oninput (input)
  */
 function onInputUpdateSubtask(event) {
     event.stopPropagation();
@@ -230,10 +230,10 @@ function editSubtaskEventHandler(event) {
 
 
 /**
- * Event handler: set subtask input to edit mode
+ * Event handler: update subtask input
  * 
  * @param {event} event - oninput (input), onclick (save button)
- * @param {number} index - current subtask index of the list
+ * @param {number} index - current index of the subtask list
  */
 function updateSubtaskEventHandler(event, index) {
     event.stopPropagation();
@@ -271,7 +271,7 @@ function deleteSubtaskEventHandler(event, index) {
 /**
  * Delete Subtask
  * 
- * @param {number} index - current subtask index of the list
+ * @param {number} index - current index of the subtask list
  */
 function deleteSubtask(index) {
     assignedSubtasks.splice(index, 1);
@@ -283,7 +283,7 @@ function deleteSubtask(index) {
 /**
  * Change task status - currently not in use (???)
  * 
- * @param {event} event - optional, currently not in use
+ * @param {event} event - inherit, currently not in use
  * @param {string} taskId - id of the selected task
  * @param {string} statusNew - id of the new status (target board)
  * @param {string} statusOld - id of old status (source board), optional, currently not in use
@@ -299,7 +299,7 @@ async function changeTaskStatus(event = null, taskId, statusNew, statusOld = nul
 /**
  * Event handler: toggle subtask status (done true/false)
  * 
- * @param {event} event - click (not implemented yet)
+ * @param {event} event - onclick (subtask checkbox on task detail view of board dialog, not implemented yet)
  * @param {string} taskId - id of the current task
  * @param {number} subtaskIndex - index of the selected subtask in the list
  */
@@ -312,7 +312,7 @@ async function toggleSubtaskStatus(event = null, taskId, subtaskIndex) {
 
 
 /**
- * Helper: returns some subtask progress information for the task view
+ * Helper: return some subtask progress information for the task view
  * 
  * @param {object} task - a task object
  * @param {string} type - return type (count, progress)
