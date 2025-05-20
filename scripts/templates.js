@@ -160,7 +160,7 @@ function getTaskDetailsWrapperTemplate(task, category) {
   return `
     <div class="task-details-wrapper">
       <div class="task-category" style="background-color: ${category};">${category}</div>
-      <h3 class="mb">${task.title}</h3>  
+      <h1 class="page-title ">${task.title}</h1>  
       <p class="task-description">${task.description || 'No description available.'}</p>
 
       <div class="task-meta">
@@ -194,7 +194,6 @@ function getTaskDetailsWrapperTemplate(task, category) {
     </div>
   `;
 }
-
 
 
 /**
