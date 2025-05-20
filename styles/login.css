@@ -282,25 +282,25 @@ input::placeholder {
 }
 
   .pwd-pic{
-    background-image: url('./assets/img/lock.png');
+    background-image: url('../assets/img/lock.png');
   }
 
   .eye-pic{
-    background-image: url('./assets/img/eye.png');
+    background-image: url('../assets/img/eye.png');
     cursor: pointer;
   }
 
   .eye-text-pic{
-    background-image: url('./assets/img/eye-text.png');
+    background-image: url('../assets/img/eye-text.png');
     cursor: pointer;
   }
   
   .mail-pic{
-    background-image: url('./assets/img/mail.png');
+    background-image: url('../assets/img/mail.png');
   }
 
   .person-pic{
-    background-image: url('./assets/img/person.png');
+    background-image: url('../assets/img/person.png');
   }
 
   @media (max-width: 427px) {
