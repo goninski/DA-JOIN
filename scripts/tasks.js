@@ -26,9 +26,9 @@ function openAddTaskPage() {
 
 
 /**
- * Event handler: opens add task form
+ * Event handler: open add task form
  * 
- * @param {event} event - onclick/sub
+ * @param {event} event - onclick (button) / inherit
  * @param {string} source - source from where the form was opened (add-task-page, board)
  * @param {string} boardId - id of the board from which the form was opened
  */
@@ -49,9 +49,9 @@ async function openAddTaskForm(event = null, source = 'board', boardId = 'todo')
 
 
 /**
- * Event handler: opens task details in dialogue, click task (board)
+ * Event handler: open task details in dialogue
  * 
- * @param {event} event - onclick
+ * @param {event} event - onclick (board task)
  * @param {string} taskId - id of the clicked task
  */
 async function showTaskDetail(event, taskId) {
@@ -68,9 +68,9 @@ async function showTaskDetail(event, taskId) {
 
 
 /**
- * Event handler: opens edit task form in dialogue, edit task button (board)
+ * Event handler: open edit task form in dialogue
  * 
- * @param {event} event - onclick
+ * @param {event} event - onclick (button)
  * @param {string} taskId - id of the clicked task
  */
 async function openEditTaskForm(event, taskId) {
@@ -88,7 +88,7 @@ async function openEditTaskForm(event, taskId) {
 
 
 /**
- * Helper: opens task dialogue (board)
+ * Helper: open task dialogue (board)
  * 
  * @param {string} elementId - id of the inner dialogue wrapper
  * @param {string} source - source from where the dialoge was opened (add-task-page, board)
@@ -180,9 +180,9 @@ async function setEditTaskValues(currentTask, formId) {
 
 
 /**
- * Event handler: filter contact select options on task form, on 'assigned to' input 
+ * Event handler: filter contact select options on task form
  * 
- * @param {event} event - oninput
+ * @param {event} event - oninput (input)
  */
 async function filterTaskContactOptions(event) {
     event.stopPropagation()
@@ -272,7 +272,7 @@ async function renderCategorySelectOptions(event = null, wrapperId = 'taskCatego
 /**
  * Event handler: submit create task
  * 
- * @param {event} event - onsubmit form
+ * @param {event} event - onsubmit (form)
  */
 async function submitCreateTask(event) {
     event.stopPropagation();
@@ -289,7 +289,7 @@ async function submitCreateTask(event) {
 /**
  * Event handler: submit update task
  * 
- * @param {event} event - onsubmit form
+ * @param {event} event - onsubmit (form)
  */
 async function submitUpdateTask(event) {
     event.stopPropagation();
@@ -325,9 +325,9 @@ async function setTaskProperties(currentTask, formInputs ) {
 
 
 /**
- * Event handler: submit delete task, delete button (board)
+ * Event handler: submit delete task
  * 
- * @param {event} event - onclick
+ * @param {event} event - onclick (button)
  * @param {string} taskId - id of the current task
  */
 async function submitDeleteTask(event, taskId) {
@@ -344,9 +344,9 @@ async function submitDeleteTask(event, taskId) {
 
 
 /**
- * Event handler: reset add task form, clear button
+ * Event handler: reset add task form
  * 
- * @param {event} event - onclick
+ * @param {event} event - onclick (button)
  */
 async function resetAddTaskForm(event) {
     event.stopPropagation();
@@ -364,9 +364,9 @@ async function resetAddTaskForm(event) {
 
 
 /**
- * Event handler: close task dialogue, close button (board)
+ * Event handler: close task dialogue
  * 
- * @param {event} event - onclick
+ * @param {event} event - onclick (button)
  */
 async function closeTaskDialogue(event) {
     event.stopPropagation();

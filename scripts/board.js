@@ -29,9 +29,9 @@ async function initBoard() {
 
 
 /**
- * Listen on search input and start actions based on input
+ * Event handler: listen to search input and start actions
  * 
- * @param {event} event - oninput event
+ * @param {event} event - oninput (search input)
  */
 async function listenTaskSearchInput(event) {
   // console.log('f) listenTaskSearchInput');
@@ -52,18 +52,9 @@ async function listenTaskSearchInput(event) {
 
 
 /**
- * set task title and description as search base
- */
-async function setSearchBase() {
-  renderTasks = tasks.forEach(task => task.searchBase = (task.title + ' ' + task.description));
-  // console.log(tasks);
-}
-
-
-/**
  * Filter board tasks based on search input
  * 
- * @param {event} event - oninput event
+ * @param {event} event - inherit
  */
 async function filterTasks(event) {
   event.preventDefault();
@@ -83,7 +74,16 @@ async function filterTasks(event) {
 
 
 /**
- * Render tasks boards
+ * Helper: set task title and description as search base
+ */
+async function setSearchBase() {
+  renderTasks = tasks.forEach(task => task.searchBase = (task.title + ' ' + task.description));
+  // console.log(tasks);
+}
+
+
+/**
+ * Render task boards
  */
 async function renderBoards() {
   let boardsWrapper = document.getElementById('boardsWrapper');
@@ -124,9 +124,9 @@ async function renderBoardTasks(renderTasks, boardId, boardTaskList) {
 
 
 /**
- * Event handler: add task to current board, on button
+ * Event handler: add task to current board
  * 
- * @param {event} event - click
+ * @param {event} event - onclick (button)
  * @param {string} boardId - id of the current board
  */
 function addBoardTask(event, boardId) {
@@ -135,9 +135,9 @@ function addBoardTask(event, boardId) {
 
 
 /**
- * Event handler: task drag start, on board task
+ * Event handler: task drag start
  * 
- * @param {event} event - ondragstart
+ * @param {event} event - ondragstart (board task)
  * @param {string} taskId - current task id
  */
 function taskDrag(event, taskId) {
@@ -148,9 +148,9 @@ function taskDrag(event, taskId) {
 
 
 /**
- * Event handler: allow task drop, on board tasklist
+ * Event handler: allow task drop
  * 
- * @param {event} event - ondragover
+ * @param {event} event - ondragover (board tasklist)
  */
 function allowDrop(event) {
   event.preventDefault();
@@ -158,9 +158,9 @@ function allowDrop(event) {
 
 
 /**
- * Event handler: task drop, on board tasklist
+ * Event handler: task drop
  * 
- * @param {event} event - ondrop
+ * @param {event} event - ondrop (board tasklist)
  * @param {string} boardId - id of the target board
  */
 async function taskDrop(event, boardId) {
@@ -176,9 +176,9 @@ async function taskDrop(event, boardId) {
 
 
 /**
- * Event handler: calls horizontal drag scroll for task board (screen < 1440px) 
+ * Event handler: activate horizontal drag scroll on screen < 1440px
  * 
- * @param {event} event - onmousedown, onmouseup, onmouseleave, onmousemove
+ * @param {event} event - onmousedown, onmouseup, onmouseleave, onmousemove (all on board tasklist)
  */
 function horizontalBoardDragScroll(event) {
   event.stopPropagation();
@@ -191,9 +191,9 @@ function horizontalBoardDragScroll(event) {
 
 /**
  * Event handler: general horizontal drag scroll
- * unstable !!  based on: https://codepen.io/toddwebdev/pen/yExKoj
+ * ??? unstable !!  based on: https://codepen.io/toddwebdev/pen/yExKoj
  * 
- * @param {event} event - onmousedown, onmouseup, onmouseleave, onmousemove
+ * @param {event} event - inherit
  * @param {string} wrapperSelector - css selector of the drag scroll element
  */
 function horizontalDragScroll(event, wrapperSelector) {

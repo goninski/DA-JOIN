@@ -7,7 +7,7 @@ document.addEventListener('keydown', documentEventHandler);
 
 
 /**
- * Helper: sets and returns an object with all relevant elements within a field wrapper
+ * Helper: set and return an object with all relevant elements within a field wrapper
  * (e.g. wrapper, input, alert, combox, listbox)
  * 
  * @param {element} element - a dom element within a field wrapper
@@ -41,7 +41,7 @@ function getCurrentFieldElements(element) {
 
 
 /**
- * Helper: get field wrapper element from element
+ * Helper: return field wrapper element from element
  * 
  * @param {element} element - dom element
  */
@@ -51,9 +51,9 @@ function getFieldWrapperFromElement(element) {
 
 
 /**
- * Helper: get field wrapper element from event
+ * Helper: return field wrapper element from event
  * 
- * @param {event} event - current target
+ * @param {event} event - inherit
  */
 function getFieldWrapperFromEvent(event) {
     return getClosestParentElementFromEvent(event, '.field-wrapper');
@@ -61,7 +61,7 @@ function getFieldWrapperFromEvent(event) {
 
 
 /**
- * Helper: get field wrapper element from id
+ * Helper: return field wrapper element from id
  * 
  * @param {string} id - id of the current element
  */
@@ -71,7 +71,7 @@ function getFieldWrapperFromId(id) {
 
 
 /**
- * Helper: get FormData
+ * Helper: return FormData
  * 
  * @param {string} formId - id of the form
  */
@@ -84,7 +84,7 @@ async function getFormData(formId) {
 
 
 /**
- * Helper: get formInputs as object
+ * Helper: return formInputs as object
  * 
  * @param {string} formId - id of the form
  */
@@ -100,7 +100,7 @@ async function getFormInputObj(formId) {
 
 
 /**
- * Returns an array (invalidFields) containing all form element id's with an invalid input
+ * Return an array (invalidFields) containing all form element id's with an invalid input
  * 
  * @param {string} formId - id of the form element
  */
@@ -120,7 +120,7 @@ function getInvalidInputIds(formId) {
 /**
  * Document Event handler: close dropdowns on outslide click or ESC
  * 
- * @param {event} event - click, ESC
+ * @param {event} event - click, ESC (document)
  */
 function documentEventHandler(event) {
     console.log('f) documentEventHandler');
@@ -137,7 +137,7 @@ function documentEventHandler(event) {
 /**
  * Event handler: procedure on element focus
  * 
- * @param {event} event - onfocus
+ * @param {event} event - onfocus (inputs)
  */
 function focusInHandler(event) {
     event.stopPropagation();
@@ -152,7 +152,7 @@ function focusInHandler(event) {
 /**
  * Event handler: procedure on element focus out
  * 
- * @param {event} event - onfocusout
+ * @param {event} event - onfocusout (inputs)
  */
 function focusOutHandler(event) {
     event.stopPropagation();
@@ -167,7 +167,7 @@ function focusOutHandler(event) {
 
 
 /**
- * Helper: returns an array with all form elements (inputs, selects, buttons)
+ * Helper: return an array with all form elements (inputs, selects, buttons)
  * 
  * @param {string} formId - id of the form element
  */
@@ -196,9 +196,9 @@ async function checkEditFormState(formId) {
 
 
 /**
- * Calls input validations for an input element
+ * Set input validations for an input element
  * 
- * @param {element} element - dom element
+ * @param {element} element - input element
  */
 function validateInput(element) {
     // console.log('f) validateInput');
@@ -209,9 +209,9 @@ function validateInput(element) {
 
 
 /**
- * Sets validity styles of an input element
+ * Set validity styles of an input element
  * 
- * @param {element} element - dom element
+ * @param {element} element - input element
  */
 function setFieldValidity(element) {
     let isValidElement = validateElement(element);
@@ -224,9 +224,9 @@ function setFieldValidity(element) {
 
 
 /**
- * Validates an input element
+ * Validate input element
  * 
- * @param {element} element - dom element
+ * @param {element} element - input element
  * @returns {boolean}
  */
 function validateElement(element) {
@@ -243,9 +243,9 @@ function validateElement(element) {
 
 
 /**
- * Validates custom validations of an input element, can be enhanced
+ * Validate custom validations of an input element, can be enhanced
  * 
- * @param {element} element - dom element
+ * @param {element} element - input element
  * @returns {boolean}
  */
 function checkCustomValidation(element) {
@@ -264,9 +264,9 @@ function checkCustomValidation(element) {
 
 
 /**
- * Validates and format a phone input
+ * Validate and format phone input
  * 
- * @param {element} element - dom element
+ * @param {element} element - input element
  */
 function validatePhoneInput(element) {
     // let element = document.getElementById(id);
@@ -284,9 +284,9 @@ function validatePhoneInput(element) {
 
 
 /**
- * Sets placeholder style for inputs without placeholder functionality if needed (e.g date)
+ * Set placeholder style for input without placeholder functionality if needed (e.g date)
  * 
- * @param {element} element - dom element
+ * @param {element} element - input element
  */
 function setPlaceholderStyle(element) {
     if(element.hasAttribute('data-placeholder-style')) {
@@ -296,9 +296,9 @@ function setPlaceholderStyle(element) {
 
 
 /**
- * Remove placeholder style for inputs without placeholder functionality if needed (e.g date)
+ * Remove placeholder style for input without placeholder functionality if needed (e.g date)
  * 
- * @param {element} element - dom element
+ * @param {element} element - input element
  */
 function removePlaceholderStyle(event) {
     // event.stopPropagation();
@@ -310,7 +310,7 @@ function removePlaceholderStyle(event) {
 /**
  * Reset validation style of the current element
  * 
- * @param {event} event - current target
+ * @param {event} event - inherit
  */
 function resetInputValidation(event) {
     let fieldWrapper = getFieldWrapperFromEvent(event);
@@ -384,7 +384,7 @@ function resetFormElements(element) {
 /**
  * Event handler: dropdown (custom select)
  * 
- * @param {event} event - onclick, onkeydown (single select only)
+ * @param {event} event - onclick (combox), onkeydown (combox single select)
  */
 function dropdownEventHandler(event) {
     event.stopPropagation();
@@ -416,9 +416,9 @@ function dropdownEventHandler(event) {
 
 
 /**
- * Event handler: dropdown single option (custom single select, e.g. category)
+ * Event handler: dropdown single option (custom select single)
  * 
- * @param {event} event - onclick
+ * @param {event} event - onclick (select option)
  */
 function dropdownOptionClickHandler(event) {
     event.stopPropagation();
@@ -441,7 +441,7 @@ function dropdownOptionClickHandler(event) {
 
 
 /**
- * Event handler: dropdown multiple option (custom multiple select for assigned contacts)
+ * Event handler: dropdown multiple option (custom multiple select (for assigned contacts))
  * 
  * @param {event} event - onchange (on checkbox input)
  * @param {string} contactId - contact id of the selected contact option
@@ -467,7 +467,7 @@ async function dropdownOptionClickHandlerMultiple(event, contactId) {
 
 
 /**
- * Set dropdown option (custom single select)
+ * Set dropdown options (custom single select)
  * 
  * @param {element} combox - combox dom element
  * @param {element} option - option dom element
@@ -483,9 +483,9 @@ function setDropdownOption(combox, option, activeOption = null) {
 
 
 /**
- * Helper: returns an array with all option elements of a listbox (custom select)
+ * Helper: return an array with all option elements of a listbox (custom select)
  * 
- * @param {element} listbox - a listbox dom element
+ * @param {element} listbox - listbox element
  * @param {boolean} multiple - is multiple select (currently not in use)
  */
 function getCurrentSelectOptions(listbox, multiple = false) {
@@ -500,9 +500,9 @@ function getCurrentSelectOptions(listbox, multiple = false) {
 
 
 /**
- * Helper: returns an array with all option values of a listbox (custom select)
+ * Helper: return an array with all option values of a listbox (custom select)
  * 
- * @param {element} listbox - a listbox dom element
+ * @param {element} listbox - listbox element
  * @param {boolean} multiple - is multiple select (currently not in use)
  */
 function getCurrentSelectOptionValues(listbox, multiple = false) {
@@ -520,9 +520,9 @@ function getCurrentSelectOptionValues(listbox, multiple = false) {
 
 
 /**
- * Toggle dropdown (custom select) of a specific element
+ * Toggle dropdown (custom select) of current element
  * 
- * @param {element} element - dom element
+ * @param {element} element - current element
  */
 function toggleDropdown(element) {                      
     getCurrentFieldElements(element);
@@ -537,9 +537,9 @@ function toggleDropdown(element) {
 
 
 /**
- * Helper: opens a dropdown (custom select)
+ * Helper: open dropdown (custom select)
  * 
- * @param {element} listbox - a listbox dom element
+ * @param {element} listbox - current listbox element
  */
 function openDropdown(listbox) {
     let fieldWrapper = getFieldWrapperFromElement(listbox);
@@ -551,9 +551,9 @@ function openDropdown(listbox) {
 
 
 /**
- * Helper: closes a dropdown (custom select)
+ * Helper: close a dropdown (custom select)
  * 
- * @param {element} listbox - a listbox dom element
+ * @param {element} listbox - current listbox element
  */
 function closeDropdown(listbox) {
     let fieldWrapper = getFieldWrapperFromElement(listbox);
@@ -565,7 +565,7 @@ function closeDropdown(listbox) {
 
 
 /**
- * Helper: closes all dropdowns (custom select) except the current
+ * Helper: close all dropdowns (custom select) except the current (???)
  * 
  * @param {element} listboxElements - array of all listbox elements
  * @param {element} currentListbox - the current listbox, optional
@@ -578,9 +578,9 @@ function closeAllDropdowns(listboxElements, currentListbox = null) {
 
 
 /**
- * Focus dropdown (custom select) of a specific element 
+ * Focus dropdown (custom select) from current element
  * 
- * @param {element} element - dom element
+ * @param {element} element - current element
  */
 function focusCurrentCombox(element) {
     getCurrentFieldElements(element);
@@ -588,15 +588,10 @@ function focusCurrentCombox(element) {
 }
 
 
-
-
-
-
-
 /**
- * Event handler: arrow down/up navigation of custom single select >> sub of dropdownEventHandler
+ * Helper: arrow down/up navigation of custom single select
  * 
- * @param {event} event - onkeydown (ArrowDown/Up)
+ * @param {event} event - inherit (from dropdownEventHandler)
  * @param {boolean} loop - loop the index
  */
 function dropdownOptionKeyHandler(event, loop = false) {
@@ -610,9 +605,9 @@ function dropdownOptionKeyHandler(event, loop = false) {
 
 
 /**
- * Helper: get selected dropdown index >> sub of dropdownOptionKeyHandler 
+ * Helper: return selected dropdown index
  * 
- * @param {event} event - onkeydown ArrowDown/Up
+ * @param {event} event - inherit
  * @param {number} index - current option index
  * @param {number} length - total number of options
  * @param {boolean} loop - loop the index
@@ -628,7 +623,7 @@ function getSelectedDropdownIndex(event, index, length, loop = false) {
 }
 
 /**
- * Helper: get next dropdown index >> sub of getSelectedDropdownIndex
+ * Helper: return next dropdown index
  */
 function getNextIndex(index, length, loop = false) {
     if(index < length - 1 ) {
@@ -641,7 +636,7 @@ function getNextIndex(index, length, loop = false) {
 
 
 /**
- * Helper: get previous dropdown index >> sub of getSelectedDropdownIndex
+ * Helper: return previous dropdown index
  */
 function getPreviousIndex(index, length, loop = false) {
     if(index <= 0) {

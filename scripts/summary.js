@@ -3,7 +3,7 @@ let summary = {};
 
 
 /**
- * on page load summary.html
+ * On page load summary.html
  */
 async function initSummary() {
     getMainTemplates();
@@ -15,7 +15,7 @@ async function initSummary() {
 
 
 /**
- * set the summary object- this object serves all dynamic data for the summary page
+ * Set the summary object- this object serves all dynamic data for the summary page
  */
 async function setSummaryObj() {
   resetSummaryObj();
@@ -28,7 +28,7 @@ async function setSummaryObj() {
 
 
 /**
- * set upcoming task values on summary object
+ * Set upcoming task values on summary object
  */
 async function setUpcomings() {
   let futureTasks = tasks.filter(task => task.dueDate >= currentFormattedDate);
@@ -45,7 +45,7 @@ async function setUpcomings() {
 
 
 /**
- * set various task counts on summary object
+ * Set various task counts on summary object
  */
 async function setTaskCounts() {
   summary.taskCountInBoard = hasLength(tasks) ? tasks.length : 0;
@@ -60,7 +60,7 @@ async function setTaskCounts() {
 
 
 /**
- * set welcome message on summary object
+ * Set welcome message on summary object
  * 
  * @param {string} loggedInUserId - the id of the logged in user
  */
@@ -72,7 +72,7 @@ function setWelcomeMsg() {
 
 
 /**
- * reset the summary object
+ * Reset the summary object
  */
 async function resetSummaryObj() {
   summary = {};
@@ -89,7 +89,7 @@ async function resetSummaryObj() {
 
 
 /**
- * helper: returns the user name by id
+ * Helper: return user name by id
  * 
  * @param {string} loggedInUserId - the id of the logged in user
  */

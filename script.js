@@ -149,7 +149,7 @@ function getClosestParentElementFromElement(element, selector = '') {
 /**
  * Helper: returns closest specific parent element from event
  * 
- * @param {event} event - current event
+ * @param {event} event - inherit
  * @param {string} selector - css selector of the specific parent element
  */
 function getClosestParentElementFromEvent(event, selector = '') {

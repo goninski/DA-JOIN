@@ -9,7 +9,7 @@ let authUserId = null;
 
 
 /**
- * Shorthand to get all data
+ * Get all data from db/ls (create object arrays of contacts, tasks, categories)
  */
 async function getAllData() {
     await getContacts();
@@ -19,7 +19,7 @@ async function getAllData() {
 
 
 /**
- * Get users (wrapper for getContacts, user/contacts are combined)
+ * Get users from db/ls (create object arrays of contacts (user/contacts are combined))
  */
 async function getUserData() {
     await getContacts();
@@ -27,7 +27,7 @@ async function getUserData() {
 
 
 /**
- * Shorthand to get task data including categories
+ * Get task data from db/ls (create object arrays of tasks, categories)
  */
 async function getTaskData() {
     await getTasks();
@@ -36,7 +36,7 @@ async function getTaskData() {
 
 
 /**
- * Get contacts from db/ls (and assign it to the 'contacts' object array)
+ * Get contacts from db/ls (and create 'contacts' object array)
  */
 async function getContacts() {
     contacts = localStorageMode ? await getFromLocalStorage('contacts') : await fetchDataFromFirebase('users/');
@@ -45,7 +45,7 @@ async function getContacts() {
 
 
 /**
- * Get Tasks from db/ls (and assign it to the 'tasks' object array)
+ * Get Tasks from db/ls (and create 'tasks' object array)
  */
 async function getTasks() {
     tasks = localStorageMode ? await getFromLocalStorage('tasks') : await fetchDataFromFirebase('tasks/');
@@ -53,7 +53,7 @@ async function getTasks() {
 
 
 /**
- * Get categories from db/ls (and assign it to the 'categories' object array)
+ * Get categories from db/ls (and create 'categories' object array)
  */
 async function getCategories() {
     categories = localStorageMode ? await getFromLocalStorage('categories') : await fetchDataFromFirebase('categories/');
@@ -61,7 +61,7 @@ async function getCategories() {
 
 
 /**
- * Create a new contact (validate contact object, add to contacts object array and save to db/ls)
+ * Create a new contact on db/ls (incl. validate contact object and add to contacts object array)
  * 
  * @param {object} contact - a contact object
  */
@@ -73,7 +73,7 @@ async function createContact(contact) {
 
 
 /**
- * Create a new task (validate task object, add to tasks object array and save to db/ls)
+ * Create a new task on db/ls (incl. validate task object and add to tasks object array)
  * 
  * @param {object} task - a task object
  */
@@ -88,7 +88,7 @@ async function createTask(task) {
 
 
 /**
- * Update existing contact (validate contact object and update db/ls)
+ * Update existing contact on db/ls (incl. validate contact object)
  * 
  * @param {object} contact - a contact object
  */
@@ -100,7 +100,7 @@ async function updateContact(contact) {
 
 
 /**
- * Update existing task (validate task object and update db/ls)
+ * Update existing task on db/ls (incl. validate task object)
  * 
  * @param {object} task - a task object
  */
