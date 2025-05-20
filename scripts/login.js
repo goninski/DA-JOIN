@@ -11,12 +11,32 @@ window.onload = () => {
     }, 100);
 };
 
-async function checkLogin(event) {
-    await getUserData(); // creates a 'contacts' object, use the function 'updateContact(contact)' to update a user if needed
-    console.log(contacts);
-    loggedInUserId = '1005'; //change to correct id
-    signIn();
+function handleLogin() {
+  const emailInputLogin = document.getElementById("email-login").value.trim();
+  const passwordInputLogin = document.getElementById("pwd-login").value.trim();
+  checkLogin(emailInputLogin, passwordInputLogin);
 }
+
+function checkLogin(emailInputLogin, passwordInputLogin) {
+  const users = JSON.parse(localStorage.getItem("users")) || [];
+  const user = users.find(user => user.email === emailInputLogin && user.password === passwordInputLogin);
+
+  if (user) {
+    alert("Login erfolgreich!");
+    signIn();
+    // window.location.href = "summary.html";
+  } else {
+    alert("E-Mail oder Passwort falsch.");
+  }
+}
+
+// async function checkLogin(event) {
+//     await getUserData(); // creates a 'contacts' object, use the function 'updateContact(contact)' to update a user if needed
+//     console.log(contacts);
+//     loggedInUserId = '1005'; //change to correct id
+//     signIn();
+// }
+
   
 async function guestLogin(event) {
     loggedInUserId = 'guest';
