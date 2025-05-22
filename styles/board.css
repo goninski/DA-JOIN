@@ -220,6 +220,11 @@
   height: auto;
 }
 
+.task-due-date {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
 
 
 /* BREAKPOINTS */

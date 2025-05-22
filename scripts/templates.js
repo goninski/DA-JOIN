@@ -160,11 +160,11 @@ function getTaskDetailsWrapperTemplate(task, category) {
   return `
     <div class="task-details-wrapper">
       <div class="task-category" style="background-color: ${category};">${category}</div>
-      <h1 class="page-title ">${task.title}</h1>  
+      <h1 class="page-title">${task.title}</h1>  
       <p class="task-description">${task.description || 'No description available.'}</p>
 
       <div class="task-meta">
-        <div class="task-meta-item">
+        <div class="task-due-date">
           <strong>Due Date:</strong> ${dueDate}
         </div>
         <div class="task-meta-item">
@@ -179,7 +179,7 @@ function getTaskDetailsWrapperTemplate(task, category) {
       </div>
 
       <div class="subtasks mt">
-        <strong>Subtasks</strong>
+        Subtasks
         ${subtasksHtml}
       </div>
 
