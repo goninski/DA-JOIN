@@ -3,7 +3,7 @@ const emailField = document.getElementById('email');
 const passwordField = document.getElementById('pwd');
 const confirmPwdField = document.getElementById('confirm_pwd');
 
-function addUser(event) {
+async function addUser(event) {
   event.preventDefault();
 
   const nameInput = nameField.value.trim();
@@ -19,9 +19,9 @@ function addUser(event) {
 
   if (!checkPasswords(passwordInput, passwordRepeatInput)) return;
 
-  if (emailAlreadyExists(emailInput)) return;
+  if (await emailAlreadyExists(emailInput)) return;
 
-  const users = JSON.parse(localStorage.getItem("users")) || [];
+  const users = await getFromLocalStorage("users") || [];
 
   const newUser = {
     name: nameInput,
@@ -30,7 +30,7 @@ function addUser(event) {
   };
 
   users.push(newUser);
-  localStorage.setItem("users", JSON.stringify(users));
+  await saveToLocalStorage("users", users);
 
   showSignUpSuccessOverlay();
 }
@@ -38,7 +38,7 @@ function addUser(event) {
 function checkValidity() {
   const form = document.getElementById("signup-form");
   if (!form.checkValidity()) {
-    form.reportValidity(); 
+    form.reportValidity();
     return false;
   }
   return true;
@@ -61,8 +61,8 @@ function checkPasswords(password, passwordRepeat) {
   return true;
 }
 
-function emailAlreadyExists(emailInput) {
-  const users = JSON.parse(localStorage.getItem("users")) || [];
+async function emailAlreadyExists(emailInput) {
+  const users = await getFromLocalStorage("users") || [];
   if (users.find(user => user.email === emailInput)) {
     alert("Diese E-Mail ist bereits registriert.");
     document.getElementById('email-div-sign-up').classList.add('input-error');
@@ -91,18 +91,6 @@ function showSignUpSuccessOverlay() {
     overlaySignUp.classList.add('flex');
 
     setTimeout(() => {
-      window.location.href = "login.html"; 
-    }, 1000); 
-  }, 800); 
-}
-
-function showSignUpSuccessOverlay() {
-  const overlaySignUp = document.querySelector('.overlay-sign-up-successfully-background');
-  setTimeout(() => {
-    overlaySignUp.classList.remove('hide');
-    overlaySignUp.classList.add('flex');
-
-    setTimeout(() => {
       window.location.href = "login.html";
     }, 1000);
   }, 800);
@@ -110,16 +98,16 @@ function showSignUpSuccessOverlay() {
 
 function onPasswordInput(inputElement) {
   const wrapper = inputElement.parentElement;
-  const icon = wrapper.querySelector('.pwd-icon'); 
+  const icon = wrapper.querySelector('.pwd-icon');
 
-  if (!icon) return; 
+  if (!icon) return;
   if (inputElement.value.trim().length > 0) {
     icon.classList.remove('pwd-pic');
     icon.classList.add('eye-pic');
   } else {
     icon.classList.remove('eye-pic', 'eye-text-pic');
     icon.classList.add('pwd-pic');
-    inputElement.type = 'password'; 
+    inputElement.type = 'password';
   }
 }
 

@@ -17,14 +17,13 @@ function handleLogin() {
   checkLogin(emailInputLogin, passwordInputLogin);
 }
 
-function checkLogin(emailInputLogin, passwordInputLogin) {
-  const users = JSON.parse(localStorage.getItem("users")) || [];
+async function checkLogin(emailInputLogin, passwordInputLogin) {
+  const users = await getFromLocalStorage("users") || [];
   const user = users.find(user => user.email === emailInputLogin && user.password === passwordInputLogin);
 
   if (user) {
     alert("Login erfolgreich!");
-    signIn();
-    // window.location.href = "summary.html";
+    window.location.href = "summary.html";
   } else {
     alert("E-Mail oder Passwort falsch.");
   }
