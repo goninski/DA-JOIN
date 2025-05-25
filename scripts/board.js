@@ -164,6 +164,8 @@ function onDragStartTask(event, taskId) {
   currentDragTaskId = taskId;
   console.log(currentDragTaskId);
   console.log(renderTasks);
+  // element = event.currentTarget;
+  // element.classList.add('dragging');
 }
 
 

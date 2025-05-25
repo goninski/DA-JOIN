@@ -142,10 +142,13 @@
   scrollbar-width: none;
 }
 
+.board-task-list:has( .board-no-task) {
+  border-radius: 10px;
+}
+
 .board-task-list.dropzone {
-  border: dashed 1px black;
-  /* border: dashed 1px var(--clr-subtle); */
-  opacity: 0.6;
+  border: dashed 1px #888;
+  opacity: 0.7;
 }
 
 .board-task {
