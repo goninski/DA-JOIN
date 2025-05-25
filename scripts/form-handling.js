@@ -7,7 +7,7 @@ document.addEventListener('keydown', documentEventHandler);
 
 
 /**
- * Helper: set and return an object with all relevant elements within a field wrapper
+ * Helper: set and return an object 'currentFieldElements' with all relevant elements within a field wrapper
  * (e.g. wrapper, input, alert, combox, listbox)
  * 
  * @param {element} element - a dom element within a field wrapper
@@ -43,7 +43,7 @@ function getCurrentFieldElements(element) {
 /**
  * Helper: return field wrapper element from element
  * 
- * @param {element} element - dom element
+ * @param {element} element - current element
  */
 function getFieldWrapperFromElement(element) {
     return element.closest('.field-wrapper');
