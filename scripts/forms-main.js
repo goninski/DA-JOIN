@@ -181,11 +181,11 @@ function getFormElementsArray(formId) {
 
 
 /**
- * ???
+ * Set edit form state
  * 
  * @param {string} formId - id of the form element
  */
-async function checkEditFormState(formId) {
+async function setInitialFormState(formId) {
     let formElements = getFormElementsArray(formId);
     formElements.forEach(function(element) {
         setPlaceholderStyle(element);

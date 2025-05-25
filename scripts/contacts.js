@@ -101,7 +101,7 @@ async function showContactDetail(event, contactId) {
 
 
 /**
- * Close current contact details (screen < 1180px)
+ * Close current contact details (only for screen < 1180px)
  * 
  * @param {string} contactId - id of the current contact
  */
@@ -159,8 +159,8 @@ async function openContactsForm(formMode, contactId = '') {
         await setAddContactValues();
     } else {
         await setEditContactValues(contactId);
-        await checkEditFormState('contactsForm');
     }
+    await setInitialFormState('contactsForm');
 }
 
 

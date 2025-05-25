@@ -123,7 +123,7 @@ async function renderTaskForm(fieldsWrapperId, currentTask = null) {
     // console.log(contacts);
     await renderCategorySelectOptions(event);
     await setEditTaskValues(currentTask, formId);
-    await checkEditFormState(formId);
+    await setInitialFormState(formId);
 }
 
 
