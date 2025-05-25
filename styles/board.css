@@ -135,9 +135,17 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  border: dashed 1px transparent;
+  border-radius: 26px;
   overflow-x: hidden;
   overflow-y: scroll;
   scrollbar-width: none;
+}
+
+.board-task-list.dropzone {
+  border: dashed 1px black;
+  /* border: dashed 1px var(--clr-subtle); */
+  opacity: 0.6;
 }
 
 .board-task {
