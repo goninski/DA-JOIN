@@ -21,7 +21,7 @@ async function addUser(event) {
 
   if (await emailAlreadyExists(emailInput)) return;
 
-  const users = await getFromLocalStorage("users") || [];
+  //const users = await getFromLocalStorage("users") || [];
 
   const newUser = {
     name: nameInput,
@@ -29,11 +29,26 @@ async function addUser(event) {
     password: passwordInput
   };
 
-  users.push(newUser);
-  await saveToLocalStorage("users", users);
+  // users.push(newUser);
+  // await saveToLocalStorage("users", users);
 
-  showSignUpSuccessOverlay();
+  // showSignUpSuccessOverlay();
+
+  await signUp(newUser);
 }
+
+
+/**
+ * Sign up procedure
+ * 
+ * @param {object} newUser - new user object
+ */
+async function signUp(newUser) {
+  await createContact(newUser);
+  await showFloatingMessage('text', 'You Signed Up successfully');
+  setTimeout(() => {window.location.href = "login.html";}, 1000);
+}
+
 
 function checkValidity() {
   const form = document.getElementById("signup-form");
@@ -62,8 +77,10 @@ function checkPasswords(password, passwordRepeat) {
 }
 
 async function emailAlreadyExists(emailInput) {
-  const users = await getFromLocalStorage("users") || [];
-  if (users.find(user => user.email === emailInput)) {
+  // const users = await getFromLocalStorage("users") || [];
+  await getUserData();
+  console.log(contacts);
+  if (contacts.find(user => user.email === emailInput)) {
     alert("Diese E-Mail ist bereits registriert.");
     document.getElementById('email-div-sign-up').classList.add('input-error');
     clearFields();
@@ -84,17 +101,17 @@ function clearFields() {
   confirmPwdField.value = '';
 }
 
-function showSignUpSuccessOverlay() {
-  const overlaySignUp = document.querySelector('.overlay-sign-up-successfully-background');
-  setTimeout(() => {
-    overlaySignUp.classList.remove('hide');
-    overlaySignUp.classList.add('flex');
+// function showSignUpSuccessOverlay() {
+//   const overlaySignUp = document.querySelector('.overlay-sign-up-successfully-background');
+//   setTimeout(() => {
+//     overlaySignUp.classList.remove('hide');
+//     overlaySignUp.classList.add('flex');
 
-    setTimeout(() => {
-      window.location.href = "login.html";
-    }, 1000);
-  }, 800);
-}
+//     setTimeout(() => {
+//       window.location.href = "login.html";
+//     }, 1000);
+//   }, 800);
+// }
 
 function onPasswordInput(inputElement) {
   const wrapper = inputElement.parentElement;

@@ -90,15 +90,6 @@ function getSidebar() {
 
 
 /**
- * Sign up procedure (redirect to login)
- */
-async function signUp() {
-    window.location.href = "/login.html";
-    // await signIn()
-}
-
-
-/**
  * Sign in procedure (set login status, redirect to summary)
  */
 async function signIn() {
