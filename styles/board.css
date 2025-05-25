@@ -135,9 +135,20 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  border: dashed 1px transparent;
+  border-radius: 26px;
   overflow-x: hidden;
   overflow-y: scroll;
   scrollbar-width: none;
+}
+
+.board-task-list:has( .board-no-task) {
+  border-radius: 10px;
+}
+
+.board-task-list.dropzone {
+  border: dashed 1px #888;
+  opacity: 0.7;
 }
 
 .board-task {
