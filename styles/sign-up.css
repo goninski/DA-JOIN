@@ -91,7 +91,7 @@
   margin: 0 auto;
 }
 
-.overlay-sign-up-successfully {
+/* .overlay-sign-up-successfully {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -126,7 +126,7 @@
     height: 100vh;
     background-color: rgba(211, 211, 211, 0.2);
     z-index: 2;
-}
+} */
 
 .input-error {
     border: 1px solid red;
