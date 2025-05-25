@@ -240,6 +240,11 @@ main, header, footer {
     flex-wrap: wrap;
 }
 
+.no-margin {
+    margin-top: 0px;
+    margin-bottom: 24px;
+}
+
 
 
 /*** BREAKPOINTS */
