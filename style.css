@@ -270,8 +270,8 @@ main, header, footer {
     }
 }
 
-@media(max-height: 735px) and (orientation: landscape) {
+/* @media(max-height: 735px) and (orientation: landscape) {
     .orientation-overlay {
         display: flex;
     }
-}
+} */
