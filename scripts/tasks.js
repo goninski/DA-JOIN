@@ -142,7 +142,7 @@ async function setEditTaskValues(currentTask, formId) {
             let priority =  setFirstLetterUpperCase(currentTask.priority);
             document.getElementById('inputPrio' + priority).checked = true;
         }
-        assignedContacts = currentTask.contactIds ? currentTask.contactIds : [];
+        assignedContacts = currentTask.contactIds ? currentTask.contactIds.slice() : [];
         await renderContactSelectOptions();
         await renderContactProfileBatches(assignedContacts);
         if(currentTask.categoryId) {
@@ -154,7 +154,7 @@ async function setEditTaskValues(currentTask, formId) {
             document.getElementById('categorySelect').setAttribute("disabled", '');
             document.getElementById('categoryOptionId-' + currentTask.categoryId).setAttribute('aria-selected', 'true');
         }
-        assignedSubtasks = currentTask.subtasks ? currentTask.subtasks : [];
+        assignedSubtasks = currentTask.subtasks ? currentTask.subtasks.slice() : [];
         renderSubtasks(assignedSubtasks);
     }
 }
@@ -297,7 +297,9 @@ async function setTaskProperties(currentTask, formInputs ) {
         currentTask.priority = formInputs.priority;
         currentTask.categoryId = document.getElementById('categorySelect').dataset.optionId;
         currentTask.contactIds = assignedContacts;
+        console.log(assignedSubtasks);
         currentTask.subtasks = assignedSubtasks;
+        console.log(currentTask.subtasks);
         !hasLength(currentTask.status) ? currentTask.status = taskStatus : null;
     } else {
         console.log('error: no form inputs !');
