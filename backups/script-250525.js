@@ -3,37 +3,50 @@ let loggedInUserId = null;
 
 
 /**
- * Checks authorization (redirect to login if unauthorized)
+ * Checks authorization for current page
  */
 async function checkAuth() {
-    loggedInUserId = await getFromLocalStorage('pseudoAuthStatus');
-    if(!loggedInUserId) {
-        loginRedirect();
-        return;
-    }
-    if(loggedInUserId == 'guest') return true;
-    let index = await getContactIndexFromId(loggedInUserId);
-    if(index < 0) {
-        loginRedirect();
-    }
+    let urlUserId = await getUserFromURL();
+    let isLoggedIn = await userIsLoggedIn(urlUserId);
+    // console.log(urlUserId);
+    // console.log(isLoggedIn);
+    !isLoggedIn ? window.location.href = "/login.html" : null;
 }
 
 
 /**
- * Sign out procedure (remove auth status and redirect to login)
+ * Sets the logged in user id from url
  */
-function signOut() {
-    loginRedirect();
+async function getUserFromURL() {
+    let urlSearch = window.location.search;
+    let urlParams = new URLSearchParams(urlSearch);
+    let user = urlParams.get('user');
+    // console.log(urlSearch);
+    // console.log(urlParams);
+    // console.log(user);
+    loggedInUserId = hasLength(user) ? user.toString() : null;
+    // console.log(loggedInUserId);
 }
 
 
 /**
- * Redirect to login page
+ * Checks if user is logged in
+ * 
+ * @param {string} userId - user id (from auth)
+ * @returns {boolean}
  */
-function loginRedirect() {
-    // loggedInUserId = null;
-    // localStorage.removeItem('pseudoAuthStatus');
-    setTimeout(function() {window.location.href = '/summary.html'}, 1500);
+async function userIsLoggedIn(userId) {
+    return true; // temporary true for all
+    if(userId == 'guest') {
+        return true;
+    }
+    let index = contacts.findIndex(user => user.id == userId && user.loggedIn == true);
+    // console.log(index);
+    if(index >= 0) {
+        return true;
+    } else {
+        return false;        
+    }
 }
 
 
@@ -73,6 +86,40 @@ function getSidebar() {
     let sidebarMobRef = document.getElementById('sidebarMob');
     sidebarMobRef.innerHTML = getSidebarMobTemplate();
     sidebarMobRef.classList.add('show--ss-mob');
+}
+
+
+/**
+ * Sign out procedure (remove auth status and redirect to login)
+ */
+async function signOut() {
+    loggedInUserId = null;
+    localStorage.removeItem('pseudoAuthStatus');
+    window.location.href = "/login.html";
+}
+
+
+/**
+ * old: Sign in procedure (set login status, redirect to summary)
+ */
+async function signIn_old() {
+    if(loggedInUserId == '') {return;}
+    !loggedInUserId == 'guest' ? await updateContactProperty(loggedInUserId, 'loggedIn', true) : null;
+    console.log(loggedInUserId);
+    setTimeout(function() {window.location.href = "/summary.html?user=" + loggedInUserId;}, 1000);
+    // checkAuth();
+}
+
+
+/**
+ * old: Sign out procedure (update login status, redirect to login)
+ */
+async function signOut_old() {
+    if(hasLength(loggedInUserId) && loggedInUserId != 'guest') {
+        updateContactProperty(loggedInUserId, 'loggedIn', null);
+    }
+    loggedInUserId = null;
+    window.location.href = "/login.html";
 }
 
 
