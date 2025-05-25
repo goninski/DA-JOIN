@@ -622,6 +622,7 @@ function getSelectedDropdownIndex(event, index, length, loop = false) {
     return index;
 }
 
+
 /**
  * Helper: return next dropdown index
  */
