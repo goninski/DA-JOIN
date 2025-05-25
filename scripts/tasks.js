@@ -297,9 +297,7 @@ async function setTaskProperties(currentTask, formInputs ) {
         currentTask.priority = formInputs.priority;
         currentTask.categoryId = document.getElementById('categorySelect').dataset.optionId;
         currentTask.contactIds = assignedContacts;
-        console.log(assignedSubtasks);
         currentTask.subtasks = assignedSubtasks;
-        console.log(currentTask.subtasks);
         !hasLength(currentTask.status) ? currentTask.status = taskStatus : null;
     } else {
         console.log('error: no form inputs !');
