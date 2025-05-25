@@ -41,7 +41,7 @@ async function addUser(event) {
 /**
  * Sign up procedure
  * 
- * @param {object} newUser - new user object
+ * @param {object} newUser - new signed up user object
  */
 async function signUp(newUser) {
   await createContact(newUser);
