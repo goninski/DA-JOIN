@@ -361,3 +361,19 @@ async function closeTaskDialogue(event) {
 }
 
 
+/**
+ * Event handler: change task status > currently not use !
+ * 
+ * @param {event} event - inherit
+ * @param {string} taskId - id of the selected task
+ * @param {string} statusNew - id of the new status (target board)
+ * @param {string} statusOld - id of old status (source board), optional, currently not in use
+ */
+async function changeTaskStatus(event = null, taskId, statusNew, statusOld = null) {
+    event ? event.stopPropagation() : null;
+    await updateTaskProperty(taskId, 'status', statusNew);
+    // renderBoard(statusNew);
+    // statusOld ? renderBoard(statusOld) : null;
+}
+
+

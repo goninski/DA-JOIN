@@ -281,22 +281,6 @@ function deleteSubtask(index) {
 
 
 /**
- * Change task status - currently not in use (???)
- * 
- * @param {event} event - inherit, currently not in use
- * @param {string} taskId - id of the selected task
- * @param {string} statusNew - id of the new status (target board)
- * @param {string} statusOld - id of old status (source board), optional, currently not in use
- */
-async function changeTaskStatus(event = null, taskId, statusNew, statusOld = null) {
-    event ? event.stopPropagation() : null;
-    await updateTaskProperty(taskId, 'status', statusNew);
-    // renderBoard(statusNew);
-    // statusOld ? renderBoard(statusOld) : null;
-}
-
-
-/**
  * Event handler: toggle subtask status (done true/false)
  * 
  * @param {event} event - onclick (subtask checkbox on task detail view of board dialog, not implemented yet)
