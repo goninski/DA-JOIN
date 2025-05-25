@@ -204,8 +204,18 @@ main, header, footer {
     margin-top: 24px;
 }
 
-#orientationOverlay {
-
+.orientation-overlay {
+    /* display: flex; */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.85);
+    padding-inline: var(--px-sec);
 }
 
 
@@ -257,5 +267,11 @@ main, header, footer {
 @media(min-width: 1440px) {
     :root {
         --px-sec: 100px;
+    }
+}
+
+@media(max-height: 735px) and (orientation: landscape) {
+    .orientation-overlay {
+        display: flex;
     }
 }

@@ -62,6 +62,7 @@ function init() {
 function getMainTemplates() {
     getHeader();
     getSidebar();
+    getOrientationOverlay();
 }
 
 
@@ -84,6 +85,15 @@ function getSidebar() {
     let sidebarMobRef = document.getElementById('sidebarMob');
     sidebarMobRef.innerHTML = getSidebarMobTemplate();
     sidebarMobRef.classList.add('show--ss-mob');
+}
+
+
+/**
+ * Get html orientation overlay
+ */
+function getOrientationOverlay() {
+    let element = document.getElementById('orientationOverlay');
+    element.textContent = 'Please turn device or window to portrait orientation !'
 }
 
 
