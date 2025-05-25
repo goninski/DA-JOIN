@@ -124,6 +124,26 @@ async function renderBoardTasks(renderTasks, boardId, boardTaskList) {
 
 
 /**
+ * Event handler: open task details in dialogue
+ * 
+ * @param {event} event - onclick (board task)
+ * @param {string} taskId - id of the clicked task
+ */
+async function showTaskDetail(event, taskId) {
+    event.stopPropagation();
+    // event ? event.stopPropagation() : null;
+    formMode = 'show';
+    let index = await getTaskIndexFromId(taskId);
+    currentTask = tasks[index];
+    console.log(currentTask);
+    await showTaskDialogue('taskDetailsWrapper');
+    document.getElementById('taskDetailsWrapper').innerHTML = getTaskDetailsWrapperTemplate(currentTask);
+    document.getElementById('taskDialogue').classList.add('show-task');
+}
+
+
+
+/**
  * Event handler: add task to current board
  * 
  * @param {event} event - onclick (button)
