@@ -3,6 +3,17 @@ let loggedInUserId = null;
 
 
 /**
+ * Screen orientation lock (portrait only on tablet/mobile
+ */
+// console.log(getDeviceType());
+// if(getDeviceType() != 'Desktop') {
+//     screen.orientation.lock('portrait');
+// } else {
+//     screen.orientation.unlock();
+// } 
+
+
+/**
  * Checks authorization (redirect to login if unauthorized)
  */
 async function checkAuth() {
@@ -73,6 +84,21 @@ function getSidebar() {
     let sidebarMobRef = document.getElementById('sidebarMob');
     sidebarMobRef.innerHTML = getSidebarMobTemplate();
     sidebarMobRef.classList.add('show--ss-mob');
+}
+
+
+/**
+ * Helper: get device type
+ */
+function getDeviceType() {
+    let userAgent = navigator.userAgent;
+    if (/Mobi|Android/i.test(userAgent)) {
+        return "Mobile";
+    } else if (/Tablet|iPad/i.test(userAgent)) {
+        return "Tablet";
+    } else {
+        return "Desktop";
+    }
 }
 
 

@@ -185,6 +185,7 @@ async function updateSubtaskStatus(taskId, subtaskIndex, value) {
  */
 async function deleteContact(contactId) {
     let index = getContactIndexFromId(contactId);
+    console.log(index);
     index >= 0 ? contacts.splice(index, 1) : null;
     localStorageMode ? await saveContactsToLS() : await deleteFirebaseData('users/' + contactId);
     await removeDeletedContactsFromTasks(contactId);

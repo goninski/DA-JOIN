@@ -64,7 +64,15 @@ async function groupContacts(contacts) {
 }
 
 
+/**
+ * Event handler: show contact details from selected contact in list
+ * 
+ * @param {event} event - onclick (contact in contact list)
+ * @param {string} contactId - id of the current contact
+ */
 async function showContactDetail(event, contactId) {
+    console.log(contactId);
+    // return;
     event.stopPropagation();
     if(lastListContactId != '' && lastListContactId != contactId){
         document.getElementById('listContactId-' + lastListContactId).classList.remove('active');
@@ -93,7 +101,7 @@ async function showContactDetail(event, contactId) {
 
 
 /**
- * Event handler: close current contact details (screen < 1180px)
+ * Close current contact details (screen < 1180px)
  * 
  * @param {string} contactId - id of the current contact
  */
@@ -108,9 +116,9 @@ function closeContactDetail(contactId) {
 
 
 /**
- * Event handler: add new contact, add new contact button/s
+ * Event handler: open add new contact form
  * 
- * @param {event} event - onclick
+ * @param {event} event - onclick (add new contact button/s)
  */
 async function openAddNewContactForm(event) {
     event.stopPropagation();
@@ -122,9 +130,9 @@ async function openAddNewContactForm(event) {
 
 
 /**
- * Event handler: edit current contact, edit contact button
+ * Event handler: edit current contact
  * 
- * @param {event} event - onclick
+ * @param {event} event - onclick (edit button)
  * @param {string} contactId - id of the current contact (currently no in use due global variable)
  */
 async function openEditContactForm(event, contactId) {
@@ -157,9 +165,9 @@ async function openContactsForm(formMode, contactId = '') {
 
 
 /**
- * Event handler: reset contacts form, on cancel button
+ * Event handler: reset contacts form
  * 
- * @param {event} event - onclick
+ * @param {event} event - onclick (cancel button)
  */
 function resetContactsForm(event) {
     event.stopPropagation();
@@ -170,9 +178,9 @@ function resetContactsForm(event) {
 
 
 /**
- * Event handler: close add/edit contacts form dialogue, on close button
+ * Event handler: close add/edit contacts form dialogue
  * 
- * @param {event} event - click
+ * @param {event} event - click (close button)
  */
 async function closeContactsFormDialogue(event) {
     event.stopPropagation();
@@ -223,9 +231,9 @@ async function setEditContactValues(contactId) {
 
 
 /**
- * Event handler: calls submit create or save contact on contacts form, submit button
+ * Event handler: calls submit create or save contact on contacts form
  * 
- * @param {event} event - onsubmit form
+ * @param {event} event - onsubmit (contacts form)
  */
 async function submitContactsForm(event) {
     event.stopPropagation();
@@ -235,15 +243,16 @@ async function submitContactsForm(event) {
 
 
 /**
- * Event handler sub: submit create contact on contacts form
+ * Create contact from contacts form
  * 
- * @param {event} event - sub
+ * @param {event} event - inherit (submit contact form)
  */
 async function submitCreateContact(event) {
     event.stopPropagation();
     let formInputs = await getFormInputObj('contactsForm');
     await setContactProperties(currentContact, formInputs);
     await createContact(currentContact);
+    lastListContactId = currentContact.id;
     // resetAddContactForm(event);
     await showFloatingMessage('text', 'Contact successfully created');
     setTimeout(function() {closeContactsFormDialogue(event);}, 1000);
@@ -251,9 +260,9 @@ async function submitCreateContact(event) {
 
 
 /**
- * Event handler sub: submit update contact on contacts form
+ * Update contact from contacts form
  * 
- * @param {event} event - sub
+ * @param {event} event - inherit (submit contact form)
  */
 async function submitUpdateContact(event) {
     event.stopPropagation();
@@ -285,9 +294,9 @@ async function setContactProperties(currentContact, formInputs ) {
 
 
 /**
- * Event handler: delete contact, on delete button
+ * Event handler: delete contact
  * 
- * @param {event} event - onclick
+ * @param {event} event - onclick (delete button)
  * @param {string} contactId - id of the current contact
  */
 async function submitDeleteContact(event, contactId) {
