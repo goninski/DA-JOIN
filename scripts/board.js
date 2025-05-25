@@ -155,12 +155,12 @@ function addBoardTask(event, boardId) {
 
 
 /**
- * Event handler: task drag start
+ * Event handler: on drag start, board task
  * 
  * @param {event} event - ondragstart (board task)
  * @param {string} taskId - current task id
  */
-function taskDrag(event, taskId) {
+function onDragStartTask(event, taskId) {
   currentDragTaskId = taskId;
   console.log(currentDragTaskId);
   console.log(renderTasks);
@@ -168,12 +168,26 @@ function taskDrag(event, taskId) {
 
 
 /**
- * Event handler: allow task drop
+ * Event handler: on drag over
  * 
  * @param {event} event - ondragover (board tasklist)
  */
-function allowDrop(event) {
+function onDragOver(event) {
   event.preventDefault();
+  element = event.currentTarget;
+  element.classList.add('dropzone');
+}
+
+
+/**
+ * Event handler: on drag leave
+ * 
+ * @param {event} event - ondragleave (board tasklist)
+ */
+function onDragLeave(event) {
+  // event.preventDefault();
+  element = event.currentTarget;
+  element.classList.remove('dropzone');
 }
 
 
@@ -184,6 +198,8 @@ function allowDrop(event) {
  * @param {string} boardId - id of the target board
  */
 async function taskDrop(event, boardId) {
+  element = event.currentTarget;
+  element.classList.remove('dropzone');
   console.log(renderTasks);
   let index = await tasks.findIndex(task => task.id == currentDragTaskId);
   // let index = await getTaskIndexFromId(currentDragElement);
