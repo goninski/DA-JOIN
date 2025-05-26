@@ -111,7 +111,7 @@ async function getBoardTasksTemplate(task, category, subtaskCount, subtaskProgre
     // let hideBatches = task.contactIds == null ? 'hide': null;
     let hideSubtask = subtaskCount == null ? 'hide': null;
     return `
-        <div class="board-task clickable-task" onclick="showTaskDetail(event, '${task.id}')" draggable="true" ondragstart="onDragStartTask(event, '${task.id}')">
+        <div class="board-task clickable-task" onclick="showTaskDetail(event, '${task.id}')" draggable="true" ondragstart="onDragStartTask(event, '${task.id}')" ondragend="onDragEnd(event)">
             <div class="board-task-category" style="background-color: ${category.color};">${category.name}</div>
             <div class="board-task-heading">${task.title}</div>
             <div class="board-task-description ${hideDescription}">${task.description}</div>

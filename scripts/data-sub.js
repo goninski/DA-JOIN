@@ -137,6 +137,67 @@ async function getNewCategoryId() {
 
 
 /**
+ * Helper: returns contact index id of the contacts object, from contact
+ * 
+ * @param {string} contactId - contact id
+ */
+async function getContactIndexFromId(contactId) {
+    return contacts.findIndex(contact => contact.id == contactId);
+}
+
+
+/**
+ * Helper: returns task index of the tasks object, from task id
+ * 
+ * @param {string} taskId - task id
+ */
+async function getTaskIndexFromId(taskId) {
+    return tasks.findIndex(task => task.id == taskId);
+}
+
+
+/**
+ * Helper: returns category index of the categories object, from category id
+ * 
+ * @param {string} categoryId - category id
+ */
+async function getCategoryIndexFromId(categoryId) {
+    return categories.findIndex(category => category.id == categoryId);
+}
+
+
+/**
+ * Helper: sort the contacts objects array alphabetically
+ * 
+ * @param {array} contacts - contacts objects array
+ */
+async function sortContacts(contacts) {
+    return await contacts.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+
+/**
+ * Helper: sort the tasks objects array
+ * 
+ * @param {array} tasks - tasks objects array
+ * @param {string} sortByProperty - property to sort by
+ */
+async function sortTasks(tasks, sortByProperty = 'dueDate') {
+    return await tasks.sort((a, b) => a[sortByProperty].localeCompare(b[sortByProperty]));
+}
+
+
+/**
+ * Helper: sort the category objects array alphabetically
+ * 
+ * @param {object} categories - categories objects array
+ */
+async function sortCategories(categories) {
+    return await categories.sort((a, b) => a.id.localeCompare(b.id));
+}
+
+
+/**
  * Remove deleted contacts from task assignment
  * 
  * @param {string} deletedContactId - id of the deleted contact

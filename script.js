@@ -3,17 +3,6 @@ let loggedInUserId = null;
 
 
 /**
- * Screen orientation lock (portrait only on tablet/mobile
- */
-// console.log(getDeviceType());
-// if(getDeviceType() != 'Desktop') {
-//     screen.orientation.lock('portrait');
-// } else {
-//     screen.orientation.unlock();
-// } 
-
-
-/**
  * Checks authorization (redirect to login if unauthorized)
  */
 async function checkAuth() {
@@ -94,21 +83,7 @@ function getSidebar() {
 function getOrientationOverlay() {
     let element = document.getElementById('orientationOverlay');
     element.textContent = 'Please turn device or window to portrait orientation !'
-}
-
-
-/**
- * Helper: get device type
- */
-function getDeviceType() {
-    let userAgent = navigator.userAgent;
-    if (/Mobi|Android/i.test(userAgent)) {
-        return "Mobile";
-    } else if (/Tablet|iPad/i.test(userAgent)) {
-        return "Tablet";
-    } else {
-        return "Desktop";
-    }
+    element.addEventListener('click', event => {event.stopPropagation();})
 }
 
 
@@ -122,6 +97,17 @@ function hasLength(object) {
     if(object && object.length > 0) {
         return true;
     }
+}
+
+
+/**
+ * Helper: sort and return array alphabetically
+ * 
+ * @param {array} array - data array
+ * @param {string} sortByProperty - property to sort by
+ */
+async function sortArray(array, sortByProperty = 'id') {
+    return await array.sort((a, b) => a[sortByProperty].localeCompare(b[sortByProperty]));
 }
 
 
@@ -167,59 +153,9 @@ function getClosestParentElementFromId(id, selector = '') {
 
 
 /**
- * Helper: returns category index of the categories object, from category id
+ * Helper: return boolean from string true/false
  * 
- * @param {string} categoryId - category id
- */
-async function getCategoryIndexFromId(categoryId) {
-    return categories.findIndex(category => category.id == categoryId);
-}
-
-
-/**
- * Helper: returns contact index id of the contacts object, from contact
- * 
- * @param {string} contactId - contact id
- */
-async function getContactIndexFromId(contactId) {
-    return contacts.findIndex(contact => contact.id == contactId);
-}
-
-
-/**
- * Helper: returns task index of the tasks object, from task id
- * 
- * @param {string} taskId - task id
- */
-async function getTaskIndexFromId(taskId) {
-    return tasks.findIndex(task => task.id == taskId);
-}
-
-
-/**
- * Helper: sort the contacts objects array alphabetically
- * 
- * @param {array} contacts - contacts objects array
- */
-async function sortContacts(contacts) {
-    return await contacts.sort((a, b) => a.name.localeCompare(b.name));
-}
-
-
-/**
- * Helper: sort the category objects array alphabetically
- * 
- * @param {object} categories - categories objects array
- */
-async function sortCategories(categories) {
-    return await categories.sort((a, b) => a.id.localeCompare(b.id));
-}
-
-
-/**
- * Helper: sort the category object alphabetically
- * 
- * @param {object} categories - categories object
+ * @param {string} booleanString - string ('true'/'false')
  */
 function getBooleanFromString(booleanString) {
     if(booleanString == 'true') {
@@ -311,22 +247,6 @@ function getRandomColor(format = 'hex') {
 
 
 /**
- * Helper: return a random string in a specific length
- * 
- * @param {number} length - lenght of the string
- */
-function getRandomString(length = 20) {
-    let characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let charactersLength = characters.length;
-    let result = ' ';
-    for ( let i = 0; i < length; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result.trim();
-}
-
-
-/**
  * Helper: sets the value of a specific dom element with the current date (today)
  * 
  * @param {string} id - id of the specific element (in general a date input element)
@@ -394,17 +314,6 @@ function getDaySegment() {
 
 
 /**
- * Shows an alert with timeout
- * 
- * @param {string} msg - alert message
- * @param {number} timeout - timeout milliseconds
- */
-async function showAlert(msg, timeout = 250) {
-    setTimeout(function() { alert(msg) }, timeout);
-}
-
-
-/**
  * Shows a floating message with timeout
  * 
  * @param {string} template - code name for specific template (text, addedTask)
@@ -464,5 +373,3 @@ async function runSlideOutAnimation(element, timeout = 0) {
         element.style = 'display: none';
     }
 }
-
-

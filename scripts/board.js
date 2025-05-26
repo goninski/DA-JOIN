@@ -42,12 +42,13 @@ async function listenTaskSearchInput(event) {
   if(searchVal.length > 0) {
     taskSearchBtn.tabIndex = 0;
     taskSearchBtn.classList.remove('not-clickable');
-    await filterTasks(event);
+    // await filterTasks(event);
   } else {
     taskSearchBtn.tabIndex = -1;
     taskSearchBtn.classList.add('not-clickable');
-    await renderBoards();
+    // await renderBoards();
   }
+    await filterTasks(event);
 }
 
 
@@ -74,7 +75,7 @@ async function filterTasks(event) {
 
 
 /**
- * Helper: set task title and description as search base
+ * Helper: set task title and description as search content base
  */
 async function setSearchBase() {
   renderTasks = tasks.forEach(task => task.searchBase = (task.title + ' ' + task.description));
@@ -161,11 +162,24 @@ function addBoardTask(event, boardId) {
  * @param {string} taskId - current task id
  */
 function onDragStartTask(event, taskId) {
+  event.stopPropagation();
   currentDragTaskId = taskId;
   console.log(currentDragTaskId);
   console.log(renderTasks);
-  // element = event.currentTarget;
-  // element.classList.add('dragging');
+  element = event.currentTarget;
+  element.classList.add('dragging');
+}
+
+
+/**
+ * Event handler: on drag end
+ * 
+ * @param {event} event - ondragend (board task)
+ */
+function onDragEnd(event) {
+  event.stopPropagation();
+  element = event.currentTarget;
+  element.classList.remove('dragging');
 }
 
 
