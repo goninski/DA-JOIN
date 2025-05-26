@@ -8,6 +8,7 @@
     align-items: center;
     gap: 30px;
     width: 100%;
+    /* max-width: 1056px; */
     margin-bottom: 62px;
 }
 
@@ -22,7 +23,6 @@
 
 .search-input-wrapper input {
   padding-block: 7px !important;
-  padding-right: 82px !important;
 }
 
 .input-icon-wrapper-search {
@@ -31,11 +31,87 @@
   border-left: solid 1px var(--clr-subtle);
 }
 
+/* .board-input {
+    border: 1px;
+    border-radius: 10px;
+    width: 312px;
+    height: 48px;
+    gap: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.find-task {
+    font-weight: 400;
+    font-size: 20px;
+    color: #D1D1D1;
+}
+
+.input-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.input-img img {
+    width: 24px;
+    height: 24px;
+}
+
+.board-search-input-wrapper {
+    display: flex;
+    align-items: center;
+    width: 312px;
+    height: 48px;
+    background-color: white;
+    border: 1px solid #D1D1D1;
+    border-radius: 10px;
+    padding: 0 12px;
+    box-sizing: border-box;
+}
+
+  .input-wrapper-board:focus-within {
+    border-color: #29ABE2;
+}
+
+  .search-input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    color: #000;
+    background-color: transparent;
+    width: 312px;
+    height: 48px;
+  }
+
+.search-input::placeholder {
+    color: #D1D1D1;
+    font-weight: 400;
+}
+
+.input-divider {
+    width: 1px;
+    height: 60%;
+    background-color: #D1D1D1;
+    margin: 0 12px;
+}
+ */
+
+
+
 .boards-wrapper {
   display: flex;
   gap: 21px; /* not 24px because of transp. border */
   flex-grow: 1;
   width: 100%;
+  /* max-width: 1208px; */
+  /* padding-top: 20px; */
   overflow-y: auto;
   scrollbar-width: none;
 }
@@ -43,6 +119,7 @@
 .board {
   display: flex;
   flex-direction: column;
+  /* border-radius: 8px; */
   width: 100%;
 }
 
@@ -50,6 +127,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  /* height: 24px; */
   margin-bottom: 15px;
   width: 100%;
 }

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Board</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="./styles/board.css" />
   <script src="./scripts/data-main.js"></script>
   <script src="./scripts/data-sub.js"></script>
@@ -31,15 +31,13 @@
       <!-- TITLE AREA -->
       <div class="board-page-title-wrapper">
         <div class="page-title mr-auto">Board</div>
-          <div class="input-wrapper search-input-wrapper">
-            <input id="inputTaskSearch" type="text" name="taskSearch" placeholder="Find Task" class="search-input" oninput="listenTaskSearchInput(event)"/>
-            <div class="input-icon-wrapper input-icon-wrapper-search">
-              <!-- <div class="divider"></div> -->
-              <button id="taskSearchBtn" class="not-clickable" tabindex="-1" onclick="filterTasks(event)">
-                <img src="./assets/icons/search.svg" alt="search icon" class="icon-search">
-              </button>
-            </div>
-          </div>
+        <div class="board-search-input-wrapper">
+          <input id="taskSearchInput" type="text" placeholder="Find Task" class="search-input" oninput="listenTaskSearchInput(event)"/>
+          <div class="input-divider"></div>
+          <button id="taskSearchBtn" class="input-img not-clickable" tabindex="-1" onclick="filterTasks(event)">
+            <img src="./assets/icons/search.png" alt="Search Icon" />
+          </button>
+        </div>
         <button class="button btn-primary btn-icon btn-small add-task-button" title="add new Task" onclick="openAddTaskForm(event)">
           <div class="btn-label">Add task</div>
           <img src="./assets/icons/add-white.svg" alt="plus-icon" />

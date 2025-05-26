@@ -35,7 +35,7 @@ async function initBoard() {
  */
 async function listenTaskSearchInput(event) {
   // console.log('f) listenTaskSearchInput');
-  let taskSearchInput = document.getElementById('taskSearchInput');
+  let taskSearchInput = document.getElementById('inputTaskSearch');
   let taskSearchBtn = document.getElementById('taskSearchBtn');
   let searchVal = taskSearchInput.value.toLowerCase();
   console.log(searchVal);
@@ -60,7 +60,7 @@ async function listenTaskSearchInput(event) {
 async function filterTasks(event) {
   event.preventDefault();
   console.log('f) filterTasks');
-  let taskSearchInput = document.getElementById('taskSearchInput');
+  let taskSearchInput = document.getElementById('inputTaskSearch');
   let searchVal = taskSearchInput.value.toLowerCase();
   let filteredTasks = tasks.filter(task => (task.searchBase).toLowerCase().includes(searchVal));
   if(hasLength(filteredTasks)) {

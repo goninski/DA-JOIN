@@ -174,7 +174,7 @@ label.required::after,
     content: "*";
     color: var(--clr-warning);
 }
-input:not([type="checkbox"], [type="radio"]):not(.search-input, .subtask-input[read-only]):not(.login-signup-input),
+input:not([type="checkbox"], [type="radio"]):not(.subtask-input[read-only]):not(.login-signup-input),
 textarea, select {
     padding: 12px 21px;
     border-radius: 10px;
@@ -497,7 +497,7 @@ input:has(+ .input-icon-wrapper.simple) {
 .input-icon-wrapper :is(.icon-20, .icon-email-input) {
     height: 20px;
 }
-.input-icon-wrapper :is(.icon-18, .icon-edit, .icon-delete, .icon-checkbox) {
+.input-icon-wrapper :is(.icon-18, .icon-edit, .icon-delete, .icon-checkbox, .icon-search) {
     height: 18px;
 }
 .input-icon-wrapper :is(.icon-14, .icon-add) {
