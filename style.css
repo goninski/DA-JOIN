@@ -204,6 +204,10 @@ main, header, footer {
 .terms-page h2:not(.skip-top-margin) {
     margin-top: 24px;
 }
+.terms-page p {
+    margin-top: 0;
+}
+
 
 .orientation-overlay {
     /* display: flex; */
@@ -231,20 +235,8 @@ main, header, footer {
 .temp-links a:hover {
     color: white;
 }
-#tempTaskList {
-    position: fixed;
-    right: 32px;
-    bottom: 32px;
-    min-width: 480px;
-}
-#tempTaskList li {
-    flex-wrap: wrap;
-}
 
-.no-margin {
-    margin-top: 0px;
-    margin-bottom: 24px;
-}
+
 
 
 
