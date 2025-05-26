@@ -8,13 +8,13 @@ let loggedInUserId = null;
 async function checkAuth() {
     loggedInUserId = await getFromLocalStorage('pseudoAuthStatus');
     if(!loggedInUserId) {
-        loginRedirect();
+        redirectToLogin();
         return;
     }
     if(loggedInUserId == 'guest') return true;
     let index = await getContactIndexFromId(loggedInUserId);
     if(index < 0) {
-        loginRedirect();
+        redirectToLogin();
     }
 }
 
@@ -23,17 +23,17 @@ async function checkAuth() {
  * Sign out procedure (remove auth status and redirect to login)
  */
 function signOut() {
-    loginRedirect();
+    redirectToLogin();
 }
 
 
 /**
  * Redirect to login page
  */
-function loginRedirect() {
+function redirectToLogin() {
     // loggedInUserId = null;
     // localStorage.removeItem('pseudoAuthStatus');
-    setTimeout(function() {window.location.href = '/summary.html'}, 1500);
+    setTimeout(function() {window.location.href = '/login.html'}, 1500);
 }
 
 

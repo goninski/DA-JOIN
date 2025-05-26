@@ -46,7 +46,7 @@ async function addUser(event) {
 async function signUp(newUser) {
   await createContact(newUser);
   await showFloatingMessage('text', 'You Signed Up successfully');
-  loginRedirect();
+  redirectToLogin();
 }
 
 
