@@ -216,7 +216,7 @@ function getTaskFormFieldsTemplate(task) {
         </div>
         <div class="field-wrapper has-alert">
             <label for="dueDate" class="required">Due date</label>
-            <input type="date" id="inputDueDate" name="dueDate" required min="2000-01-01" max="2099-12-31"  onfocus="focusInHandler(event), setTodayAsDateValue('inputDueDate')" onfocusout="focusOutHandler(event)" onkeyup="removePlaceholderStyle(event)" data-placeholder-style="true">
+            <input type="date" id="inputDueDate" name="dueDate" required min="2000-01-01" max="2099-12-31"  onfocus="focusInHandler(event), setTodayAsDateValue(event)" onfocusout="focusOutHandler(event)" onkeyup="removePlaceholderStyle(event)" data-placeholder-style="true">
             <div role="alert" class="validation-alert">Please enter a valid date</div>
         </div>
     </div>

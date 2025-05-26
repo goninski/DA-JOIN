@@ -2,6 +2,7 @@
 @import url("styles/standard.css");
 @import url("styles/standard-ucl.css");
 @import url("styles/assets.css");
+@import url("styles/assets-forms.css");
 
 
 :root {
@@ -278,6 +279,8 @@ main, header, footer {
     #sidebarMob {
         display: flex;
     }
+}
+@media(max-width: 374px) {
 }
 @media(min-width: 1440px) {
     :root {

@@ -247,16 +247,6 @@ function getRandomColor(format = 'hex') {
 
 
 /**
- * Helper: sets the value of a specific dom element with the current date (today)
- * 
- * @param {string} id - id of the specific element (in general a date input element)
- */
-function setTodayAsDateValue(id) {
-    document.getElementById(id).valueAsDate = new Date();
-}
-
-
-/**
  * Helper: converts a date to string for DB (YYYY-MM-DD)
  * 
  * @param {date} date - a date object
