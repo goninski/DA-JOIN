@@ -629,7 +629,7 @@ input:has(+ .input-icon-wrapper.simple) {
 .profile-batch-large {
     width: 120px;
     height: 120px;
-    font-size: 47px;
+    font-size: var(--fs-xxl);
 }
 .edit-buttons {
     gap: 24px;
@@ -794,7 +794,7 @@ button.close-dialogue .light {
         max-width: var(--field-width) !important;
     }
     .task-form .required-info {
-        top: -32px !important;
+        top: -36px !important;
     }
 }
 @media(max-width: 735px) {
@@ -831,6 +831,11 @@ button.close-dialogue .light {
     }
     .priority-input-wrapper label  {
         font-size: var(--fs-base);
+    }
+    .profile-batch-large {
+        width: 80px;
+        height: 80px;
+        /* font-size: 47px; */
     }
 }
 @media(max-width: 511px) {

@@ -249,11 +249,22 @@ main, header, footer {
 
 /*** BREAKPOINTS */
 
+@media(max-width: 1179px) {
+    :where(.main-inner-absolute):not(.inset) {
+        top: 48px;
+        bottom: 24px;
+    }
+    .page-title-wrapper {
+        margin-bottom: 32px;
+    }
+}
+
 @media(max-width: 735px) {
     :root {
         --px-sec: 16px;
         --height-footer: 80px;
         --fs-main-title: 47px;
+        --fs-xxl: 27px;
         --fs-xl: 20px;
     }
     /* main {
@@ -267,7 +278,6 @@ main, header, footer {
     #sidebarMob {
         display: flex;
     }
-    
 }
 @media(min-width: 1440px) {
     :root {

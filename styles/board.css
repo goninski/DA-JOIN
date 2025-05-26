@@ -162,9 +162,6 @@
   background: #FFFFFF;
   cursor: grab;
 }
-/* .board-task:active {
-  rotate: 15deg;
-} */
 
 .board-no-task {
   display: flex;
@@ -273,9 +270,13 @@
 }
 
 @media(max-width: 1179px) {
+  :where(.main-inner-absolute):not(.inset) {
+      top: 48px;
+  }
   .board-page-title-wrapper {
     flex-direction: column;
     align-items: start;
+    margin-bottom: 32px;
   }
   .board-search-input-wrapper {
       width: 100%;

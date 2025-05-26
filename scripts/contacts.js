@@ -85,7 +85,7 @@ async function showContactDetail(event, contactId) {
     document.getElementById('listContactId-' + contactId).classList.add('active');
     document.getElementById('btnCloseContactDetails').addEventListener('click', function(event) {
         event.stopPropagation();
-        closeContactDetail();
+        closeContactDetail(contactId);
     });
     lastListContactId = contactId;
     // console.log(lastListContactId);
