@@ -74,12 +74,15 @@ a:hover {
 }
 .btn-primary:hover {
     background-color: var(--clr-light-blue);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .btn-primary:disabled {
-    background-color: var(--clr-main);
     opacity: 0.8;
+    background-color: var(--clr-main);
+    box-shadow: none;
 }
 .btn-secondary {
+    position: relative;
     color: var(--clr-main);
     /* border: solid 1px var(--clr-main); */
     border: solid 1px var(--clr-main);
@@ -88,7 +91,14 @@ a:hover {
     color: var(--clr-light-blue);
     --icon-color: var(--clr-light-blue);
     border: solid 1px var(--clr-light-blue);
-    box-shadow: inset 0 0 0 1px var(--clr-light-blue);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.btn-secondary:hover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: solid 1px var(--clr-light-blue);
 }
 .btn-secondary:disabled {
 }
