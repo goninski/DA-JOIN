@@ -182,7 +182,7 @@ a.login-privacy-policy-color:hover {
 .input-wrapper-signup-login {
     position: relative;
     width: 422px;
-    height: 48px;
+    height: 48px; 
     display: flex;
     align-items: center;
     padding: 0 16px;
@@ -193,11 +193,11 @@ a.login-privacy-policy-color:hover {
 }
 
 .input-wrapper-signup-login:focus-within {
-    border: 1px solid rgba(41, 171, 226, 1);
+    border-color: rgba(41, 171, 226, 1);
 }
 
-.false_input{
-    border: 1px solid rgba(255, 0, 31, 1);
+.input-error {
+    border-color: rgba(255, 0, 31, 1);
 }
 
 .login-signup-input {
@@ -267,9 +267,7 @@ input::placeholder {
     background-position: right 0px center; 
     background-size: 20px 20px; 
     padding-right: 40px; 
-    height: 40px;
     font-size: 16px;
-    height: 24px;
     width: 380px;
   }
 

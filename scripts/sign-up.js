@@ -3,7 +3,7 @@ const emailField = document.getElementById('email');
 const passwordField = document.getElementById('pwd');
 const confirmPwdField = document.getElementById('confirm_pwd');
 
-async function addUser(event) {
+async function signUpSubmitHandler(event) {
   event.preventDefault();
 
   const nameInput = nameField.value.trim();
@@ -46,7 +46,7 @@ async function addUser(event) {
 async function signUp(newUser) {
   await createContact(newUser);
   await showFloatingMessage('text', 'You Signed Up successfully');
-  redirectToLogin();
+  loginRedirect();
 }
 
 
@@ -92,6 +92,9 @@ async function emailAlreadyExists(emailInput) {
 function resetErrorStyles() {
   document.getElementById('email-div-sign-up').classList.remove('input-error');
   document.getElementById('confirm-pwd-div-sign-up').classList.remove('input-error');
+  document.getElementById('pwd-input-div').classList.remove('input-error');
+  document.getElementById('email-input-div').classList.remove('input-error');
+  document.getElementById('login-error-message').classList.add('hidden');
 }
 
 function clearFields() {
@@ -143,4 +146,3 @@ function togglePasswordVisibility(inputId, iconElement) {
 }
 
 // window.onload = function () { console.log(usersDatabase); }
-

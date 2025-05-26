@@ -7,6 +7,7 @@
     <title>Login</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="styles/login.css">
+    <link rel="stylesheet" href="styles/sign-up.css">
     <script src="./scripts/data-main.js"></script>
     <script src="./scripts/data-sub.js"></script>
     <script src="./scripts/templates.js"></script>
@@ -15,7 +16,7 @@
 </head>
 
 <body class="bg-grey flex justify-center">
-    <img src=" ./assets/img/Capa_2.png" alt="Logo" id="login_logo">
+    <img src=" ./assets/img/capa-2.png" alt="Logo" id="login_logo">
 
     <div id="login-main-content">
         <div class=" flex-row header_login">
@@ -35,15 +36,18 @@
                 </div>
 
                 <div class="flex-col gap-20 login-email-part center">
-                    <div class="input-wrapper-signup-login flex justify-between">
+                    <div class="input-wrapper-signup-login flex justify-between" id="email-input-div">
                         <input class="login-signup-input pictureinput mail-pic" type="email" name="email"
                             id="email-login" placeholder="Email" required>
                     </div>
 
-                    <div class="input-wrapper-signup-login flex justify-between">
+                    <div class="input-wrapper-signup-login flex justify-between" id="pwd-input-div">
                         <input class="login-signup-input pictureinput" type="password" id="pwd-login" name="pwd"
                             minlength="8" placeholder="Password" required oninput="onPasswordInput(this)">
                         <div class="pwd-icon pwd-pic" onclick="togglePasswordVisibility('pwd-login', this)"></div>
+                    </div>
+                    <div id="login-error-message" class="login-error hidden">
+                        Your email or password is incorrect. Please try again.
                     </div>
                 </div>
                 <div class="flex-row align-end justify-center gap-35">

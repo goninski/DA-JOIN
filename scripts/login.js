@@ -33,45 +33,50 @@ async function checkLogin(emailInputLogin, passwordInputLogin) {
   const emailField = document.getElementById("email-login");
   const passwordField = document.getElementById("pwd-login");
 
-  const isEmailValid = checkemailsign(emailField);
-  const isPasswordValid = checkpasswordlength(passwordField, passwordInputLogin);
   const isUserValid = await checkuser(user, emailField, passwordField);
 
-  return isEmailValid && isPasswordValid && isUserValid;
+  return isUserValid;
 }
 
 async function checkuser(user, emailField, passwordField) {
+  const errorMsg = document.getElementById('login-error-message');
+
   if (!user) {
-    emailField.setCustomValidity("E-Mail-Adresse oder Passwort sind nicht korrekt.");
-    emailField.reportValidity();
+    emailField.setCustomValidity("");
+    passwordField.setCustomValidity("");
+
+    document.getElementById('pwd-input-div').classList.add('input-error');
+    document.getElementById('email-input-div').classList.add('input-error');
+    errorMsg.classList.remove('hidden');
     return false;
   } else {
     emailField.setCustomValidity("");
     passwordField.setCustomValidity("");
+    resetErrorStyles()
     return true;
   }
 }
-function checkpasswordlength(passwordField) {
-  if (passwordInputLogin.length.length < 8) {
-    passwordField.setCustomValidity("Das Passwort muss mindestens 8 Zeichen lang sein.");
-    passwordField.reportValidity();
-    return false;
-  } else {
-    passwordField.setCustomValidity("");
-    return true;
-  }
-}
+// function checkpasswordlength(passwordField) {
+//   if (passwordInputLogin.length.length < 8) {
+//     passwordField.setCustomValidity("Das Passwort muss mindestens 8 Zeichen lang sein.");
+//     passwordField.reportValidity();
+//     return false;
+//   } else {
+//     passwordField.setCustomValidity("");
+//     return true;
+//   }
+// }
 
-function checkemailsign(emailField) {
-  if (!emailField.value.includes("@")) {
-    emailField.setCustomValidity("Bitte gib eine gültige E-Mail-Adresse mit @ ein.");
-    emailField.reportValidity();
-    return false; 
-  } else {
-    emailField.setCustomValidity(""); 
-    return true;
-  }
-}
+// function checkemailsign(emailField) {
+//   if (!emailField.value.includes("@")) {
+//     emailField.setCustomValidity("Bitte gib eine gültige E-Mail-Adresse mit @ ein.");
+//     emailField.reportValidity();
+//     return false; 
+//   } else {
+//     emailField.setCustomValidity(""); 
+//     return true;
+//   }
+// }
 
 /**
  * Sign in as guest
