@@ -24,28 +24,31 @@ function getSidebarTemplate() {
                  <img src="./assets/img/logo-light.svg" alt="join-logo">
              </a>
         </div>
-        <div class="sidebar-main-links">
-            <a href="/summary.html">
+        <div class="sidebar-link-wrapper main-links">
+            <a class="menu-link-login" href="/login.html" style>
+                <img src="./assets/icons/menu-login.svg">Log In
+            </a>
+            <a class="menu-link-main" href="/summary.html">
                 <img id="menuLinkIconSummary" src="./assets/icons/menu-summary.svg">Summary
             </a>
-            <a href="/add-task.html">
+            <a class="menu-link-main" href="/add-task.html">
                 <img id="menuLinkIconAddTask" src="./assets/icons/menu-add-task.svg">Add Task
             </a>
-            <a href="/board.html">
+            <a class="menu-link-main" href="/board.html">
                 <img id="menuLinkIconBoard" src="./assets/icons/menu-board.svg">Board
             </a>
-            <a href="/contacts.html">
+            <a class="menu-link-main" href="/contacts.html">
                 <img id="menuLinkIconContacts" src="./assets/icons/menu-contacts.svg">Contacts
             </a>
         </div>
-        <div class="sidebar-footer-links">
+        <div class="sidebar-link-wrapper footer-links">
             <div class="temp-links flex-col mb-10"> 
                 <a href="/">Home</a>
                 <a href="#" id="signOutBtnTemp" onclick="signOut()">Logout</a>
                 <a href="/data-handling.html">Data Handling</a>
             </div>
-            <a href="/privacy-policy.html">Privacy Policy</a>
-            <a href="/legal-notice.html">Legal notice</a>
+            <a id="menuLinkPrivacyPolicy" href="/privacy-policy.html">Privacy Policy</a>
+            <a id="menuLinkLegalNotice" href="/legal-notice.html">Legal notice</a>
         </div>
     `
 }

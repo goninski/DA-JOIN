@@ -7,7 +7,7 @@ let lastListContactId = '';
  */
 async function initContacts() {
     getMainTemplates();
-    setActiveMenuLinkStyles('Contacts');
+    setActiveMenuLinkStyles('IconContacts');
     await getContacts();
     await checkAuth();
     // await sortContacts(contacts);

@@ -3,19 +3,35 @@ let loggedInUserId = null;
 
 
 /**
- * Checks authorization (redirect to login if unauthorized)
+ * Checks authorization (redirect to login if unauthorized, if page not public)
+ * 
+ * @param {boolean} isPublic - public page true/false (e.g. terms pages)
  */
-async function checkAuth() {
+async function checkAuth(isPublic = false) {
     loggedInUserId = await getFromLocalStorage('pseudoAuthStatus');
-    if(!loggedInUserId) {
-        redirectToLogin();
-        return;
+    if(loggedInUserId == 'guest') return;
+    document.body.classList.add('logged-out');
+    if(loggedInUserId === null) {
+        if(!isPublic) return redirectToLogin();
+    } else {
+        let index = await getContactIndexFromId(loggedInUserId);
+        if(index < 0) {
+            if(!isPublic) return redirectToLogin();
+            return;
+        }
+        document.body.classList.remove('logged-out');
     }
-    if(loggedInUserId == 'guest') return true;
-    let index = await getContactIndexFromId(loggedInUserId);
-    if(index < 0) {
-        redirectToLogin();
-    }
+}
+
+
+/**
+ * On page load terms pages
+ */
+async function initTermsPages(linkIdSuffix = '') {
+    await getUserData();
+    await checkAuth(true);
+    getMainTemplates();
+    !linkIdSuffix == '' ? setActiveMenuLinkStyles(linkIdSuffix, false): null;
 }
 
 
@@ -34,14 +50,6 @@ function redirectToLogin() {
     // loggedInUserId = null;
     // localStorage.removeItem('pseudoAuthStatus');
     setTimeout(function() {window.location.href = '/login.html'}, 1500);
-}
-
-
-/**
- * On page load terms pages
- */
-function init() {
-    getMainTemplates();
 }
 
 
@@ -80,12 +88,13 @@ function getSidebar() {
 /**
  * Set active menu link styles (add-active-class and set white icon)
  * 
- * @param {string} linkIconIdSuffix - suffix (last word) of id from menuLinkIcon(Suffix)
+ * @param {string} linkIdSuffix - suffix (last word) of id from menuLink..
+ * @param {boolean} isIcon - true if icon element of the link
  */
-function setActiveMenuLinkStyles(linkIconIdSuffix = '') {
-    let element = document.getElementById('menuLinkIcon' + linkIconIdSuffix);
+function setActiveMenuLinkStyles(linkIdSuffix = '', isIcon = true) {
+    let element = document.getElementById('menuLink' + linkIdSuffix);
     element.classList.add('active-page');
-    element.src = element.src.replace('.svg', '-active.svg');
+    isIcon ? element.src = element.src.replace('.svg', '-active.svg') : null;
 }
 
 /**
