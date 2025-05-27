@@ -225,9 +225,20 @@ body.logged-out .sidebar-link-wrapper .menu-link-main {
 }
 .terms-page h2:not(.skip-top-margin) {
     margin-top: 24px;
+    font-size: 20px;
 }
 .terms-page p {
     margin-top: 0;
+    font-size: 16px;
+}
+
+.terms-page {
+    color: black;
+}
+
+.terms-page a:not(.sidebar-link-wrapper a) {
+    color: #29ABE2;
+    text-decoration: none;
 }
 
 
