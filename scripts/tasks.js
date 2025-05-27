@@ -10,6 +10,7 @@ let taskStatus = 'todo';
  */
 async function initAddTask() {
     getMainTemplates();
+    setActiveMenuLinkStyles('AddTask');
     await getContacts();
     await checkAuth();
     await getTaskData();

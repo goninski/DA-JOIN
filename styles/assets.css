@@ -1,3 +1,14 @@
+.logo-large {
+    width: 100px;
+    height: auto;
+    object-fit: contain;
+}
+.logo-small {
+    height: 66px;
+    width: auto;
+    object-fit: contain;
+}
+
 .fs-lg {
     font-size: var(--fs-lg);
 }
@@ -29,11 +40,6 @@ a:hover {
     text-decoration: underline;
 }
 
-.logo-join-small {
-    height: 66px;
-    width: auto;
-    object-fit: contain;
-}
 
 
 /* BUTTONS */

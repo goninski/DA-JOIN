@@ -78,6 +78,17 @@ function getSidebar() {
 
 
 /**
+ * Set active menu link styles (add-active-class and set white icon)
+ * 
+ * @param {string} linkIconIdSuffix - suffix (last word) of id from menuLinkIcon(Suffix)
+ */
+function setActiveMenuLinkStyles(linkIconIdSuffix = '') {
+    let element = document.getElementById('menuLinkIcon' + linkIconIdSuffix);
+    element.classList.add('active-page');
+    element.src = element.src.replace('.svg', '-active.svg');
+}
+
+/**
  * Get html orientation overlay
  */
 function getOrientationOverlay() {

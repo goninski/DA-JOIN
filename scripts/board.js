@@ -17,6 +17,7 @@ let dragScrollScrollLeft;
  */
 async function initBoard() {
     getMainTemplates();
+    setActiveMenuLinkStyles('Board');
     await getContacts()
     await checkAuth();
     await getTaskData()
