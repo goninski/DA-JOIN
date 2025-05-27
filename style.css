@@ -219,17 +219,19 @@ body.logged-out .sidebar-link-wrapper .menu-link-main {
     color: white;
 }
 
-/* TERMS PAGES */
+------------------------/* TERMS PAGES */-------------------------------
 .terms-page .page-title-wrapper {
     margin-bottom: 32px;
 }
 .terms-page h2:not(.skip-top-margin) {
     margin-top: 24px;
     font-size: 20px;
+    font-weight: 700;
 }
 .terms-page p {
     margin-top: 0;
     font-size: 16px;
+    margin-bottom: 0;
 }
 
 .terms-page {
@@ -240,7 +242,6 @@ body.logged-out .sidebar-link-wrapper .menu-link-main {
     color: #29ABE2;
     text-decoration: none;
 }
-
 
 .orientation-overlay {
     /* display: flex; */
@@ -254,6 +255,11 @@ body.logged-out .sidebar-link-wrapper .menu-link-main {
     color: white;
     background-color: rgba(0, 0, 0, 0.85);
     padding-inline: var(--px-sec);
+}
+
+.imprint {
+    margin-bottom: 16px;
+    font-size: 27px;
 }
 
 
