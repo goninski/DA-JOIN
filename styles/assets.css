@@ -20,7 +20,7 @@
     align-items: center;
     column-gap: 30px;
     row-gap: 16px;
-    margin-bottom: 48px;
+    margin-bottom: 30px;
 }
 .page-title {
     font-size: var(--fs-main-title);
