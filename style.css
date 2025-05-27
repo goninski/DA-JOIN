@@ -183,6 +183,12 @@ main, header, footer {
     color: var(--clr-disabled);
     text-decoration: none;
 }
+.sidebar-link-wrapper.footer-links {
+    gap: 4px;
+}
+.sidebar-link-wrapper.footer-links a {
+    height: 35px;
+}
 body:not(.logged-out) .menu-link-login {
     display: none;
 }
