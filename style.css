@@ -223,7 +223,7 @@ body.logged-out .sidebar-link-wrapper .menu-link-main {
 .terms-page .page-title-wrapper {
     margin-bottom: 32px;
 }
-.terms-page h2:not(.skip-top-margin) {
+.terms-page h2:not(.skip-top-margin):not(.subtitle-h2) {
     margin-top: 24px;
     font-size: 20px;
     font-weight: 700;
@@ -233,16 +233,13 @@ body.logged-out .sidebar-link-wrapper .menu-link-main {
     font-size: 16px;
     margin-bottom: 0;
 }
-
 .terms-page {
     color: black;
 }
-
 .terms-page a:not(.sidebar-link-wrapper a) {
     color: #29ABE2;
     text-decoration: none;
 }
-
 .orientation-overlay {
     /* display: flex; */
     display: none;
@@ -256,13 +253,24 @@ body.logged-out .sidebar-link-wrapper .menu-link-main {
     background-color: rgba(0, 0, 0, 0.85);
     padding-inline: var(--px-sec);
 }
-
 .imprint {
     margin-bottom: 16px;
     font-size: 27px;
 }
-
-
+.subtitle {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+.subtitle-h2{
+    font-size: 27px;
+    font-weight: 700;
+    margin-top: 35px;
+}
+.privacy-policy-page h2 {
+    font-weight: 700;
+    font-size: 27px;
+}
 
 
 
