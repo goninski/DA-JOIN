@@ -31,19 +31,19 @@ async function checkLogin(emailInputLogin, passwordInputLogin) {
   const users = await getFromLocalStorage("users") || [];
   const user = users.find(user => user.email === emailInputLogin && user.password === passwordInputLogin);
   const emailField = document.getElementById("email-login");
-  const passwordField = document.getElementById("pwd-login");
+  const passwordLoginField = document.getElementById("pwd-login");
 
-  const isUserValid = await checkuser(user, emailField, passwordField);
+  const isUserValid = await checkuser(user, emailField, passwordLoginField);
 
   return isUserValid;
 }
 
-async function checkuser(user, emailField, passwordField) {
+async function checkuser(user, emailField, passwordLoginField) {
   const errorMsg = document.getElementById('login-error-message');
 
   if (!user) {
     emailField.setCustomValidity("");
-    passwordField.setCustomValidity("");
+    passwordLoginField.setCustomValidity("");
 
     document.getElementById('pwd-input-div').classList.add('input-error');
     document.getElementById('email-input-div').classList.add('input-error');
@@ -51,18 +51,25 @@ async function checkuser(user, emailField, passwordField) {
     return false;
   } else {
     emailField.setCustomValidity("");
-    passwordField.setCustomValidity("");
-    resetErrorStyles()
+    passwordLoginField.setCustomValidity("");
+    resetErrorStylesLogin()
     return true;
   }
 }
-// function checkpasswordlength(passwordField) {
+
+function resetErrorStylesLogin() {
+  document.getElementById('pwd-input-div').classList.remove('input-error');
+  document.getElementById('email-input-div').classList.remove('input-error');
+  document.getElementById('login-error-message').classList.add('hidden');
+}
+
+// function checkpasswordlength(passwordLoginField) {
 //   if (passwordInputLogin.length.length < 8) {
-//     passwordField.setCustomValidity("Das Passwort muss mindestens 8 Zeichen lang sein.");
-//     passwordField.reportValidity();
+//     passwordLoginField.setCustomValidity("Das Passwort muss mindestens 8 Zeichen lang sein.");
+//     passwordLoginField.reportValidity();
 //     return false;
 //   } else {
-//     passwordField.setCustomValidity("");
+//     passwordLoginField.setCustomValidity("");
 //     return true;
 //   }
 // }

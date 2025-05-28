@@ -58,6 +58,9 @@
                                 minlength="8" placeholder="Confirm Password" required oninput="onPasswordInput(this)">
                             <div class="pwd-icon pwd-pic" onclick="togglePasswordVisibility('confirm_pwd', this)"></div>
                         </div>
+                        <div id="sign-up-error-message" class="login-error hidden">
+                            Your passwords don't match. Please try again.
+                        </div>
                     </div>
 
                     <div class="center checkbox-wrapper flex-row gap-10px" onclick="">

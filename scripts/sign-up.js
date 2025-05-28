@@ -15,11 +15,7 @@ async function signUpSubmitHandler(event) {
 
   resetErrorStyles();
 
-  if (!checkInputfields(nameInput, emailInput, passwordInput, passwordRepeatInput)) return;
-
   if (!checkPasswords(passwordInput, passwordRepeatInput)) return;
-
-  if (await emailAlreadyExists(emailInput)) return;
 
   //const users = await getFromLocalStorage("users") || [];
 
@@ -37,18 +33,21 @@ async function signUpSubmitHandler(event) {
   await signUp(newUser);
 }
 
-
 /**
  * Sign up procedure
  * 
  * @param {object} newUser - new signed up user object
  */
 async function signUp(newUser) {
-  await createContact(newUser);
-  await showFloatingMessage('text', 'You Signed Up successfully');
-  loginRedirect();
+  try {
+    await createContact(newUser);
+    await showFloatingMessage('text', 'You Signed Up successfully');
+    loginRedirect();
+  } catch (error) {
+    console.error("Fehler beim Sign-Up:", error);
+    showFloatingMessage('error', 'Sign-Up fehlgeschlagen');
+  }
 }
-
 
 function checkValidity() {
   const form = document.getElementById("signup-form");
@@ -59,42 +58,41 @@ function checkValidity() {
   return true;
 }
 
-function checkInputfields(name, email, password, passwordRepeat) {
-  if (!name || !email || !password || !passwordRepeat) {
-    alert('Bitte alle Felder ausfüllen.');
-    return false;
-  }
-  return true;
-}
-
 function checkPasswords(password, passwordRepeat) {
+  const errorMsgSignUp = document.getElementById('sign-up-error-message');
+  
   if (password !== passwordRepeat) {
-    alert('Passwörter stimmen nicht überein!');
-    document.getElementById('confirm-pwd-div-sign-up').classList.add('input-error');
-    return false;
-  }
-  return true;
-}
+    confirmPwdField.setCustomValidity("");
+    passwordField.setCustomValidity("");
 
-async function emailAlreadyExists(emailInput) {
-  // const users = await getFromLocalStorage("users") || [];
-  await getUserData();
-  console.log(contacts);
-  if (contacts.find(user => user.email === emailInput)) {
-    alert("Diese E-Mail ist bereits registriert.");
-    document.getElementById('email-div-sign-up').classList.add('input-error');
-    clearFields();
+    document.getElementById('confirm-pwd-div-sign-up').classList.add('input-error');
+    errorMsgSignUp.classList.remove('hidden');
+    return false;
+  } else {
+    confirmPwdField.setCustomValidity("");
+    passwordField.setCustomValidity("");
+    resetErrorStyles()
     return true;
   }
-  return false;
 }
+
+// async function emailAlreadyExists(emailInput) {
+//   // const users = await getFromLocalStorage("users") || [];
+//   await getUserData();
+//   console.log(contacts);
+//   if (contacts.find(user => user.email === emailInput)) {
+//     alert("Diese E-Mail ist bereits registriert.");
+//     document.getElementById('email-div-sign-up').classList.add('input-error');
+//     clearFields();
+//     return true;
+//   }
+//   return false;
+// }
 
 function resetErrorStyles() {
   document.getElementById('email-div-sign-up').classList.remove('input-error');
   document.getElementById('confirm-pwd-div-sign-up').classList.remove('input-error');
-  document.getElementById('pwd-input-div').classList.remove('input-error');
-  document.getElementById('email-input-div').classList.remove('input-error');
-  document.getElementById('login-error-message').classList.add('hidden');
+  document.getElementById('sign-up-error-message').classList.add('hidden');
 }
 
 function clearFields() {
