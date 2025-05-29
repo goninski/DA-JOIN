@@ -31,7 +31,7 @@ async function initTermsPages(linkIdSuffix = '') {
     await getUserData();
     await checkAuth(true);
     getMainTemplates();
-    !linkIdSuffix == '' ? setActiveMenuLinkStyles(linkIdSuffix, false): null;
+    !linkIdSuffix == '' ? setActiveNavLinkStyles(linkIdSuffix, false): null;
 }
 
 
@@ -54,11 +54,11 @@ function redirectToLogin() {
 
 
 /**
- * Get html main templates (header, sidebar etc.)
+ * Get html main templates (header, sideNavBar etc.)
  */
 function getMainTemplates() {
     getHeader();
-    getSidebar();
+    getNavBar();
     getOrientationOverlay();
 }
 
@@ -72,16 +72,16 @@ function getHeader() {
 
 
 /**
- * Get html sidebar/mobile bottom bar
+ * Get html sideNavBar/mobile bottom bar
  */
-function getSidebar() {
-    let sidebarRef = document.getElementById('sidebar');
-    sidebarRef.innerHTML = getSidebarTemplate();
-    sidebarRef.classList.add('hide--ss-mob');
+function getNavBar() {
+    let sideNavBar = document.getElementById('sideNavBar');
+    sideNavBar.innerHTML = getNavBarTemplate();
+    sideNavBar.classList.add('hide--ss-mob');
 
-    let sidebarMobRef = document.getElementById('sidebarMob');
-    sidebarMobRef.innerHTML = getSidebarMobTemplate();
-    sidebarMobRef.classList.add('show--ss-mob');
+    let footerNavBar = document.getElementById('footerNavBar');
+    footerNavBar.innerHTML = getNavBarTemplate('Mob');
+    footerNavBar.classList.add('show--ss-mob');
 }
 
 
@@ -91,10 +91,15 @@ function getSidebar() {
  * @param {string} linkIdSuffix - suffix (last word) of id from menuLink..
  * @param {boolean} isIcon - true if icon element of the link
  */
-function setActiveMenuLinkStyles(linkIdSuffix = '', isIcon = true) {
-    let element = document.getElementById('menuLink' + linkIdSuffix);
-    element.classList.add('active-page');
-    isIcon ? element.src = element.src.replace('.svg', '-active.svg') : null;
+function setActiveNavLinkStyles(linkIdSuffix = '', isIcon = true) {
+    let linkSideBar = document.getElementById('navLink' + linkIdSuffix);
+    let linkFooterBar = document.getElementById('navLink' + linkIdSuffix + 'Mob');
+    linkSideBar.classList.add('active');
+    linkFooterBar.classList.add('active');
+    if(isIcon) {
+        linkSideBar.src = linkSideBar.src.replace('.svg', '-active.svg');
+        linkFooterBar.src = linkFooterBar.src.replace('.svg', '-active.svg');
+    }
 }
 
 /**

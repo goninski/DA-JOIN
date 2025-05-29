@@ -7,7 +7,7 @@ let summary = {};
  */
 async function initSummary() {
     getMainTemplates();
-    setActiveMenuLinkStyles('IconSummary');
+    setActiveNavLinkStyles('IconSummary');
     await getUserData();
     await checkAuth();
     await getTaskData();

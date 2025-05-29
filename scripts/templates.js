@@ -15,41 +15,83 @@ function getHeaderTemplate() {
 
 
 /**
- * Returns the html of the global sidebar (screen > 735px)
+ * Returns the html of the global navbar (sidbar / footerbar
+ * 
+ * @param {string} locationSuffix - 'mob' for mobile navbar
  */
-function getSidebarTemplate() {
+function getNavBarTemplate(locationSuffix = '') {
     return `
-        <div class="logo-large sidebar-logo">
+        <div class="logo logo-large">
              <a href="/summary.html">
                  <img src="./assets/img/logo-light.svg" alt="join-logo">
              </a>
         </div>
-        <div class="sidebar-link-wrapper main-links">
-            <a class="menu-link-login" href="/login.html" style>
-                <img src="./assets/icons/menu-login.svg">Log In
-            </a>
-            <a class="menu-link-main" href="/summary.html">
-                <img id="menuLinkIconSummary" src="./assets/icons/menu-summary.svg">Summary
-            </a>
-            <a class="menu-link-main" href="/add-task.html">
-                <img id="menuLinkIconAddTask" src="./assets/icons/menu-add-task.svg">Add Task
-            </a>
-            <a class="menu-link-main" href="/board.html">
-                <img id="menuLinkIconBoard" src="./assets/icons/menu-board.svg">Board
-            </a>
-            <a class="menu-link-main" href="/contacts.html">
-                <img id="menuLinkIconContacts" src="./assets/icons/menu-contacts.svg">Contacts
-            </a>
-        </div>
-        <div class="sidebar-link-wrapper footer-links">
-            <div class="temp-links flex-col mb-10"> 
-                <a href="/">Home</a>
-                <a href="#" id="signOutBtnTemp" onclick="signOut()">Logout</a>
-                <a href="/data-handling.html">Data Handling</a>
+        <nav class="flex flex-grow"> 
+            <div class="nav-links nav-links-main flex flex-grow">
+                <a class="nav-link-login mr-auto" href="/login.html" style>
+                    <img id=navLinkIconLogin${locationSuffix}" src="./assets/icons/menu-login.svg">Log In
+                </a>
+                <a class="nav-link-app" href="/summary.html">
+                    <img id="navLinkIconSummary${locationSuffix}" src="./assets/icons/menu-summary.svg">Summary
+                </a>
+                <a class="nav-link-app" href="/add-task.html">
+                    <img id="navLinkIconAddTask${locationSuffix}" src="./assets/icons/menu-add-task.svg">Add Task
+                </a>
+                <a class="nav-link-app" href="/board.html">
+                    <img id="navLinkIconBoard${locationSuffix}" src="./assets/icons/menu-board.svg">Board
+                </a>
+                <a class="nav-link-app" href="/contacts.html">
+                    <img id="navLinkIconContacts${locationSuffix}" src="./assets/icons/menu-contacts.svg">Contacts
+                </a>
             </div>
-            <a id="menuLinkPrivacyPolicy" href="/privacy-policy.html">Privacy Policy</a>
-            <a id="menuLinkLegalNotice" href="/legal-notice.html">Legal notice</a>
+            <div class="nav-links nav-links-terms flex">
+                <a id="navLinkLogout${locationSuffix}" href=#" onclick="signOut()">Logout</a>
+                <a id="navLinkPrivacyPolicy${locationSuffix}" href="/privacy-policy.html">Privacy Policy</a>
+                <a id="navLinkLegalNotice${locationSuffix}" href="/legal-notice.html">Legal notice</a>
+            </div>
+        </nav>
+    `
+}
+
+
+/**
+ * Returns the html of the global sidebar (screen > 735px)
+ */
+function getSideNavBarTemplate() {
+    return `
+        <div class="logo logo-large">
+             <a href="/summary.html">
+                 <img src="./assets/img/logo-light.svg" alt="join-logo">
+             </a>
         </div>
+        <nav class="flex-col flex-grow"> 
+            <div class="nav-link-wrapper main-links">
+                <a class="menu-link-login" href="/login.html" style>
+                    <img src="./assets/icons/menu-login.svg">Log In
+                </a>
+                <a class="menu-link-main" href="/summary.html">
+                    <img id="menuLinkIconSummary" src="./assets/icons/menu-summary.svg">Summary
+                </a>
+                <a class="menu-link-main" href="/add-task.html">
+                    <img id="menuLinkIconAddTask" src="./assets/icons/menu-add-task.svg">Add Task
+                </a>
+                <a class="menu-link-main" href="/board.html">
+                    <img id="menuLinkIconBoard" src="./assets/icons/menu-board.svg">Board
+                </a>
+                <a class="menu-link-main" href="/contacts.html">
+                    <img id="menuLinkIconContacts" src="./assets/icons/menu-contacts.svg">Contacts
+                </a>
+            </div>
+            <div class="nav-link-wrapper term-links">
+                <div class="temp-links flex-col mb-10"> 
+                    <a href="/">Home</a>
+                    <a href="#" id="signOutBtnTemp" onclick="signOut()">Logout</a>
+                    <a href="/data-handling.html">Data Handling</a>
+                </div>
+                <a id="menuLinkPrivacyPolicy" href="/privacy-policy.html">Privacy Policy</a>
+                <a id="menuLinkLegalNotice" href="/legal-notice.html">Legal notice</a>
+            </div>
+        </nav>
     `
 }
 
@@ -57,14 +99,34 @@ function getSidebarTemplate() {
 /**
  * Returns the html of the global mobile bottom bar (screen <= 735px)
  */
-function getSidebarMobTemplate() {
+function getFooterNavBarTemplate() {
     return `
-        <div class="link-wrapper temp flex-row flex-grow gap-05 justify-around align-center"> 
-            <a href="summary.html">Summary</a>
-            <a href="board.html">Board</a>
-            <a href="add-task.html">Add Task</a>
-            <a href="contacts.html">Contacts</a>
-        </div>
+        <nav class="footer-nav flex-row flex-grow justify-around align-center">
+            <a class="menu-link-login" href="/login.html" style>
+                <img src="./assets/icons/menu-login.svg">Log In
+            </a>
+            <div class="nav-link-wrapper term-links">
+                <div class="temp-links flex-col mb-10"> 
+                    <a href="/">Home</a>
+                    <a href="#" id="signOutBtnTemp" onclick="signOut()">Logout</a>
+                    <a href="/data-handling.html">Data Handling</a>
+                </div>
+                <a id="menuLinkPrivacyPolicy" href="/privacy-policy.html">Privacy Policy</a>
+                <a id="menuLinkLegalNotice" href="/legal-notice.html">Legal notice</a>
+            </div>
+            <a class="menu-link-main" href="/summary.html">
+                <img id="menuLinkIconSummaryMob" src="./assets/icons/menu-summary.svg">Summary
+            </a>
+            <a class="menu-link-main" href="/add-task.html">
+                <img id="menuLinkIconAddTaskMob" src="./assets/icons/menu-add-task.svg">Add Task
+            </a>
+            <a class="menu-link-main" href="/board.html">
+                <img id="menuLinkIconBoardMob" src="./assets/icons/menu-board.svg">Board
+            </a>
+            <a class="menu-link-main" href="/contacts.html">
+                <img id="menuLinkIconContactsMob" src="./assets/icons/menu-contacts.svg">Contacts
+            </a>
+        </nav>
     `
 }
 

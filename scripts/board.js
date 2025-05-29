@@ -17,7 +17,7 @@ let dragScrollScrollLeft;
  */
 async function initBoard() {
     getMainTemplates();
-    setActiveMenuLinkStyles('IconBoard');
+    setActiveNavLinkStyles('IconBoard');
     await getContacts()
     await checkAuth();
     await getTaskData()
