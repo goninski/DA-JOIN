@@ -35,7 +35,7 @@
                     <div class="login_border"></div>
                 </div>
 
-                <div class="flex-col gap-20 login-email-part center">
+                <div class="flex-col login-email-part center">
                     <div class="input-wrapper-signup-login flex justify-between" id="email-input-div">
                         <input class="login-signup-input pictureinput mail-pic" type="email" name="email"
                             id="email-login" placeholder="Email" required>
@@ -46,14 +46,16 @@
                             minlength="8" placeholder="Password" required oninput="onPasswordInput(this)">
                         <div class="pwd-icon pwd-pic" onclick="togglePasswordVisibility('pwd-login', this)"></div>
                     </div>
+                    
                     <div id="login-error-message" class="login-error hidden">
                         Your email or password is incorrect. Please try again.
                     </div>
                 </div>
+                
                 <div class="flex-row align-end justify-center gap-35">
                     <button id="signInBtn" type="button" value="Log in" class="button btn-login-size btn-fourth"
                         onclick="handleLogin()">Log in</button>
-                    <button id="signInGuestBtn" class="button btn-login-size btn-third"
+                    <button id="signInGuestBtn" class="button btn-login-size btn-secondary"
                         onclick="guestLogin(event)">Guest Log in</button>
                 </div>
             </div>
