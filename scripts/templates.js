@@ -149,7 +149,14 @@ function getTaskDetailsTemplate(task, category) {
         </div>
       </div>
 
-      <div id="taskDetailsAssignedContactsWrapper"></div>
+      <div class="assigned-to mt">
+        <strong>Assigned To:</strong>
+      </div>
+      <ul id="taskDetailsAssignedContactsWrapper" class="profile-batches task-board-detail-view hide-if-empty flex-col"></ul>
+
+      <div class="subtasks mt">
+        <strong>Subtasks:</strong>
+      </div>
       <div id="taskDetailsSubtaskWrapper"></div>
 
       <div class="edit-buttons flex-row align-center justify-end mt">
@@ -170,15 +177,12 @@ function getTaskDetailsTemplate(task, category) {
  * 
  * @param {object} contact - a contact object (of assigned contacts)
  */
-function getTaskDetailsAssignedContactsTemplate(contact) {
+function getTaskDetailsAssignedContactTemplate(contact) {
   return `
-    <div class="assigned-to mt">
-        <strong>Assigned To:</strong>
-    </div>
-    <div class="assigned-person flex-row align-center gap">
-      <div class="avatar" style="background-color: ${contact.color};">${contact.initials}</div>
-      <div class="name">${contact.name}</div>
-    </div>
+    <li class="flex-row gap align-center">
+        <div class="profile-batch label-icon" style="--profile-color: ${contact.color};">${contact.initials}</div>
+        ${contact.name}
+    </li>
   `;
 }
 
@@ -186,13 +190,12 @@ function getTaskDetailsAssignedContactsTemplate(contact) {
 /**
  * Return html of a subtask for task details (within status board dialogue)
  * 
- * @param {object} subtask - a subtask object (of subtasks)
+ * @param {object} task - current task object
+ * @param {object} subtask - a subtask object (of the current task)
+ * @param {number} subtaskIndex - index of the current subtask
  */
-function getTaskDetailsSubtaskTemplate(subtask) {
+function getTaskDetailsSubtaskTemplate(task, subtask, subtaskIndex) {
   return `
-    <div class="subtasks mt">
-        <strong>Subtasks:</strong>
-    </div>
     <label class="subtask-item flex-row align-center gap">
       <input type="checkbox" ${subtask.done ? 'checked' : ''} disabled>
       ${subtask.title}

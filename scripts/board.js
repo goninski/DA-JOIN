@@ -139,20 +139,23 @@ async function showTaskDetail(event, taskId) {
     await showTaskDialogue('taskDetailsWrapper');
     document.getElementById('taskDetailsWrapper').innerHTML = getTaskDetailsTemplate(task, category);
     document.getElementById('taskDialogue').classList.add('show-task');
-    hasLength(task.contactIds) ? await renderTaskDetailsAssignedContacts(task.contactIds) : null;
-    hasLength(task.subtasks) ? await renderTaskDetailsSubtasks(task.subtasks) : null;
+    hasLength(task.contactIds) ? await renderTaskDetailsAssignedContacts(task) : null;
+    hasLength(task.subtasks) ? await renderTaskDetailsSubtasks(task) : null;
 }
 
 
 /**
  * Render assigned contacts on task detail
  * 
- * @param {array} contactIds - array of assigned contact id's (of current task)
+ * @param {object} task - current task
  */
-async function renderTaskDetailsAssignedContacts(contactIds) {
+async function renderTaskDetailsAssignedContacts(task) {
+    let contactIds = task.contactIds;
+    let wrapper = document.getElementById('taskDetailsAssignedContactsWrapper');
+    wrapper.innerHTML = '';    
     for (let index = 0; index < contactIds.length; index++) {
-      contact = await getContactById(contactIds[index]);
-      document.getElementById('taskDetailsAssignedContactsWrapper').innerHTML = getTaskDetailsAssignedContactsTemplate(contact);
+      let contact = await getContactById(contactIds[index]);
+      wrapper.innerHTML += getTaskDetailsAssignedContactTemplate(contact);
     }
 }
 
@@ -160,11 +163,15 @@ async function renderTaskDetailsAssignedContacts(contactIds) {
 /**
  * Render subtasks on task detail
  * 
- * @param {array} subtasks - array of subtask objects (of current task)
+ * @param {object} task - current task
  */
-async function renderTaskDetailsSubtasks(subtasks) {
-    for (let index = 0; index < subtasks.length; index++) {
-      document.getElementById('taskDetailsSubtaskWrapper').innerHTML = getTaskDetailsSubtaskTemplate(subtasks[index]);
+async function renderTaskDetailsSubtasks(task) {
+    let subtasks = task.subtasks;
+    let wrapper = document.getElementById('taskDetailsSubtaskWrapper');
+    wrapper.innerHTML = '';    
+    for (let subtaskIndex = 0; subtaskIndex < subtasks.length; subtaskIndex++) {
+      let subtask = subtasks[subtaskIndex];
+      wrapper.innerHTML += getTaskDetailsSubtaskTemplate(task, subtask, subtaskIndex);
     }
 }
 
