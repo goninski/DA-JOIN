@@ -16,10 +16,9 @@ let dragScrollScrollLeft;
  * On page load board.html
  */
 async function initBoard() {
-    getMainTemplates();
     await getContacts()
     await checkAuth();
-    setNavLinkProps('IconBoard');
+    getMainTemplates();
     await getTaskData()
     renderTasks = tasks;
     await setSearchBase();

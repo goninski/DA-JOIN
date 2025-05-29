@@ -6,10 +6,9 @@ let summary = {};
  * On page load summary.html
  */
 async function initSummary() {
-    getMainTemplates();
     await getUserData();
     await checkAuth();
-    setNavLinkProps('IconSummary');
+    getMainTemplates();
     await getTaskData();
     await setSummaryObj();
 }

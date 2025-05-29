@@ -47,7 +47,6 @@ async function initTermsPages(linkIdSuffix = '') {
     await getUserData();
     await checkAuth(true);
     getMainTemplates();
-    !linkIdSuffix == '' ? setNavLinkProps(linkIdSuffix, false): null;
 }
 
 
@@ -76,6 +75,7 @@ function redirectToLogin() {
 function getMainTemplates() {
     getHeader();
     getNavBar();
+    setNavLinkProps();
     getOrientationOverlay();
 }
 
@@ -91,7 +91,8 @@ function getHeader() {
 /**
  * toggle header navigation
  */
-function toggleHeaderNav() {
+function toggleHeaderNav(event) {
+    event.preventDefault();
     document.getElementById('headerNav').classList.toggle('hide');
 }
 
@@ -111,24 +112,19 @@ function getNavBar() {
 
 
 /**
- * Set active menu link properties (active class, white icon, user initials)
- * 
- * @param {string} linkIdSuffix - suffix (last word) of id from menuLink..
- * @param {boolean} isIcon - true if icon element of the link
+ * Set dynamic nav properties (user batch, active page styles)
  */
-function setNavLinkProps(linkIdSuffix = '', isIcon = true) {
+function setNavLinkProps() {
     let headerNavToggle = document.getElementById('headerNavTrigger');
-    let linkSideBar = document.getElementById('navLink' + linkIdSuffix);
-    let linkFooterBar = document.getElementById('navLink' + linkIdSuffix + 'Mob');
-    let linkHeaderNav = document.getElementById('navLink' + linkIdSuffix + 'Header');
     headerNavToggle.innerText = loggedInUser ? loggedInUser.initials : 'G';
-    linkSideBar.classList.add('active');
-    linkFooterBar.classList.add('active');
-    // linkHeaderNav.classList.add('active');
-    if(isIcon) {
-        linkSideBar.src = linkSideBar.src.replace('.svg', '-active.svg');
-        linkFooterBar.src = linkFooterBar.src.replace('.svg', '-active.svg');
-    }
+    let navLinks = document.querySelectorAll('nav .nav-links a');
+    navLinks.forEach(link => {
+        if(link.href === window.location.href) {
+            link.classList.add('active');
+            let iconElement = link.querySelector('img');
+            iconElement ? iconElement.src = iconElement.src.replace('.svg', '-active.svg') : null;
+        }
+    });
 }
 
 

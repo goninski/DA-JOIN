@@ -6,10 +6,9 @@ let lastListContactId = '';
  * on page load contacts.html
  */
 async function initContacts() {
-    getMainTemplates();
     await getContacts();
     await checkAuth();
-    setNavLinkProps('IconContacts');
+    getMainTemplates();
     await renderContactList();
 }
 
