@@ -1,5 +1,5 @@
 /**
- * Returns the html of the global header
+ * Return html of the global header
  */
 function getHeaderTemplate() {
     return `
@@ -25,7 +25,7 @@ function getHeaderTemplate() {
 
 
 /**
- * Returns the html of the global navbar (sidbar / footerbar
+ * Return html of the global navbar (sidbar / footerbar
  * 
  * @param {string} locationIdSuffix - 'mob' for mobile navbar
  */
@@ -62,7 +62,7 @@ function getNavBarTemplate() {
 
 
 /**
- * Returns the html of a single status board
+ * Return html of a single status board
  * 
  * @param {object} board - a board object (of boards)
  */
@@ -84,7 +84,7 @@ function getBoardTemplate(board) {
 
 
 /**
- * Returns the html of the no-task drop zone (for boards with no tasks assigned)
+ * Return html of the no-task drop zone (for boards with no tasks assigned)
  */
 function getBoardNoTaskTemplate() {
     return `
@@ -94,7 +94,7 @@ function getBoardNoTaskTemplate() {
 
 
 /**
- * Returns the html of a single task of a status board
+ * Return html of a single task of a status board
  * 
  * @param {object} task - a task object (of tasks)
  * @param {object} category - the category object (of categories) for the current task
@@ -126,32 +126,13 @@ async function getBoardTasksTemplate(task, category, subtaskCount, subtaskProgre
 
 
 /**
- * Returns the html of the task details (within status board dialogue)
- * ...this template has to be completed yet !
+ * Return html of the task details (within status board dialogue)
  * 
  * @param {object} task - a task object (of tasks)
  * @param {object} category - the category object (of categories) for the current task
- * 
  */
-const category = categories.find(c => c.id === task.categoryId);
-
-function getTaskDetailsWrapperTemplate(task, category) {
-  const dueDate = new Date(task.dueDate).toLocaleDateString('en-GB'); 
-
-  const assignedHtml = task.assignedTo?.map(person => `
-    <div class="assigned-person flex-row align-center gap">
-      <div class="avatar" style="background-color: ${person.color};">${person.initials}</div>
-      <div class="name">${person.name}</div>
-    </div>
-  `).join('') || '';
-
-  const subtasksHtml = task.subtasks?.map(st => `
-    <label class="subtask-item flex-row align-center gap">
-      <input type="checkbox" ${st.done ? 'checked' : ''} disabled />
-      ${st.title}
-    </label>
-  `).join('') || '';
-
+function getTaskDetailsTemplate(task, category) {
+  let dueDate = new Date(task.dueDate).toLocaleDateString('en-GB'); 
   return `
     <div class="task-details-wrapper">
       <div class="task-category" style="background-color: ${category};">${category}</div>
@@ -168,15 +149,8 @@ function getTaskDetailsWrapperTemplate(task, category) {
         </div>
       </div>
 
-      <div class="assigned-to mt">
-        <strong>Assigned To:</strong>
-        ${assignedHtml}
-      </div>
-
-      <div class="subtasks mt">
-        Subtasks
-        ${subtasksHtml}
-      </div>
+      <div id="taskDetailsAssignedContactsWrapper"></div>
+      <div id="taskDetailsSubtaskWrapper"></div>
 
       <div class="edit-buttons flex-row align-center justify-end mt">
         <button onclick="openEditTaskForm(event, '${task.id}')">
@@ -192,7 +166,43 @@ function getTaskDetailsWrapperTemplate(task, category) {
 
 
 /**
- * Returns the html of the add and edit task forms (form inner content)
+ * Return html of a assigned contacts for task details (within status board dialogue)
+ * 
+ * @param {object} contact - a contact object (of assigned contacts)
+ */
+function getTaskDetailsAssignedContactsTemplate(contact) {
+  return `
+    <div class="assigned-to mt">
+        <strong>Assigned To:</strong>
+    </div>
+    <div class="assigned-person flex-row align-center gap">
+      <div class="avatar" style="background-color: ${contact.color};">${contact.initials}</div>
+      <div class="name">${contact.name}</div>
+    </div>
+  `;
+}
+
+
+/**
+ * Return html of a subtask for task details (within status board dialogue)
+ * 
+ * @param {object} subtask - a subtask object (of subtasks)
+ */
+function getTaskDetailsSubtaskTemplate(subtask) {
+  return `
+    <div class="subtasks mt">
+        <strong>Subtasks:</strong>
+    </div>
+    <label class="subtask-item flex-row align-center gap">
+      <input type="checkbox" ${subtask.done ? 'checked' : ''} disabled>
+      ${subtask.title}
+    </label>
+  `;
+}
+
+
+/**
+ * Returns html of the add and edit task forms (form inner content)
  * 
  * @param {object} task - a task object (of tasks) > currently not in use
  */
@@ -283,7 +293,7 @@ function getTaskFormFieldsTemplate(task) {
 
 
 /**
- * Returns the html of the multiple select datalist for the user/contact assignment in the task forms
+ * Return html of the multiple select datalist for the user/contact assignment in the task forms
  * 
  * @param {object} contact - a contact object (of contacts)
  * @param {number} index - the listing index of the current contact
@@ -306,7 +316,7 @@ function getContactSelectOptionTemplate(contact, index) {
 
 
 /**
- * Returns the html of the select datalist for the category assigment in the task forms
+ * Return html of the select datalist for the category assigment in the task forms
  * 
  * @param {object} category - a category object (of categories)
  * @param {number} index - the listing index of the current category
@@ -320,7 +330,7 @@ function getCategorySelectOptionTemplate(category, index) {
 
 
 /**
- * Returns the html of the listed subtasks in the task forms
+ * Return html of the listed subtasks in the task forms
  * 
  * @param {object} subtask - current subtask object
  * @param {number} index - listing index of the current subtask
@@ -346,7 +356,7 @@ function getSubtasksTemplate(subtask, index, taskId) {
 
 
 /**
- * Returns the html of the cancel and submit button in the add contact form
+ * Return html of the cancel and submit button in the add contact form
  */
 function getAddContactSubmitButtonsTemplate() {
     return `
@@ -357,7 +367,7 @@ function getAddContactSubmitButtonsTemplate() {
 
 
 /**
- * Returns the html of the delete and submit button in the edit contact form
+ * Return html of the delete and submit button in the edit contact form
  * 
  * @param {string} contactId - contact id of the contact to edit
  */
@@ -370,7 +380,7 @@ function getEditContactSubmitButtonsTemplate(contactId) {
 
 
 /**
- * Returns the html of the contact list on the contact page
+ * Return html of the contact list on the contact page
  * 
  * @param {string} groupName - group name (first name letter) of a contact group (grouped by first name letter)
  */
@@ -383,7 +393,7 @@ function getContactListTemplate(groupName) {
 
 
 /**
- * Returns the html of a single contact in the contact list
+ * Return html of a single contact in the contact list
  * 
  * @param {object} contact - contact object (of contacts)
  */
@@ -401,7 +411,7 @@ function getContactListGroupTemplate(contact) {
 
 
 /**
- * Returns the html of the contact name and profile batch (within the detail view of a selected contact via contact list)
+ * Return html of the contact name and profile batch (within the detail view of a selected contact via contact list)
  * 
  * @param {object} contact - current contact object
  */
@@ -420,7 +430,7 @@ function getContactDetailProfileBatchTemplate(contact) {
 
 
 /**
- * Returns the html of further contact informations (within the detail view of a selected contact via contact list)
+ * Return html of further contact informations (within the detail view of a selected contact via contact list)
  * 
  * @param {object} contact - current contact object
  */
@@ -441,7 +451,7 @@ function getContactDetailInfoTemplate(contact) {
 
 
 /**
- * Returns the html of a single contact profile batch (for multiple usage)
+ * Return html of a single contact profile batch (for multiple usage)
  * 
  * @param {object} contact - current contact object
  */
@@ -453,7 +463,7 @@ function getContactProfileBatchTemplate(contact) {
 
 
 /**
- * Returns the html of a floating text confirmation popup (for multiple usage)
+ * Return html of a floating text confirmation popup (for multiple usage)
  * 
  * @param {string} msg - message
  */
@@ -463,7 +473,7 @@ function getFloatingMessageTextTemplate(msg) {
 
 
 /**
- * Returns the html of the floating added task confirmation popup
+ * Return html of the floating added task confirmation popup
  */
 function getFloatingMessageTaskAddedTemplate() {
     return `
@@ -474,7 +484,7 @@ function getFloatingMessageTaskAddedTemplate() {
 
 
 /**
- * Returns the html of a svg plus icon (for multiple usage, mainly for buttons)
+ * Return html of a svg plus icon (for multiple usage, mainly for buttons)
  * (the color contains a css variable for flexible styling)
  * 
  * @param {string} label - optional label before the icon
@@ -492,7 +502,7 @@ function getIconTemplatePlus(label = "") {
 
 
 /**
- * Returns the html of a svg close icon (for multiple usage, mainly for buttons)
+ * Return html of a svg close icon (for multiple usage, mainly for buttons)
  * (the color contains a css variable for flexible styling)
  * 
  * @param {string} label - optional label before the icon
@@ -508,7 +518,7 @@ function getIconTemplateClose(label = "") {
 
 
 /**
- * Returns the html of a svg cancel icon (for multiple usage, mainly for buttons)
+ * Return html of a svg cancel icon (for multiple usage, mainly for buttons)
  * (the color contains a css variable for flexible styling)
  * 
  * @param {string} label - optional label before the icon
@@ -524,7 +534,7 @@ function getIconTemplateCancel(label = "") {
 
 
 /**
- * Returns the html of a svg check icon (for multiple usage, mainly for buttons)
+ * Return html of a svg check icon (for multiple usage, mainly for buttons)
  * (the color contains a css variable for flexible styling)
  * 
  * @param {string} label - optional label before the icon
@@ -540,7 +550,7 @@ function getIconTemplateCheck(label = "") {
 
 
 /**
- * Returns the html of a svg high priority icon (for multiple usage, mainly for buttons)
+ * Return html of a svg high priority icon (for multiple usage, mainly for buttons)
  * (the color contains a css variable for flexible styling)
  * 
  * @param {string} label - optional label before the icon
@@ -557,7 +567,7 @@ function getIconTemplatePrioHigh(label = "") {
 
 
 /**
- * Returns the html of a svg medium priority icon (for multiple usage, mainly for buttons)
+ * Return html of a svg medium priority icon (for multiple usage, mainly for buttons)
  * (the color contains a css variable for flexible styling)
  * 
  * @param {string} label - optional label before the icon
@@ -574,7 +584,7 @@ function getIconTemplatePrioMedium(label = "") {
 
 
 /**
- * Returns the html of a svg low priority icon (for multiple usage, mainly for buttons)
+ * Return html of a svg low priority icon (for multiple usage, mainly for buttons)
  * (the color contains a css variable for flexible styling)
  * 
  * @param {string} label - optional label before the icon

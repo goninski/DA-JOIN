@@ -111,8 +111,9 @@ async function renderBoardTasks(renderTasks, boardId, boardTaskList) {
   if(hasLength(boardTasks)) {
     for (let index = 0; index < boardTasks.length; index++) {
       let task = boardTasks[index];
-      let catIndex = await getCategoryIndexFromId(task.categoryId);
-      let category = categories[catIndex];
+      // let catIndex = await getCategoryIndexFromId(task.categoryId);
+      // let category = categories[catIndex];
+      let category = await getCategoryById(task.categoryId);
       let subtaskCount = await getSubtaskProgress(task, 'count');
       let subtaskProgressWidth = (128 * await getSubtaskProgress(task, 'progress') / 100) + 'px';
       boardTaskList.innerHTML += await getBoardTasksTemplate(task, category, subtaskCount, subtaskProgressWidth);
@@ -132,16 +133,40 @@ async function renderBoardTasks(renderTasks, boardId, boardTaskList) {
  */
 async function showTaskDetail(event, taskId) {
     event.stopPropagation();
-    // event ? event.stopPropagation() : null;
     formMode = 'show';
-    let index = await getTaskIndexFromId(taskId);
-    currentTask = tasks[index];
-    console.log(currentTask);
+    let task = await getTaskById(taskId);
+    let category = await getCategoryById(task.categoryId);
     await showTaskDialogue('taskDetailsWrapper');
-    document.getElementById('taskDetailsWrapper').innerHTML = getTaskDetailsWrapperTemplate(currentTask);
+    document.getElementById('taskDetailsWrapper').innerHTML = getTaskDetailsTemplate(task, category);
     document.getElementById('taskDialogue').classList.add('show-task');
+    hasLength(task.contactIds) ? await renderTaskDetailsAssignedContacts(task.contactIds) : null;
+    hasLength(task.subtasks) ? await renderTaskDetailsSubtasks(task.subtasks) : null;
 }
 
+
+/**
+ * Render assigned contacts on task detail
+ * 
+ * @param {array} contactIds - array of assigned contact id's (of current task)
+ */
+async function renderTaskDetailsAssignedContacts(contactIds) {
+    for (let index = 0; index < contactIds.length; index++) {
+      contact = await getContactById(contactIds[index]);
+      document.getElementById('taskDetailsAssignedContactsWrapper').innerHTML = getTaskDetailsAssignedContactsTemplate(contact);
+    }
+}
+
+
+/**
+ * Render subtasks on task detail
+ * 
+ * @param {array} subtasks - array of subtask objects (of current task)
+ */
+async function renderTaskDetailsSubtasks(subtasks) {
+    for (let index = 0; index < subtasks.length; index++) {
+      document.getElementById('taskDetailsSubtaskWrapper').innerHTML = getTaskDetailsSubtaskTemplate(subtasks[index]);
+    }
+}
 
 
 /**

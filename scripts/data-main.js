@@ -62,6 +62,36 @@ async function getCategories() {
 
 
 /**
+ * Helper: returns a task object by id
+ * 
+ * @param {string} taskId - task id
+ */
+async function getTaskById(taskId) {
+    return tasks.find(task => task.id == taskId);
+}
+
+
+/**
+ * Helper: returns a contact object by id
+ * 
+ * @param {string} contactId - contact id
+ */
+async function getContactById(contactId) {
+    return contacts.find(contact => contact.id == contactId);
+}
+
+
+/**
+ * Helper: returns a category object by id
+ * 
+ * @param {string} categoryId - category id
+ */
+async function getCategoryById(categoryId) {
+    return categories.find(category => category.id == categoryId);
+}
+
+
+/**
  * Create a new contact on db/ls (incl. validate contact object and add to contacts object array)
  * 
  * @param {object} contact - a contact object
