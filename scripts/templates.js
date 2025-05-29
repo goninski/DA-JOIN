@@ -23,9 +23,9 @@ function getHeaderTemplate() {
  */
 function getNavBarTemplate(locationSuffix = '') {
     return `
-        <a href="/summary.html" class="nav-link-logo">
+        <div href="/summary.html" class="nav-link-logo">
             <img src="./assets/img/logo-light.svg" alt="join-logo" class="logo logo-large">
-        </a>
+        </div>
         <nav class="flex flex-grow"> 
             <div class="nav-links nav-links-main flex flex-grow">
                 <a class="nav-link-login mr-auto" href="/login.html" style>
