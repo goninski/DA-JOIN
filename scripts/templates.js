@@ -3,14 +3,19 @@
  */
 function getHeaderTemplate() {
     return `
-        <div class="ct-container flex-row justify-between align-center">
+        <div class="header-inner ct-container flex-row justify-between align-center">
             <div class="header-link-logo">
                 <img src="./assets/img/logo-dark.svg" alt="join-logo" class="logo logo-small">
             </div>
             <p class="header-title">Kanban Project Management&nbsp;Tool</p>
             <a class="header-link-help" href="help.html"><img class="help-icon" src="./assets/icons/help.svg" alt="help-icon"></a>
             <button id="headerNavTrigger" onclick="toggleHeaderNav()" class="profile-batch">G</button>
-            <nav id="headerNav" class="hide">Nav...</nav> 
+            <nav id="headerNav" class="nav-links hide">
+                <a id="navLinkLegalNoticeHeader" href="/legal-notice.html">Legal Notice</a>
+                <a id="navLinkPrivacyPolicyHeader" href="/privacy-policy.html">Privacy Policy</a>
+                <a id="navLinkDataHandlingHeader" href="/data-handling.html">Data Handling</a>
+                <a href="#" onclick="signOut()">Log out</a>
+            </nav> 
         </div>
     `
 }
@@ -19,9 +24,9 @@ function getHeaderTemplate() {
 /**
  * Returns the html of the global navbar (sidbar / footerbar
  * 
- * @param {string} locationSuffix - 'mob' for mobile navbar
+ * @param {string} locationIdSuffix - 'mob' for mobile navbar
  */
-function getNavBarTemplate(locationSuffix = '') {
+function getNavBarTemplate(locationIdSuffix = '') {
     return `
         <div href="/summary.html" class="nav-link-logo">
             <img src="./assets/img/logo-light.svg" alt="join-logo" class="logo logo-large">
@@ -29,25 +34,24 @@ function getNavBarTemplate(locationSuffix = '') {
         <nav class="flex flex-grow"> 
             <div class="nav-links nav-links-main flex flex-grow">
                 <a class="nav-link-login mr-auto" href="/login.html" style>
-                    <img id=navLinkIconLogin${locationSuffix}" src="./assets/icons/menu-login.svg">Log In
+                    <img id=navLinkIconLogin${locationIdSuffix}" src="./assets/icons/menu-login.svg">Log In
                 </a>
                 <a class="nav-link-app" href="/summary.html">
-                    <img id="navLinkIconSummary${locationSuffix}" src="./assets/icons/menu-summary.svg">Summary
+                    <img id="navLinkIconSummary${locationIdSuffix}" src="./assets/icons/menu-summary.svg">Summary
                 </a>
                 <a class="nav-link-app" href="/add-task.html">
-                    <img id="navLinkIconAddTask${locationSuffix}" src="./assets/icons/menu-add-task.svg">Add Task
+                    <img id="navLinkIconAddTask${locationIdSuffix}" src="./assets/icons/menu-add-task.svg">Add Task
                 </a>
                 <a class="nav-link-app" href="/board.html">
-                    <img id="navLinkIconBoard${locationSuffix}" src="./assets/icons/menu-board.svg">Board
+                    <img id="navLinkIconBoard${locationIdSuffix}" src="./assets/icons/menu-board.svg">Board
                 </a>
                 <a class="nav-link-app" href="/contacts.html">
-                    <img id="navLinkIconContacts${locationSuffix}" src="./assets/icons/menu-contacts.svg">Contacts
+                    <img id="navLinkIconContacts${locationIdSuffix}" src="./assets/icons/menu-contacts.svg">Contacts
                 </a>
             </div>
             <div class="nav-links nav-links-terms flex">
-                <a id="navLinkLogout${locationSuffix}" class="nav-link-app" href=#" onclick="signOut()">Logout</a>
-                <a id="navLinkPrivacyPolicy${locationSuffix}" href="/privacy-policy.html">Privacy Policy</a>
-                <a id="navLinkLegalNotice${locationSuffix}" href="/legal-notice.html">Legal notice</a>
+                <a id="navLinkPrivacyPolicy${locationIdSuffix}" href="/privacy-policy.html">Privacy Policy</a>
+                <a id="navLinkLegalNotice${locationIdSuffix}" href="/legal-notice.html">Legal notice</a>
             </div>
         </nav>
     `

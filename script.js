@@ -105,9 +105,11 @@ function setNavLinkProps(linkIdSuffix = '', isIcon = true) {
     let headerNavToggle = document.getElementById('headerNavTrigger');
     let linkSideBar = document.getElementById('navLink' + linkIdSuffix);
     let linkFooterBar = document.getElementById('navLink' + linkIdSuffix + 'Mob');
+    let linkHeaderNav = document.getElementById('navLink' + linkIdSuffix + 'Header');
     headerNavToggle.innerText = loggedInUser ? loggedInUser.initials : 'G';
     linkSideBar.classList.add('active');
     linkFooterBar.classList.add('active');
+    // linkHeaderNav.classList.add('active');
     if(isIcon) {
         linkSideBar.src = linkSideBar.src.replace('.svg', '-active.svg');
         linkFooterBar.src = linkFooterBar.src.replace('.svg', '-active.svg');

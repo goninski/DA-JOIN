@@ -73,6 +73,9 @@ body {
     line-height: var(--lh-base);
     color: var(--clr-main);
 }
+footer {
+    margin-top: auto !important;
+}
 header {
     justify-content: center;
     height: var(--height-header);
@@ -80,10 +83,10 @@ header {
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
     z-index: 900;
 }
-footer {
-    margin-top: auto !important;
+.header-innner {
+    position: relative;
 }
-.header-title{
+.header-title {
     font-size: var(--fs-lg);
     color: black;
 }
@@ -106,6 +109,21 @@ header .profile-batch {
     border-width: 3px;
     font-size: var(--fs-lg);
     font-weight: var(--fw-bold);
+}
+#headerNav {
+    position: absolute;
+    top: var(--height-header);
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--clr-main);
+    padding: 10px;
+    border-radius: 16px;
+    border-top-right-radius: 0;
+    /* border-bottom-left-radius: 0; */
+}
+#headerNav a {
+    padding-inline: 16px;
 }
 
 main {
@@ -142,6 +160,16 @@ main, header, footer {
     background-color: var(--clr-main);
     color: white;
 }
+.nav-links a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 46px;
+    padding-left: var(--side-navbar-pad-left);
+    padding-right: var(--side-navbar-pad-right);
+    color: var(--clr-disabled);
+    text-decoration: none;
+}
 #sideNavBar {
     display: flex;
     flex-direction: column;
@@ -172,14 +200,8 @@ main, header, footer {
     margin-top: 78px;
 }
 #sideNavBar .nav-links a {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    height: 46px;
     padding-left: var(--side-navbar-pad-left);
     padding-right: var(--side-navbar-pad-right);
-    color: var(--clr-disabled);
-    text-decoration: none;
 }
 #sideNavBar .nav-links-terms {
     gap: 4px;
@@ -187,6 +209,7 @@ main, header, footer {
 #sideNavBar .nav-links-terms a {
     height: 35px;
 }
+header nav a:hover,
 .nav-links-main a:hover {
     background-color: #2A3D59;
 }
@@ -344,6 +367,11 @@ body.logged-out .nav-link-app {
     .header-link-logo {
         display: block;
         margin-right: auto;
+    }
+    header .profile-batch {
+        width: 40px;
+        height: 40px;
+        border-width: 2px;
     }
     .header-title,
     .header-link-help {
