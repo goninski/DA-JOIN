@@ -16,7 +16,7 @@ function getHeaderTemplate() {
                     <a href="/legal-notice.html">Legal Notice</a>
                     <a href="/privacy-policy.html">Privacy Policy</a>
                     <a href="/data-handling.html">Data Handling</a>
-                    <a href="#" onclick="signOut()">Log out</a>
+                    <a href="#" onclick="signOut(event)">Log out</a>
                 </div> 
             </nav>
         </div>
