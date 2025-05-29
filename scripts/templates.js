@@ -8,10 +8,11 @@ function getHeaderTemplate() {
                 <img src="./assets/img/logo-dark.svg" alt="join-logo" class="logo logo-small">
             </div>
             <p class="header-title">Kanban Project Management&nbsp;Tool</p>
-            <a class="header-link-help" href="help.html"><img class="help-icon" src="./assets/icons/help.svg" alt="help-icon"></a>
+            <a class="help-link" href="help.html"><img class="help-icon" src="./assets/icons/help.svg" alt="help-icon"></a>
             <nav class=header-nav flex-column pos-relative">
                 <button id="headerNavTrigger" onclick="toggleHeaderNav(event)" class="profile-batch">G</button>
-                <div id="headerNav" class="nav-links hide">
+                <div id="headerNavDropdown" class="nav-links hide">
+                    <a class="help-link-mobile" href="/help.html">Help</a>
                     <a href="/legal-notice.html">Legal Notice</a>
                     <a href="/privacy-policy.html">Privacy Policy</a>
                     <a href="/data-handling.html">Data Handling</a>

@@ -93,7 +93,7 @@ function getHeader() {
  */
 function toggleHeaderNav(event) {
     event.preventDefault();
-    document.getElementById('headerNav').classList.toggle('hide');
+    document.getElementById('headerNavDropdown').classList.toggle('hide');
 }
 
 
@@ -112,7 +112,7 @@ function getNavBar() {
 
 
 /**
- * Set dynamic nav properties (user batch, active page styles)
+ * Set dynamic nav properties (user batch, active url styles/icons)
  */
 function setNavLinkProps() {
     let headerNavToggle = document.getElementById('headerNavTrigger');
