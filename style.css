@@ -88,10 +88,10 @@ header {
     font-size: var(--fs-lg);
     color: black;
 }
-.header-link-logo {
+header .logo-link {
     display: none;
 }
-.header-link-logo img {
+header .logo img {
     width: 32px;
     height: auto;
 }
@@ -366,7 +366,7 @@ body.logged-out .nav-link-app {
         margin-left: unset;
         width: 100% !important;
     }
-    .header-link-logo {
+    header .logo-link {
         display: block;
         margin-right: auto;
     }
@@ -385,6 +385,9 @@ body.logged-out .nav-link-app {
     }
     #headerNavDropdown {
         transform: translateX(-67.5%);
+    }
+    .nav-link-login {
+        margin-right: auto;
     }
 }
 @media(max-width: 374px) {

@@ -4,7 +4,7 @@
 function getHeaderTemplate() {
     return `
         <div class="ct-container flex-row justify-between align-center">
-            <div class="header-link-logo">
+            <div class="logo-link">
                 <img src="./assets/img/logo-dark.svg" alt="join-logo" class="logo logo-small">
             </div>
             <p class="header-title">Kanban Project Management&nbsp;Tool</p>
@@ -36,7 +36,7 @@ function getNavBarTemplate() {
         </div>
         <nav class="flex flex-grow"> 
             <div class="nav-links nav-links-main flex flex-grow">
-                <a class="nav-link-login mr-auto" href="/login.html" style>
+                <a class="nav-link-login" href="/login.html" style>
                     <img src="./assets/icons/menu-login.svg">Log In
                 </a>
                 <a class="nav-link-app" href="/summary.html">
