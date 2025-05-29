@@ -51,23 +51,18 @@
     --sp-90: 150px;
     --gap: var(--sp-10);
 
-    --side-navbar-width: 232px;
     --transition-duration: 125ms;
+    --side-navbar-width: 232px;
     --height-header: 96px;
     --height-footer: 0px; /* fixed bottom menu, mobile only */
-    /* --height-full-ex-header: calc(100vh - var(--height-header));
-    --height-between-header-footer: calc(100vh - (var(--height-header) + var(--height-footer))); */
 }
-
 
 @keyframes slide-in-right{
   from{margin-right:-100%} to{margin-right:0;}
 }
-
 @keyframes slide-out-right{
   from{margin-right:0} to{margin-right:-100%;}
 }
-
 
 html {
     background-color: var(--bg-page);
@@ -79,8 +74,6 @@ body {
     color: var(--clr-main);
 }
 header {
-    /* position: fixed; */
-    /* top: 0; */
     justify-content: center;
     height: var(--height-header);
     background-color: white;
@@ -90,14 +83,29 @@ header {
 footer {
     margin-top: auto !important;
 }
-
-
 .header-title{
-    font-size: 20px;
-    font-weight: 400;
-    margin-left: 0px;
+    font-size: var(--fs-lg);
     color: black;
-    z-index: 1;
+}
+.header-link-logo {
+    display: none;
+}
+.header-link-logo img {
+    width: 32px;
+    height: auto;
+}
+.header-link-help {
+    margin-left: auto;
+    margin-right: 16px;
+}
+header .profile-batch {
+    width: 56px;
+    height: 56px;
+    color: var(--clr-light-blue);
+    border-color: var(--clr-main);
+    border-width: 3px;
+    font-size: var(--fs-lg);
+    font-weight: var(--fw-bold);
 }
 
 main {
@@ -236,6 +244,7 @@ body:not(.logged-out) .nav-link-login,
 body:not(.logged-out) #footerNavBar .nav-links-terms {
     display: none !important;
 }
+body.logged-out #headerNavTrigger,
 body.logged-out .nav-link-app {
     display: none !important;
 }
@@ -322,6 +331,7 @@ body.logged-out .nav-link-app {
 @media(max-width: 735px) {
     :root {
         --px-sec: 16px;
+        --height-header: 80px;
         --height-footer: 80px;
         --fs-main-title: 47px;
         --fs-xxl: 27px;
@@ -330,6 +340,14 @@ body.logged-out .nav-link-app {
     main, header, footer {
         margin-left: unset;
         width: 100% !important;
+    }
+    .header-link-logo {
+        display: block;
+        margin-right: auto;
+    }
+    .header-title,
+    .header-link-help {
+        display: none;
     }
     #footerNavBar {
         display: flex;

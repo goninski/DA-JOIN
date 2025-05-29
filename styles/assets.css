@@ -1,12 +1,13 @@
+.logo {
+    object-fit: contain;
+}
 .logo-large {
     width: 100px;
     height: auto;
-    object-fit: contain;
 }
 .logo-small {
     height: 66px;
     width: auto;
-    object-fit: contain;
 }
 
 .fs-lg {

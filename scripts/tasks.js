@@ -10,9 +10,9 @@ let taskStatus = 'todo';
  */
 async function initAddTask() {
     getMainTemplates();
-    setActiveNavLinkStyles('IconAddTask');
     await getContacts();
     await checkAuth();
+    setNavLinkProps('IconAddTask');
     await getTaskData();
     await openAddTaskForm(event, 'add-task-page');
 }

@@ -7,10 +7,9 @@ let lastListContactId = '';
  */
 async function initContacts() {
     getMainTemplates();
-    setActiveNavLinkStyles('IconContacts');
     await getContacts();
     await checkAuth();
-    // await sortContacts(contacts);
+    setNavLinkProps('IconContacts');
     await renderContactList();
 }
 

@@ -7,9 +7,9 @@ let summary = {};
  */
 async function initSummary() {
     getMainTemplates();
-    setActiveNavLinkStyles('IconSummary');
     await getUserData();
     await checkAuth();
+    setNavLinkProps('IconSummary');
     await getTaskData();
     await setSummaryObj();
 }
@@ -20,11 +20,16 @@ async function initSummary() {
  */
 async function setSummaryObj() {
   resetSummaryObj();
-  summary.userName = await getUserNameById(loggedInUserId);
+  // summary.userName = await getUserNameById(loggedInUserId);
+  summary.userName = loggedInUser ? loggedInUser.name : '';
   await setUpcomings();
   await setTaskCounts();
   setWelcomeMsg();
   console.log(summary);
+}
+
+async function getContactById(contactId) {
+    return contacts.find(contact => contact.id == contactId);
 }
 
 
@@ -88,13 +93,3 @@ async function resetSummaryObj() {
   summary.upcomingDeadline = '';
 } 
 
-
-/**
- * Helper: return user name by id
- * 
- * @param {string} loggedInUserId - the id of the logged in user
- */
-async function getUserNameById(loggedInUserId) {
-  let filteredArr = contacts.filter(contact => contact.id == loggedInUserId);
-  return hasLength(filteredArr) ? filteredArr.name : '';
-}

@@ -17,9 +17,9 @@ let dragScrollScrollLeft;
  */
 async function initBoard() {
     getMainTemplates();
-    setActiveNavLinkStyles('IconBoard');
     await getContacts()
     await checkAuth();
+    setNavLinkProps('IconBoard');
     await getTaskData()
     renderTasks = tasks;
     await setSearchBase();

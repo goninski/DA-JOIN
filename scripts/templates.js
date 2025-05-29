@@ -3,12 +3,14 @@
  */
 function getHeaderTemplate() {
     return `
-        <div class="ct-container flex-row gap justify-between align-center flex-wrap--ss-mob">
-            <p class="header-title">Kanban Project Management Tool</p>
-            <a id="help-icon" href="help.html">
-                <img class="help-icon" src="./assets/icons/help.svg"></img>
+        <div class="ct-container flex-row justify-between align-center">
+            <a href="/summary.html" class="header-link-logo">
+                <img src="./assets/img/logo-dark.svg" alt="join-logo" class="logo logo-small">
             </a>
-            <img
+            <p class="header-title">Kanban Project Management&nbsp;Tool</p>
+            <a class="header-link-help" href="help.html"><img class="help-icon" src="./assets/icons/help.svg" alt="help-icon"></a>
+            <button id="headerNavTrigger" onclick="toggleHeaderNav()" class="profile-batch">G</button>
+            <nav id="headerNav" class="hide">Nav...</nav> 
         </div>
     `
 }
@@ -21,11 +23,9 @@ function getHeaderTemplate() {
  */
 function getNavBarTemplate(locationSuffix = '') {
     return `
-        <div class="logo logo-large">
-             <a href="/summary.html">
-                 <img src="./assets/img/logo-light.svg" alt="join-logo">
-             </a>
-        </div>
+        <a href="/summary.html" class="nav-link-logo">
+            <img src="./assets/img/logo-light.svg" alt="join-logo" class="logo logo-large">
+        </a>
         <nav class="flex flex-grow"> 
             <div class="nav-links nav-links-main flex flex-grow">
                 <a class="nav-link-login mr-auto" href="/login.html" style>
@@ -45,7 +45,7 @@ function getNavBarTemplate(locationSuffix = '') {
                 </a>
             </div>
             <div class="nav-links nav-links-terms flex">
-                <a id="navLinkLogout${locationSuffix}" href=#" onclick="signOut()">Logout</a>
+                <a id="navLinkLogout${locationSuffix}" class="nav-link-app" href=#" onclick="signOut()">Logout</a>
                 <a id="navLinkPrivacyPolicy${locationSuffix}" href="/privacy-policy.html">Privacy Policy</a>
                 <a id="navLinkLegalNotice${locationSuffix}" href="/legal-notice.html">Legal notice</a>
             </div>

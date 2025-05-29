@@ -1,5 +1,6 @@
 let currentPage = window.location.pathname;
 let loggedInUserId = null;
+let loggedInUser = {};
 
 
 /**
@@ -14,8 +15,9 @@ async function checkAuth(isPublic = false) {
     if(loggedInUserId === null) {
         if(!isPublic) return redirectToLogin();
     } else {
-        let index = await getContactIndexFromId(loggedInUserId);
-        if(index < 0) {
+        loggedInUser = await getContactById(loggedInUserId);
+        // console.log(loggedInUser);
+        if(!loggedInUser) {
             if(!isPublic) return redirectToLogin();
             return;
         }
@@ -31,7 +33,7 @@ async function initTermsPages(linkIdSuffix = '') {
     await getUserData();
     await checkAuth(true);
     getMainTemplates();
-    !linkIdSuffix == '' ? setActiveNavLinkStyles(linkIdSuffix, false): null;
+    !linkIdSuffix == '' ? setNavLinkProps(linkIdSuffix, false): null;
 }
 
 
@@ -72,6 +74,14 @@ function getHeader() {
 
 
 /**
+ * toggle header navigation
+ */
+function toggleHeaderNav() {
+    document.getElementById('headerNav').classList.toggle('hide');
+}
+
+
+/**
  * Get html sideNavBar/mobile bottom bar
  */
 function getNavBar() {
@@ -86,14 +96,16 @@ function getNavBar() {
 
 
 /**
- * Set active menu link styles (add-active-class and set white icon)
+ * Set active menu link properties (active class, white icon, user initials)
  * 
  * @param {string} linkIdSuffix - suffix (last word) of id from menuLink..
  * @param {boolean} isIcon - true if icon element of the link
  */
-function setActiveNavLinkStyles(linkIdSuffix = '', isIcon = true) {
+function setNavLinkProps(linkIdSuffix = '', isIcon = true) {
+    let headerNavToggle = document.getElementById('headerNavTrigger');
     let linkSideBar = document.getElementById('navLink' + linkIdSuffix);
     let linkFooterBar = document.getElementById('navLink' + linkIdSuffix + 'Mob');
+    headerNavToggle.innerText = loggedInUser ? loggedInUser.initials : 'G';
     linkSideBar.classList.add('active');
     linkFooterBar.classList.add('active');
     if(isIcon) {
@@ -101,6 +113,7 @@ function setActiveNavLinkStyles(linkIdSuffix = '', isIcon = true) {
         linkFooterBar.src = linkFooterBar.src.replace('.svg', '-active.svg');
     }
 }
+
 
 /**
  * Get html orientation overlay

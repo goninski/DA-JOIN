@@ -125,6 +125,16 @@ async function getNewTaskId() {
 
 
 /**
+ * Helper: returns a contact object by id
+ * 
+ * @param {string} contactId - contact id
+ */
+async function getContactById(contactId) {
+    return contacts.find(contact => contact.id == contactId);
+}
+
+
+/**
  * Get a new category id (by checking the current highest number)
  * 
  * @returns {string}
