@@ -152,11 +152,12 @@ async function showTaskDetail(event, taskId) {
 async function renderTaskDetailsAssignedContacts(task) {
     let contactIds = task.contactIds;
     let wrapper = document.getElementById('taskDetailsAssignedContactsWrapper');
-    wrapper.innerHTML = '';    
+    wrapper.innerHTML = '';
+    console.log(contactIds)    ;
     if(hasLength(contactIds)) {
       for (let index = 0; index < contactIds.length; index++) {
         let contact = await getContactById(contactIds[index]);
-        wrapper.innerHTML += getTaskDetailsAssignedContactTemplate(contact);
+        contact ? wrapper.innerHTML += getTaskDetailsAssignedContactTemplate(contact) : null;
       }
     }
 }
