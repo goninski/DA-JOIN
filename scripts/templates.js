@@ -28,7 +28,7 @@ function getHeaderTemplate() {
  * 
  * @param {string} locationIdSuffix - 'mob' for mobile navbar
  */
-function getNavBarTemplate(locationIdSuffix = '') {
+function getNavBarTemplate() {
     return `
         <div href="/summary.html" class="nav-link-logo">
             <img src="./assets/img/logo-light.svg" alt="join-logo" class="logo logo-large">
@@ -36,24 +36,24 @@ function getNavBarTemplate(locationIdSuffix = '') {
         <nav class="flex flex-grow"> 
             <div class="nav-links nav-links-main flex flex-grow">
                 <a class="nav-link-login mr-auto" href="/login.html" style>
-                    <img id=navLinkIconLogin${locationIdSuffix}" src="./assets/icons/menu-login.svg">Log In
+                    <img src="./assets/icons/menu-login.svg">Log In
                 </a>
                 <a class="nav-link-app" href="/summary.html">
-                    <img id="navLinkIconSummary${locationIdSuffix}" src="./assets/icons/menu-summary.svg">Summary
+                    <img src="./assets/icons/menu-summary.svg">Summary
                 </a>
                 <a class="nav-link-app" href="/add-task.html">
-                    <img id="navLinkIconAddTask${locationIdSuffix}" src="./assets/icons/menu-add-task.svg">Add Task
+                    <img src="./assets/icons/menu-add-task.svg">Add Task
                 </a>
                 <a class="nav-link-app" href="/board.html">
-                    <img id="navLinkIconBoard${locationIdSuffix}" src="./assets/icons/menu-board.svg">Board
+                    <img src="./assets/icons/menu-board.svg">Board
                 </a>
                 <a class="nav-link-app" href="/contacts.html">
-                    <img id="navLinkIconContacts${locationIdSuffix}" src="./assets/icons/menu-contacts.svg">Contacts
+                    <img src="./assets/icons/menu-contacts.svg">Contacts
                 </a>
             </div>
             <div class="nav-links nav-links-terms flex">
-                <a id="navLinkPrivacyPolicy${locationIdSuffix}" href="/privacy-policy.html">Privacy Policy</a>
-                <a id="navLinkLegalNotice${locationIdSuffix}" href="/legal-notice.html">Legal notice</a>
+                <a href="/privacy-policy.html">Privacy Policy</a>
+                <a href="/legal-notice.html">Legal notice</a>
             </div>
         </nav>
     `

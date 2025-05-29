@@ -106,7 +106,7 @@ function getNavBar() {
     sideNavBar.classList.add('hide--ss-mob');
 
     let footerNavBar = document.getElementById('footerNavBar');
-    footerNavBar.innerHTML = getNavBarTemplate('Mob');
+    footerNavBar.innerHTML = getNavBarTemplate();
     footerNavBar.classList.add('show--ss-mob');
 }
 
