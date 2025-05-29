@@ -2,8 +2,8 @@ let formMode = '';
 let invalidFields = [];
 let listboxElements = [];
 let currentFieldElements = {};
-document.addEventListener('click', documentEventHandler);
-document.addEventListener('keydown', documentEventHandler);
+document.addEventListener('click', documentEventHandlerForms);
+document.addEventListener('keydown', documentEventHandlerForms);
 
 
 /**
@@ -122,8 +122,8 @@ function getInvalidInputIds(formId) {
  * 
  * @param {event} event - click, ESC (document)
  */
-function documentEventHandler(event) {
-    console.log('f) documentEventHandler');
+function documentEventHandlerForms(event) {
+    console.log('f) documentEventHandlerForms');
     if( event.key === 'Escape' || event.type === "click" ) {
         closeAllDropdowns(listboxElements);
         focusCurrentCombox(event.target);

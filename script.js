@@ -1,6 +1,20 @@
 let currentPage = window.location.pathname;
 let loggedInUserId = null;
 let loggedInUser = null;
+document.addEventListener('click', documentEventHandler);
+
+
+/**
+ * Document Event handler: close header nav on outslide click
+ * 
+ * @param {event} event - click (document)
+ */
+function documentEventHandler(event) {
+    console.log('f) documentEventHandler');
+    if( event.type === "click" ) {
+        // document.getElementById('headerNav').classList.add('hide');
+    }
+}
 
 
 /**
@@ -40,7 +54,8 @@ async function initTermsPages(linkIdSuffix = '') {
 /**
  * Sign out procedure (remove auth status and redirect to login)
  */
-function signOut() {
+function signOut(event) {
+    event.stopPropagation();
     redirectToLogin();
 }
 

@@ -300,7 +300,7 @@ body.logged-out .nav-link-app {
 .terms-page {
     color: black;
 }
-.terms-page a:not(.nav-bar) {
+.terms-page main a {
     color: #29ABE2;
     text-decoration: none;
 }
