@@ -139,8 +139,8 @@ async function showTaskDetail(event, taskId) {
     await showTaskDialogue('taskDetailsWrapper');
     document.getElementById('taskDetailsWrapper').innerHTML = getTaskDetailsTemplate(task, category);
     document.getElementById('taskDialogue').classList.add('show-task');
-    hasLength(task.contactIds) ? await renderTaskDetailsAssignedContacts(task) : null;
-    hasLength(task.subtasks) ? await renderTaskDetailsSubtasks(task) : null;
+    await renderTaskDetailsAssignedContacts(task);
+    await renderTaskDetailsSubtasks(task);
 }
 
 
@@ -153,9 +153,11 @@ async function renderTaskDetailsAssignedContacts(task) {
     let contactIds = task.contactIds;
     let wrapper = document.getElementById('taskDetailsAssignedContactsWrapper');
     wrapper.innerHTML = '';    
-    for (let index = 0; index < contactIds.length; index++) {
-      let contact = await getContactById(contactIds[index]);
-      wrapper.innerHTML += getTaskDetailsAssignedContactTemplate(contact);
+    if(hasLength(contactIds)) {
+      for (let index = 0; index < contactIds.length; index++) {
+        let contact = await getContactById(contactIds[index]);
+        wrapper.innerHTML += getTaskDetailsAssignedContactTemplate(contact);
+      }
     }
 }
 
@@ -169,9 +171,11 @@ async function renderTaskDetailsSubtasks(task) {
     let subtasks = task.subtasks;
     let wrapper = document.getElementById('taskDetailsSubtaskWrapper');
     wrapper.innerHTML = '';    
-    for (let subtaskIndex = 0; subtaskIndex < subtasks.length; subtaskIndex++) {
-      let subtask = subtasks[subtaskIndex];
-      wrapper.innerHTML += getTaskDetailsSubtaskTemplate(task, subtask, subtaskIndex);
+    if(hasLength(subtasks)) {
+      for (let subtaskIndex = 0; subtaskIndex < subtasks.length; subtaskIndex++) {
+        let subtask = subtasks[subtaskIndex];
+        wrapper.innerHTML += getTaskDetailsSubtaskTemplate(task, subtask, subtaskIndex);
+      }
     }
 }
 

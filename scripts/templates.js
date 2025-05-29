@@ -133,11 +133,12 @@ async function getBoardTasksTemplate(task, category, subtaskCount, subtaskProgre
  */
 function getTaskDetailsTemplate(task, category) {
   let dueDate = new Date(task.dueDate).toLocaleDateString('en-GB'); 
+  let hideDescription = task.description == null ? 'hide': null;
   return `
     <div class="task-details-wrapper">
-      <div class="task-category" style="background-color: ${category};">${category}</div>
-      <h1 class="page-title">${task.title}</h1>  
-      <p class="task-description">${task.description || 'No description available.'}</p>
+      <div class="board-task-category" style="background-color: ${category.color};">${category.name}</div>
+      <h3 class="page-title">${task.title}</h3>  
+      <div class="board-task-description ${hideDescription}">${task.description}</div>
 
       <div class="task-meta">
         <div class="task-due-date">
