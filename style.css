@@ -268,7 +268,7 @@ body.logged-out .nav-link-app {
 .terms-page {
     color: black;
 }
-.terms-page a:not(.nav-link-wrapper a) {
+.terms-page a:not(.nav-bar) {
     color: #29ABE2;
     text-decoration: none;
 }
