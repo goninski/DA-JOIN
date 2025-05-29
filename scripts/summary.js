@@ -20,16 +20,11 @@ async function initSummary() {
  */
 async function setSummaryObj() {
   resetSummaryObj();
-  // summary.userName = await getUserNameById(loggedInUserId);
   summary.userName = loggedInUser ? loggedInUser.name : '';
   await setUpcomings();
   await setTaskCounts();
   setWelcomeMsg();
   console.log(summary);
-}
-
-async function getContactById(contactId) {
-    return contacts.find(contact => contact.id == contactId);
 }
 
 
