@@ -60,6 +60,11 @@ button.add-contact img {
     border-radius: 10px;
     min-height: 87px;
     gap: 35px;
+    padding: 15px 24px;
+    gap: 35px;
+    cursor: pointer;
+    max-width: 100%;
+    overflow: hidden;
 }
 .contact-item .contact-details {
     gap: 5px;
@@ -69,11 +74,6 @@ button.add-contact img {
 }
 .contact-item .email {
     color: var(--clr-link-blue);
-}
-.contact-item {
-    padding: 15px 24px;
-    gap: 35px;
-    cursor: pointer;
 }
 .contact-item:where(.active, :hover, :focus) {
     background-color: var(--clr-main);
@@ -131,9 +131,6 @@ button.add-contact img {
     width: auto;
     object-fit: contain;
 }
-
-
-
 
 
 
@@ -215,6 +212,17 @@ button.add-contact img {
     }
     .floating-contact {
         flex-wrap: wrap;
+        gap: 16px;
+    }
+}
+
+@media(max-width: 374px) {
+    .contact-list-sidebar {
+        padding-inline: 10px !important;
+    }
+    .contact-list-sidebar,
+    .contact-item {
+        padding-inline: 16px !important;
         gap: 16px;
     }
 }

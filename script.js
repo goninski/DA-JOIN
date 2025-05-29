@@ -10,9 +10,10 @@ document.addEventListener('click', documentEventHandler);
  * @param {event} event - click (document)
  */
 function documentEventHandler(event) {
-    console.log('f) documentEventHandler');
+    // console.log('f) documentEventHandler');
     if( event.type === "click" ) {
-        // document.getElementById('headerNav').classList.add('hide');
+        let headerNavDropdown = document.getElementById('headerNavDropdown');
+        headerNavDropdown ? headerNavDropdown.classList.add('hide') : null;
     }
 }
 
@@ -93,6 +94,7 @@ function getHeader() {
  */
 function toggleHeaderNav(event) {
     event.preventDefault();
+    event.stopPropagation();
     document.getElementById('headerNavDropdown').classList.toggle('hide');
 }
 
