@@ -274,38 +274,6 @@ body.logged-out .nav-link-app {
     display: none !important;
 }
 
-
-/* TEMP */
-.temp-links a {
-    color: #ccc;
-    font-size: 14px;
-    line-height: 0.5;
-}
-.temp-links a:hover {
-    color: white;
-}
-
-------------------------/* TERMS PAGES */-------------------------------
-.terms-page .page-title-wrapper {
-    margin-bottom: 32px;
-}
-.terms-page h2:not(.skip-top-margin):not(.subtitle-h2) {
-    margin-top: 24px;
-    font-size: 20px;
-    font-weight: 700;
-}
-.terms-page p {
-    margin-top: 0;
-    font-size: 16px;
-    margin-bottom: 0;
-}
-.terms-page {
-    color: black;
-}
-.terms-page main a {
-    color: #29ABE2;
-    text-decoration: none;
-}
 .orientation-overlay {
     /* display: flex; */
     display: none;
@@ -318,6 +286,29 @@ body.logged-out .nav-link-app {
     color: white;
     background-color: rgba(0, 0, 0, 0.85);
     padding-inline: var(--px-sec);
+}
+
+
+------------------------/* TERMS PAGES */-------------------------------
+.terms-page .page-title-wrapper {
+    margin-bottom: 32px;
+}
+.terms-page main h2:not(.skip-top-margin):not(.subtitle-h2) {
+    margin-top: 24px;
+    font-size: 20px;
+    font-weight: 700;
+}
+.terms-page main p {
+    margin-top: 0;
+    font-size: 16px;
+    margin-bottom: 0;
+}
+.terms-page main {
+    color: black;
+}
+.terms-page main a {
+    color: #29ABE2;
+    text-decoration: none;
 }
 .imprint {
     margin-bottom: 16px;
@@ -333,7 +324,7 @@ body.logged-out .nav-link-app {
     font-weight: 700;
     margin-top: 35px;
 }
-.privacy-policy-page h2 {
+.privacy-policy-page main h2 {
     font-weight: 700;
     font-size: 27px;
 }
