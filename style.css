@@ -328,6 +328,24 @@ body.logged-out .nav-link-app {
     font-weight: 700;
     font-size: 27px;
 }
+.help-page h3 {
+font-size: 20px;
+font-weight: 700;
+margin-left: 35px;
+}
+
+.help-page p {
+    margin-left: 35px;
+}
+
+.help-page ol {
+    margin: 0;
+}
+
+.help-page li::marker {
+    font-size: 27px;
+    font-weight: 700;
+}
 
 
 
