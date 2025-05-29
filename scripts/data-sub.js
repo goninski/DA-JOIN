@@ -125,6 +125,28 @@ async function getNewTaskId() {
 
 
 /**
+ * Get a new category id (by checking the current highest number)
+ * 
+ * @returns {string}
+ */
+async function getNewCategoryId() {
+    let lastId = await getMaxIdFromObjArray(categories);
+    lastId++;
+    return lastId.toString();
+}
+
+
+/**
+ * Helper: returns a task object by id
+ * 
+ * @param {string} taskId - task id
+ */
+async function getTaskById(taskId) {
+    return tasks.find(task => task.id == taskId);
+}
+
+
+/**
  * Helper: returns a contact object by id
  * 
  * @param {string} contactId - contact id
@@ -135,14 +157,12 @@ async function getContactById(contactId) {
 
 
 /**
- * Get a new category id (by checking the current highest number)
+ * Helper: returns a category object by id
  * 
- * @returns {string}
+ * @param {string} categoryId - category id
  */
-async function getNewCategoryId() {
-    let lastId = await getMaxIdFromObjArray(categories);
-    lastId++;
-    return lastId.toString();
+async function getCategoryById(categoryId) {
+    return categories.find(category => category.id == categoryId);
 }
 
 

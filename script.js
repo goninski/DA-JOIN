@@ -1,6 +1,6 @@
 let currentPage = window.location.pathname;
 let loggedInUserId = null;
-let loggedInUser = {};
+let loggedInUser = null;
 
 
 /**

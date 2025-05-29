@@ -4,9 +4,9 @@
 function getHeaderTemplate() {
     return `
         <div class="ct-container flex-row justify-between align-center">
-            <a href="/summary.html" class="header-link-logo">
+            <div class="header-link-logo">
                 <img src="./assets/img/logo-dark.svg" alt="join-logo" class="logo logo-small">
-            </a>
+            </div>
             <p class="header-title">Kanban Project Management&nbsp;Tool</p>
             <a class="header-link-help" href="help.html"><img class="help-icon" src="./assets/icons/help.svg" alt="help-icon"></a>
             <button id="headerNavTrigger" onclick="toggleHeaderNav()" class="profile-batch">G</button>
