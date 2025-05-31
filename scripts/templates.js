@@ -108,7 +108,7 @@ async function getBoardTasksTemplate(task, category, subtaskCount, subtaskProgre
     return `
         <div class="board-task clickable-task" onclick="showTaskDetail(event, '${task.id}')" draggable="true" ondragstart="onDragStartTask(event, '${task.id}')" ondragend="onDragEnd(event)">
             <div class="board-task-category" style="background-color: ${category.color};">${category.name}</div>
-            <div class="board-task-heading">${task.title}</div>
+            <div class="board-task-title">${task.title}</div>
             <div class="board-task-description ${hideDescription}">${task.description}</div>
             <div class="board-subtask-info flex-row justify-between align-center ${hideSubtask}">
                 <div class="board-task-progress-bar">
@@ -132,42 +132,40 @@ async function getBoardTasksTemplate(task, category, subtaskCount, subtaskProgre
  * @param {object} category - the category object (of categories) for the current task
  */
 function getTaskDetailsTemplate(task, category) {
-  let dueDate = new Date(task.dueDate).toLocaleDateString('en-GB'); 
   let hideDescription = task.description == null ? 'hide': null;
+  let dueDate = new Date(task.dueDate).toLocaleDateString('en-GB'); 
+  let priority = setFirstLetterUpperCase(task.priority);
   return `
-    <div class="task-details-wrapper">
-      <div class="board-task-category" style="background-color: ${category.color};">${category.name}</div>
-      <h3 class="page-title">${task.title}</h3>  
-      <div class="board-task-description ${hideDescription}">${task.description}</div>
-
-      <div class="task-meta">
-        <div class="task-due-date">
-          <strong>Due Date:</strong> ${dueDate}
+    <div class="task-details-wrapper flex-col">
+        <div class="board-task-category" style="background-color: ${category.color};">${category.name}</div>
+        <h3 class="board-task-title">${task.title}</h3>  
+        <div class="board-task-description ${hideDescription}">${task.description}</div>
+        <div class="board-task-meta flex align-center">
+            <label>Due Date:</label>
+            <div>${dueDate}</div>
         </div>
-        <div class="task-meta-item">
-          <strong>Priority:</strong> 
-          <img src="./assets/icons/prio-${task.priority}.svg" alt="${task.priority}" title="${task.priority}">
+        <div class="board-task-meta board-task-priority flex">
+            <label>Priority:</label>
+            <div class="flex align-center">${priority}
+                <img src="./assets/icons/prio-${task.priority}.svg" alt="${task.priority}-icon">
+            </div>
         </div>
-      </div>
-
-      <div class="assigned-to mt">
-        <strong>Assigned To:</strong>
-      </div>
-      <ul id="taskDetailsAssignedContactsWrapper" class="profile-batches task-board-detail-view hide-if-empty flex-col"></ul>
-
-      <div class="subtasks mt">
-        <strong>Subtasks:</strong>
-      </div>
-      <div id="taskDetailsSubtaskWrapper"></div>
-
-      <div class="edit-buttons flex-row align-center justify-end mt">
+        <div class="board-task-meta board-task-assigned-to flex-col">
+            <label>Assigned To:</label>
+            <ul id="taskDetailsAssignedContactsWrapper" class="profile-batches task-board-detail-view hide-if-empty flex-col"></ul>
+        </div>
+        <div class="board-task-meta board-task-subtasks flex-col">
+            <label>Subtasks</label>
+            <ul id="taskDetailsSubtaskWrapper" class="task-board-detail-view hide-if-empty flex-col"></ul>
+        </div>
+    </div>
+    <div class="edit-buttons flex-row align-center justify-end mt-auto">
         <button onclick="openEditTaskForm(event, '${task.id}')">
-          <img src="assets/icons/edit.svg" alt="edit-icon">Edit
+            <img src="assets/icons/edit.svg" alt="edit-icon">Edit
         </button>
         <button onclick="submitDeleteTask(event, '${task.id}')">
-          <img src="assets/icons/delete.svg" alt="delete-icon">Delete
+            <img src="assets/icons/delete.svg" alt="delete-icon">Delete
         </button>
-      </div>
     </div>
   `;
 }
@@ -197,10 +195,12 @@ function getTaskDetailsAssignedContactTemplate(contact) {
  */
 function getTaskDetailsSubtaskTemplate(task, subtask, subtaskIndex) {
   return `
-    <label class="subtask-item flex-row align-center gap">
-      <input type="checkbox" ${subtask.done ? 'checked' : ''} disabled>
-      ${subtask.title}
-    </label>
+    <li class="flex-row gap align-center">
+        <label class="subtask-item flex-row align-center">
+            <input type="checkbox" ${subtask.done ? 'checked' : ''} disabled>
+            ${subtask.title}
+        </label>
+    </li>
   `;
 }
 

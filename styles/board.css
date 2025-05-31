@@ -99,7 +99,19 @@
   background: #FFFFFF;
   cursor: grab;
 }
-
+.task-details-wrapper {
+  font-size: var(--fs-lg);
+  color: black;
+  gap: 24px;
+}
+.task-details-wrapper label {
+  color: var(--clr-main);
+  min-width: 92px;
+  margin-bottom: 0;
+}
+.task-details-wrapper .board-task-meta {
+  gap: 24px;
+}
 .board-no-task {
   display: flex;
   align-items: center;
@@ -111,28 +123,33 @@
   border-radius: 10px;
   backdrop-filter: blur(4px);
 }
-
 .board-task-category {
-  height: 27px;
-  width: 113px;
+  width: max-content;
+  padding-block: 4px;
+  padding-inline: 16px;
   border-radius: 8px;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 16px;
-  padding-right: 16px;
   color: #FFFFFF;
 }
-
-.board-task-heading {
+.task-details-wrapper .board-task-category {
+  padding-inline: 24px;
+  font-size: 23px;
+}
+.board-task-title {
   font-weight: var(--fw-bold);
   margin-bottom: -16px;
 }
-
+.task-details-wrapper .board-task-title {
+  font-size: var(--fs-main-title);
+}
 .board-task-description {
   color: #A8A8A8;
   max-height: 58px;
 }
-
+.task-details-wrapper .board-task-description {
+  color: black;
+  max-height: unset;
+  margin-top: 6px;
+}
 .board-task-progress-bar {
   width: 128px;
   height: 8px;
@@ -140,21 +157,17 @@
   background-color: #F4F4F4;
   overflow: hidden;
 }
-
 .board-task-progress-done {
   background-color: #4589FF;
   height: 100%;
   width: 0;
 }
-
 .board-subtask-count {
   font-size: var(--fs-sm);
 }
-
 .board-task-user {
   height: 32px;
 }
-
 .profile-batches.task-board .profile-batch {
     width: 32px;
     height: 32px;
@@ -163,16 +176,40 @@
     border-width: 1px;
     padding-top: 1px;
 }
-
 .board-task-priority {
   width: 17px;
   height: auto;
 }
-
-.task-due-date {
-  margin-top: 25px;
-  margin-bottom: 25px;
+.task-details-wrapper .board-task-priority div {
+  gap: 10px;
 }
+.task-details-wrapper .board-task-meta.flex-col {
+  gap: 10px;
+}
+.task-details-wrapper .board-task-assigned-to ul {
+  gap: 4px;
+}
+.task-details-wrapper .board-task-assigned-to li {
+  height: 56px;
+  padding-inline: 16px;
+  gap: 16px;
+}
+.task-details-wrapper .board-task-subtasks ul {
+  margin-block: 0;
+  padding-inline: 0;
+}
+.task-details-wrapper .board-task-subtasks li {
+  height: 32px;
+  padding-inline: 16px;
+}
+.task-details-wrapper .board-task-subtasks li label {
+  font-size: var(--fs-base);
+}
+.task-details-wrapper .board-task-subtasks li input {
+  margin-right: 16px;
+}
+
+
 
 
 
