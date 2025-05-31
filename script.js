@@ -141,7 +141,7 @@ function getOrientationOverlay() {
 
 
 /**
- * Helper: checks if object exists and has length
+ * Helper: check if object exists and has length
  * 
  * @param {object} object - any object
  * @returns {boolean}
@@ -165,7 +165,7 @@ async function sortArray(array, sortByProperty = 'id') {
 
 
 /**
- * Helper: returns closest specific parent element from element
+ * Helper: return closest specific parent element from element
  * 
  * @param {element} element - dom element
  * @param {string} selector - css selector of the specific parent element
@@ -176,7 +176,7 @@ function getClosestParentElementFromElement(element, selector = '') {
 
 
 /**
- * Helper: returns closest specific parent element from event
+ * Helper: return closest specific parent element from event
  * 
  * @param {event} event - inherit
  * @param {string} selector - css selector of the specific parent element
@@ -191,7 +191,7 @@ function getClosestParentElementFromEvent(event, selector = '') {
 
 
 /**
- * Helper: returns closest specific parent element from id
+ * Helper: return closest specific parent element from id
  * 
  * @param {string} id - current element id
  * @param {string} selector - css selector of the specific parent element
@@ -220,7 +220,7 @@ function getBooleanFromString(booleanString) {
 
 
 /**
- * Helper: returns the first word of a string
+ * Helper: return the first word of a string
  * 
  * @param {string} string - string
  */
@@ -231,7 +231,7 @@ function getFirstWord(string, index = 0) {
 
 
 /**
- * Helper: returns the last word of a string
+ * Helper: return the last word of a string
  * 
  * @param {string} string - string
  */
@@ -242,7 +242,7 @@ function getLastWord(string) {
 
 
 /**
- * Helper: sets the first letter of string to upper case and returns the full string
+ * Helper: set the first letter of string to upper case and returns the full string
  * 
  * @param {string} string - string
  */
@@ -252,7 +252,7 @@ function setFirstLetterUpperCase(string) {
 
 
 /**
- * Helper: returns first letter of first and last word of a string, in upper case
+ * Helper: return first letter of first and last word of a string, in upper case
  * 
  * @param {string} string - string
  */
@@ -264,7 +264,7 @@ function getInitialsOfFirstAndLastWord(string) {
 
 
 /**
- * Helper: returns first letter of last word of a string, in upper case
+ * Helper: return first letter of last word of a string, in upper case
  * 
  * @param {string} string - string
  */
@@ -275,7 +275,7 @@ function getInitialOfLastWord(string) {
 
 
 /**
- * Helper: returns the highest id of an object array
+ * Helper: return the highest id of an object array
  * 
  * @param {array} objArray - array with objects (needs a property of id)
  */
@@ -300,7 +300,7 @@ function getRandomColor(format = 'hex') {
 
 
 /**
- * Helper: converts a date to string for DB (YYYY-MM-DD)
+ * Helper: convert a date to string for DB (YYYY-MM-DD)
  * 
  * @param {date} date - a date object
  */
@@ -315,7 +315,7 @@ function formatDateToStringDB(date) {
 
 
 /**
- * Helper: converts a DB date string (YYYY-MM-DD) to a full date string (Month Day, Year)
+ * Helper: convert a DB date string (YYYY-MM-DD) to a full date string (Month Day, Year)
  * 
  * @param {string} dateStringDB  - date string (YYYY-MM-DD)
  */
@@ -329,7 +329,7 @@ function formatDateFromStringDBToFull(dateStringDB) {
 
 
 /**
- * Helper: adds days to a date
+ * Helper: add days to a date
  * 
  * @param {date} date - date object
  * @param {number} days - number of days to add
@@ -341,7 +341,7 @@ function addDaysToDate(date, days) {
 
 
 /**
- * Helper: returns the current day segment (morning, afternoon, evening)
+ * Helper: return current day segment (morning, afternoon, evening)
  */
 function getDaySegment() {
   let currentDate = new Date();
@@ -357,7 +357,28 @@ function getDaySegment() {
 
 
 /**
- * Shows a floating message with timeout
+ * Helper: toggle icon color on hover (only for svg sources on img element)
+ * 
+ * @param {event} event - current event
+ * @param {string} hoverColor - file suffix for the hover svg file
+ */
+function toggleIconColorOnHover(event, hoverColor = 'blue') {
+    event.stopPropagation();
+    let iconElement = event.currentTarget.querySelector('img');
+    if(!iconElement) return;
+    let hoverFileSuffix = '-' + hoverColor + '.svg';
+    let iconSource = iconElement.src;
+    if(event.type == 'mouseover') {
+        return (!iconSource.endsWith(hoverFileSuffix)) ? iconElement.src = iconElement.src.replace('.svg', hoverFileSuffix) : null;
+    }
+    if(event.type == 'mouseleave') {
+        return (iconSource.endsWith(hoverFileSuffix)) ?iconElement.src = iconElement.src.replace(hoverFileSuffix, '.svg') : null;
+    }
+}
+
+
+/**
+ * Helper: show floating message with timeout
  * 
  * @param {string} template - code name for specific template (text, addedTask)
  * @param {string} msg - message content
@@ -379,7 +400,7 @@ async function showFloatingMessage(template, msg = '', timeout = 1500) {
 
 
 /**
- * Runs a slide in animation for specific element
+ * Helper: run a slide in animation for specific element
  * 
  * @param {element} element - dom element
  * @param {number} timeout - timeout milliseconds
@@ -399,7 +420,7 @@ async function runSlideInAnimation(element, timeout = 0) {
 
 
 /**
- * Runs a slide out animation for specific element
+ * Helper: Run a slide out animation for specific element
  * 
  * @param {element} element - dom element
  * @param {number} timeout - timeout milliseconds

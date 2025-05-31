@@ -133,6 +133,8 @@ async function getBoardTasksTemplate(task, category, subtaskCount, subtaskProgre
  */
 function getTaskDetailsTemplate(task, category) {
   let hideDescription = task.description == null ? 'hide': null;
+  let hideContacts = !hasLength(task.contactIds) ? 'hide': null;
+  let hideSubtasks = !hasLength(task.subtasks) ? 'hide': null;
   let dueDate = new Date(task.dueDate).toLocaleDateString('en-GB'); 
   let priority = setFirstLetterUpperCase(task.priority);
   return `
@@ -150,20 +152,20 @@ function getTaskDetailsTemplate(task, category) {
                 <img src="./assets/icons/prio-${task.priority}.svg" alt="${task.priority}-icon">
             </div>
         </div>
-        <div class="board-task-meta board-task-assigned-to flex-col">
+        <div class="board-task-meta board-task-assigned-to flex-col ${hideContacts}">
             <label>Assigned To:</label>
             <ul id="taskDetailsAssignedContactsWrapper" class="profile-batches task-board-detail-view hide-if-empty flex-col"></ul>
         </div>
-        <div class="board-task-meta board-task-subtasks flex-col">
+        <div class="board-task-meta board-task-subtasks flex-col ${hideSubtasks}">
             <label>Subtasks</label>
             <ul id="taskDetailsSubtaskWrapper" class="task-board-detail-view hide-if-empty flex-col"></ul>
         </div>
     </div>
     <div class="edit-buttons flex-row align-center justify-end mt-auto">
-        <button onclick="openEditTaskForm(event, '${task.id}')">
+        <button onclick="openEditTaskForm(event, '${task.id}')" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)">
             <img src="assets/icons/edit.svg" alt="edit-icon">Edit
         </button>
-        <button onclick="submitDeleteTask(event, '${task.id}')">
+        <button onclick="submitDeleteTask(event, '${task.id}')" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)">
             <img src="assets/icons/delete.svg" alt="delete-icon">Delete
         </button>
     </div>

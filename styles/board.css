@@ -1,7 +1,6 @@
 .board-page-inner {
     top: 80px;
 }
-
 .board-page-title-wrapper {
     display: flex;
     justify-content: space-between;
@@ -10,27 +9,22 @@
     width: 100%;
     margin-bottom: 62px;
 }
-
 .add-task-button img {
   height: 19px;
 }
-
 .search-input-wrapper {
   width: 100%;
   max-width: 312px;
 }
-
 .search-input-wrapper input {
   padding-block: 7px !important;
   padding-right: 82px !important;
 }
-
 .input-icon-wrapper-search {
   width: 48px;
   justify-content: end;
   border-left: solid 1px var(--clr-subtle);
 }
-
 .boards-wrapper {
   display: flex;
   gap: 21px; /* not 24px because of transp. border */
@@ -39,13 +33,11 @@
   overflow-y: auto;
   scrollbar-width: none;
 }
-
 .board {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
-
 .board-title-bar {
   display: flex;
   align-items: center;
@@ -53,17 +45,14 @@
   margin-bottom: 15px;
   width: 100%;
 }
-
 .board-title {
   font-weight: 700;
   font-size: var(--fs-lg);
   color: hsl(218, 25%, 35%);
 }
-
 .add-task-button-board {
   --icon-color: var(--clr-main);
 }
-
 .add-task-button-board:hover {
   --icon-color: var(--clr-light-blue);
 }
@@ -78,16 +67,13 @@
   overflow-y: scroll;
   scrollbar-width: none;
 }
-
 .board-task-list:has( .board-no-task) {
   border-radius: 10px;
 }
-
 .board-task-list.dropzone {
   border: dashed 1px #888;
   opacity: 0.7;
 }
-
 .board-task {
   display: flex;
   flex-direction: column;
@@ -207,6 +193,16 @@
 }
 .task-details-wrapper .board-task-subtasks li input {
   margin-right: 16px;
+}
+#taskDetailsWrapper .edit-buttons button:first-child {
+  width: 58px;
+}
+#taskDetailsWrapper .edit-buttons button:last-child {
+  width: 72px;
+}
+#taskDetailsWrapper .edit-buttons button:hover {
+  font-weight: var(--fw-bold);
+  color: var(--clr-light-blue);
 }
 
 
