@@ -372,7 +372,7 @@ function toggleIconColorOnHover(event, hoverColor = 'blue') {
         return (!iconSource.endsWith(hoverFileSuffix)) ? iconElement.src = iconElement.src.replace('.svg', hoverFileSuffix) : null;
     }
     if(event.type == 'mouseleave') {
-        return (iconSource.endsWith(hoverFileSuffix)) ?iconElement.src = iconElement.src.replace(hoverFileSuffix, '.svg') : null;
+        return (iconSource.endsWith(hoverFileSuffix)) ? iconElement.src = iconElement.src.replace(hoverFileSuffix, '.svg') : null;
     }
 }
 

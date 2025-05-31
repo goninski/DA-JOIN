@@ -288,7 +288,8 @@ input:has(+ .input-icon-wrapper.simple) {
     width: auto;
     object-fit: contain;
 }
-.input-icon-wrapper.custom-checkbox input {
+/* .input-icon-wrapper.custom-checkbox input, */
+input.custom-checkbox  {
     position: absolute;
     appearance: none;
     box-sizing: content-box;
@@ -296,11 +297,14 @@ input:has(+ .input-icon-wrapper.simple) {
     border-radius: 3px;
     width: 12px;
     height: 12px;
-    right: 2px;
     bottom: 2px;
     transition-duration: var(--transition-duration);
 }
-.input-icon-wrapper.custom-checkbox .checkbox-checked-wrapper,
+input.custom-checkbox.checkbox-end  {
+    right: 2px;
+}
+/* .input-icon-wrapper.custom-checkbox .checkbox-checked-wrapper, */
+.checkbox-checked-wrapper,
 .radio-select-option {
     display: none;
 }

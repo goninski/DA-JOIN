@@ -283,15 +283,20 @@ function deleteSubtask(index) {
 /**
  * Event handler: toggle subtask status (done true/false)
  * 
- * @param {event} event - onclick (subtask checkbox on task detail view of board dialog, not implemented yet)
+ * @param {event} event - onclick (subtask checkbox on task detail view of board dialog)
  * @param {string} taskId - id of the current task
  * @param {number} subtaskIndex - index of the selected subtask in the list
  */
-async function toggleSubtaskStatus(event = null, taskId, subtaskIndex) {
-    event ? event.stopPropagation() : null;
-    let index = await getTaskIndexFromId(taskId);
-    let status = tasks[index].subtasks[subtaskIndex].done;
-    await updateSubtaskStatus(taskId, subtaskIndex, !status);
+async function toggleSubtaskStatus(event, taskId, subtaskIndex) {
+    event.stopPropagation();
+    let task = await getTaskById(taskId);
+    if(task) {
+        if(hasLength(task.subtasks)) {
+            let status = task.subtasks[subtaskIndex].done;
+            await updateSubtaskStatus(taskId, subtaskIndex, !status);
+            await renderTaskDetailsSubtasks(task);
+        }
+    }
 }
 
 

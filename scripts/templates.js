@@ -161,6 +161,7 @@ function getTaskDetailsTemplate(task, category) {
             <ul id="taskDetailsSubtaskWrapper" class="task-board-detail-view hide-if-empty flex-col"></ul>
         </div>
     </div>
+             
     <div class="edit-buttons flex-row align-center justify-end mt-auto">
         <button onclick="openEditTaskForm(event, '${task.id}')" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)">
             <img src="assets/icons/edit.svg" alt="edit-icon">Edit
@@ -197,11 +198,10 @@ function getTaskDetailsAssignedContactTemplate(contact) {
  */
 function getTaskDetailsSubtaskTemplate(task, subtask, subtaskIndex) {
   return `
-    <li class="flex-row gap align-center">
-        <label class="subtask-item flex-row align-center">
-            <input type="checkbox" ${subtask.done ? 'checked' : ''} disabled>
-            ${subtask.title}
-        </label>
+    <li class="subtask-item flex-row align-center">
+        <input type="checkbox" ${subtask.done ? 'checked' : ''} class="custom custom-checkbox clickable hide-focus" onclick="toggleSubtaskStatus(event, ${task.id}, ${subtaskIndex})">
+        <img src="assets/icons/checkbox-checked.svg" alt="checkbox-checked" class="icon-checkbox-checked custom-checkbox-checked">
+        <label>${subtask.title}</label>
     </li>
   `;
 }
@@ -310,7 +310,7 @@ function getContactSelectOptionTemplate(contact, index) {
         <label for="checkboxAssignedContact-${contact.id}" class="hide-focus" onkeydown="event.stopPropagation()">${contact.name}
             <div class="profile-batch label-icon" style="--profile-color: ${contact.color};">${contact.initials}</div>
             <div class="input-icon-wrapper custom-checkbox">
-                <input type="checkbox" class="custom clickable" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}"  onchange="dropdownOptionClickHandlerMultiple(event, '${contact.id}')">
+                <input type="checkbox" class="custom custom-checkbox checkbox-end clickable" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}"  onchange="dropdownOptionClickHandlerMultiple(event, '${contact.id}')">
                 <div class="checkbox-checked-wrapper">
                     <img src="assets/icons/checkbox-checked-white.svg" alt="checkbox-checked" class="icon-checkbox-checked">
                 </div>

@@ -41,6 +41,7 @@ let contactsDummy = [
         "name": "Boris Becker",
         "email": "boris@becker.de",
         "phone": "+49 999 888 777",
+        "password": "88888888"
     },
     {
         "id": "1011",
