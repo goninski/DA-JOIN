@@ -454,11 +454,15 @@ body.logged-out .nav-link-app {
    background-color: rgba(0, 0, 0, 0.05);
    border-radius: 100%;
    transform: scale(1.05);
-   transition: transform 0.1s ease;
+   transition: transform 0.1s ease; 
 }
 
 .help-page .page-title-wrapper {
     justify-content: space-between;
+}
+
+.help-page .help-icon {
+    display: none;
 }
 
 
