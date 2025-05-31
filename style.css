@@ -457,10 +457,6 @@ body.logged-out .nav-link-app {
    transition: transform 0.1s ease; 
 }
 
-.help-page .page-title-wrapper {
-    justify-content: space-between;
-}
-
 .help-page .help-icon {
     display: none;
 }
