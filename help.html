@@ -22,6 +22,7 @@
 
             <div class="page-title-wrapper">
                 <h1 class="page-title ">Help</h1>
+                <img class="help-page-arrow" src="./assets/icons/arrow-left-line.png" alt="Arrow left" onclick="goBack()">
             </div>
 
             <p>
@@ -137,7 +138,11 @@
     <div id="sideNavBar" class="nav-bar"></div>
     <div id="footerNavBar" class="nav-bar"></div>
     <div id="orientationOverlay" class="orientation-overlay"></div>
-
+<script>
+  function goBack() {
+    window.history.back();
+  }
+</script>
 </body>
 
 </html>

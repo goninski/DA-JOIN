@@ -441,6 +441,26 @@ body.logged-out .nav-link-app {
     font-weight: 700;
 }
 
+.help-page .help-page-arrow {
+    width: 32px;
+    height: 32px;
+    position: fixed;
+    left: 1307px;
+    top: 225px;
+}
+
+.help-page-arrow:hover {
+   cursor: pointer;
+   background-color: rgba(0, 0, 0, 0.05);
+   border-radius: 100%;
+   transform: scale(1.05);
+   transition: transform 0.1s ease;
+}
+
+.help-page .page-title-wrapper {
+    justify-content: space-between;
+}
+
 
 
 
