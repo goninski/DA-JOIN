@@ -11,8 +11,52 @@ async function initSummary() {
     getMainTemplates();
     await getTaskData();
     await setSummaryObj();
+    renderSummaryNumbers();
+    addSummaryBoxListeners();
 }
 
+/**
+ * Updates the summary numbers in the summary page
+ */
+function renderSummaryNumbers() {
+    // To-do
+    document.querySelector('.to-do .number').textContent = summary.taskCountTodo || 0;
+    // Done
+    document.querySelector('.done .number').textContent = summary.taskCountDone || 0;
+    // Urgent
+    document.querySelector('.urgent-deadline .number').textContent = summary.taskCountUrgent || 0;
+    // Upcoming Deadline
+    document.querySelector('.deadline .date').textContent = summary.upcomingDeadline || '';
+    // Tasks in Board
+    document.querySelector('.tasks-in-board .number').textContent = summary.taskCountInBoard || 0;
+    // Tasks in Progress
+    document.querySelector('.tasks-in-progress .number').textContent = summary.taskCountInProgress || 0;
+    // Awaiting Feedback
+    document.querySelector('.awaiting-feedback .number').textContent = summary.taskCountAwaitFeedback || 0;
+}
+
+/**
+ * Add click listeners to summary boxes to open board.html
+ */
+function addSummaryBoxListeners() {
+    const selectors = [
+        '.to-do',
+        '.done',
+        '.urgent-deadline',
+        '.tasks-in-board',
+        '.tasks-in-progress',
+        '.awaiting-feedback'
+    ];
+    selectors.forEach(sel => {
+        const el = document.querySelector(sel);
+        if (el) {
+            el.style.cursor = 'pointer';
+            el.addEventListener('click', () => {
+                window.location.href = 'board.html';
+            });
+        }
+    });
+}
 
 /**
  * Set the summary object- this object serves all dynamic data for the summary page

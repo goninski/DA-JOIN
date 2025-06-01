@@ -447,7 +447,7 @@ body.logged-out .nav-link-app {
     width: 32px;
     height: 32px;
     position: fixed;
-    left: 1307px;
+    left: 89%;
     top: 225px;
 }
 
@@ -455,7 +455,7 @@ body.logged-out .nav-link-app {
    cursor: pointer;
    background-color: rgba(0, 0, 0, 0.05);
    border-radius: 100%;
-   transform: scale(1.05);
+   transform: scale(1.1);
    transition: transform 0.1s ease; 
 }
 
