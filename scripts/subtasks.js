@@ -16,6 +16,7 @@ async function renderSubtasks(assignedSubtasks, wrapperId = 'assignedSubtasks') 
             listItem.readOnly = true;
             let wrapper = listItem.parentElement;
             wrapper.classList.remove('edit-mode');
+            (index === assignedSubtasks.length - 1) ? listItem.scrollIntoView() : null;
         }
     }
 }
@@ -212,11 +213,11 @@ function onInputUpdateSubtask(event) {
 /**
  * Event handler: set subtask input to edit mode
  * 
- * @param {event} event - onclick (edit button)
+ * @param {event} event - double click (input), click (edit button)
  */
 function editSubtaskEventHandler(event) {
     event.stopPropagation();
-    // console.log('f) editSubtaskEventHandler');
+    // event.preventDefault();
     if(subtaskEventAllowed) {
         event.preventDefault();
         let input = getCurrentSubtaskInputFromEvent(event);
@@ -224,6 +225,7 @@ function editSubtaskEventHandler(event) {
         wrapper.classList.add('edit');
         wrapper.classList.remove('read-only');
         input.readOnly = false;
+        // input.classList.add('prevent-select');
         input.focus();
     }
 }

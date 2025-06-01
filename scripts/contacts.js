@@ -203,7 +203,7 @@ async function closeContactsFormDialogue(event) {
     let dialogue = document.getElementById('addContactDialogue');
     document.getElementById('addNewContactBtnFloating').style = '';
     // document.body.style = '';
-    await runSlideOutAnimation(dialogue, 200);
+    await runSlideOutAnimation(dialogue);
     await renderContactList();
     await showContactDetail(event, lastListContactId);
     // reloadPage(event);

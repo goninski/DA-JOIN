@@ -424,14 +424,7 @@ async function showFloatingMessage(template, msg = '', timeout = 1500) {
 async function runSlideInAnimation(element, timeout = 0) {
     element.classList.remove('slide-out');
     element.classList.add('slide-in');
-    if(timeout > 0) {
-        setTimeout(function() {
-            element.style = '';
-            // element.classList.remove('slide-out');
-        }, timeout);
-    } else {
-        element.style = '';
-    }
+    setTimeout(function() {element.style = '';}, timeout);
 }
 
 
@@ -441,15 +434,8 @@ async function runSlideInAnimation(element, timeout = 0) {
  * @param {element} element - dom element
  * @param {number} timeout - timeout milliseconds
  */
-async function runSlideOutAnimation(element, timeout = 0) {
+async function runSlideOutAnimation(element, timeout = 175) {
     element.classList.remove('slide-in');
     element.classList.add('slide-out');
-    if(timeout > 0) {
-        setTimeout(function() {
-            element.style = 'display: none';
-            // element.classList.remove('slide-out');
-        }, timeout);
-    } else {
-        element.style = 'display: none';
-    }
+    setTimeout(function() {element.style = 'display: none';}, timeout);
 }
