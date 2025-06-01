@@ -239,11 +239,11 @@ function getTaskFormFieldsTemplate(task) {
         <div class="field-wrapper">
             <label for="priority">Priority</label>
             <div class="priority-input-wrapper flex-row justify-between align-center">
-                <label for="inputPrioHigh" id="labelPrioHigh" class="prio-high button btn-icon btn-radio hide-child-input" value="high"><input type="radio" id="inputPrioHigh" name="priority" value="high" class="focus-strong">Urgent<div id="iconPrioHigh" class="icon-wrapper"></div></label>
+                <label for="inputPrioHigh" id="labelPrioHigh" class="prio-high button btn-icon btn-radio hide-child-input" value="high"><input type="radio" id="inputPrioHigh" name="priority" value="high" class="focus-strong"><span>Urgent</span><div id="iconPrioHigh" class="icon-wrapper"></div></label>
 
-                <label for="inputPrioMedium" id="labelPrioMedium" class="prio-medium button btn-icon btn-radio hide-child-input" value="medium"><input type="radio" id="inputPrioMedium" name="priority" value="medium" checked class="focus-strong">Medium<div id="iconPrioMedium" class="icon-wrapper"></div></label>
+                <label for="inputPrioMedium" id="labelPrioMedium" class="prio-medium button btn-icon btn-radio hide-child-input" value="medium"><input type="radio" id="inputPrioMedium" name="priority" value="medium" checked class="focus-strong"><span>Medium</span><div id="iconPrioMedium" class="icon-wrapper"></div></label>
 
-                <label for="inputPrioLow" id="labelPrioLow" class="prio-low button btn-icon btn-radio hide-child-input" value="low"><input type="radio" id="inputPrioLow" name="priority" value="low" class="focus-strong">Low<div id="iconPrioLow" class="icon-wrapper"></div></label>
+                <label for="inputPrioLow" id="labelPrioLow" class="prio-low button btn-icon btn-radio hide-child-input" value="low"><input type="radio" id="inputPrioLow" name="priority" value="low" class="focus-strong"><span>Low</span><div id="iconPrioLow" class="icon-wrapper"></div></label>
             </div>
         </div>
 

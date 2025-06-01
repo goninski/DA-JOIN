@@ -71,9 +71,11 @@ textarea {
     border: solid 1px var(--clr-subtle);
     cursor: pointer;
     justify-content: center;
-    padding: 16px 10px;
+    padding-block: 16px;
+    padding-inline: 10px;
     flex-grow: 1;
-    min-width: 136px;
+    max-width: unset;
+    /* min-width: 136px; */
 }
 .hide-child-input {
     position: relative;
@@ -364,9 +366,12 @@ form.task-form {
     --field-width: 442px;
 }
 .task-form .priority-input-wrapper {
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     row-gap: 2px;
 }
+/* .task-form .priority-input-wrapper label {
+    flex-grow: 1;
+} */
 .task-form #assignedContactBatches {
     margin-top: 4px;
 }
@@ -505,21 +510,27 @@ form.task-form {
         font-size: var(--fs-base);
     }
 }
-@media(max-width: 511px) {
+@media(max-width: 435px) {
     form {
         --field-width: 100% !important;
     }
     .task-form .priority-input-wrapper {
-        justify-content: start;
+        /* justify-content: start; */
+    }
+    .priority-input-wrapper label {
+        /* font-size: 12px; */
     }
     .submit-button-wrapper {
         flex-wrap: wrap;
         /* justify-content: start; */
         max-height: unset !important;
     }
-}
-@media(max-width: 374px) {
     .add-task-page .submit-button-wrapper button {
         --fs-lg: 16px;
+    }
+}
+@media(max-width: 374px) {
+    .priority-input-wrapper label span {
+        display: none;
     }
 }
