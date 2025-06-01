@@ -92,7 +92,9 @@ function getHeader() {
 
 
 /**
- * toggle header navigation
+ * Toggle header navigation
+ * 
+ * @param {event} event - click (header nav button)
  */
 function toggleHeaderNav(event) {
     event.preventDefault();

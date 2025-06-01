@@ -149,7 +149,6 @@ button.add-contact img {
 }
 #contactOptionsMenu:not(.is-open) {
     transition: transform 0.5s;
-    transform: translateX(100%);
 }
 #contactOptionsMenu button {
     font-size: var(--fs-base);

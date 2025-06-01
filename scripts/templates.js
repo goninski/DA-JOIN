@@ -9,7 +9,7 @@ function getHeaderTemplate() {
             </div>
             <p class="header-title">Kanban Project Management&nbsp;Tool</p>
             <a class="help-link" href="help.html"><img class="help-icon" src="./assets/icons/help.svg" alt="help-icon"></a>
-            <nav class=header-nav flex-column pos-relative">
+            <nav class="header-nav flex-col pos-relative">
                 <button id="headerNavTrigger" onclick="toggleHeaderNav(event)" class="profile-batch">G</button>
                 <div id="headerNavDropdown" class="nav-links" onclick="event.stopPropagation()">
                     <a class="help-link-mobile" href="/help.html">Help</a>

@@ -130,21 +130,21 @@ header .profile-batch {
     font-size: var(--fs-lg);
     font-weight: var(--fw-bold);
 }
-
 #headerNavDropdown {
     position: absolute;
     top: var(--height-header);
-    display: none;
+    right: 0;
+    display: flex;
     flex-direction: column;
     background-color: var(--clr-main);
     padding: 10px;
     border-radius: 20px;
     border-top-right-radius: 0;
-    transform: translateX(-55%);
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+    transform: translate(8px, -20px);
 }
-#headerNavDropdown.is-open {
-    display: flex;
+#headerNavDropdown:not(.is-open) {
+    display: none;
 }
 #headerNavDropdown a {
     padding-inline: 16px;
@@ -489,39 +489,29 @@ body.logged-out .nav-link-app {
         --fs-xxl: 27px;
         --fs-xl: 20px;
     }
-
     main,
     header,
     footer {
         margin-left: unset;
         width: 100% !important;
     }
-
     header .logo-link {
         display: block;
         margin-right: auto;
     }
-
     header .profile-batch {
         width: 40px;
         height: 40px;
         border-width: 2px;
     }
-
     header .header-title,
     header .help-link {
         display: none !important;
     }
-
     header .help-link-mobile,
     #footerNavBar {
         display: flex;
     }
-
-    #headerNavDropdown {
-        transform: translateX(-67.5%);
-    }
-
     .nav-link-login {
         margin-right: auto;
     }

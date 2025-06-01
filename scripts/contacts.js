@@ -109,7 +109,6 @@ function openContactOptionsMenu(event) {
     event.stopPropagation();
     event.preventDefault();
     document.getElementById('contactOptionsMenu').classList.add('is-open');
-    // document.getElementById('contactOptionsMenu').classList.remove('hide');
 }
 
 
