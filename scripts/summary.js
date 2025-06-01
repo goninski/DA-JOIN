@@ -12,6 +12,7 @@ async function initSummary() {
     await getTaskData();
     await setSummaryObj();
     renderSummaryNumbers();
+    addSummaryBoxListeners();
 }
 
 /**
@@ -32,6 +33,29 @@ function renderSummaryNumbers() {
     document.querySelector('.tasks-in-progress .number').textContent = summary.taskCountInProgress || 0;
     // Awaiting Feedback
     document.querySelector('.awaiting-feedback .number').textContent = summary.taskCountAwaitFeedback || 0;
+}
+
+/**
+ * Add click listeners to summary boxes to open board.html
+ */
+function addSummaryBoxListeners() {
+    const selectors = [
+        '.to-do',
+        '.done',
+        '.urgent-deadline',
+        '.tasks-in-board',
+        '.tasks-in-progress',
+        '.awaiting-feedback'
+    ];
+    selectors.forEach(sel => {
+        const el = document.querySelector(sel);
+        if (el) {
+            el.style.cursor = 'pointer';
+            el.addEventListener('click', () => {
+                window.location.href = 'board.html';
+            });
+        }
+    });
 }
 
 /**
