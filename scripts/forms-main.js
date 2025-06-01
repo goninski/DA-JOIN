@@ -360,6 +360,7 @@ async function resetForm(formId) {
     // console.log(listboxElements);
     getInvalidInputIds(formId);
     formElements[0].focus();
+    form.scrollTop;
 }
 
 

@@ -340,6 +340,7 @@ async function resetAddTaskForm(event) {
     await renderContactSelectOptions();    
     await renderContactProfileBatches();    
     await renderCategorySelectOptions();    
+    await renderSubtasks(assignedSubtasks);
     event.preventDefault();
 }
 

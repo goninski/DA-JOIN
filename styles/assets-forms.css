@@ -74,8 +74,9 @@ textarea {
     padding-block: 16px;
     padding-inline: 10px;
     flex-grow: 1;
-    max-width: unset;
+    flex-basis: 136px;
     /* min-width: 136px; */
+    max-width: unset;
 }
 .hide-child-input {
     position: relative;
@@ -506,19 +507,13 @@ form.task-form {
     .field-groups {
         flex-direction: column;
     }
-    .priority-input-wrapper label  {
+    .priority-input-wrapper .btn-radio  {
         font-size: var(--fs-base);
     }
 }
 @media(max-width: 435px) {
     form {
         --field-width: 100% !important;
-    }
-    .task-form .priority-input-wrapper {
-        /* justify-content: start; */
-    }
-    .priority-input-wrapper label {
-        /* font-size: 12px; */
     }
     .submit-button-wrapper {
         flex-wrap: wrap;
