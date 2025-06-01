@@ -5,15 +5,17 @@ document.addEventListener('click', documentEventHandler);
 
 
 /**
- * Document Event handler: close header nav on outslide click
+ * Document Event handler: close various dialogues
  * 
  * @param {event} event - click (document)
  */
 function documentEventHandler(event) {
-    // console.log('f) documentEventHandler');
     if( event.type === "click" ) {
-        let headerNavDropdown = document.getElementById('headerNavDropdown');
-        headerNavDropdown ? headerNavDropdown.classList.add('hide') : null;
+        let elementIds = ['headerNavDropdown', 'contactOptionsMenu'];
+        elementIds.forEach(elementId => {
+            let element = document.getElementById(elementId);
+            element ? element.classList.add('hide') : null;
+        });
     }
 }
 
@@ -150,6 +152,18 @@ function hasLength(object) {
     if(object && object.length > 0) {
         return true;
     }
+}
+
+
+/**
+ * Helper: close parent wrapper
+ * 
+ * @param {event} event - inherit
+ * @param {string} selector - selector of the wrapper to close
+ */
+function closeParentWrapper(event, selector = '.close-on-event') {
+    let wrapper = getClosestParentElementFromEvent(event, selector);
+    wrapper.classList.add('hide');
 }
 
 

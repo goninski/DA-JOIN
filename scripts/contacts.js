@@ -148,10 +148,12 @@ async function openAddNewContactForm(event) {
  * @param {string} contactId - id of the current contact (currently no in use due global variable)
  */
 async function openEditContactForm(event, contactId) {
+    event.preventDefault();
     event.stopPropagation();
     formMode = 'edit';
     // lastListContactId = contactId;
     await openContactsForm(formMode, currentContact.id);
+    closeParentWrapper(event);
 }
 
 

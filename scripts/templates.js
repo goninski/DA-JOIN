@@ -451,10 +451,10 @@ function getContactDetailProfileBatchTemplate(contact) {
  */
 function getContactOptionButtons(contact) {
     return `
-        <button onclick="openEditContactForm(event, '${contact.id}')" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)" class="option-button-edit">
+        <button onclick="openEditContactForm(event, '${contact.id}')" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)" class="option-button-edit" title="Edit current contact">
             <img src="assets/icons/edit.svg" alt="edit-icon">Edit
         </button>
-        <button onclick="submitDeleteContact(event, '${contact.id}')" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)" class="option-button-delete">
+        <button onclick="submitDeleteContact(event, '${contact.id}')" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)" class="option-button-delete" title="Delete current contact">
             <img src="assets/icons/delete.svg" alt="delete-icon">Delete
         </button>
     `
