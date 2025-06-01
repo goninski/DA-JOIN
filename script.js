@@ -14,7 +14,7 @@ function documentEventHandler(event) {
         let elementIds = ['headerNavDropdown', 'contactOptionsMenu'];
         elementIds.forEach(elementId => {
             let element = document.getElementById(elementId);
-            element ? element.classList.add('hide') : null;
+            element ? element.classList.remove('is-open') : null;
         });
     }
 }
@@ -97,7 +97,7 @@ function getHeader() {
 function toggleHeaderNav(event) {
     event.preventDefault();
     event.stopPropagation();
-    document.getElementById('headerNavDropdown').classList.toggle('hide');
+    document.getElementById('headerNavDropdown').classList.toggle('is-open');
 }
 
 

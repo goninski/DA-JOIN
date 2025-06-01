@@ -110,6 +110,7 @@ button.add-contact img {
 }
 .contact-property {
     gap: 15px;
+    width: max-content;
 }
 .contact-property .label {
     font-weight: var(--fw-bold);
@@ -131,7 +132,7 @@ button.add-contact img {
 }
 #contactOptionsMenu {
     position: fixed;
-    right: 28px;
+    right: 0;
     bottom: calc(var(--height-footer) + 26px);
     z-index: 910;
     padding: 20px;
@@ -140,6 +141,15 @@ button.add-contact img {
     border-bottom-right-radius: 0;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     gap: 20px;
+    transform: translateX(100%);
+}
+#contactOptionsMenu.is-open {
+    transition: transform 0.5s;
+    transform: translateX(-28px);
+}
+#contactOptionsMenu:not(.is-open) {
+    transition: transform 0.5s;
+    transform: translateX(100%);
 }
 #contactOptionsMenu button {
     font-size: var(--fs-base);

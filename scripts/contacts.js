@@ -108,7 +108,8 @@ async function showContactDetail(event, contactId) {
 function openContactOptionsMenu(event) {
     event.stopPropagation();
     event.preventDefault();
-    document.getElementById('contactOptionsMenu').classList.remove('hide');
+    document.getElementById('contactOptionsMenu').classList.add('is-open');
+    // document.getElementById('contactOptionsMenu').classList.remove('hide');
 }
 
 
