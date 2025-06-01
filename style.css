@@ -517,7 +517,7 @@ body.logged-out .nav-link-app {
     }
 }
 
-@media(max-width: 374px) {
+@media(max-width: 435px) {
     #footerNavBar .nav-links a {
         font-size: 12px;
         padding-inline: 10px;
