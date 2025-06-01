@@ -23,7 +23,7 @@
             <div class="pos-absol-header-login">
                 <p class="not_a_join_user-login-header label">Not a Join user?</p>
                 <a href="./sign-up.html">
-                    <button class="btn-login-header-size btn-login-header btn-fourth">Sign up</button>
+                    <button class="btn-login-header-size btn-login-header btn-fourth btn-fourth-size-login-top">Sign up</button>
                 </a>
             </div>
         </div>
@@ -42,20 +42,20 @@
                     </div>
 
                     <div class="input-wrapper-signup-login flex justify-between" id="pwd-input-div">
-                        <input class="login-signup-input pictureinput" type="password" id="pwd-login" name="pwd"
+                        <input class="login-signup-input pictureinput-for-pwd" type="password" id="pwd-login" name="pwd"
                             minlength="8" placeholder="Password" required oninput="onPasswordInput(this)">
                         <div class="pwd-icon pwd-pic" onclick="togglePasswordVisibility('pwd-login', this)"></div>
                     </div>
                     
                     <div id="login-error-message" class="login-error hidden">
-                        Your email or password is incorrect. Please try again.
+                        Check your email and password. Please try again.
                     </div>
                 </div>
                 
-                <div class="flex-row align-end justify-center gap-35">
-                    <button id="signInBtn" type="button" value="Log in" class="button btn-login-size btn-fourth"
+                <div class="flex-row align-end justify-center gap-35 button-part-login">
+                    <button id="signInBtn" type="button" value="Log in" class="button btn-login-size btn-fourth btn-fourth-size-login"
                         onclick="handleLogin()">Log in</button>
-                    <button id="signInGuestBtn" class="button btn-login-size btn-secondary"
+                    <button id="signInGuestBtn" class="button btn-login-size btn-third"
                         onclick="guestLogin(event)">Guest Log in</button>
                 </div>
             </div>

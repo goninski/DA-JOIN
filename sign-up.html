@@ -22,7 +22,7 @@
     <div class="flex justify-center">
         <div class="flex-col bg-white sign-up-div-size flex center gap_32px">
             <div class="arrow_left_icon_position">
-                <a href="./login.html">
+                <a href="./login.html" class="a-arrow_left_icon">
                     <img src="./assets/img/arrow-left-line.png" alt="Arrow Left Icon" class="arrow_left_icon">
                 </a>
             </div>
@@ -52,27 +52,27 @@
                             <div class="pwd-icon pwd-pic" onclick="togglePasswordVisibility('pwd', this)"></div>
                         </div>
 
-                        <div class="input-wrapper-signup-login flex justify-between"
-                            id="confirm-pwd-div-sign-up">
+                        <div class="input-wrapper-signup-login flex justify-between" id="confirm-pwd-div-sign-up">
                             <input class="login-signup-input pictureinput" type="password" id="confirm_pwd" name="pwd"
                                 minlength="8" placeholder="Confirm Password" required oninput="onPasswordInput(this)">
                             <div class="pwd-icon pwd-pic" onclick="togglePasswordVisibility('confirm_pwd', this)"></div>
                         </div>
-                        <div id="sign-up-error-message" class="login-error hidden margin-bottom-24px">
+                        <div id="sign-up-error-message" class="sign-up-error hidden margin-bottom-16px">
                             Your passwords don't match. Please try again.
                         </div>
                     </div>
 
-                    <div class="center checkbox-wrapper flex-row gap-10px">
-                        <input type="checkbox" id="privacy_policy" class="custom-checkbox" required>
-                        <div class="flex-row center">
-                            <div class="div-i-accept">I accept the <a class="a-privacy-policy">Privacy policy</a></div>
-                        </div>
+                    <div class="checkbox-wrapper">
+                        <label class="checkbox-label terms-page main p flex center">
+                            <input type="checkbox" class="custom-checkbox" required>
+                            <span>I accept the <a href="#" class="a-privacy-policy">Privacy policy</a></span>
+                        </label>
                     </div>
+
             </div>
 
             <div class="flex-row align-end justify-center gap-35">
-                <button id="signUpBtn" type="submit" value="Sign up" class="button btn-login-size btn-fourth"
+                <button id="signUpBtn" type="submit" value="Sign up" class="button btn-login-size btn-fourth btn-fourth-size-sign-up"
                     onclick="signUpSubmitHandler(event)">Sign up</button>
             </div>
             </form>

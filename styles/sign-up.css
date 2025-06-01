@@ -10,6 +10,11 @@
     z-index: 3;
 }
 
+.a-arrow_left_icon {
+    outline: none;
+    box-shadow: none;
+}
+
 .sign-up-div-size {
     display: flex;
     flex-direction: column;
@@ -28,7 +33,7 @@
 }
 
 .custom-checkbox {
-    appearance: none;
+    position: unset !important;
     width: 24px;
     height: 24px;
     border: 2px solid #2A3647;
@@ -49,6 +54,9 @@
 }
 
 .login-email-part-sign-up {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 422px;
     height: 326px;
     padding: 0px;
@@ -85,9 +93,34 @@
 .checkbox-wrapper {
     width: 231px;
     height: 24px;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.checkbox-label {
+    font-size: 16px !important;
+    gap: 10px;
+}
+
+.btn-fourth-size-sign-up {
+    height: 55px;
+    width: 126px;
+}
+
+.checkbox-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: 422px;
+}
+
+.checkbox-text {
+    white-space: nowrap;
+    text-align: left;
 }
 
 /* .overlay-sign-up-successfully {
@@ -137,7 +170,19 @@
 }
 
 .login-error {
-    width: 364px;
+    width: 422px;
+    height: 16px;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 120%;
+    color: #FF8190;
+    margin-top: 4px;
+}
+
+.sign-up-error {
+    width: 422px;
     height: 14px;
     font-family: 'Poppins', sans-serif;
     font-style: normal;
@@ -145,5 +190,9 @@
     font-size: 12px;
     line-height: 120%;
     color: #FF8190;
-    margin-top: 0px;
+    margin-top: 8px;
+}
+
+.margin-bottom-16px {
+    margin-bottom: 16px;
 }

@@ -60,7 +60,7 @@ function checkValidity() {
 
 function checkPasswords(password, passwordRepeat) {
   const errorMsgSignUp = document.getElementById('sign-up-error-message');
-  
+
   if (password !== passwordRepeat) {
     confirmPwdField.setCustomValidity("");
     passwordField.setCustomValidity("");
@@ -122,16 +122,19 @@ function onPasswordInput(inputElement) {
   if (inputElement.value.trim().length > 0) {
     icon.classList.remove('pwd-pic');
     icon.classList.add('eye-pic');
+    icon.style.pointerEvents = 'auto';
   } else {
     icon.classList.remove('eye-pic', 'eye-text-pic');
     icon.classList.add('pwd-pic');
     inputElement.type = 'password';
+    icon.style.pointerEvents = 'none';
   }
 }
 
 function togglePasswordVisibility(inputId, iconElement) {
   const input = document.getElementById(inputId);
 
+  if (input.value.trim().length === 0) return;
   if (input.type === 'password') {
     input.type = 'text';
     iconElement.classList.remove('eye-pic');
