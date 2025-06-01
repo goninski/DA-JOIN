@@ -162,11 +162,11 @@ function getTaskDetailsTemplate(task, category) {
         </div>
     </div>
              
-    <div class="edit-buttons flex-row align-center justify-end mt-auto">
-        <button onclick="openEditTaskForm(event, '${task.id}')" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)">
+    <div class="option-buttons flex-row align-center justify-end mt-auto">
+        <button onclick="openEditTaskForm(event, '${task.id}')" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)" class="option-button-edit">
             <img src="assets/icons/edit.svg" alt="edit-icon">Edit
         </button>
-        <button onclick="submitDeleteTask(event, '${task.id}')" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)">
+        <button onclick="submitDeleteTask(event, '${task.id}')" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)" class="option-button-delete">
             <img src="assets/icons/delete.svg" alt="delete-icon">Delete
         </button>
     </div>
@@ -422,15 +422,41 @@ function getContactListGroupTemplate(contact) {
  * @param {object} contact - current contact object
  */
 function getContactDetailProfileBatchTemplate(contact) {
+    let optionButtons = getContactOptionButtons(contact);
     return `
         <div class="profile-batch profile-batch-large" style="--profile-color: ${contact.color};">${contact.initials}</div>
         <div class="profile-title flex-col">
             <h2 class="">${contact.name}</h2>                        
-            <div class="edit-buttons flex-row align-center">
-                <button onclick="openEditContactForm(event, '${contact.id}')"><img src="assets/icons/edit.svg" alt="edit-icon">Edit</button>
-                <button id="btnDelete" onclick="submitDeleteContact(event, '${contact.id}')"><img src="assets/icons/delete.svg" alt="delete-icon">Delete</button>
+            <div class="option-buttons flex-row align-center">
+                ${optionButtons}
             </div>
         </div>
+    `
+}
+
+
+                // <button onclick="openEditContactForm(event, '${contact.id}')" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)" class="option-button-edit">
+                //     <img src="assets/icons/edit.svg" alt="edit-icon">Edit
+                // </button>
+                // <button onclick="submitDeleteContact(event, '${contact.id}')" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)" class="option-button-delete">
+                //     <img src="assets/icons/delete.svg" alt="delete-icon">Delete
+                // </button>
+
+
+
+/**
+ * Return html of the contact option buttons (within detail view of a selected contact)
+ * 
+ * @param {object} contact - current contact object
+ */
+function getContactOptionButtons(contact) {
+    return `
+        <button onclick="openEditContactForm(event, '${contact.id}')" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)" class="option-button-edit">
+            <img src="assets/icons/edit.svg" alt="edit-icon">Edit
+        </button>
+        <button onclick="submitDeleteContact(event, '${contact.id}')" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)" class="option-button-delete">
+            <img src="assets/icons/delete.svg" alt="delete-icon">Delete
+        </button>
     `
 }
 

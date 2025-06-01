@@ -222,19 +222,6 @@
   pointer-events: none;
 }
 
-#taskDetailsWrapper .edit-buttons button:first-child {
-  width: 58px;
-}
-#taskDetailsWrapper .edit-buttons button:last-child {
-  width: 72px;
-}
-#taskDetailsWrapper .edit-buttons button:hover {
-  font-weight: var(--fw-bold);
-  color: var(--clr-light-blue);
-}
-
-
-
 
 
 /* BREAKPOINTS */

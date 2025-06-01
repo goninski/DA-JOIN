@@ -125,8 +125,9 @@ a:hover {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .floating-button-round.bottom-right {
-    bottom: 32px;
     right: 32px;
+    /* bottom: 32px; */
+    bottom: calc(var(--height-footer) + 32px);
 }
 .floating-message {
     position: fixed;
@@ -139,8 +140,15 @@ a:hover {
 :is(.floating-button-round, .floating-message) img {
     height: 32px;
 }
+.floating-button-round img[alt="three-dot-menu-icon"] {
+    height: 26px;
+}
 .floating-message img.icon-board {
     height: 30px;
+}
+.floating-button-round:hover {
+    background-color: var(--clr-light-blue);
+    border-color: var(--clr-light-blue);
 }
 
 
@@ -171,19 +179,30 @@ a:hover {
     height: 120px;
     font-size: var(--fs-xxl);
 }
-.edit-buttons {
+.option-buttons {
     gap: 24px;
 }
-.edit-buttons button {
+.option-buttons button {
     display: flex;
     align-items: center;
-    gap: 8px;
-    height: 24px;
+    gap: 12px;
+    /* height: 24px; */
 }
-.edit-buttons button img {
+.option-buttons button img {
     height: 18px;
     width: auto;
     object-fit: contain;
+    margin-top: -2px;
+}
+.option-buttons .option-button-edit {
+  width: 58px;
+}
+.option-buttons .option-button-delete {
+  width: 72px;
+}
+.option-buttons button:hover {
+  font-weight: var(--fw-bold) !important;
+  color: var(--clr-light-blue) !important;
 }
 
 
@@ -318,7 +337,7 @@ button.close-dialogue .light {
         height: 3px;
     }
     .floating-button-round.bottom-right {
-        bottom: calc(var(--height-footer) + 32px);
+        /* bottom: calc(var(--height-footer) + 32px); */
     }
     .dialogue-inner > div {
         padding: 61px 16px !important;

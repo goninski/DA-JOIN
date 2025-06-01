@@ -96,6 +96,19 @@ async function showContactDetail(event, contactId) {
     // console.log(contact);
     document.getElementById('floatingContact').innerHTML = getContactDetailProfileBatchTemplate(currentContact);
     document.getElementById('contactInfo').innerHTML = getContactDetailInfoTemplate(currentContact);
+    document.getElementById('contactOptionsMenu').innerHTML = getContactOptionButtons(currentContact);
+}
+
+
+/**
+ * Event handler: open contact options menu (mobile view only) 
+ * 
+ * @param {event} event - click (contact options menu button)
+ */
+function openContactOptionsMenu(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    document.getElementById('contactOptionsMenu').classList.remove('hide');
 }
 
 

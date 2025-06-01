@@ -41,7 +41,7 @@ button.add-contact img {
     width: auto;
     object-fit: contain;
 }
-.floating-button-round.add-contact {
+.floating-button-round:is(.add-contact, .show-options) {
     display: none;
 }
 .contact-list-sidebar :where(ul, ol) {
@@ -120,19 +120,31 @@ button.add-contact img {
 #btnCloseContactDetails {
     display: none;
     position: absolute;
-    top: 58px;
-    right: 20px;
+    right: var(--px-sec);
     width: 32px;
     height: 32px;
-    z-index: 1;
 }
 #btnCloseContactDetails img {
     height: 24px;
     width: auto;
     object-fit: contain;
 }
-
-
+#contactOptionsMenu {
+    position: fixed;
+    right: 28px;
+    bottom: calc(var(--height-footer) + 26px);
+    z-index: 910;
+    padding: 20px;
+    background-color: white;
+    border-radius: 20px;
+    border-bottom-right-radius: 0;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    gap: 20px;
+}
+#contactOptionsMenu button {
+    font-size: var(--fs-base);
+    color: var(--clr-main);
+}
 
 @media(max-width: 1345px) {
     .page-title-wrapper {
@@ -164,6 +176,12 @@ button.add-contact img {
         position: absolute;
         inset: 0;
         overflow: auto;
+    }
+    .contact-page-inner.show-contact-detail .option-buttons:not(#contactOptionsMenu) {
+        display: none;
+    }
+    .contact-page-inner.show-contact-detail .floating-button-round.show-options {
+        display: unset;
     }
     .contact-dialogue .dialogue-inner {
         max-height: unset;
