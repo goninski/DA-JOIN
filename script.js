@@ -5,34 +5,6 @@ document.addEventListener('click', documentEventHandler);
 
 
 /**
- * Document Event handler: close various dialogues
- * 
- * @param {event} event - click (document)
- */
-function documentEventHandler(event) {
-    if( event.type === "click" ) {
-        let elementIds = ['headerNavDropdown', 'contactOptionsMenu'];
-        elementIds.forEach(elementId => {
-            let element = document.getElementById(elementId);
-            element ? element.classList.remove('is-open') : null;
-        });
-    }
-}
-
-
-/**
- * Event Handler: close current element (multiple use)
- * 
- * @param {event} event - various
- */
-function closeElementByCurrentTarget(event) {
-    event.stopPropagation();
-    let element = event.currentTarget;
-    element ? element.classList.remove('is-open') : null;
-}
-
-
-/**
  * Checks authorization (redirect to login if unauthorized, if page not public)
  * 
  * @param {boolean} isPublic - public page true/false (e.g. terms pages)
@@ -104,18 +76,6 @@ function getHeader() {
 
 
 /**
- * Toggle header navigation
- * 
- * @param {event} event - click (header nav button)
- */
-function toggleHeaderNav(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    document.getElementById('headerNavDropdown').classList.toggle('is-open');
-}
-
-
-/**
  * Get html sideNavBar/mobile bottom bar
  */
 function getNavBar() {
@@ -147,12 +107,52 @@ function setNavLinkProps() {
 
 
 /**
+ * Toggle header navigation
+ * 
+ * @param {event} event - click (header nav button)
+ */
+function toggleHeaderNav(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    document.getElementById('headerNavDropdown').classList.toggle('is-open');
+}
+
+
+/**
  * Get html orientation overlay
  */
 function getOrientationOverlay() {
     let element = document.getElementById('orientationOverlay');
     element.textContent = 'Please turn device or window to portrait orientation !'
     element.addEventListener('click', event => {event.stopPropagation();})
+}
+
+
+/**
+ * Document Event handler: close various dialogues
+ * 
+ * @param {event} event - click (document)
+ */
+function documentEventHandler(event) {
+    if( event.type === "click" ) {
+        let elementIds = ['headerNavDropdown', 'contactOptionsMenu'];
+        elementIds.forEach(elementId => {
+            let element = document.getElementById(elementId);
+            element ? element.classList.remove('is-open') : null;
+        });
+    }
+}
+
+
+/**
+ * Event Handler: close current element (multiple use)
+ * 
+ * @param {event} event - various
+ */
+function closeElementByCurrentTarget(event) {
+    event.stopPropagation();
+    let element = event.currentTarget;
+    element ? element.classList.remove('is-open') : null;
 }
 
 
@@ -211,10 +211,7 @@ function getClosestParentElementFromElement(element, selector = '') {
  */
 function getClosestParentElementFromEvent(event, selector = '') {
     let element = event.currentTarget;
-    if(element) {
-        return element.closest(selector);
-    }
-    return;
+    if(element) {return element.closest(selector);}
 }
 
 
@@ -226,10 +223,7 @@ function getClosestParentElementFromEvent(event, selector = '') {
  */
 function getClosestParentElementFromId(id, selector = '') {
     let element = document.getElementById(id);
-    if(element) {
-        return element.closest(selector);
-    }
-    return;
+    if(element) {return element.closest(selector);}
 }
 
 
@@ -239,91 +233,7 @@ function getClosestParentElementFromId(id, selector = '') {
  * @param {string} booleanString - string ('true'/'false')
  */
 function getBooleanFromString(booleanString) {
-    if(booleanString == 'true') {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-
-/**
- * Helper: return the first word of a string
- * 
- * @param {string} string - string
- */
-function getFirstWord(string, index = 0) {
-    let array = string.split(" ");
-    return array[index];
-}
-
-
-/**
- * Helper: return the last word of a string
- * 
- * @param {string} string - string
- */
-function getLastWord(string) {
-    let array = string.split(" ");
-    return array[array.length - 1];
-}
-
-
-/**
- * Helper: set the first letter of string to upper case and returns the full string
- * 
- * @param {string} string - string
- */
-function setFirstLetterUpperCase(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1)
-}
-
-
-/**
- * Helper: return first letter of first and last word of a string, in upper case
- * 
- * @param {string} string - string
- */
-function getInitialsOfFirstAndLastWord(string) {
-    let firstWord = getFirstWord(string);
-    let lastWord = getLastWord(string);
-    return (firstWord[0] + lastWord[0]).toUpperCase();
-}
-
-
-/**
- * Helper: return first letter of last word of a string, in upper case
- * 
- * @param {string} string - string
- */
-function getInitialOfLastWord(string) {
-    let lastWord = getLastWord(string);
-    return lastWord[0].toUpperCase();
-}
-
-
-/**
- * Helper: return the highest id of an object array
- * 
- * @param {array} objArray - array with objects (needs a property of id)
- */
-async function getMaxIdFromObjArray(objArray) {
-    return Math.max(...objArray.map(item => item.id));
-}
-
-
-/**
- * Helper: return a random hex color string
- * 
- * @param {string} format - color format (hex)
- */
-function getRandomColor(format = 'hex') {
-    let clr = Math.floor(Math.random()*16777215).toString(16);
-    clr = '#' + clr;
-    if(clr.length == 6) {
-        clr = clr + '0';
-    }
-    return clr;
+    return (booleanString == 'true') ? true : false;
 }
 
 
@@ -365,22 +275,6 @@ function formatDateFromStringDBToFull(dateStringDB) {
  */
 function addDaysToDate(date, days) {
     return new Date(date.getTime() + days * 24 * 60 * 60 * 1000);
-}
-
-
-/**
- * Helper: return current day segment (morning, afternoon, evening)
- */
-function getDaySegment() {
-  let currentDate = new Date();
-  let hours = currentDate.getHours();
-  let daySegment = 'afternoon';
-  if(hours >=0 && hours < 12) {
-    daySegment = 'morning';
-  } else if(hours >= 18) {
-    daySegment = 'evening';
-  }
-  return daySegment;
 }
 
 

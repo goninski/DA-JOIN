@@ -306,3 +306,84 @@ async function deleteFirebaseData(fetchPath="x") {
     });
     dataObj = await response.json();
 }
+
+
+/**
+ * Helper: return the first word of a string
+ * 
+ * @param {string} string - string
+ */
+function getFirstWord(string, index = 0) {
+    let array = string.split(" ");
+    return array[index];
+}
+
+
+/**
+ * Helper: return the last word of a string
+ * 
+ * @param {string} string - string
+ */
+function getLastWord(string) {
+    let array = string.split(" ");
+    return array[array.length - 1];
+}
+
+
+/**
+ * Helper: set the first letter of string to upper case and returns the full string
+ * 
+ * @param {string} string - string
+ */
+function setFirstLetterUpperCase(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
+
+/**
+ * Helper: return first letter of first and last word of a string, in upper case
+ * 
+ * @param {string} string - string
+ */
+function getInitialsOfFirstAndLastWord(string) {
+    let firstWord = getFirstWord(string);
+    let lastWord = getLastWord(string);
+    return (firstWord[0] + lastWord[0]).toUpperCase();
+}
+
+
+/**
+ * Helper: return first letter of last word of a string, in upper case
+ * 
+ * @param {string} string - string
+ */
+function getInitialOfLastWord(string) {
+    let lastWord = getLastWord(string);
+    return lastWord[0].toUpperCase();
+}
+
+
+/**
+ * Helper: return the highest id of an object array
+ * 
+ * @param {array} objArray - array with objects (needs a property of id)
+ */
+async function getMaxIdFromObjArray(objArray) {
+    return Math.max(...objArray.map(item => item.id));
+}
+
+
+/**
+ * Helper: return a random hex color string
+ * 
+ * @param {string} format - color format (hex)
+ */
+function getRandomColor(format = 'hex') {
+    let clr = Math.floor(Math.random()*16777215).toString(16);
+    clr = '#' + clr;
+    if(clr.length == 6) {
+        clr = clr + '0';
+    }
+    return clr;
+}
+

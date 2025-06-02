@@ -125,3 +125,18 @@ async function resetSummaryObj() {
   summary.upcomingDeadline = '';
 } 
 
+
+/**
+ * Helper: return current day segment (morning, afternoon, evening)
+ */
+function getDaySegment() {
+  let currentDate = new Date();
+  let hours = currentDate.getHours();
+  let daySegment = 'afternoon';
+  if(hours >=0 && hours < 12) {
+    daySegment = 'morning';
+  } else if(hours >= 18) {
+    daySegment = 'evening';
+  }
+  return daySegment;
+}
