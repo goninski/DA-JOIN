@@ -22,7 +22,6 @@ async function renderContactList() {
     let contactsGrouped = await groupContacts(contacts);
     for (let index = 0; index < contactsGrouped.length; index++) {
         let contactGroupObj = contactsGrouped[index];
-        // console.log(contactGroupObj);
         let groupName = contactGroupObj[0];
         let contactGroup = contactGroupObj[1];
         contactListRef.innerHTML += getContactListTemplate(groupName);
@@ -42,7 +41,6 @@ async function renderContactGroupItems(contactGroup, groupName) {
     contactListGroupRef.innerHTML = '';
     for (let index = 0; index < contactGroup.length; index++) {
         let contact = contactGroup[index];
-        // console.log(contact);
         contactListGroupRef.innerHTML += getContactListGroupTemplate(contact);
     }
 }
@@ -56,9 +54,7 @@ async function renderContactGroupItems(contactGroup, groupName) {
 async function groupContacts(contacts) {
     await sortContacts(contacts);
     let contactsGroupedObj = await Map.groupBy(contacts, contact => contact.name[0].toUpperCase());
-    // console.log(contactsGroupedObj);
     let contactsGrouped = Array.from(contactsGroupedObj);
-    // console.log(contactsGrouped);
     return contactsGrouped;
 }
 
@@ -71,11 +67,9 @@ async function groupContacts(contacts) {
  */
 async function showContactDetail(event, contactId) {
     console.log(contactId);
-    // return;
     event.stopPropagation();
     if(lastListContactId != '' && lastListContactId != contactId){
         document.getElementById('listContactId-' + lastListContactId).classList.remove('active');
-        // console.log('condition A');
     }
     if(contactId == '') {
         return closeContactDetail(contactId);
@@ -87,13 +81,7 @@ async function showContactDetail(event, contactId) {
         closeContactDetail(contactId);
     });
     lastListContactId = contactId;
-    // console.log(lastListContactId);
-    // console.log(contactId);
-    // console.log(contacts);
-    // console.log(index);
-    let index = await getContactIndexFromId(contactId);
-    currentContact = contacts[index];
-    // console.log(contact);
+    currentContact = await getContactById(contactId);
     document.getElementById('floatingContact').innerHTML = getContactDetailProfileBatchTemplate(currentContact);
     document.getElementById('contactInfo').innerHTML = getContactDetailInfoTemplate(currentContact);
     document.getElementById('contactOptionsMenu').innerHTML = getContactOptionButtons(currentContact);
@@ -231,8 +219,7 @@ async function setAddContactValues() {
 async function setEditContactValues(contactId) {
     document.getElementById('dialogueTeaser').style = 'display: none;';
     document.getElementById('dialogueTitle').innerHTML = 'Edit Contact';
-    let index = await getContactIndexFromId(contactId);
-    let contact = contacts[index];
+    let contact = await getContactById(contactId);
     document.getElementById('dialogueProfileBatch').innerHTML = contact.initials;
     document.getElementById('dialogueProfileBatch').style = '--profile-color: violet;';
     document.getElementById('inputName').value = contact.name;

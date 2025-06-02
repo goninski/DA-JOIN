@@ -164,12 +164,12 @@ async function updateCategory(category) {
  * @param {*} value - property value (null = delete property)
  */
 async function updateContactProperty(contactId, property, value = null) {
-    let index = await getContactIndexFromId(contactId);
-    console.log(index);
-    let contact = contacts[index];
-    value === null ? delete contact[property] : contact[property] = value;
-    console.log(contacts);
-    localStorageMode ? await saveContactsToLS() : await saveContactToDB(contact, 'update');
+    let contact = await getContactById(contactId);
+    if(contact) {
+        value === null ? delete contact[property] : contact[property] = value;
+        console.log(contacts);
+        localStorageMode ? await saveContactsToLS() : await saveContactToDB(contact, 'update');
+    }
 }
 
 
@@ -181,31 +181,29 @@ async function updateContactProperty(contactId, property, value = null) {
  * @param {*} value - property value (null = delete property)
  */
 async function updateTaskProperty(taskId, property, value = null) {
-    // console.log(taskInputs);
-    let index = await getTaskIndexFromId(taskId);
-    let task = tasks[index];
-    value === null ? delete task[property] : task[property] = value;
-    await updateTask(task);
-    // console.log(tasks);
-    localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task, 'update');
+    let task = await getTaskById(taskId);
+    if(task) {
+        value === null ? delete task[property] : task[property] = value;
+        await updateTask(task);
+        localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task, 'update');
+    }
 }
 
 
 /**
  * Update subtask state (done true/false)
- * ??? to fix: save only after form submit
  * 
  * @param {string} taskId - id of the task object
  * @param {number} subtaskIndex - index of the subtask
  * @param {boolean} value - done = true/false
  */
 async function updateSubtaskStatus(taskId, subtaskIndex, value) {
-    // console.log(taskInputs);
-    let index = await getTaskIndexFromId(taskId);
-    let task = tasks[index];
-    task.subtasks[subtaskIndex].done = value;
-    console.log(tasks);
-    localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task, 'update');
+    let task = await getTaskById(taskId);
+    if(task){
+        task.subtasks[subtaskIndex].done = value;
+        console.log(tasks);
+        localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task, 'update');
+    }
 }
 
 
@@ -216,7 +214,6 @@ async function updateSubtaskStatus(taskId, subtaskIndex, value) {
  */
 async function deleteContact(contactId) {
     let index = await getContactIndexFromId(contactId);
-    console.log(index);
     index >= 0 ? contacts.splice(index, 1) : null;
     localStorageMode ? await saveContactsToLS() : await deleteFirebaseData('users/' + contactId);
     await removeDeletedContactsFromTasks(contactId);
@@ -244,7 +241,6 @@ async function deleteCategory(categoryId) {
     let index = await getCategoryIndexFromId(categoryId);
     index >= 0 ? categories.splice(index, 1) : null;
     localStorageMode ? await saveCategoriesToLS() : await deleteFirebaseData('categories/' + categoryId);
-    // await removeDeletedCategoryFromTasks(categoryId);
 }
 
 
