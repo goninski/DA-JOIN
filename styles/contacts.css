@@ -122,13 +122,6 @@ button.add-contact img {
     display: none;
     position: absolute;
     right: var(--px-sec);
-    width: 32px;
-    height: 32px;
-}
-#btnCloseContactDetails img {
-    height: 24px;
-    width: auto;
-    object-fit: contain;
 }
 #contactOptionsMenu {
     position: fixed;

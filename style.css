@@ -449,20 +449,27 @@ body.logged-out .nav-link-app {
     font-weight: 700;
 }
 
-.help-page .help-page-arrow {
-    width: 32px;
-    height: 32px;
-    position: fixed;
-    left: 1307px;
-    top: 225px;
+.back-button-wrapper {
+    position: sticky;
+    top: 0;
+    align-self: end;
+    margin-bottom: -30px;
+    padding: 2px;
 }
-
-.help-page-arrow:hover {
-   cursor: pointer;
-   background-color: rgba(0, 0, 0, 0.05);
-   border-radius: 100%;
-   transform: scale(1.1);
-   transition: transform 0.1s ease; 
+.back-button {
+    display: flex;
+    padding: 6px 4px;
+    border-radius: 100%;
+}
+.back-button img {
+    height: 21px;
+    width: auto;
+    object-fit: contain;
+}
+.back-button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+    transition: transform 0.1s ease;
 }
 
 .help-page .help-icon {
@@ -540,44 +547,5 @@ body.logged-out .nav-link-app {
 @media(max-width: 1023px) and (max-height: 639px) and (orientation: landscape) {
     .orientation-overlay {
         display: flex;
-    }
-}
-
-.help-page .help-page-arrow {
-    width: 32px;
-    height: 32px;
-    position: fixed;
-    left: 1307px;
-    top: 225px;
-}
-
-/* Responsive adjustments for .help-page-arrow */
-@media (max-width: 1440px) {
-    .help-page .help-page-arrow {
-        left: 80vw;
-    }
-}
-@media (max-width: 1024px) {
-    .help-page .help-page-arrow {
-        left: 70vw;
-        top: 180px;
-        width: 28px;
-        height: 28px;
-    }
-}
-@media (max-width: 735px) {
-    .help-page .help-page-arrow {
-        left: 85vw;
-        top: 100px;
-        width: 24px;
-        height: 24px;
-    }
-}
-@media (max-width: 480px) {
-    .help-page .help-page-arrow {
-        left: 90vw;
-        top: 60px;
-        width: 20px;
-        height: 20px;
     }
 }
