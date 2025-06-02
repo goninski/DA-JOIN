@@ -26,6 +26,7 @@
 .page-title {
     font-size: var(--fs-main-title);
     font-weight: var(--fw-bold);
+    color: black;
 }
 .page-subtitle {
     font-size: var(--fs-xl);
@@ -78,6 +79,9 @@ a:hover {
     font-weight: var(--fw-bold);
     background-color: var(--clr-main);
     border: none;
+}
+.btn-primary:active {
+    background-color: var(--clr-dark);
 }
 .btn-primary:hover {
     background-color: var(--clr-light-blue);

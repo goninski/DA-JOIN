@@ -37,14 +37,13 @@ async function openAddTaskForm(event = null, source = 'board', boardId = 'todo')
     formMode = 'add';
     currentTask = {};
     taskStatus = source == 'board' ? boardId : 'todo';
-    // await showTaskDialogue('addTaskFormWrapper', source);
-    // await renderTaskForm('addTaskFieldGroups');
-    if( source != 'add-task-page') {
-        document.getElementById('taskDialogue').classList.add('add-task');
-        await showTaskDialogue('addTaskFormWrapper', source);
-        // document.getElementById('taskDialogue').classList.add('form-scrollable');
-    }
+    await showTaskDialogue('addTaskFormWrapper', source);
     await renderTaskForm('addTaskFieldGroups');
+    if(source == 'add-task-page') {
+        return;
+    } else {
+        document.getElementById('taskDialogue').classList.add('add-task');
+    }
 }
 
 
@@ -314,12 +313,8 @@ async function setTaskProperties(currentTask, formInputs ) {
 async function submitDeleteTask(event, taskId) {
     event.stopPropagation();
     await deleteTask(taskId);
-    // let index = getTaskIndexFromId(taskId);
-    // index >= 0 ? tasks.splice(index, 1) : null;
     currentTask = {};
     await showFloatingMessage('text', 'Task deleted');
-    // console.log(currentPage);
-    currentPage == '/board.html' ? await renderBoards() : null; // does not work !?
     setTimeout(function() {closeTaskDialogue(event)}, 500);
 }
 
@@ -356,6 +351,6 @@ async function closeTaskDialogue(event) {
     (formMode == 'add' || formMode == 'edit') ? resetAddTaskForm(event) : null;
     formMode = '';
     let dialogue = document.getElementById('taskDialogue');
-    await renderBoards(renderTasks);
+    await renderBoards();
     await runSlideOutAnimation(dialogue);
 }

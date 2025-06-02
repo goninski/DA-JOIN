@@ -128,10 +128,12 @@
 }
 .task-options-menu {
   position: absolute;
-  top: -8px;
-  right: 8px;
+  top: -4px;
+  right: 32px;
   padding: 20px;
-  background-color: #F4F4F4;
+  /* background-color: #F4F4F4; */
+  background-color: var(--clr-main);
+  color: white;
   border-radius: 20px;
   border-bottom-right-radius: 0;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -150,7 +152,7 @@
   min-width: 145px;
   text-align: left;
   transition-duration: 175ms;
-  color: black;
+  color: var(--clr-disabled);
   height: 20px;
 }
 .task-options-menu button:hover {

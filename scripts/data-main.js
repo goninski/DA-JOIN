@@ -215,7 +215,7 @@ async function updateSubtaskStatus(taskId, subtaskIndex, value) {
  * @param {string} contactId - id of the contact object
  */
 async function deleteContact(contactId) {
-    let index = getContactIndexFromId(contactId);
+    let index = await getContactIndexFromId(contactId);
     console.log(index);
     index >= 0 ? contacts.splice(index, 1) : null;
     localStorageMode ? await saveContactsToLS() : await deleteFirebaseData('users/' + contactId);
@@ -229,7 +229,7 @@ async function deleteContact(contactId) {
  * @param {string} taskId - id of the task object
  */
 async function deleteTask(taskId) {
-    let index = getTaskIndexFromId(taskId);
+    let index = await getTaskIndexFromId(taskId);
     index >= 0 ? tasks.splice(index, 1) : null;
     localStorageMode ? await saveTasksToLS() : await deleteFirebaseData('tasks/' + taskId);
 }
@@ -241,7 +241,7 @@ async function deleteTask(taskId) {
  * @param {string} categoryId - id of the category object
  */
 async function deleteCategory(categoryId) {
-    let index = getCategoryIndexFromId(categoryId);
+    let index = await getCategoryIndexFromId(categoryId);
     index >= 0 ? categories.splice(index, 1) : null;
     localStorageMode ? await saveCategoriesToLS() : await deleteFirebaseData('categories/' + categoryId);
     // await removeDeletedCategoryFromTasks(categoryId);

@@ -62,7 +62,6 @@
     from {
         margin-right: -100%
     }
-
     to {
         margin-right: 0;
     }
@@ -72,7 +71,6 @@
     from {
         margin-right: 0
     }
-
     to {
         margin-right: -100%;
     }
@@ -119,7 +117,12 @@ header .logo img {
 header .help-link {
     margin-left: auto;
     margin-right: 16px;
+    width: 32px;
 }
+header .help-link:hover {
+    transform: scale(1.1);
+}
+
 
 header .profile-batch {
     width: 56px;
@@ -129,6 +132,9 @@ header .profile-batch {
     border-width: 3px;
     font-size: var(--fs-lg);
     font-weight: var(--fw-bold);
+}
+header .profile-batch:hover {
+    background-color: #0C2E621F;
 }
 #headerNavDropdown {
     position: absolute;
@@ -343,10 +349,10 @@ body.logged-out .nav-link-app {
 }
 
 
-------------------------
-
+-------------------------------
 /* TERMS PAGES */
-------------------------------- .terms-page .page-title-wrapper {
+-------------------------------
+.terms-page .page-title-wrapper {
     margin-bottom: 32px;
 }
 
