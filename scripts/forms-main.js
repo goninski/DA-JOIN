@@ -169,7 +169,7 @@ function focusOutHandler(event) {
     event.stopPropagation();
     event.preventDefault();
     let element = event.currentTarget;
-    console.log('f) focusOutHandler');
+    // console.log('f) focusOutHandler');
     // console.log(element);
     // closeAllDropdowns(listboxElements);
     validateInput(element);
@@ -244,7 +244,10 @@ function validateElement(element) {
     // console.log('f) validateElement');
     // console.log(element.id);
     if(element.hasAttribute('required')) {
-        return (element.value.replaceAll(' ', '') != '');
+        // return (element.value.replaceAll(' ', '') != '');
+        if(element.value.replaceAll(' ', '') == '') {
+            return false;
+        };
     }
     if(! element.checkValidity() || ! checkCustomValidation(element)) {
         return false;
@@ -260,16 +263,16 @@ function validateElement(element) {
  * @returns {boolean}
  */
 function checkCustomValidation(element) {
+    if(element.hasAttribute("type", "phone"))  {
+        if(! element.value.length) return true;
+        validatePhoneInput(element);
+        return (element.value.length >= 10);
+    }
     if(! element.hasAttribute("data-custom-validation"))  {
         return true;
     }
     if(element.dataset.customValidation == 'required') {
         return (element.value.length > 0);
-    }
-    if(element.dataset.customValidation == 'phone') {
-        if(! element.value.length) { return true; }
-        validatePhoneInput(element);
-        return (element.value.length >= 10);
     }
 }
 

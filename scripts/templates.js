@@ -233,34 +233,52 @@ function getTaskDetailsSubtaskTemplate(task, subtask, subtaskIndex) {
 
 
 /**
- * Returns html of the add and edit task forms (form inner content)
+ * Return html of the add/edit task forms (form inner content)
  * 
  * @param {object} task - a task object (of tasks) > currently not in use
  */
 function getTaskFormFieldsTemplate(task) {
+    let priorityFieldGroup = getPriorityFormFieldTemplate();
+    let assignedContactsFieldGroup = getAssignedContactsFormFieldTemplate();
+    let categoryFieldGroup = getCategoryFormFieldTemplate();
+    let subtaskFieldGroup = getSubtaskFormFieldTemplate();
+
     return `
-    <div class="field-group flex-col flex-grow">
+        <div class="field-group flex-col flex-grow">
 
-        <div class="field-wrapper has-alert">
-            <label for="title" class="required">Title</label>
-            <input type="text" id="inputTitle" name="title" placeholder="Enter a title" required maxlength="128" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)">
-            <div role="alert" class="validation-alert">This field is required</div>
+            <div class="field-wrapper has-alert">
+                <label for="title" class="required">Title</label>
+                <input type="text" id="inputTitle" name="title" placeholder="Enter a title" required maxlength="128" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)">
+                <div role="alert" class="validation-alert">This field is required</div>
+            </div>
+            <div class="field-wrapper has-alert">
+                <label for="description">Description</label>
+                <textarea id="inputDescription" name="description" placeholder="Enter a description"></textarea>
+            </div>
+            <div class="field-wrapper has-alert">
+                <label for="dueDate" class="required">Due date</label>
+                <input type="date" id="inputDueDate" name="dueDate" required min="2000-01-01" max="2099-12-31" step="1" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" onkeyup="removePlaceholderStyle(event)" data-placeholder-style="true">
+                <div role="alert" class="validation-alert">Please enter a valid date</div>
+            </div>
         </div>
-        <div class="field-wrapper has-alert">
-            <label for="description">Description</label>
-            <textarea id="inputDescription" name="description" placeholder="Enter a description"></textarea>
-        </div>
-        <div class="field-wrapper has-alert">
-            <label for="dueDate" class="required">Due date</label>
-            <input type="date" id="inputDueDate" name="dueDate" required min="2000-01-01" max="2099-12-31"  onfocus="focusInHandler(event), setTodayAsDateValue(event)" onfocusout="focusOutHandler(event)" onkeyup="removePlaceholderStyle(event)" data-placeholder-style="true">
-            <div role="alert" class="validation-alert">Please enter a valid date</div>
-        </div>
-    </div>
 
-    <div class="field-group-divider"></div>
+        <div class="field-group-divider"></div>
 
-    <div class="field-group flex-col flex-grow gap">
+        <div class="field-group flex-col flex-grow gap">
+            ${priorityFieldGroup}
+            ${assignedContactsFieldGroup}
+            ${categoryFieldGroup}
+            ${subtaskFieldGroup}
+        </div>       
+    `
+}
 
+
+/**
+ * Return html of the priority form field group (task form/s)
+ */
+function getPriorityFormFieldTemplate() {
+    return `
         <div class="field-wrapper">
             <label for="priority">Priority</label>
             <div class="priority-input-wrapper flex-row justify-between align-center">
@@ -271,7 +289,15 @@ function getTaskFormFieldsTemplate(task) {
                 <label for="inputPrioLow" id="labelPrioLow" class="prio-low button btn-icon btn-radio hide-child-input" value="low"><input type="radio" id="inputPrioLow" name="priority" value="low" class="focus-strong"><span>Low</span><div id="iconPrioLow" class="icon-wrapper"></div></label>
             </div>
         </div>
+    `
+}
 
+
+/**
+ * Return html of the assigned contacts form field group (task form/s)
+ */
+function getAssignedContactsFormFieldTemplate() {
+    return `
         <div class="field-wrapper">
             <label for="selectContacts">Assigned to</label>
             <div class="select custom-select multiple select-contacts">
@@ -285,46 +311,12 @@ function getTaskFormFieldsTemplate(task) {
             </div>
             <ul id="profileBatches" class="profile-batches hide-if-empty" style="margin-top: 12px;"></ul>
         </div>
-
-        <div class="field-wrapper has-alert hide-on-edit-mode">
-            <label for="categorySelect" class="required">Category</label>
-            <div class="select custom-select">
-                <div class="input-wrapper custom-select">
-                    <input type="text" id="categorySelect" name="categorySelect" role="combox" placeholder="Select task category" class="clickable" data-custom-validation="required" data-active-index="-1" readonly onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" onclick="dropdownEventHandler(event)" onkeydown="dropdownEventHandler(event)"   >
-                    <div class="input-icon-wrapper custom-select">
-                        <div class="icon-wrapper flex">
-                            <img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown">
-                        </div>
-                    </div>
-                </div>
-                <ol id="taskCategoriesSelectOptionsWrapper" class="select-options-wrapper" role="listbox" xdata-combox-id="categorySelect"></ol>
-            </div>
-            <div role="alert" class="validation-alert">This field is required</div>
-        </div>
-
-        <div class="field-wrapper subtask-wrapper">
-            <label for="subtasks">Subtasks</label>
-            <div class="input-wrapper input-wrapper-subtasks">
-                <!--<input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask"> -->
-                <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask" maxlength="128" onfocus="focusInHandler(event)" oninput="onInputAddSubtask(event)" onkeydown="addSubtaskInputEventHandler(event)">
-                <div id="subtaskInputButtonAdd" class="input-icon-wrapper">
-                    <button class="xnot-clickable" tabindex="-1" onclick="addSubtaskEventHandlerPseudo(event)"><img src="/assets/icons/add.svg" class="icon-add"></button>
-                </div>
-                <div id="subtaskInputButtons" class="input-icon-wrapper hide">
-                    <button onclick="clearSubtaskEventHandler(event)"><img src="/assets/icons/cancel.svg" class="icon-cancel"></button>
-                    <div class="divider"></div>
-                    <button onclick="addSubtaskEventHandler(event)"><img src="/assets/icons/check.svg" class="icon-check"></button>
-                </div>
-            </div>
-            <ul id="assignedSubtasks" class="subtask-listing"></ul>
-        </div>
-       
     `
 }
 
 
 /**
- * Return html of the multiple select datalist for the user/contact assignment in the task forms
+ * Return html of the multiple select datalist for the assigned contacts form field (task form/s)
  * 
  * @param {object} contact - a contact object (of contacts)
  * @param {number} index - the listing index of the current contact
@@ -347,7 +339,36 @@ function getContactSelectOptionTemplate(contact, index) {
 
 
 /**
- * Return html of the select datalist for the category assigment in the task forms
+ * Return html of the category form field group (task form/s)
+ */
+function getCategoryFormFieldTemplate() {
+    return `
+        <div class="field-wrapper has-alert hide-on-edit-mode">
+            <label for="categorySelect" class="required">Category</label>
+            <div class="select custom-select">
+                <div class="input-wrapper custom-select">
+                    <input type="text" id="categorySelect" name="categorySelect" role="combox" placeholder="Select task category" class="clickable" data-custom-validation="required" data-active-index="-1" readonly onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" onclick="dropdownEventHandler(event)" onkeydown="dropdownEventHandler(event)"   >
+                    <div class="input-icon-wrapper custom-select">
+                        <button onclick="event.preventDefault(), dropdownEventHandler(event)">
+                            <img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown">
+                        </button>
+                    </div>
+                </div>
+                <ol id="taskCategoriesSelectOptionsWrapper" class="select-options-wrapper" role="listbox" xdata-combox-id="categorySelect"></ol>
+            </div>
+            <div role="alert" class="validation-alert">This field is required</div>
+        </div>
+    `
+}
+
+                        // <div class="icon-wrapper flex">
+                        //     <img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown">
+                        // </div>
+
+
+
+/**
+ * Return html of the select datalist for the category form field group (task form/s)
  * 
  * @param {object} category - a category object (of categories)
  * @param {number} index - the listing index of the current category
@@ -361,7 +382,32 @@ function getCategorySelectOptionTemplate(category, index) {
 
 
 /**
- * Return html of the listed subtasks in the task forms
+ * Return html of the subtask form field group (task form/s)
+ */
+function getSubtaskFormFieldTemplate() {
+    return `
+        <div class="field-wrapper subtask-wrapper">
+            <label for="subtasks">Subtasks</label>
+            <div class="input-wrapper input-wrapper-subtasks">
+                <!--<input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask"> -->
+                <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask" maxlength="128" onfocus="focusInHandler(event)" oninput="onInputAddSubtask(event)" onkeydown="addSubtaskInputEventHandler(event)">
+                <div id="subtaskInputButtonAdd" class="input-icon-wrapper">
+                    <button onclick="addSubtaskEventHandlerFocus(event)"><img src="/assets/icons/add.svg" class="icon-add"></button>
+                </div>
+                <div id="subtaskInputButtons" class="input-icon-wrapper hide">
+                    <button onclick="clearSubtaskEventHandler(event)"><img src="/assets/icons/cancel.svg" class="icon-cancel"></button>
+                    <div class="divider"></div>
+                    <button onclick="addSubtaskEventHandler(event)"><img src="/assets/icons/check.svg" class="icon-check"></button>
+                </div>
+            </div>
+            <ul id="assignedSubtasks" class="subtask-listing"></ul>
+        </div>
+    `
+}
+
+
+/**
+ * Return html of the subtask listing for the subtask form field group (task form/s)
  * 
  * @param {object} subtask - current subtask object
  * @param {number} index - listing index of the current subtask

@@ -297,6 +297,9 @@ button.close-dialogue .light {
 .contact-dialogue .dialogue-sidebar {
     max-width: 469px;
 }
+.dialogue-sidebar .page-title {
+    color: white;
+}
 .dialogue-sidebar .title-deco-divider {
     order: 99;
     width: 90px;

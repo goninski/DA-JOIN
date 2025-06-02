@@ -126,16 +126,15 @@ function addSubtaskEventHandler(event) {
 }
 
 /**
- * Event handler: pseudo add task icon
- * ??? is this button for decoration only?  
- * ??? why is the event not prevented
+ * Event handler: focus add new subtas input
  * 
  * @param {event} event - onclick (plus icon button)
  */
-function addSubtaskEventHandlerPseudo(event) {
+function addSubtaskEventHandlerFocus(event) {
     event.preventDefault();
     event.stopPropagation();
-    // subtaskEventAllowed ? event.preventDefault() : null;
+    element = document.getElementById('inputSubtasks');
+    element.focus();
 }
 
 
@@ -225,8 +224,8 @@ function editSubtaskEventHandler(event) {
         wrapper.classList.add('edit');
         wrapper.classList.remove('read-only');
         input.readOnly = false;
-        // input.classList.add('prevent-select');
         input.focus();
+        input.setSelectionRange(length, input.value.length);
     }
 }
 
