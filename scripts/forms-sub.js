@@ -6,9 +6,6 @@
 function dropdownEventHandler(event) {
     event.stopPropagation();
     console.log('f) dropdownEventHandler');
-    // console.log(event.key);
-    // console.log(event.type);
-    // console.log(event.target);
     getCurrentFieldElements(event.target);
     listbox = currentFieldElements.listbox;
     if(['Enter', ' '].includes(event.key)) {
@@ -21,13 +18,23 @@ function dropdownEventHandler(event) {
     if( event.key === 'Escape') {
         return closeDropdown(listbox);
     }
+    return dropdownEventHandlerMultiple(event);
+}
+
+
+/**
+ * Event handler: dropdown (custom select multiple)
+ * 
+ * @param {event} event - inherit
+ */
+function dropdownEventHandlerMultiple(event) {
     if(!event.currentTarget.hasAttribute('data-select-multiple')) {
         if(['ArrowDown', 'ArrowUp'].includes(event.key)) {
             return dropdownOptionKeyHandler(event, false);
         }
-        if(['Tab'].includes(event.key)) {
-            // return toggleDropdown(listbox);
-        }
+        // if(['Tab'].includes(event.key)) {
+        //     // return toggleDropdown(listbox);
+        // }
     }
 }
 
@@ -41,7 +48,6 @@ function dropdownOptionClickHandler(event) {
     event.stopPropagation();
     console.log('f) dropdownOptionClickHandler');
     let option = event.currentTarget.closest('[role="option"]');
-    // console.log(option);
     if(option) {
         getCurrentFieldElements(option);         
         let options = currentFieldElements.options;
@@ -49,10 +55,7 @@ function dropdownOptionClickHandler(event) {
             element.setAttribute('aria-selected', 'false');
         });
         setDropdownOption(currentFieldElements.combox, option, null);
-        // let combox = currentFieldElements.combox;
-        // console.log(combox);
         toggleDropdown(currentFieldElements.listbox);
-        // validateInput(currentFieldElements.combox);
     }
 }
 
@@ -67,9 +70,7 @@ async function dropdownOptionClickHandlerMultiple(event, contactId) {
     event.stopPropagation();
     console.log('f) dropdownOptionClickHandlerMultiple');
     let option = event.currentTarget.closest('[role="option"]');
-    // console.log(option);
     if(option) {
-        // let checkbox = option.querySelector('[type="checkbox"]');
         let checkbox = event.target;
         if(checkbox.checked) {
             assignedContacts.push(contactId);
@@ -77,8 +78,6 @@ async function dropdownOptionClickHandlerMultiple(event, contactId) {
             assignedContacts.splice(assignedContacts.indexOf(contactId), 1);
         };
         await renderTaskFormContactBatches(assignedContacts);
-        // toggleDropdown(currentFieldElements.listbox);
-        // event.preventDefault();
     }
 }
 
@@ -111,7 +110,6 @@ function getCurrentSelectOptions(listbox, multiple = false) {
     options.forEach(function(option) {
         selectOptions.push(option);
     });
-    // console.log(selectOptions);
     return selectOptions;
 }
 
@@ -264,5 +262,3 @@ function getPreviousIndex(index, length, loop = false) {
     }
     return index;
 }
-
-

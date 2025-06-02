@@ -35,7 +35,6 @@ function getCurrentFieldElements(element) {
             currentFieldElements.options = getCurrentSelectOptions(listbox);
         }
     }
-    // console.log(currentFieldElements);
     return currentFieldElements;
 }
 
@@ -89,7 +88,6 @@ async function getFormData(formId) {
  * @param {string} formId - id of the form
  */
 async function getFormInputObj(formId) {
-    // event ? event.preventDefault() : null;
     console.log(formId);
     let formData = await getFormData(formId);
     console.log(formData);
@@ -113,7 +111,6 @@ function getInvalidInputIds(formId) {
             invalidFields.push(element.id);
         }
     });
-    // console.log(invalidFields);
 }
 
 
@@ -144,7 +141,6 @@ function focusInHandler(event) {
     let element = event.currentTarget;
     getCurrentFieldElements(element);
     console.log('f) focusInHandler');
-    // console.log(element);
     resetInputValidation(event);
 }
 
@@ -169,11 +165,7 @@ function focusOutHandler(event) {
     event.stopPropagation();
     event.preventDefault();
     let element = event.currentTarget;
-    // console.log('f) focusOutHandler');
-    // console.log(element);
-    // closeAllDropdowns(listboxElements);
     validateInput(element);
-    // currentFieldElements.listbox ? closeDropdown(currentFieldElements.listbox) : null;
 }
 
 
@@ -186,7 +178,6 @@ function getFormElementsArray(formId) {
     let form = document.getElementById(formId);
     let elements = form.elements;
     let elementsArr = Array.from(elements);
-    // console.log(elementsArr);
     return elementsArr;
 }
 
@@ -215,8 +206,6 @@ async function setInitialFormState(formId) {
  * @param {element} element - input element
  */
 function validateInput(element) {
-    // console.log('f) validateInput');
-    // console.log(element);
     setFieldValidity(element);
     setSubmitBtnState(element.form.id);
 }
@@ -244,10 +233,7 @@ function setFieldValidity(element) {
  * @returns {boolean}
  */
 function validateElement(element) {
-    // console.log('f) validateElement');
-    // console.log(element.id);
     if(element.hasAttribute('required')) {
-        // return (element.value.replaceAll(' ', '') != '');
         if(element.value.replaceAll(' ', '') == '') {
             return false;
         };
@@ -287,7 +273,6 @@ function checkCustomValidation(element) {
  */
 function validatePhoneInput(element) {
     let inputValue = element.value;
-    // console.log(inputValue);
     let formattedValue = inputValue;
     let rawValue = inputValue.replaceAll(' ', '');
     if(rawValue.length >= 10){
@@ -317,7 +302,7 @@ function setPlaceholderStyle(element) {
  * @param {element} element - input element
  */
 function removePlaceholderStyle(event) {
-    // event.stopPropagation();
+    event.stopPropagation();
     let element = event.currentTarget;
     element.hasAttribute('data-placeholder-style') ? element.dataset.placeholderStyle = 'false' : null;
 }
@@ -356,16 +341,15 @@ function setSubmitBtnState(formId) {
 async function resetForm(formId) {
     let form = document.getElementById(formId);
     form.reset();
-    // invalidFields = [];
     listboxElements = [];
     let formElements = getFormElementsArray(formId);
     formElements.forEach(function(element) {
         resetFormElements(element);
     });
-    // console.log(listboxElements);
     getInvalidInputIds(formId);
     formElements[0].focus();
-    // form.scrollTop;
+    form.scrollTop;
+    form.querySelector('.top-element').scrollIntoView();
 }
 
 
