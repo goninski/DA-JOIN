@@ -23,8 +23,6 @@ async function initBoard() {
     renderTasks = tasks;
     await setSearchBase();
     await renderBoards();
-    //await renderTempTaskList(tasks);
-    // addTaskClickListeners();
 }
 
 
@@ -111,8 +109,6 @@ async function renderBoardTasks(renderTasks, boardId, boardTaskList) {
   if(hasLength(boardTasks)) {
     for (let index = 0; index < boardTasks.length; index++) {
       let task = boardTasks[index];
-      // let catIndex = await getCategoryIndexFromId(task.categoryId);
-      // let category = categories[catIndex];
       let category = await getCategoryById(task.categoryId);
       let subtaskCount = await getSubtaskProgress(task, 'count');
       let subtaskProgressWidth = (128 * await getSubtaskProgress(task, 'progress') / 100) + 'px';
@@ -182,6 +178,22 @@ async function renderTaskDetailsSubtasks(task) {
 
 
 /**
+ * Render task options menu (change status/move to board)
+ * 
+ * @param {event} event - click (three dot menu button)
+ * @param {string} taskId - id of the current task
+ * @param {string} currentStatus - current status of the current task
+ */
+async function renderTaskOptionsMenu(event, taskId, currentStatus) {
+    event.stopPropagation();
+    event.preventDefault();
+    let wrapper = document.getElementById('taskOptionsMenu-' + taskId);
+    wrapper.innerHTML = getMoveToBoardMenuTemplate(taskId, currentStatus);
+    wrapper.classList.add('is-open');
+}
+
+
+/**
  * Event handler: add task to current board
  * 
  * @param {event} event - onclick (button)
@@ -201,10 +213,9 @@ function addBoardTask(event, boardId) {
 function onDragStartTask(event, taskId) {
   event.stopPropagation();
   currentDragTaskId = taskId;
-  console.log(currentDragTaskId);
-  console.log(renderTasks);
-  // element = event.currentTarget;
-  // element.classList.add('dragging');
+  element = event.currentTarget;
+  element.classList.add('dragging');
+  // setTimeout(function() {element.classList.add('dragging')}, 0);
 }
 
 
@@ -226,6 +237,7 @@ function onDragEnd(event) {
  * @param {event} event - ondragover (board tasklist)
  */
 function onDragOver(event) {
+  console.log('onDragOver');
   event.preventDefault();
   element = event.currentTarget;
   element.classList.add('dropzone');
@@ -253,14 +265,30 @@ function onDragLeave(event) {
 async function taskDrop(event, boardId) {
   element = event.currentTarget;
   element.classList.remove('dropzone');
-  console.log(renderTasks);
-  let index = await tasks.findIndex(task => task.id == currentDragTaskId);
-  // let index = await getTaskIndexFromId(currentDragElement);
-  console.log(index);
-  tasks[index].status = boardId;
-  await updateTaskProperty(currentDragTaskId, 'status', boardId);
-  console.log(tasks);
-  await renderBoards();
+  await changeBoardTaskStatus(event, currentDragTaskId, boardId)
+}
+
+
+/**
+ * Event handler: change task status (move to board)
+ * 
+ * @param {event} event - inherit, click (move to board menu buttons)
+ * @param {string} taskId - id of the selected task
+ * @param {string} statusNew - id of the new status (target board)
+ * @param {string} msg - confirmation message
+ */
+async function changeBoardTaskStatus(event, taskId, statusNew, msg = '') {
+    event.stopPropagation();
+    event.preventDefault();
+    let task = await getTaskById(taskId);
+    task.status = statusNew;
+    let board = boards.find(board => board.id == statusNew);
+    await updateTaskProperty(taskId, 'status', statusNew);
+    await renderBoards();
+    if(msg != '') {
+      await showFloatingMessage('text', 'Task succesfully moved to ' + board.label + ' Board');
+      closeParentWrapper(event);
+    }
 }
 
 
@@ -270,6 +298,7 @@ async function taskDrop(event, boardId) {
  * @param {event} event - onmousedown, onmouseup, onmouseleave, onmousemove (all on board tasklist)
  */
 function horizontalBoardDragScroll(event) {
+  return;
   event.stopPropagation();
   if(window.matchMedia("(min-width: 1440px)").matches) {
     return;
@@ -286,6 +315,7 @@ function horizontalBoardDragScroll(event) {
  * @param {string} wrapperSelector - css selector of the drag scroll element
  */
 function horizontalDragScroll(event, wrapperSelector) {
+  return;
   event.stopPropagation();
   let dragScrollWrapper = getClosestParentElementFromEvent(event, wrapperSelector);
   let type = event.type;

@@ -107,6 +107,10 @@ async function getBoardTasksTemplate(task, category, subtaskCount, subtaskProgre
     let hideSubtask = subtaskCount == null ? 'hide': null;
     return `
         <div class="board-task clickable-task" onclick="showTaskDetail(event, '${task.id}')" draggable="true" ondragstart="onDragStartTask(event, '${task.id}')" ondragend="onDragEnd(event)">
+            <div class="task-options-menu-wrapper flex-col">
+                <button class="task-options-menu-button hide-focus" title="Change Task Status" onclick="renderTaskOptionsMenu(event,'${task.id}', '${task.status}')"><img src="./assets/icons/menu-dots.svg" alt="three-dot-menu-icon"></button>
+                <ul id="taskOptionsMenu-${task.id}" class="task-options-menu close-on-event flex-col ul-reset not-clickable" onclick="event.stopPropagation()" onmouseleave="closeElementByCurrentTarget(event)"></ul>
+            </div>
             <div class="board-task-category" style="background-color: ${category.color};">${category.name}</div>
             <div class="board-task-title">${task.title}</div>
             <div class="board-task-description ${hideDescription}">${task.description}</div>
@@ -121,6 +125,27 @@ async function getBoardTasksTemplate(task, category, subtaskCount, subtaskProgre
                 <img src="./assets/icons/prio-${task.priority}.svg" class="board-task-priority ml-auto">
             </div>
         </div>
+    `
+}
+
+
+/**
+ * Return html of board task option menu (change task status / move to board)
+ * 
+ * @param {string} taskId - id of the current task
+ * @param {string} currentStatus - current status of the current task
+ */
+function getMoveToBoardMenuTemplate(taskId, currentStatus) {
+    let hideTodo = (currentStatus == boards[0].id) ? 'hide' : '';
+    let hideInProgress = (currentStatus == boards[1].id) ? 'hide' : '';
+    let hideAwaitFeedback = (currentStatus == boards[2].id) ? 'hide' : '';
+    let hideDone = (currentStatus == boards[3].id) ? 'hide' : '';
+    return `
+        <div>New Task Status:</div>
+        <li class="${hideTodo}"><button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[0].id}')">&#8594;&ensp;${boards[0].label}</button></li>
+        <li class="${hideInProgress}"><button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[1].id}')">&#8594;&ensp;${boards[1].label}</button></li>
+        <li class="${hideAwaitFeedback}"><button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[2].id}')">&#8594;&ensp;${boards[2].label}</button></li>
+        <li class="${hideDone}"><button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[3].id}')">&#8594;&ensp;${boards[3].label}</button></li>
     `
 }
 
@@ -433,15 +458,6 @@ function getContactDetailProfileBatchTemplate(contact) {
         </div>
     `
 }
-
-
-                // <button onclick="openEditContactForm(event, '${contact.id}')" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)" class="option-button-edit">
-                //     <img src="assets/icons/edit.svg" alt="edit-icon">Edit
-                // </button>
-                // <button onclick="submitDeleteContact(event, '${contact.id}')" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)" class="option-button-delete">
-                //     <img src="assets/icons/delete.svg" alt="delete-icon">Delete
-                // </button>
-
 
 
 /**

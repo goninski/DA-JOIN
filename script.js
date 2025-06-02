@@ -21,6 +21,18 @@ function documentEventHandler(event) {
 
 
 /**
+ * Event Handler: close current element (multiple use)
+ * 
+ * @param {event} event - various
+ */
+function closeElementByCurrentTarget(event) {
+    event.stopPropagation();
+    let element = event.currentTarget;
+    element ? element.classList.remove('is-open') : null;
+}
+
+
+/**
  * Checks authorization (redirect to login if unauthorized, if page not public)
  * 
  * @param {boolean} isPublic - public page true/false (e.g. terms pages)

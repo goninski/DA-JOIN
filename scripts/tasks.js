@@ -37,14 +37,14 @@ async function openAddTaskForm(event = null, source = 'board', boardId = 'todo')
     formMode = 'add';
     currentTask = {};
     taskStatus = source == 'board' ? boardId : 'todo';
-    await showTaskDialogue('addTaskFormWrapper', source);
-    await renderTaskForm('addTaskFieldGroups');
-    if( source == 'add-task-page') {
-        return;
-    } else {
+    // await showTaskDialogue('addTaskFormWrapper', source);
+    // await renderTaskForm('addTaskFieldGroups');
+    if( source != 'add-task-page') {
         document.getElementById('taskDialogue').classList.add('add-task');
+        await showTaskDialogue('addTaskFormWrapper', source);
         // document.getElementById('taskDialogue').classList.add('form-scrollable');
     }
+    await renderTaskForm('addTaskFieldGroups');
 }
 
 
@@ -359,21 +359,3 @@ async function closeTaskDialogue(event) {
     await renderBoards(renderTasks);
     await runSlideOutAnimation(dialogue);
 }
-
-
-/**
- * Event handler: change task status > currently not use !
- * 
- * @param {event} event - inherit
- * @param {string} taskId - id of the selected task
- * @param {string} statusNew - id of the new status (target board)
- * @param {string} statusOld - id of old status (source board), optional, currently not in use
- */
-async function changeTaskStatus(event = null, taskId, statusNew, statusOld = null) {
-    event ? event.stopPropagation() : null;
-    await updateTaskProperty(taskId, 'status', statusNew);
-    // renderBoard(statusNew);
-    // statusOld ? renderBoard(statusOld) : null;
-}
-
-
