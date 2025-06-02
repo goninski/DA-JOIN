@@ -66,7 +66,6 @@ async function groupContacts(contacts) {
  * @param {string} contactId - id of the current contact
  */
 async function showContactDetail(event, contactId) {
-    console.log(contactId);
     event.stopPropagation();
     if(lastListContactId != '' && lastListContactId != contactId){
         document.getElementById('listContactId-' + lastListContactId).classList.remove('active');

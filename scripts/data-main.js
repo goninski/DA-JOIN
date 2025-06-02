@@ -41,6 +41,7 @@ async function getTaskData() {
 async function getContacts() {
     contacts = localStorageMode ? await getFromLocalStorage('contacts') : await fetchDataFromFirebase('users/');
     await sortContacts(contacts);
+    console.log(contacts);
 }
 
 
@@ -50,6 +51,7 @@ async function getContacts() {
 async function getTasks() {
     tasks = localStorageMode ? await getFromLocalStorage('tasks') : await fetchDataFromFirebase('tasks/');
     await sortTasks(tasks, 'dueDate');
+    console.log(tasks);
 }
 
 
@@ -125,7 +127,6 @@ async function createTask(task) {
  */
 async function updateContact(contact) {
     await validateContactProperties(contact);
-    // await sortContacts(contacts);
     localStorageMode ? await saveContactsToLS() : await saveContactToDB(contact, 'update');
 }
 
@@ -136,11 +137,7 @@ async function updateContact(contact) {
  * @param {object} task - a task object
  */
 async function updateTask(task) {
-    // console.log(taskInputs);
     await validateTaskProperties(task);
-    console.log(currentTask);
-    console.log(task);
-    console.log(tasks);
     localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task, 'update');
 }
 

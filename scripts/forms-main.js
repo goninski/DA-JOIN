@@ -77,7 +77,6 @@ function getFieldWrapperFromId(id) {
 async function getFormData(formId) {
     let form = document.getElementById(formId);
     let formData = new FormData(form);
-    console.log(formData);
     return formData;
 }
 
@@ -88,11 +87,8 @@ async function getFormData(formId) {
  * @param {string} formId - id of the form
  */
 async function getFormInputObj(formId) {
-    console.log(formId);
     let formData = await getFormData(formId);
-    console.log(formData);
     let formInputObj = Object.fromEntries(formData);
-    console.log(formInputObj);
     return formInputObj;
 }
 
@@ -124,9 +120,6 @@ function documentEventHandlerForms(event) {
     if( event.key === 'Escape' || event.type === "click" ) {
         closeAllDropdowns(listboxElements);
         focusCurrentCombox(event.target);
-        console.log('escape/click on document !');
-        console.log(event.currentTarget);
-        console.log(event.target);
     }
 }
 
@@ -140,7 +133,6 @@ function focusInHandler(event) {
     event.stopPropagation();
     let element = event.currentTarget;
     getCurrentFieldElements(element);
-    console.log('f) focusInHandler');
     resetInputValidation(event);
 }
 
@@ -349,7 +341,8 @@ async function resetForm(formId) {
     getInvalidInputIds(formId);
     formElements[0].focus();
     form.scrollTop;
-    form.querySelector('.top-element').scrollIntoView();
+    let topElement = form.querySelector('.top-element');
+    topElement ? topElement.scrollIntoView() : null;
 }
 
 
