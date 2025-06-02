@@ -76,7 +76,7 @@ async function dropdownOptionClickHandlerMultiple(event, contactId) {
         } else {
             assignedContacts.splice(assignedContacts.indexOf(contactId), 1);
         };
-        await renderContactProfileBatches(assignedContacts);
+        await renderTaskFormContactBatches(assignedContacts);
         // toggleDropdown(currentFieldElements.listbox);
         // event.preventDefault();
     }

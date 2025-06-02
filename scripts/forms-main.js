@@ -197,12 +197,15 @@ function getFormElementsArray(formId) {
  * @param {string} formId - id of the form element
  */
 async function setInitialFormState(formId) {
+    let form = document.getElementById(formId);
     let formElements = getFormElementsArray(formId);
     formElements.forEach(function(element) {
         setPlaceholderStyle(element);
     });
     setSubmitBtnState(formId);
     formElements[0].focus();
+    form.scrollTop;
+    form.querySelector('.top-element').scrollIntoView();
 }
 
 
@@ -263,8 +266,8 @@ function validateElement(element) {
  * @returns {boolean}
  */
 function checkCustomValidation(element) {
-    if(element.hasAttribute("type", "phone"))  {
-        if(! element.value.length) return true;
+    if(element.getAttribute("type") == 'tel') {
+        if(element.value.length === 0) return true;
         validatePhoneInput(element);
         return (element.value.length >= 10);
     }
@@ -283,7 +286,6 @@ function checkCustomValidation(element) {
  * @param {element} element - input element
  */
 function validatePhoneInput(element) {
-    // let element = document.getElementById(id);
     let inputValue = element.value;
     // console.log(inputValue);
     let formattedValue = inputValue;
@@ -363,7 +365,7 @@ async function resetForm(formId) {
     // console.log(listboxElements);
     getInvalidInputIds(formId);
     formElements[0].focus();
-    form.scrollTop;
+    // form.scrollTop;
 }
 
 

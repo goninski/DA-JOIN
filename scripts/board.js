@@ -113,7 +113,7 @@ async function renderBoardTasks(renderTasks, boardId, boardTaskList) {
       let subtaskCount = await getSubtaskProgress(task, 'count');
       let subtaskProgressWidth = (128 * await getSubtaskProgress(task, 'progress') / 100) + 'px';
       boardTaskList.innerHTML += await getBoardTasksTemplate(task, category, subtaskCount, subtaskProgressWidth);
-      await renderContactProfileBatches(task.contactIds, elementId = 'profileBatchesTaskBoard-' + task.id);
+      await renderTaskFormContactBatches(task.contactIds, elementId = 'profileBatchesTaskBoard-' + task.id);
     }
   } else {
     boardTaskList.innerHTML = getBoardNoTaskTemplate();
@@ -126,13 +126,14 @@ async function renderBoardTasks(renderTasks, boardId, boardTaskList) {
  * 
  * @param {event} event - onclick (board task)
  * @param {string} taskId - id of the clicked task
+ * @param {boolean} animated - show dialogue with animation true/false
  */
-async function showTaskDetail(event, taskId) {
+async function showTaskDetail(event, taskId, animated = true) {
     event.stopPropagation();
     formMode = 'show';
     let task = await getTaskById(taskId);
     let category = await getCategoryById(task.categoryId);
-    await showTaskDialogue('taskDetailsWrapper');
+    await showTaskDialogue('taskDetailsWrapper', 'board', animated);
     document.getElementById('taskDetailsWrapper').innerHTML = getTaskDetailsTemplate(task, category);
     document.getElementById('taskDialogue').classList.add('show-task');
     await renderTaskDetailsAssignedContacts(task);
@@ -149,7 +150,7 @@ async function renderTaskDetailsAssignedContacts(task) {
     let contactIds = task.contactIds;
     let wrapper = document.getElementById('taskDetailsAssignedContactsWrapper');
     wrapper.innerHTML = '';
-    console.log(contactIds)    ;
+    // console.log(contactIds)    ;
     if(hasLength(contactIds)) {
       for (let index = 0; index < contactIds.length; index++) {
         let contact = await getContactById(contactIds[index]);

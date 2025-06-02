@@ -247,7 +247,7 @@ function getTaskFormFieldsTemplate(task) {
         <div class="field-group flex-col flex-grow">
 
             <div class="field-wrapper has-alert">
-                <label for="title" class="required">Title</label>
+                <label for="title" class="required top-element">Title</label>
                 <input type="text" id="inputTitle" name="title" placeholder="Enter a title" required maxlength="128" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)">
                 <div role="alert" class="validation-alert">This field is required</div>
             </div>
@@ -302,7 +302,7 @@ function getAssignedContactsFormFieldTemplate() {
             <label for="selectContacts">Assigned to</label>
             <div class="select custom-select multiple select-contacts">
                 <div class="input-wrapper custom-select">
-                    <input type="text" role="combox" id="selectContacts" name="selectContacts" class="clickable" placeholder="Select contacts to assign" data-select-multiple="true" oninput="filterTaskContactOptions(event)" onfocusout="focusOutHandler(event)" onclick="dropdownEventHandler(event)">
+                    <input type="text" role="combox" id="selectContacts" name="selectContacts" class="clickable" placeholder="Select contacts to assign" data-select-multiple="true" oninput="listenTaskFormContactsListboxSearch(event)" onfocusout="focusOutHandler(event)" onclick="dropdownEventHandler(event)">
                     <div class="input-icon-wrapper custom-select multiple">
                         <button onclick="event.preventDefault(), dropdownEventHandler(event)"><img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown"></button>
                     </div>
@@ -321,7 +321,7 @@ function getAssignedContactsFormFieldTemplate() {
  * @param {object} contact - a contact object (of contacts)
  * @param {number} index - the listing index of the current contact
  */
-function getContactSelectOptionTemplate(contact, index) {
+function getContactListboxOptionTemplate(contact, index) {
     return `
     <li class="select-option" role="option" data-index="${index}" onclick="event.stopPropagation()">
         <label for="checkboxAssignedContact-${contact.id}" class="hide-focus" onkeydown="event.stopPropagation()">${contact.name}
@@ -354,17 +354,12 @@ function getCategoryFormFieldTemplate() {
                         </button>
                     </div>
                 </div>
-                <ol id="taskCategoriesSelectOptionsWrapper" class="select-options-wrapper" role="listbox" xdata-combox-id="categorySelect"></ol>
+                <ol id="taskCategoryListbox" class="select-options-wrapper" role="listbox" xdata-combox-id="categorySelect"></ol>
             </div>
             <div role="alert" class="validation-alert">This field is required</div>
         </div>
     `
 }
-
-                        // <div class="icon-wrapper flex">
-                        //     <img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown">
-                        // </div>
-
 
 
 /**
@@ -373,7 +368,7 @@ function getCategoryFormFieldTemplate() {
  * @param {object} category - a category object (of categories)
  * @param {number} index - the listing index of the current category
  */
-function getCategorySelectOptionTemplate(category, index) {
+function getCategoryListboxOptionTemplate(category, index) {
     return `
     <li id="categoryOptionId-${category.id}" class="select-option" role="option" onclick="dropdownOptionClickHandler(event)" aria-selected="false" data-index="${index}" data-option-id="${category.id}">${category.name}
     </li>

@@ -13,7 +13,7 @@ async function initAddTask() {
     await checkAuth();
     getMainTemplates();
     await getTaskData();
-    await openAddTaskForm(event, 'add-task-page');
+    await openAddTaskForm(null, 'add-task-page');
 }
 
 
@@ -36,7 +36,7 @@ async function openAddTaskForm(event = null, source = 'board', boardId = 'todo')
     event ? event.stopPropagation() : null;
     formMode = 'add';
     currentTask = {};
-    taskStatus = source == 'board' ? boardId : 'todo';
+    taskStatus = (source == 'board') ? boardId : 'todo';
     await showTaskDialogue('addTaskFormWrapper', source);
     await renderTaskForm('addTaskFieldGroups');
     if(source == 'add-task-page') {
@@ -56,14 +56,12 @@ async function openAddTaskForm(event = null, source = 'board', boardId = 'todo')
 async function openEditTaskForm(event, taskId) {
     event.stopPropagation();
     formMode = 'edit';
-    let index = await getTaskIndexFromId(taskId);
-    currentTask = tasks[index];
-    console.log(currentTask);
+    currentTask = await getTaskById(taskId);
+    // console.log(currentTask);
     await showTaskDialogue('editTaskFormWrapper');
     await renderTaskForm('editTaskFieldGroups', currentTask);
     document.getElementById('taskDialogue').classList.add('edit-task');
     // document.getElementById('taskDialogue').classList.add('form-scrollable');
-    // setEditTaskValues(task);
 }
 
 
@@ -72,8 +70,9 @@ async function openEditTaskForm(event, taskId) {
  * 
  * @param {string} elementId - id of the inner dialogue wrapper
  * @param {string} source - source from where the dialoge was opened (add-task-page, board)
+ * @param {boolean} animated - show dialogue with animation true/false
  */
-async function showTaskDialogue(elementId, source = 'board') {
+async function showTaskDialogue(elementId, source = 'board', animated = true) {
     if(source == 'board') {
         document.getElementById('addTaskFieldGroups').innerHTML = '';
         document.getElementById('editTaskFieldGroups').innerHTML = '';
@@ -82,14 +81,8 @@ async function showTaskDialogue(elementId, source = 'board') {
         document.getElementById('editTaskFormWrapper').style = 'display: none;';
         document.getElementById(elementId).style = '';
         let dialogue = document.getElementById('taskDialogue');
-        dialogue.classList.remove('show-task');
-        dialogue.classList.remove('add-task');
-        dialogue.classList.remove('edit-task');
-        // dialogue.classList.remove('form-scrollable');
-        await runSlideInAnimation(dialogue);
-        // dialogue.classList.remove('slide-out');
-        // dialogue.classList.add('slide-in');
-        // dialogue.style = '';
+        dialogue.classList.remove('show-task', 'add-task', 'edit-task');
+        animated ? await runSlideInAnimation(dialogue) : dialogue.style = '';
     }
 }
 
@@ -101,61 +94,57 @@ async function showTaskDialogue(elementId, source = 'board') {
  * @param {object} currentTask - current task (if edit mode)
  */
 async function renderTaskForm(fieldsWrapperId, currentTask = null) {
-    // console.log(task);
     assignedContacts = [];
     assignedSubtasks = [];
-    let formId;
     document.getElementById(fieldsWrapperId).innerHTML = getTaskFormFieldsTemplate(currentTask);
     document.getElementById('iconPrioHigh').innerHTML = getIconTemplatePrioHigh();
     document.getElementById('iconPrioMedium').innerHTML = getIconTemplatePrioMedium();
     document.getElementById('iconPrioLow').innerHTML = getIconTemplatePrioLow();
+    let formId;
     if(formMode == 'add') {
-        document.getElementById('btnReset').innerHTML = getIconTemplateCancel('Clear');
-        document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Create Task');
-        await renderContactSelectOptions();
         formId = 'addTaskForm';
+        await renderAddTaskFormProps(formId);
     } else {
-        document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Ok');
         formId = 'editTaskForm';
+        await renderEditTaskFormProps(currentTask, formId);        
     }
-    await resetForm(formId);
-    // console.log(contacts);
-    await renderCategorySelectOptions(event);
-    await setEditTaskValues(currentTask, formId);
     await setInitialFormState(formId);
 }
 
 
 /**
- * Set edit task form values
- * 
- * @param {object} currentTask - current task (if edit mode)
- * @param {string} formId - id of the form (currently not in use)
+ * Render add-task form properties
  */
-async function setEditTaskValues(currentTask, formId) {
-    if(formMode == 'edit') {
-        document.getElementById('inputTitle').value = currentTask.title;
-        currentTask.description ? document.getElementById('inputDescription').value = currentTask.description : '';
-        document.getElementById('inputDueDate').value = currentTask.dueDate;
-        if(currentTask.priority) {
-            let priority =  setFirstLetterUpperCase(currentTask.priority);
-            document.getElementById('inputPrio' + priority).checked = true;
-        }
-        assignedContacts = currentTask.contactIds ? currentTask.contactIds.slice() : [];
-        await renderContactSelectOptions();
-        await renderContactProfileBatches(assignedContacts);
-        if(currentTask.categoryId) {
-            let index = await getCategoryIndexFromId(currentTask.categoryId);
-            let categoryName = categories[index].name;
-            document.getElementById('categorySelect').value = categoryName;
-            document.getElementById('categorySelect').dataset.optionId = currentTask.categoryId;
-            document.getElementById('categorySelect').classList.remove("clickable");
-            document.getElementById('categorySelect').setAttribute("disabled", '');
-            document.getElementById('categoryOptionId-' + currentTask.categoryId).setAttribute('aria-selected', 'true');
-        }
-        assignedSubtasks = currentTask.subtasks ? currentTask.subtasks.slice() : [];
-        renderSubtasks(assignedSubtasks);
+async function renderAddTaskFormProps(formId) {
+    document.getElementById('btnReset').innerHTML = getIconTemplateCancel('Clear');
+    document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Create Task');
+    await renderTaskFormContactListbox();
+    await renderTaskFormCategoryListbox();
+    await resetForm(formId);
+}
+
+
+/**
+ * Render edit-task form properties
+ * 
+ * @param {object} currentTask - current task
+ */
+async function renderEditTaskFormProps(currentTask, formId) {
+    await resetForm(formId);
+    document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Ok');
+    document.getElementById('inputTitle').value = currentTask.title;
+    currentTask.description ? document.getElementById('inputDescription').value = currentTask.description : '';
+    document.getElementById('inputDueDate').value = currentTask.dueDate;
+    if(currentTask.priority) {
+        let priority =  setFirstLetterUpperCase(currentTask.priority);
+        document.getElementById('inputPrio' + priority).checked = true;
     }
+    assignedContacts = currentTask.contactIds ? currentTask.contactIds.slice() : [];
+    await renderTaskFormContactListbox();
+    await renderTaskFormContactBatches(assignedContacts);
+    await renderEditTaskFormCategories(currentTask);
+    assignedSubtasks = currentTask.subtasks ? currentTask.subtasks.slice() : [];
+    await renderTaskFormSubtasks(assignedSubtasks);
 }
 
 
@@ -164,31 +153,24 @@ async function setEditTaskValues(currentTask, formId) {
  * 
  * @param {event} event - oninput (input)
  */
-async function filterTaskContactOptions(event) {
+async function listenTaskFormContactsListboxSearch(event) {
     event.stopPropagation()
     let searchVal = document.getElementById('selectContacts').value;
     searchVal = searchVal.toLowerCase();
-    console.log(searchVal);
-    await renderContactSelectOptions('taskContactsListbox', searchVal);
+    await renderTaskFormContactListbox(searchVal);
 }
 
 
 /**
- * Render contact select options on task form
+ * Filter contacts listbox on task form/s &  handle dropdown states
  * 
- * @param {string} listboxId - id of the listbox for render
  * @param {string} searchVal - search value (filter)
+ * @param {element} listbox - listbox element
  */
-async function renderContactSelectOptions(listboxId = 'taskContactsListbox', searchVal = '') {
-    let listbox = document.getElementById(listboxId);
+async function filterTaskFormContactsListbox(searchVal = '', listbox) {
     let combox = document.getElementById('selectContacts');
     listbox.innerHTML = '';
-    // console.log(contacts);
     taskContacts = contacts;
-    // taskContacts = await Object.create(contacts);
-    // taskContacts = await sortContacts(taskContacts);
-    // console.log(contacts);
-    // console.log(taskContacts);
     if(searchVal === ' ') {
         combox.value = '';
         toggleDropdown(listbox);        
@@ -200,51 +182,80 @@ async function renderContactSelectOptions(listboxId = 'taskContactsListbox', sea
         openDropdown(listbox);
         taskContacts = await taskContacts.filter(contact => contact.name.toLowerCase().includes(searchVal));
     }
-    // console.log(taskContacts);
-    for (let index = 0; index < taskContacts.length; index++) {
-        listbox.innerHTML += getContactSelectOptionTemplate(taskContacts[index], index);
-        if(assignedContacts && assignedContacts.length > 0) {
-            let isChecked = assignedContacts.includes(taskContacts[index].id);
-            setTimeout(function() {
-                document.getElementById('checkboxAssignedContact-' + taskContacts[index].id).checked = isChecked;
-            }, 1);
+    return taskContacts;
+}
+
+
+/**
+ * Render contacts listbox on task form/s
+ * 
+ * @param {string} searchVal - search value (filter)
+ */
+async function renderTaskFormContactListbox(searchVal = '') {
+    let listbox = document.getElementById('taskContactsListbox');
+    taskContacts = await filterTaskFormContactsListbox(searchVal, listbox);
+    if(hasLength(taskContacts)) {
+        for (let index = 0; index < taskContacts.length; index++) {
+            listbox.innerHTML += getContactListboxOptionTemplate(taskContacts[index], index);
+            if(assignedContacts && assignedContacts.length > 0) {
+                let isChecked = assignedContacts.includes(taskContacts[index].id);
+                setTimeout(function() {
+                    document.getElementById('checkboxAssignedContact-' + taskContacts[index].id).checked = isChecked;
+                }, 1);
+            }
         }
     }
 }
 
 
 /**
- * Render assigned contact profile batches on task form
+ * Render assigned contact profile batches on task form/s
  * 
  * @param {array} contactIds - array of assigned contact id's
  * @param {string} elementId - id of the render wrapper
  */
-async function renderContactProfileBatches(contactIds = [], elementId = 'profileBatches') {
+async function renderTaskFormContactBatches(contactIds = [], elementId = 'profileBatches') {
     let element = document.getElementById(elementId);
     element.innerHTML = '';
     for (let index = 0; index < contactIds.length; index++) {
-        let contactIndex = await getContactIndexFromId(contactIds[index]);
-        if(contactIndex >= 0) {
-            element.innerHTML += getContactProfileBatchTemplate(contacts[contactIndex]);
-        }
+        let contact = await getContactById(contactIds[index]);
+        contact ? element.innerHTML += getContactProfileBatchTemplate(contact) : null;
     }
 }
 
 
 /**
- * Render category select options on task form
+ * Render category select listbox on task form/s
  * 
  * @param {event} event - currently not in use
  * @param {string} wrapperId - id of the render wrapper
  */
-async function renderCategorySelectOptions(event = null, wrapperId = 'taskCategoriesSelectOptionsWrapper') {
+async function renderTaskFormCategoryListbox(event = null, wrapperId = 'taskCategoryListbox') {
     event ? event.stopPropagation() : null;
     let optionsWrapper = document.getElementById(wrapperId);
     optionsWrapper.innerHTML = '';
     categories = await sortCategories(categories);
     // let assignedCategory = 0;
     for (let index = 0; index < categories.length; index++) {
-        optionsWrapper.innerHTML += getCategorySelectOptionTemplate(categories[index], index);
+        optionsWrapper.innerHTML += getCategoryListboxOptionTemplate(categories[index], index);
+    }
+}
+
+
+/**
+ * Render edit task form categories
+ * 
+ * @param {object} currentTask - current task (if edit mode)
+ */
+async function renderEditTaskFormCategories(currentTask) {
+    if(currentTask.categoryId) {
+        let category = getCategoryById(currentTask.categoryId)
+        let categoryName = category ? category.Name : null;
+        document.getElementById('categorySelect').value = categoryName;
+        document.getElementById('categorySelect').dataset.optionId = currentTask.categoryId;
+        document.getElementById('categorySelect').classList.remove("clickable");
+        document.getElementById('categorySelect').setAttribute("disabled", '');
+        //document.getElementById('categoryOptionId-' + currentTask.categoryId).setAttribute('aria-selected', 'true');
     }
 }
 
@@ -260,7 +271,6 @@ async function submitCreateTask(event) {
     let formInputs = await getFormInputObj('addTaskForm');
     await setTaskProperties(currentTask, formInputs);
     await createTask(currentTask);
-    // resetAddTaskForm(event);
     await showFloatingMessage('addedTask');
     setTimeout(function() {location.href = "/board.html";}, 1500);
 }
@@ -277,8 +287,11 @@ async function submitUpdateTask(event) {
     let formInputs = await getFormInputObj('editTaskForm');
     await setTaskProperties(currentTask, formInputs);
     await updateTask(currentTask);
-    await showFloatingMessage('text', 'Task successfully edited');
-    setTimeout(function() {closeTaskDialogue(event)}, 500);
+    let showConfMsg = 0;
+    showConfMsg ? await showFloatingMessage('text', 'Task successfully edited') : null;
+    showConfMsg ? setTimeout(function() {closeTaskDialogue(event)}, 0) : null;
+    // document.getElementById('taskDialogue').style = 'display: none';
+    await showTaskDetail(event, currentTask.id, false);
 }
 
 
@@ -331,11 +344,10 @@ async function resetAddTaskForm(event) {
     assignedContacts = [];
     assignedSubtasks = [];
     resetForm(formId);
-    // setInitialFormState(formId, 'inputTitle', 'add');
-    await renderContactSelectOptions();    
-    await renderContactProfileBatches();    
-    await renderCategorySelectOptions();    
-    await renderSubtasks(assignedSubtasks);
+    await renderTaskFormContactListbox();    
+    await renderTaskFormContactBatches();    
+    await renderTaskFormCategoryListbox();    
+    await renderTaskFormSubtasks(assignedSubtasks);
     event.preventDefault();
 }
 

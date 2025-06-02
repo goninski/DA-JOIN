@@ -4,7 +4,7 @@
  * @param {array} assignedSubtasks - array of subtask objects
  * @param {string} wrapperId - id of the render wrapper
  */
-async function renderSubtasks(assignedSubtasks, wrapperId = 'assignedSubtasks') {
+async function renderTaskFormSubtasks(assignedSubtasks, wrapperId = 'assignedSubtasks') {
     let element = document.getElementById(wrapperId);
     element.innerHTML = '';
     if(hasLength(assignedSubtasks)) {
@@ -152,7 +152,7 @@ async function addSubtask(element) {
     !assignedSubtasks ? assignedSubtasks = [] : null;
     // console.log(assignedSubtasks);
     assignedSubtasks.push(subtask)
-    await renderSubtasks(assignedSubtasks);
+    await renderTaskFormSubtasks(assignedSubtasks);
     clearSubtaskInput(element);
 }
 
@@ -248,7 +248,7 @@ function updateSubtaskEventHandler(event, index) {
         wrapper.classList.remove('edit');
         wrapper.classList.add('read-only');
         input.readOnly = true;
-        renderSubtasks(assignedSubtasks);
+        renderTaskFormSubtasks(assignedSubtasks);
     }
 }
 
@@ -277,7 +277,7 @@ function deleteSubtaskEventHandler(event, index) {
 function deleteSubtask(index) {
     assignedSubtasks.splice(index, 1);
     // console.log(assignedSubtasks);
-    renderSubtasks(assignedSubtasks);
+    renderTaskFormSubtasks(assignedSubtasks);
 }
 
 
