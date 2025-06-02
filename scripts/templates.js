@@ -8,7 +8,7 @@ function getHeaderTemplate() {
                 <img src="./assets/img/logo-dark.svg" alt="join-logo" class="logo logo-small">
             </div>
             <p class="header-title">Kanban Project Management&nbsp;Tool</p>
-            <a class="help-link" href="help.html"><img class="help-icon" src="./assets/icons/help.svg" alt="help-icon"></a>
+            <a class="help-link" href="help.html" title="Show Help Page"><img class="help-icon" src="./assets/icons/help.svg" alt="help-icon"></a>
             <nav class="header-nav flex-col pos-relative">
                 <button id="headerNavTrigger" onclick="toggleHeaderNav(event)" class="profile-batch">G</button>
                 <div id="headerNavDropdown" class="nav-links" onclick="event.stopPropagation()">
@@ -62,7 +62,7 @@ function getNavBarTemplate() {
 
 
 /**
- * Return html of a single status board
+ * Return html of a single board (status board on board page)
  * 
  * @param {object} board - a board object (of boards)
  */
@@ -106,7 +106,7 @@ async function getBoardTasksTemplate(task, category, subtaskCount, subtaskProgre
     // let hideBatches = task.contactIds == null ? 'hide': null;
     let hideSubtask = subtaskCount == null ? 'hide': null;
     return `
-        <div class="board-task clickable-task" onclick="showTaskDetail(event, '${task.id}')" draggable="true" ondragstart="onDragStartTask(event, '${task.id}')" ondragend="onDragEnd(event)">
+        <div class="board-task clickable-task" onclick="showTaskDetail(event, '${task.id}')" draggable="true" ondragstart="onDragStartTask(event, '${task.id}')" ondrag="onDragTask(event, '${task.id}')" ondragend="onDragEnd(event)">
             <div class="task-options-menu-wrapper flex-col">
                 <button class="task-options-menu-button hide-focus" title="Change Task Status" onclick="renderTaskOptionsMenu(event,'${task.id}', '${task.status}')"><img src="./assets/icons/menu-dots.svg" alt="three-dot-menu-icon"></button>
                 <ul id="taskOptionsMenu-${task.id}" class="task-options-menu close-on-event flex-col ul-reset not-clickable" onclick="event.stopPropagation()" onmouseleave="closeElementByCurrentTarget(event)"></ul>
