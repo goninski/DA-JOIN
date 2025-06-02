@@ -287,10 +287,9 @@ async function submitUpdateTask(event) {
     let formInputs = await getFormInputObj('editTaskForm');
     await setTaskProperties(currentTask, formInputs);
     await updateTask(currentTask);
-    let showConfMsg = 0;
+    let showConfMsg = 1;
     showConfMsg ? await showFloatingMessage('text', 'Task successfully edited') : null;
-    showConfMsg ? setTimeout(function() {closeTaskDialogue(event)}, 0) : null;
-    // document.getElementById('taskDialogue').style = 'display: none';
+    // showConfMsg ? setTimeout(function() {closeTaskDialogue(event)}, 0) : null;
     await showTaskDetail(event, currentTask.id, false);
 }
 
