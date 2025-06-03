@@ -146,4 +146,11 @@ function togglePasswordVisibility(inputId, iconElement) {
   }
 }
 
+/**
+ * Redirects the user to the login page after successful sign up
+ */
+function loginRedirect() {
+    window.location.href = "login.html";
+}
+
 // window.onload = function () { console.log(usersDatabase); }

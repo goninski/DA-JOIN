@@ -13,6 +13,7 @@ async function initSummary() {
     await setSummaryObj();
     renderSummaryNumbers();
     addSummaryBoxListeners();
+    renderGreetingUser();
 }
 
 /**
@@ -139,4 +140,20 @@ function getDaySegment() {
     daySegment = 'evening';
   }
   return daySegment;
+}
+
+/**
+ * Render the greeting and username on the summary page
+ */
+function renderGreetingUser() {
+    const greetingEl = document.querySelector('.greeting');
+    const usernameEl = document.querySelector('.username');
+    if (summary.userName && summary.userName.toLowerCase() !== 'guest') {
+        greetingEl.textContent = summary.welcomeMsg;
+        usernameEl.textContent = summary.userName;
+        usernameEl.style.display = '';
+    } else {
+        greetingEl.textContent = summary.welcomeMsg;
+        usernameEl.style.display = 'none';
+    }
 }
