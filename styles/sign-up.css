@@ -33,24 +33,36 @@
 }
 
 .custom-checkbox {
-    position: unset !important;
-    width: 24px;
-    height: 24px;
-    border: 2px solid #2A3647;
-    border-radius: 3px;
-    background-color: white;
-    cursor: pointer;
-    position: relative;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #2A3647;
+  border-radius: 3px;
+  background: #fff;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  vertical-align: middle;
 }
 
-.custom-checkbox:checked::after {
-    content: "✔";
-    color: black;
-    position: absolute;
-    top: 0px;
-    left: 4px;
-    font-size: 18px;
-    line-height: 24px;
+.custom-checkbox-checked {
+  display: none;
+  width: 14px;
+  height: 14px;
+  position: relative;
+  left: -16px; /* Adjust if needed for alignment */
+  top: 2px;    /* Adjust if needed for alignment */
+  pointer-events: none;
+}
+
+.custom-checkbox:checked {
+  opacity: 0;
+}
+
+.custom-checkbox:checked + .custom-checkbox-checked {
+  display: inline;
 }
 
 .login-email-part-sign-up {

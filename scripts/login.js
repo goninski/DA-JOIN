@@ -14,16 +14,17 @@ window.onload = () => {
   }, 100);
 };
 
-async function handleLogin(userId) {
+async function handleLogin(event) {
+  event.preventDefault();
   const emailInputLogin = document.getElementById("email-login").value.trim();
   const passwordInputLogin = document.getElementById("pwd-login").value.trim();
-  const loginSuccessful = await checkLogin(emailInputLogin, passwordInputLogin);
 
-  // add code to check and get the user id
-  // .....
-
-  if (loginSuccessful){
-    await signIn(userId);
+  try {
+    const userCredential = await firebase.auth().signInWithEmailAndPassword(emailInputLogin, passwordInputLogin);
+    // User is logged in, redirect or fetch user data as needed
+    window.location.href = "board.html";
+  } catch (error) {
+    showFloatingMessage('error', error.message);
   }
 }
 

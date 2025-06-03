@@ -5,32 +5,36 @@ const confirmPwdField = document.getElementById('confirm_pwd');
 
 async function signUpSubmitHandler(event) {
   event.preventDefault();
-
   const nameInput = nameField.value.trim();
   const emailInput = emailField.value.trim();
   const passwordInput = passwordField.value.trim();
   const passwordRepeatInput = confirmPwdField.value.trim();
 
   if (!checkValidity()) return;
-
   resetErrorStyles();
-
   if (!checkPasswords(passwordInput, passwordRepeatInput)) return;
 
-  //const users = await getFromLocalStorage("users") || [];
+  try {
+    // 1. Create user with Firebase Auth
+    const userCredential = await firebase.auth().createUserWithEmailAndPassword(emailInput, passwordInput);
+    const user = userCredential.user;
 
-  const newUser = {
-    name: nameInput,
-    email: emailInput,
-    password: passwordInput
-  };
+    // 2. Save user info in Realtime Database
+    await fetch(`${fetchUrl}users/${user.uid}.json`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        name: nameInput,
+        email: emailInput,
+        createdAt: new Date().toISOString()
+      }),
+      headers: { 'Content-Type': 'application/json' }
+    });
 
-  // users.push(newUser);
-  // await saveToLocalStorage("users", users);
-
-  // showSignUpSuccessOverlay();
-
-  await signUp(newUser);
+    await showFloatingMessage('text', 'You Signed Up successfully');
+    loginRedirect();
+  } catch (error) {
+    showFloatingMessage('error', error.message);
+  }
 }
 
 /**
