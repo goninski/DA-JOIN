@@ -34,7 +34,7 @@
 
             <div class="flex-col login-email-part-sign-up center gap_16px">
                 <form id="signup-form">
-                    <div class="flex-col">
+                    <div class="flex-col input-part-sign-up">
                         <div class="input-wrapper-signup-login margin-bottom-24px flex justify-between">
                             <input class="login-signup-input pictureinput person-pic" type="text" minlength="3"
                                 placeholder="Name" id="sign-up-name" required>
@@ -62,16 +62,18 @@
                         </div>
                     </div>
 
-                    <div class="checkbox-wrapper">
-                        <label class="checkbox-label" style="display: flex; align-items: center; gap: 10px;">
-                            <input type="checkbox" class="custom-checkbox" id="terms-checkbox" required>
-                            <img src="assets/icons/checkbox-checked.svg" class="custom-checkbox-checked"
-                                alt="checked" />
-                            <span class="checkbox-text">
-                                I accept the <a href="#" class="a-privacy-policy">Privacy policy</a>
-                            </span>
-                        </label>
-                    </div>
+
+                    <label class="custom-checkbox-container">
+                        <input type="checkbox" id="terms-checkbox" required>
+                        <span class="custom-checkbox-visuals">
+                            <span class="custom-checkbox-box"></span>
+                            <img src="assets/icons/checkbox-checked.svg" class="custom-checkbox-icon" alt="checked">
+                        </span>
+                        <span class="checkbox-text">
+                            I accept the <a href="#" class="a-privacy-policy">Privacy policy</a>
+                        </span>
+                    </label>
+
 
             </div>
 
