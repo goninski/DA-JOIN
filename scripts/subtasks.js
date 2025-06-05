@@ -40,7 +40,6 @@ function subtaskEventAllowed(event) {
  */
 function getCurrentSubtaskInputFromEvent(event) {
     let wrapper = getClosestParentElementFromEvent(event, '.input-wrapper-subtask');
-    // console.log(wrapper);
     return wrapper.querySelector('input');
 }
 
@@ -120,7 +119,6 @@ function addSubtaskEventHandler(event) {
         event.preventDefault();
         getCurrentFieldElements(event.target);
         let input = currentFieldElements.input;
-        // console.log(currentFieldElements);
         addSubtask(input);
     }
 }
@@ -148,9 +146,7 @@ async function addSubtask(element) {
     let subtask = {};
     subtask.title = element.value;
     subtask.done = false;
-    // console.log(subtask);
     !assignedSubtasks ? assignedSubtasks = [] : null;
-    // console.log(assignedSubtasks);
     assignedSubtasks.push(subtask)
     await renderTaskFormSubtasks(assignedSubtasks);
     clearSubtaskInput(element);
@@ -164,7 +160,6 @@ async function addSubtask(element) {
  */
 function clearSubtaskEventHandler(event) {
     event.stopPropagation();
-    // console.log('f) clearSubtaskEventHandler');
     if(subtaskEventAllowed) {
         event.preventDefault();
         getCurrentFieldElements(event.target);
@@ -193,12 +188,9 @@ function clearSubtaskInput(element) {
  */
 function onInputUpdateSubtask(event) {
     event.stopPropagation();
-    // console.log(event.currentTarget);
-    // console.log(event.target);
     let input = event.currentTarget;
     let wrapper = getCurrentSubtaskInputWrapper(input);
     let updateBtn = wrapper.querySelector('.update-subtask-button');
-    // console.log(updateBtn);
     if(validateSubtaskInput(input)) {
         wrapper.classList.remove('invalid');
         updateBtn.tabIndex = 0;
@@ -216,7 +208,6 @@ function onInputUpdateSubtask(event) {
  */
 function editSubtaskEventHandler(event) {
     event.stopPropagation();
-    // event.preventDefault();
     if(subtaskEventAllowed) {
         event.preventDefault();
         let input = getCurrentSubtaskInputFromEvent(event);
@@ -225,7 +216,8 @@ function editSubtaskEventHandler(event) {
         wrapper.classList.remove('read-only');
         input.readOnly = false;
         input.focus();
-        input.setSelectionRange(length, input.value.length);
+        let valLength = input.value.length
+        input.setSelectionRange(valLength, valLength);
     }
 }
 
@@ -238,13 +230,11 @@ function editSubtaskEventHandler(event) {
  */
 function updateSubtaskEventHandler(event, index) {
     event.stopPropagation();
-    // console.log('f) updateSubtaskEventHandler');
     if(subtaskEventAllowed) {
         event.preventDefault();
         let input = getCurrentSubtaskInputFromEvent(event);
         let wrapper = getCurrentSubtaskInputWrapper(input);
         assignedSubtasks[index].title = input.value;
-        // console.log(assignedSubtasks);
         wrapper.classList.remove('edit');
         wrapper.classList.add('read-only');
         input.readOnly = true;
@@ -261,7 +251,6 @@ function updateSubtaskEventHandler(event, index) {
  */
 function deleteSubtaskEventHandler(event, index) {
     event.stopPropagation();
-    // console.log('f) deleteSubtaskEventHandler');
     if(subtaskEventAllowed) {
         event.preventDefault();
         deleteSubtask(index);
@@ -276,7 +265,6 @@ function deleteSubtaskEventHandler(event, index) {
  */
 function deleteSubtask(index) {
     assignedSubtasks.splice(index, 1);
-    // console.log(assignedSubtasks);
     renderTaskFormSubtasks(assignedSubtasks);
 }
 
