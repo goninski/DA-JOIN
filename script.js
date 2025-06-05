@@ -64,8 +64,6 @@ function getMainTemplates() {
     getNavBar();
     setNavLinkProps();
     getOrientationOverlay();
-    let floatingMsgElement = document.getElementById('floatingMsg');
-    floatingMsgElement ? floatingMsgElement.classList.add('button', 'btn-icon', 'btn-primary', 'floating-message') : null;
 }
 
 
@@ -310,16 +308,28 @@ function toggleIconColorOnHover(event, hoverColor = 'blue') {
  */
 async function showFloatingMessage(template, msg = '', timeout = 1500) {
     let element = document.getElementById("floatingMsg");
-    if(template == 'addedTask') {
-        element.innerHTML = getFloatingMessageTaskAddedTemplate();
-    } else {
-        element.innerHTML = getFloatingMessageTextTemplate(msg);
+    if(element) {
+        element.classList.add('button', 'btn-icon', 'btn-primary');
+        if(template == 'addedTask') {
+            element.innerHTML = getFloatingMessageTaskAddedTemplate();
+        } else {
+            element.innerHTML = getFloatingMessageTextTemplate(msg);
+        }
+        element.classList.add('showing');
+        setTimeout(function() { 
+            element.classList.remove('showing');
+            element.innerHTML = '';
+        }, timeout);
     }
-    element.classList.add('showing');
-    setTimeout(function() { 
-        element.classList.remove('showing');
-        element.innerHTML = '';
-}, timeout);
+}
+
+
+/**
+ * Set floating message props
+ */
+function xsetFloatingMessageProps() {
+    let floatingMsgElement = document.getElementById('floatingMsg');
+    element.classList.add('floating-message', 'button', 'btn-icon', 'btn-primary');
 }
 
 

@@ -226,7 +226,7 @@ button.add-contact img {
     }
 }
 
-@media(max-width: 735px) {
+@media(max-width: 800px) {
     #btnReset {
         display: none;
     }

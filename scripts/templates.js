@@ -106,7 +106,7 @@ async function getBoardTasksTemplate(task, category, subtaskCount, subtaskProgre
     // let hideBatches = task.contactIds == null ? 'hide': null;
     let hideSubtask = subtaskCount == null ? 'hide': null;
     return `
-        <div class="board-task clickable-task" onclick="showTaskDetail(event, '${task.id}')" draggable="true" ondragstart="onDragStartTask(event, '${task.id}')" ondrag="onDragTask(event, '${task.id}')" ondragend="onDragEnd(event)">
+        <div class="board-task clickable-task" onclick="showTaskDetail(event, '${task.id}')" draggable="true" ondragstart="onDragStartTask(event, '${task.id}')" ondragend="onDragEnd(event)">
             <div class="task-options-menu-wrapper flex-col">
                 <button class="task-options-menu-button hide-focus" title="Change Task Status" onclick="renderTaskOptionsMenu(event,'${task.id}', '${task.status}')"><img src="./assets/icons/menu-dots.svg" alt="three-dot-menu-icon"></button>
                 <ul id="taskOptionsMenu-${task.id}" class="task-options-menu close-on-event flex-col ul-reset not-clickable" onclick="event.stopPropagation()" onmouseleave="closeElementByCurrentTarget(event)"></ul>

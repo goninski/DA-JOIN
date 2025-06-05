@@ -215,24 +215,7 @@ function onDragStartTask(event, taskId) {
   event.stopPropagation();
   currentDragTaskId = taskId;
   element = event.currentTarget;
-  // element.classList.add('dragging');
-  // setTimeout(function() {element.classList.add('dragging')}, 0);
-}
-
-
-/**
- * Event handler: on drag, board task
- * 
- * @param {event} event - ondrag (board task)
- * @param {string} taskId - current task id
- */
-function onDragTask(event, taskId) {
-  console.log('onDrag');
-  event.stopPropagation();
-  currentDragTaskId = taskId;
-  element = event.currentTarget;
   element.classList.add('dragging');
-  // setTimeout(function() {element.classList.add('dragging')}, 0);
 }
 
 

@@ -355,20 +355,7 @@
 }
 
 
-/*** BREAKPOINTS */
-
-/* @media(max-width: 1023px) {
-    .flex-wrap--ss-tab {
-        flex-wrap: wrap;
-    }
-    .flex-col--ss-tab {
-        flex-direction: column;
-    }
-    .hide--ss-tab {
-        display: none;
-    }
-} */
-@media(max-width: 735px) {
+@media(max-width: 800px) {
     .flex-wrap--ss-mob {
         flex-wrap: wrap;
     }
@@ -384,7 +371,7 @@
 @media(min-width: 1516px) {
 }
 
-@media(min-width: 736px) {
+@media(min-width: 801px) {
     .show--ss-mob {
         display: none !important;
     }

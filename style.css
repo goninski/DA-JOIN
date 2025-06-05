@@ -362,7 +362,7 @@ body.logged-out .nav-link-app {
     }
 }
 
-@media(max-width: 735px) {
+@media(max-width: 800px) {
     :root {
         --px-sec: 16px;
         --height-header: 80px;
@@ -413,7 +413,7 @@ body.logged-out .nav-link-app {
     }
 }
 
-@media(max-width: 1023px) and (max-height: 639px) and (orientation: landscape) {
+@media(max-width: 1023px) and (max-height: 719px) and (orientation: landscape) {
     .orientation-overlay {
         display: flex;
     }
