@@ -362,6 +362,13 @@ body.logged-out .nav-link-app {
     }
 }
 
+@media(min-width: 801px) and (max-height: 800px) {
+    #sideNavBar .nav-links-main {
+        justify-content: center;
+        margin-top: unset;
+    }
+}
+
 @media(max-width: 800px) {
     :root {
         --px-sec: 16px;

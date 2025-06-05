@@ -11,7 +11,10 @@
     flex-shrink: 1;
     background-color: var(--bg-page);
 }
-
+.contact-detail-section.scrollable {
+    overflow-y: auto;
+    scrollbar-width: none;
+}
 .contact-list-sidebar {
     background-color: white;
     width: 100%;
@@ -120,8 +123,9 @@ button.add-contact img {
 }
 #btnCloseContactDetails {
     display: none;
-    position: absolute;
-    right: var(--px-sec);
+}
+.contact-page .back-button-wrapper {
+    margin-bottom: -45px;
 }
 #contactOptionsMenu {
     position: fixed;
@@ -233,6 +237,9 @@ button.add-contact img {
     .floating-contact {
         flex-wrap: wrap;
         gap: 16px;
+    }
+    .contact-dialogue .batch-wrapper {
+        margin-top: -100px;
     }
 }
 

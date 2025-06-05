@@ -91,6 +91,17 @@
   background: #FFFFFF;
   cursor: grab;
 }
+#taskDetailsWrapper.scrollable {
+    position: absolute;
+    inset: var(--padding-dialogue);
+}
+#taskDetailsWrapper.scrollable .task-details-wrapper {
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+#taskDetailsWrapper.scrollable .option-buttons {
+    margin-top: 32px;
+}
 .task-details-wrapper {
   font-size: var(--fs-lg);
   color: black;

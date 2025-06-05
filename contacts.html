@@ -33,14 +33,19 @@
             </div>
 
 
-            <div class="section contact-detail-section" xstyle="--ct-w: 752px;">
+            <div class="section contact-detail-section scrollable" xstyle="--ct-w: 752px;">
+                <div class="back-button-wrapper flex pos-absolute">
+                    <button id="btnCloseContactDetails" class="back-button" title="back to contact list">
+                        <img src="/assets/icons/arrow-left-blue.svg" alt="arrow-left-icon">
+                    </button>
+                </div> 
 
                 <div class="ct-container full-width">
                     <div class="page-title-wrapper">
                         <h1 class="page-title ">Contacts</h1>
                         <div class="title-deco-divider"></div>
                         <div class="page-subtitle">Better&nbsp;with a&nbsp;Team</div>
-                        <button id="btnCloseContactDetails" class="back-button" title="back to contact list"><img src="/assets/icons/arrow-left-blue.svg" alt="arrow-left-icon"></button>
+                        <!-- <button id="btnCloseContactDetails" class="back-button" title="back to contact list"><img src="/assets/icons/arrow-left-blue.svg" alt="arrow-left-icon"></button> -->
                     </div>
                     <div id="floatingContact" class="floating-contact"></div>
                     <div id="contactInfo" class="contact-info flex-col"></div>
