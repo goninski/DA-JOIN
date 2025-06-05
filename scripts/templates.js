@@ -76,7 +76,7 @@ function getBoardTemplate(board) {
                     ${addTaskBtn}
                 </button>
             </div>
-            <div id="boardTaskList-${board.id}" class="board-task-list" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="taskDrop(event, '${board.id}')" xonmousedown="horizontalBoardDragScroll(event)" xonmouseup="horizontalBoardDragScroll(event)" xonmouseleave="horizontalBoardDragScroll(event)" xonmousemove="horizontalBoardDragScroll(event)">
+            <div id="boardTaskList-${board.id}" class="board-task-list" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="taskDrop(event, '${board.id}')">
             </div>
         </div>
 `
@@ -141,7 +141,7 @@ function getMoveToBoardMenuTemplate(taskId, currentStatus) {
     let hideAwaitFeedback = (currentStatus == boards[2].id) ? 'hide' : '';
     let hideDone = (currentStatus == boards[3].id) ? 'hide' : '';
     return `
-        <button class="close-task-options-menu" onclick="closeTaskOptionsMenu(event)" title="close menu">
+        <button class="close-task-options-menu" onclick="closeParentWrapper(event)" title="close menu">
             <img src="assets/icons/close-white.svg" alt="close-icon" class="close-icon light">
         </button>
         <div>New Task Status:</div>
@@ -511,10 +511,10 @@ function getContactDetailProfileBatchTemplate(contact) {
  */
 function getContactOptionButtons(contact) {
     return `
-        <button onclick="openEditContactForm(event, '${contact.id}')" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)" class="option-button-edit" title="Edit current contact">
+        <button onclick="openEditContactForm(event, '${contact.id}'), closeParentWrapper(event)" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)" class="option-button-edit" title="Edit current contact">
             <img src="assets/icons/edit.svg" alt="edit-icon">Edit
         </button>
-        <button onclick="submitDeleteContact(event, '${contact.id}')" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)" class="option-button-delete" title="Delete current contact">
+        <button onclick="submitDeleteContact(event, '${contact.id}'), closeParentWrapper(event)" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)" class="option-button-delete" title="Delete current contact">
             <img src="assets/icons/delete.svg" alt="delete-icon">Delete
         </button>
     `

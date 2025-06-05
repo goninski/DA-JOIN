@@ -189,20 +189,6 @@ async function renderTaskOptionsMenu(event, taskId, currentStatus) {
 
 
 /**
- * Event handler: close task options menu
- * 
- * @param {event} event - click (close icon)
- */
-async function closeTaskOptionsMenu(event) {
-    event.stopPropagation();
-    event.preventDefault();
-    let wrapper = getClosestParentElementFromEvent(event, '.task-options-menu');
-    wrapper.classList.remove('is-open');
-    wrapper.innerHTML = '';
-}
-
-
-/**
  * Event handler: add task to current board
  * 
  * @param {event} event - onclick (button)

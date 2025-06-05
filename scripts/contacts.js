@@ -138,9 +138,7 @@ async function openEditContactForm(event, contactId) {
     event.preventDefault();
     event.stopPropagation();
     formMode = 'edit';
-    // lastListContactId = contactId;
     await openContactsForm(formMode, currentContact.id);
-    closeParentWrapper(event);
 }
 
 
@@ -193,7 +191,6 @@ async function closeContactsFormDialogue(event) {
     await runSlideOutAnimation(dialogue);
     await renderContactList();
     await showContactDetail(event, lastListContactId);
-    // reloadPage(event);
 }
 
 
@@ -225,7 +222,8 @@ async function setEditContactValues(contactId) {
     document.getElementById('inputEmail').value = contact.email;
     contact.phone ? document.getElementById('inputPhone').value = contact.phone : '';
     document.getElementById('submitBtnWrapper').innerHTML = getEditContactSubmitButtonsTemplate(contactId);
-    // document.getElementById('dialogueBtnDelete').innerHTML = getIconTemplateCancel('Cancel');
+    let showDeleteBtn = 0;
+    showDeleteBtn ? document.getElementById('dialogueBtnDelete').innerHTML = getIconTemplateCancel('Cancel') : null;
     document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Save');
 }
 
@@ -253,7 +251,6 @@ async function submitCreateContact(event) {
     await setContactProperties(currentContact, formInputs);
     await createContact(currentContact);
     lastListContactId = currentContact.id;
-    // resetAddContactForm(event);
     await showFloatingMessage('text', 'Contact successfully created');
     setTimeout(function() {closeContactsFormDialogue(event);}, 1000);
 }
