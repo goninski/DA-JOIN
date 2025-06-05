@@ -387,7 +387,7 @@ form.task-form {
 }
 :is(.task-page-inner, .task-dialogue) .submit-button-wrapper .required-info {
     position: absolute;
-    top: 32px;
+    top: 16px;
     left: 0;
 }
 .subtask-listing {
@@ -497,8 +497,8 @@ form.task-form {
     .task-form .submit-button-wrapper {
         max-width: var(--field-width) !important;
     }
-    .task-form .required-info {
-        top: -36px !important;
+    .task-form.add-task-form .required-info {
+        top: -36px;
     }
 }
 @media(max-width: 800px) {

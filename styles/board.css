@@ -99,13 +99,11 @@
     overflow-y: auto;
     scrollbar-width: none;
 }
-#taskDetailsWrapper.scrollable .option-buttons {
-    margin-top: 32px;
-}
 .task-details-wrapper {
   font-size: var(--fs-lg);
   color: black;
   gap: 24px;
+  margin-bottom: 24px;
 }
 .task-details-wrapper label {
   font-size: var(--fs-lg);
@@ -392,6 +390,12 @@
         --fs-lg: var(--fs-base);
     }
 }
+@media(max-width: 374px) {
+  #taskDetailsSubtaskWrapper li label {
+        --fs-base: 14px;
+  }
+}
+
 @media(min-width: 1440px) {
     .board-page-inner {
         --px-sec: 64px;

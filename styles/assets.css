@@ -288,18 +288,16 @@ button.close-dialogue .light {
     background-color: white;
     border-radius: 30px;
     overflow: hidden;
-    /* flex-grow: 1; */
     width: 100%;
-    /* align-items: stretch; */
-    /* overflow-y: auto; */
 }
 .task-dialogue:not(.add-task) {
     --padding-dialogue: 48px 48px;
 }
 .task-dialogue:not(.add-task) .dialogue-inner {
     padding: var(--padding-dialogue);
-    max-width: 525px;
     gap: 24px;
+    max-width: 525px;
+    max-height: 939px;
 }
 .task-dialogue .dialogue-inner {
     flex-grow: 1;
@@ -388,6 +386,13 @@ button.close-dialogue .light {
         width: 90px;
         height: 3px;
     }
+    .task-dialogue {
+        --padding-dialogue: 48px 6vw !important;
+    }
+    .task-dialogue .dialogue-inner {
+        max-width: 396px !important;
+        max-height: 700px !important;
+    }
     .contact-dialogue {
         --padding-dialogue: 61px 6vw;
     }
@@ -402,6 +407,9 @@ button.close-dialogue .light {
     }
 }
 @media(max-width: 435px) {
+    .task-dialogue {
+        --padding-dialogue: 48px 16px !important;
+    }
     .contact-dialogue {
         --padding-dialogue: 61px 16px;
     }
