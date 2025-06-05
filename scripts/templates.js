@@ -109,7 +109,7 @@ async function getBoardTasksTemplate(task, category, subtaskCount, subtaskProgre
         <div class="board-task clickable-task" onclick="showTaskDetail(event, '${task.id}')" draggable="true" ondragstart="onDragStartTask(event, '${task.id}')" ondragend="onDragEnd(event)">
             <div class="task-options-menu-wrapper flex-col">
                 <button class="task-options-menu-button hide-focus" title="Change Task Status" onclick="renderTaskOptionsMenu(event,'${task.id}', '${task.status}')"><img src="./assets/icons/menu-dots.svg" alt="three-dot-menu-icon"></button>
-                <ul id="taskOptionsMenu-${task.id}" class="task-options-menu close-on-event flex-col ul-reset not-clickable" onclick="event.stopPropagation()" onmouseleave="closeElementByCurrentTarget(event)"></ul>
+                <ul id="taskOptionsMenu-${task.id}" class="task-options-menu close-on-event flex-col ul-reset not-clickable" onclick="event.stopPropagation()" xonmouseleave="closeElementByCurrentTarget(event)"></ul>
             </div>
             <div class="board-task-category" style="background-color: ${category.color};">${category.name}</div>
             <div class="board-task-title">${task.title}</div>
@@ -141,6 +141,9 @@ function getMoveToBoardMenuTemplate(taskId, currentStatus) {
     let hideAwaitFeedback = (currentStatus == boards[2].id) ? 'hide' : '';
     let hideDone = (currentStatus == boards[3].id) ? 'hide' : '';
     return `
+        <button class="close-task-options-menu" onclick="closeTaskOptionsMenu(event)" title="close menu">
+            <img src="assets/icons/close-white.svg" alt="close-icon" class="close-icon light">
+        </button>
         <div>New Task Status:</div>
         <li class="${hideTodo}"><button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[0].id}')">&#8594;&ensp;${boards[0].label}</button></li>
         <li class="${hideInProgress}"><button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[1].id}')">&#8594;&ensp;${boards[1].label}</button></li>

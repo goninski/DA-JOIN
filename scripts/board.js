@@ -32,7 +32,6 @@ async function initBoard() {
  * @param {event} event - oninput (search input)
  */
 async function listenTaskSearchInput(event) {
-  // console.log('f) listenTaskSearchInput');
   let taskSearchInput = document.getElementById('inputTaskSearch');
   let taskSearchBtn = document.getElementById('taskSearchBtn');
   let searchVal = taskSearchInput.value.toLowerCase();
@@ -40,11 +39,9 @@ async function listenTaskSearchInput(event) {
   if(searchVal.length > 0) {
     taskSearchBtn.tabIndex = 0;
     taskSearchBtn.classList.remove('not-clickable');
-    // await filterTasks(event);
   } else {
     taskSearchBtn.tabIndex = -1;
     taskSearchBtn.classList.add('not-clickable');
-    // await renderBoards();
   }
     await filterTasks(event);
 }
@@ -57,7 +54,6 @@ async function listenTaskSearchInput(event) {
  */
 async function filterTasks(event) {
   event.preventDefault();
-  console.log('f) filterTasks');
   let taskSearchInput = document.getElementById('inputTaskSearch');
   let searchVal = taskSearchInput.value.toLowerCase();
   let filteredTasks = tasks.filter(task => (task.searchBase).toLowerCase().includes(searchVal));
@@ -77,7 +73,6 @@ async function filterTasks(event) {
  */
 async function setSearchBase() {
   renderTasks = tasks.forEach(task => task.searchBase = (task.title + ' ' + task.description));
-  // console.log(tasks);
 }
 
 
@@ -150,7 +145,6 @@ async function renderTaskDetailsAssignedContacts(task) {
     let contactIds = task.contactIds;
     let wrapper = document.getElementById('taskDetailsAssignedContactsWrapper');
     wrapper.innerHTML = '';
-    // console.log(contactIds)    ;
     if(hasLength(contactIds)) {
       for (let index = 0; index < contactIds.length; index++) {
         let contact = await getContactById(contactIds[index]);
@@ -191,6 +185,20 @@ async function renderTaskOptionsMenu(event, taskId, currentStatus) {
     let wrapper = document.getElementById('taskOptionsMenu-' + taskId);
     wrapper.innerHTML = getMoveToBoardMenuTemplate(taskId, currentStatus);
     wrapper.classList.add('is-open');
+}
+
+
+/**
+ * Event handler: close task options menu
+ * 
+ * @param {event} event - click (close icon)
+ */
+async function closeTaskOptionsMenu(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    let wrapper = getClosestParentElementFromEvent(event, '.task-options-menu');
+    wrapper.classList.remove('is-open');
+    wrapper.innerHTML = '';
 }
 
 
@@ -290,57 +298,4 @@ async function changeBoardTaskStatus(event, taskId, statusNew, msg = '') {
     }
 }
 
-
-/**
- * Event handler: activate horizontal drag scroll on screen < 1440px
- * 
- * @param {event} event - onmousedown, onmouseup, onmouseleave, onmousemove (all on board tasklist)
- */
-function horizontalBoardDragScroll(event) {
-  return;
-  event.stopPropagation();
-  if(window.matchMedia("(min-width: 1440px)").matches) {
-    return;
-  }
-  return horizontalDragScroll(event, '.board-task-list');
-}
-
-
-/**
- * Event handler: general horizontal drag scroll
- * ??? unstable !!  based on: https://codepen.io/toddwebdev/pen/yExKoj
- * 
- * @param {event} event - inherit
- * @param {string} wrapperSelector - css selector of the drag scroll element
- */
-function horizontalDragScroll(event, wrapperSelector) {
-  return;
-  event.stopPropagation();
-  let dragScrollWrapper = getClosestParentElementFromEvent(event, wrapperSelector);
-  let type = event.type;
-  switch(type) {
-    case 'mousedown':
-      dragScrollMouseIsDown = true;
-      dragScrollWrapper.classList.add('active');
-      dragScrollStartX = event.pageX - dragScrollWrapper.offsetLeft;
-      dragScrollScrollLeft = dragScrollWrapper.dragScrollScrollLeft;
-      break;
-    case 'mouseleave':
-      dragScrollMouseIsDown = false;
-      dragScrollWrapper.classList.remove('active');
-      break;
-    case 'mouseup':
-      dragScrollMouseIsDown = false;
-      dragScrollWrapper.classList.remove('active');
-      break;
-    case 'mousemove':
-      if(!dragScrollMouseIsDown) return;
-      event.preventDefault();
-      const x = event.pageX - dragScrollWrapper.offsetLeft;
-      const walk = (x - dragScrollStartX) * 3; //scroll-fast
-      dragScrollWrapper.dragScrollScrollLeft = dragScrollScrollLeft - walk;
-      // console.log(walk);
-      break;
-  }
-}
 
