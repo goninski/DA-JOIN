@@ -64,7 +64,7 @@ async function filterTasks(event) {
   if(hasLength(filteredTasks)) {
     renderTasks = filteredTasks;
   } else {
-    await showFloatingMessage('text', 'no Tasks found !', 1500);
+    await showFloatingMessage('text', 'no Tasks found !', 1500, 'showing-top');
     setTimeout(() => {taskSearchInput.value = ''}, 1500)
     renderTasks = tasks;    
   }
@@ -225,7 +225,6 @@ function onDragStartTask(event, taskId) {
  * @param {event} event - ondragend (board task)
  */
 function onDragEnd(event) {
-  console.log('onDragEnd');
   event.stopPropagation();
   element = event.currentTarget;
   element.classList.remove('dragging');
@@ -238,7 +237,6 @@ function onDragEnd(event) {
  * @param {event} event - ondragover (board tasklist)
  */
 function onDragOver(event) {
-  console.log('onDragOver');
   event.preventDefault();
   element = event.currentTarget;
   element.classList.add('dropzone');

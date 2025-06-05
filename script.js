@@ -305,31 +305,19 @@ function toggleIconColorOnHover(event, hoverColor = 'blue') {
  * @param {string} template - code name for specific template (text, addedTask)
  * @param {string} msg - message content
  * @param {number} timeout - timeout milliseconds
+ * @param {string} optClass - optional class
  */
-async function showFloatingMessage(template, msg = '', timeout = 1500) {
+async function showFloatingMessage(template, msg = '', timeout = 1500, optClass = 'showing-default') {
     let element = document.getElementById("floatingMsg");
     if(element) {
-        element.classList.add('button', 'btn-icon', 'btn-primary');
-        if(template == 'addedTask') {
-            element.innerHTML = getFloatingMessageTaskAddedTemplate();
-        } else {
-            element.innerHTML = getFloatingMessageTextTemplate(msg);
-        }
-        element.classList.add('showing');
+        element.classList.remove(optClass);
+        element.innerHTML = (template == 'addedTask') ? getFloatingMessageTaskAddedTemplate() : getFloatingMessageTextTemplate(msg);
+        element.classList.add('button', 'btn-icon', 'btn-primary', 'showing', optClass);
         setTimeout(function() { 
             element.classList.remove('showing');
             element.innerHTML = '';
         }, timeout);
     }
-}
-
-
-/**
- * Set floating message props
- */
-function xsetFloatingMessageProps() {
-    let floatingMsgElement = document.getElementById('floatingMsg');
-    element.classList.add('floating-message', 'button', 'btn-icon', 'btn-primary');
 }
 
 

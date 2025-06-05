@@ -135,16 +135,24 @@ a:hover {
 }
 .floating-message {
     position: fixed;
-    bottom: 32px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     background-color: var(--clr-light-blue) !important;
     min-width: 280px;    
     z-index: 9999;
     transform: translateX(-100%);
+    transition: transform 0.35s;
+}
+.floating-message:not(.showing-top) {
+    bottom: 32px;
+}
+.floating-message.showing-top {
+    top: 270px;
 }
 .floating-message.showing {
-    transition: transform 0.35s ease-in;
     transform: translateX(var(--px-sec));
+}
+.floating-message:not(.showing) {
+    transform: translateX(-100%);
 }
 :is(.floating-button-round, .floating-message) img {
     height: 32px;
