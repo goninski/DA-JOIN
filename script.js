@@ -64,6 +64,8 @@ function getMainTemplates() {
     getNavBar();
     setNavLinkProps();
     getOrientationOverlay();
+    let floatingMsgElement = document.getElementById('floatingMsg');
+    floatingMsgElement ? floatingMsgElement.classList.add('button', 'btn-icon', 'btn-primary', 'floating-message') : null;
 }
 
 
@@ -313,9 +315,9 @@ async function showFloatingMessage(template, msg = '', timeout = 1500) {
     } else {
         element.innerHTML = getFloatingMessageTextTemplate(msg);
     }
-    element.classList.remove('hide');
+    element.classList.add('showing');
     setTimeout(function() { 
-        element.classList.add('hide');
+        element.classList.remove('showing');
         element.innerHTML = '';
 }, timeout);
 }
