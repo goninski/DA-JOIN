@@ -157,4 +157,11 @@ function loginRedirect() {
     window.location.href = "login.html";
 }
 
-// window.onload = function () { console.log(usersDatabase); }
+function toggleCheckboxBox(checkbox) {
+    const box = checkbox.parentElement.getElementById('.terms-checkbox');
+    if (checkbox.checked) {
+        box.classList.add('hide-box');
+    } else {
+        box.classList.remove('hide-box');
+    }
+}

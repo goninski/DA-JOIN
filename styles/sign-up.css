@@ -1,6 +1,6 @@
 .arrow_left_icon {
-    height: 32px;
-    width: 32px;
+    height: 20.74px;
+    width: 21.33px;
 }
 
 .arrow_left_icon_position {
@@ -13,6 +13,11 @@
 .a-arrow_left_icon {
     outline: none;
     box-shadow: none;
+}
+
+.input-part-sign-up {
+    width: 422px;
+    height: 286px;
 }
 
 .sign-up-div-size {
@@ -32,37 +37,78 @@
     border-radius: 30px;
 }
 
-.custom-checkbox {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 14px;
-  height: 14px;
+.custom-checkbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  height: 24px;
+}
+
+.custom-checkbox-container input[type="checkbox"] {
+  opacity: 0;
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.custom-checkbox-visuals {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Leere Box */
+.custom-checkbox-box {
+  width: 100%;
+  height: 100%;
   border: 2px solid #2A3647;
   border-radius: 3px;
-  background: #fff;
-  cursor: pointer;
-  margin: 0;
-  padding: 0;
-  position: relative;
-  vertical-align: middle;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: white;
 }
 
-.custom-checkbox-checked {
+.custom-checkbox-box:hover{
+    background-color: rgba(237, 242, 250, 1)
+}
+
+/* Häkchen-Bild */
+.custom-checkbox-icon {
+  width: 100%;
+  height: 100%;
   display: none;
-  width: 14px;
-  height: 14px;
-  position: relative;
-  left: -16px; /* Adjust if needed for alignment */
-  top: 2px;    /* Adjust if needed for alignment */
-  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
-.custom-checkbox:checked {
-  opacity: 0;
+.custom-checkbox-icon:hover {
+    background-color: rgba(237, 242, 250, 1);
 }
 
-.custom-checkbox:checked + .custom-checkbox-checked {
+/* Wenn angeklickt: Bild anzeigen, Box ausblenden */
+.custom-checkbox-container input[type="checkbox"]:checked ~ .custom-checkbox-visuals .custom-checkbox-box {
+  display: none;
+}
+
+.custom-checkbox-container input[type="checkbox"]:checked ~ .custom-checkbox-visuals .custom-checkbox-icon {
+  display: block;
+}
+
+.checkbox-text {
   display: inline;
+  font-size: 16px;
+  color: #2A3647;
+  white-space: normal;
+  text-align: center;
 }
 
 .login-email-part-sign-up {
@@ -94,7 +140,6 @@
 }
 
 .a-privacy-policy {
-    width: 105px;
     height: 19px;
     font-weight: 400;
     font-size: 16px;
@@ -102,39 +147,10 @@
     color: #29ABE2;
 }
 
-.checkbox-wrapper {
-    width: 231px;
-    height: 24px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    white-space: nowrap;
-}
-
-.checkbox-label {
-    font-size: 16px !important;
-    gap: 10px;
-}
-
 .btn-fourth-size-sign-up {
     height: 55px;
     width: 126px;
 }
-
-.checkbox-row {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    width: 422px;
-}
-
-.checkbox-text {
-    white-space: nowrap;
-    text-align: left;
-}
-
 /* .overlay-sign-up-successfully {
     display: flex;
     flex-direction: column;
