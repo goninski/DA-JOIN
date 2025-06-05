@@ -119,7 +119,8 @@
 .task-options-menu-wrapper {
   position: absolute;
   right: 0;
-  display: none;
+  display: flex;
+  /* display: none; */
 }
 .task-options-menu-button {
   padding-inline: 16px;

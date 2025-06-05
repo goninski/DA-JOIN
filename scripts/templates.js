@@ -76,7 +76,7 @@ function getBoardTemplate(board) {
                     ${addTaskBtn}
                 </button>
             </div>
-            <div id="boardTaskList-${board.id}" class="board-task-list" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="taskDrop(event, '${board.id}')" onmousedown="horizontalBoardDragScroll(event)" onmouseup="horizontalBoardDragScroll(event)" onmouseleave="horizontalBoardDragScroll(event)" onmousemove="horizontalBoardDragScroll(event)">
+            <div id="boardTaskList-${board.id}" class="board-task-list" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="taskDrop(event, '${board.id}')" xonmousedown="horizontalBoardDragScroll(event)" xonmouseup="horizontalBoardDragScroll(event)" xonmouseleave="horizontalBoardDragScroll(event)" xonmousemove="horizontalBoardDragScroll(event)">
             </div>
         </div>
 `
