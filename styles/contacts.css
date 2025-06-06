@@ -193,7 +193,7 @@ button.add-contact img {
         max-height: unset;
     }
     .contact-dialogue .batch-wrapper {
-        margin-top: -124px;
+        margin-top: -100px;
     }
     .contact-dialogue .dialogue-sidebar {
         max-width: 100%;
@@ -201,7 +201,7 @@ button.add-contact img {
     }
     .contact-dialogue .field-groups {
         flex-direction: column;
-        gap: 32px;
+        gap: 56px;
     }
     .contact-dialogue .submit-button-wrapper {
         justify-content: center;
@@ -222,6 +222,9 @@ button.add-contact img {
     .contact-dialogue .dialogue-main {
         justify-content: flex-start;
     }
+.contact-dialogue .submit-button-wrapper {
+    margin-top: -8px;
+    }
     button.close-dialogue .dark {
         display: none;
     }
@@ -237,9 +240,6 @@ button.add-contact img {
     .floating-contact {
         flex-wrap: wrap;
         gap: 16px;
-    }
-    .contact-dialogue .batch-wrapper {
-        margin-top: -100px;
     }
 }
 

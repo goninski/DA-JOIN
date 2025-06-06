@@ -378,8 +378,6 @@
   .board-page-inner {
       overflow-y: auto;
   }
-  .board-page-title-wrapper {
-  }
   .boards-wrapper {
     overflow-y: unset;
   }
@@ -391,6 +389,7 @@
         --fs-lg: var(--fs-base);
     }
 }
+
 @media(max-width: 374px) {
   #taskDetailsSubtaskWrapper li label {
         --fs-base: 14px;
