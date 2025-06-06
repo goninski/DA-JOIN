@@ -216,7 +216,7 @@ function editSubtaskEventHandler(event) {
         wrapper.classList.remove('read-only');
         input.readOnly = false;
         input.focus();
-        let valLength = input.value.length
+        let valLength = input.value.length;
         input.setSelectionRange(valLength, valLength);
     }
 }
