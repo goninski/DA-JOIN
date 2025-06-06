@@ -315,7 +315,6 @@
   .boards-wrapper {
     flex-direction: column;
     align-items: start;
-    overflow-y: auto;
   }
   .boards-wrapper {
     flex-direction: column;
@@ -343,7 +342,7 @@
 }
 
 @media(max-width: 1179px) {
-  :where(.main-inner-absolute):not(.inset) {
+  .board-page-inner {
       top: 48px;
   }
   .board-page-title-wrapper {
@@ -375,12 +374,14 @@
   }
 }
 
-@media(max-width: 1439px) and (max-height: 800px) {
-  :where(.main-inner-absolute):not(.inset) {
-      top: 48px;
+@media(max-height: 850px) {
+  .board-page-inner {
+      overflow-y: auto;
   }
   .board-page-title-wrapper {
-    margin-bottom: 32px;
+  }
+  .boards-wrapper {
+    overflow-y: unset;
   }
 }
 
