@@ -143,10 +143,10 @@ function getMoveToBoardMenuTemplate(taskId, currentStatus, statusIndex) {
     let hideDone = (statusIndex == 3) ? 'hide' : '';
     let arrowInProgress = (statusIndex < 1) ? 'downward' : 'upward';
     let arrowAwaitFeedback = (statusIndex < 2) ? 'downward' : 'upward';
+        // <button class="close-task-options-menu" onclick="closeParentWrapper(event)" title="close menu">
+        //     <img src="assets/icons/close-white.svg" alt="close-icon" class="close-icon light">
+        // </button>
     return `
-        <button class="close-task-options-menu" onclick="closeParentWrapper(event)" title="close menu">
-            <img src="assets/icons/close-white.svg" alt="close-icon" class="close-icon light">
-        </button>
         <strong>Move to</strong>
         <ul class"ul-reset">  
             <li class="${hideTodo}"><button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[0].id}')"><img src="./assets/icons/arrow-upward.svg">${boards[0].label}</button></li>
