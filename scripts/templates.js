@@ -532,7 +532,7 @@ function getContactDetailInfoTemplate(contact) {
         <h3 class="fs-lg fw-regular flex-col justifiy-center">Contact Information</h3>                        
         <div class="contact-property flex-col">
             <div class="label" >Email</div>
-            <a href="mailto:${contact.email}" class="email">${contact.email}</a>
+            <a href="mailto:${contact.email}" class="email" title="Email senden">${contact.email}</a>
         </div>
         <div class="contact-property flex-col ${hidePhone}">
             <div class="label">Phone</div>
@@ -582,6 +582,7 @@ function getFloatingMessageTaskAddedTemplate() {
  * @param {string} label - optional label before the icon
  */
 function getIconTemplatePlus(label = "") {
+    label = (label == '') ? '' : '<span>' + label + '</span>';
     return `
         ${label}
         <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -600,6 +601,7 @@ function getIconTemplatePlus(label = "") {
  * @param {string} label - optional label before the icon
  */
 function getIconTemplateClose(label = "") {
+    label = (label == '') ? '' : '<span>' + label + '</span>';
     return `
         ${label}
         <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -616,6 +618,7 @@ function getIconTemplateClose(label = "") {
  * @param {string} label - optional label before the icon
  */
 function getIconTemplateCancel(label = "") {
+    label = (label == '') ? '' : '<span>' + label + '</span>';
     return `
         ${label}
         <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -632,6 +635,7 @@ function getIconTemplateCancel(label = "") {
  * @param {string} label - optional label before the icon
  */
 function getIconTemplateCheck(label = "") {
+    label = (label == '') ? '' : '<span>' + label + '</span>';
     return `
         ${label}
         <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -648,6 +652,7 @@ function getIconTemplateCheck(label = "") {
  * @param {string} label - optional label before the icon
  */
 function getIconTemplatePrioHigh(label = "") {
+    label = (label == '') ? '' : '<span>' + label + '</span>';
     return `
         ${label}
         <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -665,6 +670,7 @@ function getIconTemplatePrioHigh(label = "") {
  * @param {string} label - optional label before the icon
  */
 function getIconTemplatePrioMedium(label = "") {
+    label = (label == '') ? '' : '<span>' + label + '</span>';
     return `
         ${label}
         <svg width="21" height="8" viewBox="0 0 21 8" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -682,6 +688,7 @@ function getIconTemplatePrioMedium(label = "") {
  * @param {string} label - optional label before the icon
  */
 function getIconTemplatePrioLow(label = "") {
+    label = (label == '') ? '' : ('<span>' + label + '</span>');
     return `
         ${label}
         <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">

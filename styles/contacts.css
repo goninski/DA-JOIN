@@ -91,6 +91,11 @@ button.add-contact img {
 .floating-contact .profile-batch {
     flex-shrink: 0;
 }
+.profile-batch-large {
+    width: 120px;
+    height: 120px;
+    font-size: 47px;
+}
 .floating-contact .profile-title {
     gap: 8px;
 }

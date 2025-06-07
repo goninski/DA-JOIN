@@ -1,8 +1,9 @@
 /* FORM / FIELD GROUP/WRAPPER */
+
 form {
     display: flex;
     flex-direction: column;
-    --field-width: 422px;
+    --field-width: 424px;
     margin-block-end: 0;
 }
 form.scrollable {
@@ -14,35 +15,34 @@ form.scrollable {
     flex-direction: column;
     position: relative;
 }
-.field-wrapper.has-alert {
+.field-wrapper {
     padding-bottom: 16px;
-}
-.field-groups {
-    row-gap: 12px;
 }
 form.scrollable .field-groups {
     overflow-x: hidden;
     overflow-y: auto;
-    margin-right: -15px;
+    /* margin-right: -15px; */
     scrollbar-width: none;
 }
+.field-groups {
+    column-gap: 44px;
+    row-gap: 20px;
+}
 .field-group {
+    flex-basis: var(--field-width);
     width: 100%;
-    max-width: var(--field-width);
+    /* max-width: var(--field-width); */
     padding-left: 1px;
     padding-right: 1px;
-    gap: 24px;
+    gap: 16px;
 }
 .field-group-divider {
     border-left: solid 1px var(--clr-subtle);
 }
 
-/* .dialogue:not(.task-dialogue) .field-group {
-    min-width: var(--field-width);
-} */
 
+/* INPUTS / LABEL */
 
-/** INPUTS / LABEL */
 label {
     font-size: 20px;
     margin-bottom: 8px;
@@ -375,15 +375,11 @@ input.custom-checkbox.checkbox-end  {
     gap: 64px;
 }
 form.task-form {
-    --field-width: 442px;
+    --field-width: 444px;
 }
 .task-form .priority-input-wrapper {
-    /* flex-wrap: wrap; */
     row-gap: 2px;
 }
-/* .task-form .priority-input-wrapper label {
-    flex-grow: 1;
-} */
 .task-form #assignedContactBatches {
     margin-top: 4px;
 }
@@ -392,9 +388,9 @@ form.task-form {
     max-height: 56px;
     margin-top: auto;
 }
-:is(.task-page-inner, .task-dialogue) .submit-button-wrapper .required-info {
+.task-form .submit-button-wrapper .required-info {
     position: absolute;
-    top: 16px;
+    align-self: end;
     left: 0;
 }
 .subtask-listing {
@@ -476,7 +472,13 @@ form.task-form {
 
 @media(max-width: 1345px) {
     form.task-form {
-        --field-width: 600px;
+        --field-width: 398px;
+    }
+}
+
+@media(max-width: 1259px) {
+    form.task-form {
+        --field-width: 100%;
     }
     .task-form .field-groups {
         flex-direction: column;
@@ -494,14 +496,19 @@ form.task-form {
     .task-form .submit-button-wrapper {
         max-width: var(--field-width) !important;
     }
-    .task-form.add-task-form .required-info {
+    .task-dialogue .add-task-form .submit-button-wrapper .required-info {
+        align-self: unset;
         top: -36px;
+        left: 0;
+    }
+    .task-dialogue .add-task-form {
+        row-gap: 64px;
     }
 }
 
 @media(max-width: 800px) {
     form {
-        --field-width: 364px;
+        --field-width: 366px;
     }
     form.task-form {
         --field-width: 100%;
@@ -509,9 +516,6 @@ form.task-form {
     .field-groups {
         flex-direction: column;
     }
-    /* .priority-input-wrapper .btn-radio  {
-        font-size: var(--fs-base);
-    } */
 }
 
 @media(max-width: 599px) {
@@ -525,12 +529,21 @@ form.task-form {
         flex-wrap: wrap;
         max-height: unset !important;
     }
+    form.add-task-form {
+        gap: 60px;
+    }
+    .task-form.add-task .submit-button-wrapper .required-info {
+        align-self: unset;
+        top: -36px;
+        left: 0;
+    }
     .add-task-page .submit-button-wrapper button {
         --fs-lg: 16px;
     }
 }
 
 @media(max-width: 434px) {
+    .btn-cancel span,
     .priority-input-wrapper label span {
         display: none;
     }

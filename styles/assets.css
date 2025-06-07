@@ -147,7 +147,7 @@ a:hover {
     bottom: 32px;
 }
 .floating-message.showing-top {
-    top: 150px;
+    top: 200px;
 }
 .floating-message.showing {
     transform: translateX(var(--px-sec));
@@ -191,35 +191,6 @@ a:hover {
     transform: scale(1.1);
     transition: transform 0.1s ease;
 }
-
-
-/* PROFILE BATCHES */
-.profile-batches {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-block: 0;
-    padding-inline: 0;
-    max-width: 100%;
-}
-.profile-batch {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 42px;
-    height: 42px;
-    color: white;
-    border: solid 2px white;
-    border-radius: 100%;
-    background-color: var(--profile-color);
-    font-size: 12px;
-}
-.profile-batch-large {
-    width: 120px;
-    height: 120px;
-    font-size: 47px;
-}
 .option-buttons {
     gap: 24px;
 }
@@ -244,6 +215,28 @@ a:hover {
 .option-buttons button:hover {
   font-weight: var(--fw-bold) !important;
   color: var(--clr-light-blue) !important;
+}
+
+.profile-batches {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-block: 0;
+    padding-inline: 0;
+    max-width: 100%;
+}
+.profile-batch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 42px;
+    height: 42px;
+    color: white;
+    border: solid 2px white;
+    border-radius: 100%;
+    background-color: var(--profile-color);
+    font-size: 12px;
 }
 
 
@@ -291,10 +284,14 @@ button.close-dialogue .light {
     overflow: hidden;
     width: 100%;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+    scrollbar-width: none;
 }
 
 .task-dialogue:not(.add-task) {
     --padding-dialogue: 48px 48px;
+}
+.task-dialogue.show-task .dialogue-inner {
+    overflow-y: auto;
 }
 .task-dialogue .dialogue-inner {
     max-height: 870px;
@@ -375,20 +372,17 @@ button.close-dialogue .light {
 
 /* BREAKPOINTS */
 
-@media(max-width: 1345px) {
+@media(max-width: 1259px) {
+    .page-title-wrapper {
+        margin-bottom: 32px;
+    }
     .task-dialogue.add-task {
         --padding-dialogue: 48px 40px;
     }
     .task-dialogue.add-task .dialogue-inner {
         max-width: 525px;
-        padding: 48px 40px;
+        padding: var(--padding-dialogue);
         gap: 24px;
-    }
-}
-
-@media(max-width: 1259px) {
-    .page-title-wrapper {
-        margin-bottom: 32px;
     }
 }
 
@@ -433,6 +427,9 @@ button.close-dialogue .light {
     }
     .contact-dialogue {
         --padding-dialogue: 61px 16px;
+    }
+    .floating-message.showing {
+        font-size: var(--fs-base);
     }
 }
 
