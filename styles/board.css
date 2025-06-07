@@ -341,7 +341,7 @@
   }
 }
 
-@media(max-width: 1179px) {
+@media(max-width: 1080px) {
   .board-page-inner {
       top: 48px;
   }

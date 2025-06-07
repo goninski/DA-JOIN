@@ -163,13 +163,10 @@ button.add-contact img {
         height: 3px;
     }
 }
+
 @media(max-width: 1259px) {
     .contact-list-sidebar {
         flex-shrink: 1;
-    }
-}
-@media(max-width: 1179px) {
-    .contact-list-sidebar {
         max-width: 100%;
     }
     .contact-page-inner:not(.show-contact-detail) .contact-detail-section {
@@ -193,7 +190,7 @@ button.add-contact img {
         max-height: unset;
     }
     .contact-dialogue .batch-wrapper {
-        margin-top: -100px;
+        margin-top: -125px;
     }
     .contact-dialogue .dialogue-sidebar {
         max-width: 100%;
@@ -201,7 +198,7 @@ button.add-contact img {
     }
     .contact-dialogue .field-groups {
         flex-direction: column;
-        gap: 56px;
+        gap: 32px;
     }
     .contact-dialogue .submit-button-wrapper {
         justify-content: center;
@@ -215,15 +212,16 @@ button.add-contact img {
     .contact-dialogue .dialogue-inner {
         flex-direction: column;
         min-height: unset;
-        max-width: 745px;
+        max-width: 500px;
+        height: unset;
         overflow: auto;
         scrollbar-width: none;
     }
     .contact-dialogue .dialogue-main {
         justify-content: flex-start;
     }
-.contact-dialogue .submit-button-wrapper {
-    margin-top: -8px;
+    .contact-dialogue .submit-button-wrapper {
+        margin-top: -8px;
     }
     button.close-dialogue .dark {
         display: none;
@@ -240,6 +238,9 @@ button.add-contact img {
     .floating-contact {
         flex-wrap: wrap;
         gap: 16px;
+    }
+    .contact-dialogue .batch-wrapper {
+        margin-top: -101px;
     }
 }
 
