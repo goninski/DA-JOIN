@@ -225,26 +225,38 @@ button.add-contact img {
 }
 
 @media(max-width: 800px) {
+    .floating-contact {
+        gap: 20px;
+    }
+    .floating-contact .profile-batch-large {
+        width: 80px;
+        height: 80px;
+        font-size: var(--fs-xl);
+    }
+}
+
+@media(max-width: 599px) {
     #btnReset {
         display: none;
     }
     .floating-contact {
         flex-wrap: wrap;
-        gap: 16px;
-    }
-    .contact-dialogue .batch-wrapper {
-        margin-top: -101px;
-    }
-}
-
-@media(max-width: 435px) {
-    .contact-list-sidebar {
-        padding-inline: 10px !important;
     }
     .contact-list-sidebar,
     .contact-item {
         padding-inline: 16px !important;
         gap: 16px;
+    }
+}
+
+@media(max-width: 434px) {
+    .contact-list-sidebar {
+        padding-inline: 10px !important;
+    }
+    .floating-contact .profile-batch-large {
+        width: 60px;
+        height: 60px;
+        font-size: var(--fs-lg);
     }
 }
 

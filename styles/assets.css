@@ -218,7 +218,7 @@ a:hover {
 .profile-batch-large {
     width: 120px;
     height: 120px;
-    font-size: var(--fs-xxl);
+    font-size: 47px;
 }
 .option-buttons {
     gap: 24px;
@@ -412,11 +412,6 @@ button.close-dialogue .light {
         top: 24px;
         right: 16px;
     }
-    .profile-batch-large {
-        width: 80px;
-        height: 80px;
-        /* font-size: 47px; */
-    }
 }
 
 @media(max-width: 599px) {
@@ -440,10 +435,6 @@ button.close-dialogue .light {
 @media(max-width: 434px) {
     .submit-button-wrapper button {
         font-size: var(--fs-base);
-    }
-    .profile-batch-large {
-        width: 60px;
-        height: 60px;
     }
 }
 

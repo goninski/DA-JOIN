@@ -514,7 +514,7 @@ form.task-form {
     } */
 }
 
-@media(max-width: 511px) {
+@media(max-width: 599px) {
     form {
         --field-width: 100% !important;
     }
