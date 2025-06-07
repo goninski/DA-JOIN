@@ -7,6 +7,7 @@ function dropdownEventHandler(event) {
     event.stopPropagation();
     console.log('f) dropdownEventHandler');
     getCurrentFieldElements(event.target);
+    console.log(currentFieldElements);
     listbox = currentFieldElements.listbox;
     if(['Enter', ' '].includes(event.key)) {
         event.preventDefault();
@@ -18,23 +19,20 @@ function dropdownEventHandler(event) {
     if( event.key === 'Escape') {
         return closeDropdown(listbox);
     }
-    return dropdownEventHandlerMultiple(event);
+    return dropdownArrowUpDownHandler(event);
 }
 
 
 /**
- * Event handler: dropdown (custom select multiple)
+ * Custom dropdown arrow up/down handler
  * 
  * @param {event} event - inherit
  */
-function dropdownEventHandlerMultiple(event) {
+function dropdownArrowUpDownHandler(event) {
     if(!event.currentTarget.hasAttribute('data-select-multiple')) {
         if(['ArrowDown', 'ArrowUp'].includes(event.key)) {
             return dropdownOptionKeyHandler(event, false);
         }
-        // if(['Tab'].includes(event.key)) {
-        //     // return toggleDropdown(listbox);
-        // }
     }
 }
 

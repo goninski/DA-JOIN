@@ -120,6 +120,10 @@ function documentEventHandlerForms(event) {
     if( event.key === 'Escape' || event.type === "click" ) {
         closeAllDropdowns(listboxElements);
         focusCurrentCombox(event.target);
+        return;
+    }
+    if( event.key === 'Enter') {
+        event.preventDefault();
     }
 }
 

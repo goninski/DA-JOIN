@@ -209,7 +209,6 @@ button.add-contact img {
     }
     .contact-dialogue .dialogue-inner {
         flex-direction: column;
-        min-height: unset;
         max-width: 500px;
         height: unset;
         overflow: auto;
@@ -221,11 +220,14 @@ button.add-contact img {
     .contact-dialogue .submit-button-wrapper {
         margin-top: -8px;
     }
-    button.close-dialogue .dark {
+    button.close-dialogue .close-icon.dark {
         display: none;
     }
-    button.close-dialogue .light {
-        display: unset;
+    button.close-dialogue .close-icon.light {
+        display: flex;
+    }
+    #btnReset span {
+        display: none;
     }
 }
 
@@ -241,9 +243,6 @@ button.add-contact img {
 }
 
 @media(max-width: 599px) {
-    #btnReset {
-        display: none;
-    }
     .floating-contact {
         flex-wrap: wrap;
     }
@@ -251,6 +250,9 @@ button.add-contact img {
     .contact-item {
         padding-inline: 16px !important;
         gap: 16px;
+    }
+    #btnReset {
+        display: none;
     }
 }
 

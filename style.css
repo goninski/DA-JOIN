@@ -57,7 +57,7 @@
     --bottom-space: 48px;
     --height-header: 96px;
     --height-footer: 0px;
-    /* fixed bottom menu, mobile only */
+    --field-width: 424px;
 }
 
 @keyframes slide-in-right {
@@ -429,7 +429,7 @@ body.logged-out .nav-link-app {
         display: flex;
     }
 }
-@media(max-height: 549px) and (orientation: landscape) {
+@media(max-height: 599px) and (orientation: landscape) {
     .orientation-overlay {
         display: flex;
     }

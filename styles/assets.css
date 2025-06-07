@@ -46,16 +46,23 @@ a:hover {
 
 
 /* BUTTONS */
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: inherit;
+    font-size: var(--fs-base);
+}
 .button {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: var(--ff-primary);
+    /* font-family: var(--ff-primary); */
+    /* font-size: var(--fs-base); */
     line-height: 1.2;
     letter-spacing: 0;
     height: 100%;
     max-width: max-content;
-    font-size: var(--fs-base);
     padding-inline: 22px;
     gap: 10px;
 }
@@ -267,9 +274,23 @@ button.close-dialogue {
     width: 32px;
     height: 32px;
     z-index: 2000;
+    border-radius: 100%;
+    transition-duration: 175ms;
 }
-button.close-dialogue .light {
+.contact-dialogue button.close-dialogue img {
+    margin-left: 2px;
+}
+button.close-dialogue .close-icon.light {
     display: none;
+}
+button.close-dialogue:hover {
+    background-color: var(--clr-light-blue);
+}
+button.close-dialogue:hover .close-icon.dark {
+    display: none;
+}
+button.close-dialogue:hover .close-icon.light {
+    display: flex;
 }
 .task-dialogue button.close-dialogue {
     top: 32px;
@@ -396,12 +417,9 @@ button.close-dialogue .light {
         width: 90px;
         height: 3px;
     }
-    .task-dialogue {
-        --padding-dialogue: 48px 6vw !important;
-    }
-    .contact-dialogue {
+    /* .contact-dialogue {
         --padding-dialogue: 61px 6vw;
-    }
+    } */
     .task-dialogue button.close-dialogue {
         top: 24px;        
         right: 6vw;        

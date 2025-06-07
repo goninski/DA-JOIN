@@ -179,8 +179,7 @@ function hasLength(object) {
  */
 function closeParentWrapper(event, selector = '.close-on-event') {
     let wrapper = getClosestParentElementFromEvent(event, selector);
-    // wrapper.classList.add('hide');
-    wrapper.classList.remove('is-open');
+    wrapper ? wrapper.classList.remove('is-open') : null;
 }
 
 
