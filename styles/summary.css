@@ -36,14 +36,20 @@
 }
 
 .key-metrics {
-    position: absolute;
-    top: 335px;
-    left: 328px;
-    height: 562px;
-    width: 560px;
+    width: 100%;
+    max-width: 100vw;
+    margin-top: 40px;
+    margin-left: 328px;
+    margin-right: auto;
     display: flex;
     flex-wrap: wrap;
     gap: 18px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-sizing: border-box;
+    position: static;
+    flex-direction: column;
+    transition: margin 0.3s, flex-direction 0.3s;
 }
 
 .to-do {
@@ -202,11 +208,13 @@
 .all-tasks {
     display: flex;
     gap: 28px;
+    flex-wrap: wrap;
 }
 
 .all-todos {
     display: flex;
-    gap: 32px;
+    gap: 28px;
+    flex-wrap: wrap;
 }
 
 .label {
@@ -228,6 +236,7 @@
     margin-left: 328px;
     margin-right: auto;
     display: block;
+    transition: margin 0.3s;
 }
 
 /* Title wrapper with gap and alignment */
@@ -270,6 +279,66 @@
 @media (max-width: 1200px) {
     .greeting-user {
         display: none;
+    }
+
+     .key-metrics {
+        margin-left: 0;
+        padding: 0 16px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 24px;
+    }
+
+    .ct-container.full-width {
+        margin-left: 0;
+        margin-top: 80px;
+        padding: 0 16px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .page-title-wrapper {
+        flex-direction: column;
+        gap: 0px;
+    }
+}
+
+@media (max-width: 900px) {
+    .all-todos,
+    .all-tasks {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+    }
+    .urgent-deadline,
+    .to-do,
+    .done,
+    .tasks-in-board,
+    .tasks-in-progress,
+    .awaiting-feedback {
+        width: 100% !important;
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 600px) {
+    .page-title {
+        font-size: 36px;
+        white-space: normal;
+    }
+    .page-subtitle {
+        font-size: 18px;
+    }
+    .title-deco-divider {
+        height: 30px;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 0 4px;
     }
 }
 
