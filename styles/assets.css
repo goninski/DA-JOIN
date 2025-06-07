@@ -292,6 +292,7 @@ button.close-dialogue .light {
     width: 100%;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
 }
+
 .task-dialogue:not(.add-task) {
     --padding-dialogue: 48px 48px;
 }
@@ -299,6 +300,9 @@ button.close-dialogue .light {
     max-height: 870px;
 }
 .task-dialogue:not(.show-task) .dialogue-inner {
+    flex-grow: 1;
+}
+.task-dialogue.show-task .task-details-wrapper {
     flex-grow: 1;
 }
 .task-dialogue:not(.add-task) .dialogue-inner {

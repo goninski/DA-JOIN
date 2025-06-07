@@ -273,8 +273,9 @@
   padding-inline: 16px;
   height: 100%;
   border-radius: 10px;
-  width: max-content;
   gap: 16px;
+  width: max-content;
+  max-width: 100%;
 }
 #taskDetailsSubtaskWrapper li label {
   font-size: var(--fs-base);
