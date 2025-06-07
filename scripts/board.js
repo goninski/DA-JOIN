@@ -10,6 +10,8 @@ let currentDragTaskId;
 let dragScrollMouseIsDown = false;
 let dragScrollStartX;
 let dragScrollScrollLeft;
+document.addEventListener('click', documentEventHandlerBoard);
+document.addEventListener('keydown', documentEventHandlerBoard);
 
 
 /**
@@ -23,6 +25,17 @@ async function initBoard() {
     renderTasks = tasks;
     await setSearchBase();
     await renderBoards();
+}
+
+/**
+ * Document Event handler: close popups on outslide click or ESC
+ * 
+ * @param {event} event - click, ESC (document)
+ */
+function documentEventHandlerBoard(event) {
+    if( event.key === 'Escape' || event.type === "click" ) {
+        closeOpenElements('.task-options-menu');
+    }
 }
 
 
@@ -182,8 +195,10 @@ async function renderTaskDetailsSubtasks(task) {
 async function renderTaskOptionsMenu(event, taskId, currentStatus) {
     event.stopPropagation();
     event.preventDefault();
+    closeOpenElements('.task-options-menu');
     let wrapper = document.getElementById('taskOptionsMenu-' + taskId);
-    wrapper.innerHTML = getMoveToBoardMenuTemplate(taskId, currentStatus);
+    let statusIndex = boards.findIndex((item) => item.id == currentStatus);
+    wrapper.innerHTML = getMoveToBoardMenuTemplate(taskId, currentStatus, statusIndex);
     wrapper.classList.add('is-open');
 }
 

@@ -411,7 +411,7 @@ input.custom-checkbox.checkbox-end  {
 .input-wrapper-subtask input {
     height: 40px;
     min-height: unset !important;
-    background-color: var(--bg-page) !important;
+    background-color: transparent !important;
     border: none !important;
     font-size: var(--fs-base) !important;
     padding-right: 90px !important;
@@ -424,12 +424,9 @@ input.custom-checkbox.checkbox-end  {
 .input-wrapper-subtask.read-only input {
     padding-left: 44px !important;
 }
-.input-wrapper-subtask.read-only input:hover {
-    background-color: #EEEEEE !important;
+.input-wrapper-subtask.read-only:hover {
+    background-color:  #EEEEEE !important;
     border-radius: 10px;
-}
-.input-wrapper-subtask.read-only .input-icon-wrapper.read-only {
-    /* display: none; */
 }
 .input-wrapper-subtask.read-only .input-icon-wrapper.edit {
     display: none;

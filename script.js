@@ -147,6 +147,23 @@ function documentEventHandler(event) {
 
 
 /**
+ * Close all open elements of certain selector (multiple use)
+ * 
+ * @param {string} selector - query-all selector 
+ */
+function closeOpenElements(selector) {
+    let elements = document.querySelectorAll(selector);
+    if(elements) {
+        elements.forEach(element => {
+            if(element.classList.contains('is-open')) {
+                element.classList.remove('is-open');
+            };
+        });
+    }
+}
+
+
+/**
  * Event Handler: close current element (multiple use)
  * 
  * @param {event} event - various

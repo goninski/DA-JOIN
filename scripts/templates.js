@@ -108,8 +108,8 @@ async function getBoardTasksTemplate(task, category, subtaskCount, subtaskProgre
     return `
         <div class="board-task clickable-task" onclick="showTaskDetail(event, '${task.id}')" draggable="true" ondragstart="onDragStartTask(event, '${task.id}')" ondragend="onDragEnd(event)">
             <div class="task-options-menu-wrapper flex-col">
-                <button class="task-options-menu-button hide-focus" title="Change Task Status" onclick="renderTaskOptionsMenu(event,'${task.id}', '${task.status}')"><img src="./assets/icons/menu-dots.svg" alt="three-dot-menu-icon"></button>
-                <ul id="taskOptionsMenu-${task.id}" class="task-options-menu close-on-event flex-col ul-reset not-clickable" onclick="event.stopPropagation()" xonmouseleave="closeElementByCurrentTarget(event)"></ul>
+                <button class="task-options-menu-button hide-focus" title="Move Task" onclick="renderTaskOptionsMenu(event,'${task.id}', '${task.status}')"><img src="./assets/icons/swap-status.svg" alt="swap-icon"></button>
+                <div id="taskOptionsMenu-${task.id}" class="task-options-menu close-on-event flex-col not-clickable" onclick="event.stopPropagation()" xonmouseleave="closeElementByCurrentTarget(event)"></div>
             </div>
             <div class="board-task-category" style="background-color: ${category.color};">${category.name}</div>
             <div class="board-task-title">${task.title}</div>
@@ -134,21 +134,26 @@ async function getBoardTasksTemplate(task, category, subtaskCount, subtaskProgre
  * 
  * @param {string} taskId - id of the current task
  * @param {string} currentStatus - current status of the current task
+ * @param {number} statusIndex - current status index
  */
-function getMoveToBoardMenuTemplate(taskId, currentStatus) {
-    let hideTodo = (currentStatus == boards[0].id) ? 'hide' : '';
-    let hideInProgress = (currentStatus == boards[1].id) ? 'hide' : '';
-    let hideAwaitFeedback = (currentStatus == boards[2].id) ? 'hide' : '';
-    let hideDone = (currentStatus == boards[3].id) ? 'hide' : '';
+function getMoveToBoardMenuTemplate(taskId, currentStatus, statusIndex) {
+    let hideTodo = (statusIndex == 0) ? 'hide' : '';
+    let hideInProgress = (statusIndex == 1) ? 'hide' : '';
+    let hideAwaitFeedback = (statusIndex == 2) ? 'hide' : '';
+    let hideDone = (statusIndex == 3) ? 'hide' : '';
+    let arrowInProgress = (statusIndex < 1) ? 'downward' : 'upward';
+    let arrowAwaitFeedback = (statusIndex < 2) ? 'downward' : 'upward';
     return `
         <button class="close-task-options-menu" onclick="closeParentWrapper(event)" title="close menu">
             <img src="assets/icons/close-white.svg" alt="close-icon" class="close-icon light">
         </button>
-        <div>New Task Status:</div>
-        <li class="${hideTodo}"><button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[0].id}')">&#8594;&ensp;${boards[0].label}</button></li>
-        <li class="${hideInProgress}"><button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[1].id}')">&#8594;&ensp;${boards[1].label}</button></li>
-        <li class="${hideAwaitFeedback}"><button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[2].id}')">&#8594;&ensp;${boards[2].label}</button></li>
-        <li class="${hideDone}"><button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[3].id}')">&#8594;&ensp;${boards[3].label}</button></li>
+        <strong>Move to</strong>
+        <ul class"ul-reset">  
+            <li class="${hideTodo}"><button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[0].id}')"><img src="./assets/icons/arrow-upward.svg">${boards[0].label}</button></li>
+            <li class="${hideInProgress}"><button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[1].id}')"><img src="./assets/icons/arrow-${arrowInProgress}.svg">${boards[1].label}</button></li>
+            <li class="${hideAwaitFeedback}"><button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[2].id}')"><img src="./assets/icons/arrow-${arrowAwaitFeedback}.svg">${boards[2].label}</button></li>
+            <li class="${hideDone}"><button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[3].id}')"><img src="./assets/icons/arrow-downward.svg">${boards[3].label}</button></li>
+        </ul>
     `
 }
 
