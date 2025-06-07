@@ -18,24 +18,27 @@ async function handleLogin(event) {
   event.preventDefault();
   const emailInputLogin = document.getElementById("email-login").value.trim();
   const passwordInputLogin = document.getElementById("pwd-login").value.trim();
+  const isValidUser = await checkLogin(emailInputLogin, passwordInputLogin);
 
-  try {
-    const userCredential = await firebase.auth().signInWithEmailAndPassword(emailInputLogin, passwordInputLogin);
-    // User is logged in, redirect or fetch user data as needed
-    window.location.href = "board.html";
-  } catch (error) {
-    showFloatingMessage('error', error.message);
-  }
+ if (isValidUser) {
+    window.location.href = "summary.html";
+  } else {
+    showFloatingMessage('error', 'Check your email and password. Please try again.');  }
 }
 
 async function checkLogin(emailInputLogin, passwordInputLogin) {
-  const users = await getFromLocalStorage("users") || [];
-  const user = users.find(user => user.email === emailInputLogin && user.password === passwordInputLogin);
+   await getUserData();
+
+  const user = contacts.find(user => user.email === emailInputLogin && user.password === passwordInputLogin);
   const emailField = document.getElementById("email-login");
   const passwordLoginField = document.getElementById("pwd-login");
 
   const isUserValid = await checkuser(user, emailField, passwordLoginField);
 
+  if (isUserValid) {
+    loggedInUserId = user.id;
+    await signIn(user.id);
+  }
   return isUserValid;
 }
 

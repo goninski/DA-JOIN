@@ -14,26 +14,26 @@ async function signUpSubmitHandler(event) {
   resetErrorStyles();
   if (!checkPasswords(passwordInput, passwordRepeatInput)) return;
 
-  try {
-    // 1. Create user with Firebase Auth
-    const userCredential = await firebase.auth().createUserWithEmailAndPassword(emailInput, passwordInput);
-    const user = userCredential.user;
+   try {
+    await getUserData();
 
-    // 2. Save user info in Realtime Database
-    await fetch(`${fetchUrl}users/${user.uid}.json`, {
-      method: 'PUT',
-      body: JSON.stringify({
-        name: nameInput,
-        email: emailInput,
-        createdAt: new Date().toISOString()
-      }),
-      headers: { 'Content-Type': 'application/json' }
-    });
+    let user = {};
+    user.id = getNewContactId();
+    user.name = nameInput;
+    user.email = emailInput;
+    user.password = passwordInput;
+    user.title = "";
+    user.loggedIn = true;
+
+    await createContact(user);
+
+    loggedInUserId = user.id;
 
     await showFloatingMessage('text', 'You Signed Up successfully');
     loginRedirect();
   } catch (error) {
-    showFloatingMessage('error', error.message);
+    console.error("Sign-Up Fehler:", error);
+    showFloatingMessage('error', 'Sign-Up fehlgeschlagen');
   }
 }
 
@@ -79,19 +79,6 @@ function checkPasswords(password, passwordRepeat) {
     return true;
   }
 }
-
-// async function emailAlreadyExists(emailInput) {
-//   // const users = await getFromLocalStorage("users") || [];
-//   await getUserData();
-//   console.log(contacts);
-//   if (contacts.find(user => user.email === emailInput)) {
-//     alert("Diese E-Mail ist bereits registriert.");
-//     document.getElementById('email-div-sign-up').classList.add('input-error');
-//     clearFields();
-//     return true;
-//   }
-//   return false;
-// }
 
 function resetErrorStyles() {
   document.getElementById('email-div-sign-up').classList.remove('input-error');
