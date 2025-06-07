@@ -31,12 +31,13 @@
 .page-subtitle {
     font-size: var(--fs-xl);
     font-weight: var(--fw-regular);
-    min-width: 150px;
+    white-space: nowrap;
 }
 .title-deco-divider {
     background-color: var(--clr-light-blue);
     width: 3px;
     height: 59px;
+    flex-shrink: 0;
 }
 a:hover {
     text-decoration: underline;
@@ -247,6 +248,7 @@ a:hover {
 
 
 /* DIALOGUES */
+
 .dialogue.slide-in {
     animation: slide-in-right 175ms ease-in;
 }
@@ -276,7 +278,6 @@ button.close-dialogue {
 button.close-dialogue .light {
     display: none;
 }
-
 .task-dialogue button.close-dialogue {
     top: 32px;
     right: 40px;
@@ -289,18 +290,21 @@ button.close-dialogue .light {
     border-radius: 30px;
     overflow: hidden;
     width: 100%;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
 }
 .task-dialogue:not(.add-task) {
     --padding-dialogue: 48px 48px;
+}
+.task-dialogue .dialogue-inner {
+    max-height: 870px;
+}
+.task-dialogue:not(.show-task) .dialogue-inner {
+    flex-grow: 1;
 }
 .task-dialogue:not(.add-task) .dialogue-inner {
     padding: var(--padding-dialogue);
     gap: 24px;
     max-width: 525px;
-    max-height: 939px;
-}
-.task-dialogue .dialogue-inner {
-    flex-grow: 1;
 }
 .task-dialogue.add-task {
     --padding-dialogue: 64px 74px;
@@ -365,7 +369,7 @@ button.close-dialogue .light {
 
 
 
-/** BREAKPOINTS */
+/* BREAKPOINTS */
 
 @media(max-width: 1345px) {
     .task-dialogue.add-task {
@@ -373,9 +377,17 @@ button.close-dialogue .light {
     }
     .task-dialogue.add-task .dialogue-inner {
         max-width: 525px;
+        padding: 48px 40px;
         gap: 24px;
     }
 }
+
+@media(max-width: 1259px) {
+    .page-title-wrapper {
+        margin-bottom: 32px;
+    }
+}
+
 @media(max-width: 800px) {
     .page-title-wrapper {
         flex-direction: column;
@@ -389,12 +401,12 @@ button.close-dialogue .light {
     .task-dialogue {
         --padding-dialogue: 48px 6vw !important;
     }
-    .task-dialogue .dialogue-inner {
-        max-width: 396px !important;
-        max-height: 700px !important;
-    }
     .contact-dialogue {
         --padding-dialogue: 61px 6vw;
+    }
+    .task-dialogue button.close-dialogue {
+        top: 24px;        
+        right: 6vw;        
     }
     .contact-dialogue button.close-dialogue {
         top: 24px;
@@ -406,11 +418,32 @@ button.close-dialogue .light {
         /* font-size: 47px; */
     }
 }
-@media(max-width: 435px) {
+
+@media(max-width: 599px) {
     .task-dialogue {
-        --padding-dialogue: 48px 16px !important;
+        --padding-dialogue: 32px 16px !important;
+    }
+    .task-dialogue .dialogue-inner {
+        max-width: 396px !important;
+    }
+    .task-dialogue.add-task .dialogue-inner {
+        --padding-inline: 16px;
+    }
+    .task-dialogue button.close-dialogue {
+        right: 16px;        
     }
     .contact-dialogue {
         --padding-dialogue: 61px 16px;
     }
 }
+
+@media(max-width: 434px) {
+    .submit-button-wrapper button {
+        font-size: var(--fs-base);
+    }
+    .profile-batch-large {
+        width: 60px;
+        height: 60px;
+    }
+}
+

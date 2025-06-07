@@ -153,7 +153,7 @@ async function openContactsForm(formMode, contactId = '') {
     let dialogue = document.getElementById('addContactDialogue');
     await runSlideInAnimation(dialogue);
     document.getElementById('addNewContactBtnFloating').style = 'display: none;';
-    document.body.style = 'overflow: hidden;';
+    // document.body.style = 'overflow: hidden;';
     if(formMode == 'add'){
         await setAddContactValues();
     } else {

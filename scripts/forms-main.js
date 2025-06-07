@@ -186,9 +186,9 @@ async function setInitialFormState(formId) {
         setPlaceholderStyle(element);
     });
     setSubmitBtnState(formId);
-    formElements[0].focus();
-    form.scrollTop;
-    form.querySelector('.top-element').scrollIntoView();
+    let topElement = form.querySelector('.top-element');
+    topElement ? topElement.scrollIntoView() : null;
+    setTimeout(() => formElements[0].focus(), 200);
 }
 
 
@@ -339,10 +339,9 @@ async function resetForm(formId) {
         resetFormElements(element);
     });
     getInvalidInputIds(formId);
-    formElements[0].focus();
-    form.scrollTop;
     let topElement = form.querySelector('.top-element');
     topElement ? topElement.scrollIntoView() : null;
+    setTimeout(() => formElements[0].focus(), 200);
 }
 
 

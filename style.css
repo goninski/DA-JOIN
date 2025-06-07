@@ -53,6 +53,8 @@
 
     --transition-duration: 125ms;
     --side-navbar-width: 232px;
+    --top-space: 110px;
+    --bottom-space: 48px;
     --height-header: 96px;
     --height-footer: 0px;
     /* fixed bottom menu, mobile only */
@@ -184,8 +186,8 @@ footer {
 }
 
 :where(.main-inner-absolute):not(.inset) {
-    top: 110px;
-    bottom: var(--py-sec);
+    top: var(--top-space);
+    bottom: var(--bottom-space);
     inset-inline: var(--px-sec);
 }
 
@@ -349,16 +351,12 @@ body.logged-out .nav-link-app {
 }
 
 
-/*** BREAKPOINTS */
+/* BREAKPOINTS */
 
 @media(max-width: 1259px) {
-    :where(.main-inner-absolute):not(.inset) {
-        top: 48px;
-        bottom: 24px;
-    }
-
-    .page-title-wrapper {
-        margin-bottom: 32px;
+    :root {
+        --top-space: 48px;
+        --bottom-space: 24px;
     }
 }
 
@@ -371,12 +369,12 @@ body.logged-out .nav-link-app {
 
 @media(max-width: 800px) {
     :root {
-        --px-sec: 16px;
+        /* --px-sec: 16px; */
         --height-header: 80px;
         --height-footer: 80px;
-        --fs-main-title: 47px;
+        /* --fs-main-title: 47px;
         --fs-xxl: 27px;
-        --fs-xl: 20px;
+        --fs-xl: 20px; */
     }
     main,
     header,
@@ -406,7 +404,13 @@ body.logged-out .nav-link-app {
     }
 }
 
-@media(max-width: 435px) {
+@media(max-width: 599px) {
+    :root {
+        --px-sec: 16px;
+        --fs-main-title: 47px;
+        --fs-xxl: 27px;
+        --fs-xl: 20px;
+    }
     #footerNavBar .nav-links a {
         font-size: 12px;
         padding-inline: 10px;
@@ -420,7 +424,12 @@ body.logged-out .nav-link-app {
     }
 }
 
-@media(max-width: 1259px) and (max-height: 650px) and (orientation: landscape) {
+@media(max-width: 1259px) and (max-height: 649px) and (orientation: landscape) {
+    .orientation-overlay {
+        display: flex;
+    }
+}
+@media(max-height: 549px) and (orientation: landscape) {
     .orientation-overlay {
         display: flex;
     }

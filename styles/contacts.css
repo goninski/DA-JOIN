@@ -1,15 +1,10 @@
-.board-page-inner {
-    top: 80px;
-
-    inset-inline: var(--px-sec-sm);
-}
-
 .contact-page-inner {
     flex-direction: row;
 }
 .contact-detail-section {
     flex-shrink: 1;
     background-color: var(--bg-page);
+    margin-top: calc(var(--top-space) - var(--py-sec));
 }
 .contact-detail-section.scrollable {
     overflow-y: auto;
@@ -152,6 +147,9 @@ button.add-contact img {
     color: var(--clr-main);
 }
 
+
+/* BREAKPOINTS */
+
 @media(max-width: 1345px) {
     .page-title-wrapper {
         flex-direction: column;
@@ -175,12 +173,7 @@ button.add-contact img {
     .contact-page-inner:not(.show-contact-detail) .floating-button-round.add-contact {
         display: unset;
     }
-    .contact-page-inner.show-contact-detail .contact-detail-section {
-        position: absolute;
-        inset: 0;
-        overflow: auto;
-    }
-    .contact-page-inner.show-contact-detail .option-buttons:not(#contactOptionsMenu) {
+    .contact-page-inner.show-contact-detail :is(.contact-list-sidebar, .option-buttons:not(#contactOptionsMenu)) {
         display: none;
     }
     .contact-page-inner.show-contact-detail .floating-button-round.show-options {

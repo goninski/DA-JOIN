@@ -1,5 +1,5 @@
-.board-page-inner {
-    top: 80px;
+.board-page {
+    --top-space: 80px;
 }
 .board-page-title-wrapper {
     display: flex;
@@ -342,8 +342,8 @@
 }
 
 @media(max-width: 1080px) {
-  .board-page-inner {
-      top: 48px;
+  .board-page {
+        --top-space: 48px;
   }
   .board-page-title-wrapper {
     flex-direction: column;
@@ -383,14 +383,14 @@
   }
 }
 
-@media(max-width: 800px) {
+@media(max-width: 599px) {
     .task-details-wrapper {
         --fs-main-title: 36px;
         --fs-lg: var(--fs-base);
     }
 }
 
-@media(max-width: 374px) {
+@media(max-width: 434px) {
   #taskDetailsSubtaskWrapper li label {
         --fs-base: 14px;
   }
