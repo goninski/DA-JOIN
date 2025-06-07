@@ -23,7 +23,6 @@ async function initBoard() {
     getMainTemplates();
     await getTaskData()
     renderTasks = tasks;
-    await setSearchBase();
     await renderBoards();
 }
 
@@ -69,6 +68,7 @@ async function filterTasks(event) {
   event.preventDefault();
   let taskSearchInput = document.getElementById('inputTaskSearch');
   let searchVal = taskSearchInput.value.toLowerCase();
+  renderTasks = await tasks.forEach(task => task.searchBase = (task.title + ' ' + task.description));
   let filteredTasks = await tasks.filter(task => (task.searchBase).toLowerCase().includes(searchVal));
   if(hasLength(filteredTasks)) {
     renderTasks = filteredTasks;
@@ -78,14 +78,6 @@ async function filterTasks(event) {
     renderTasks = tasks;    
   }
   await renderBoards();
-}
-
-
-/**
- * Helper: set task title and description as search content base
- */
-async function setSearchBase() {
-  renderTasks = tasks.forEach(task => task.searchBase = (task.title + ' ' + task.description));
 }
 
 
