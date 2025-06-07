@@ -14,7 +14,8 @@
 }
 .search-input-wrapper {
   width: 100%;
-  max-width: 312px;
+  max-width: 314px;
+  padding-inline: 1px;
 }
 .search-input-wrapper input {
   padding-block: 7px !important;

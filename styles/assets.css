@@ -143,12 +143,15 @@ button {
 }
 .floating-message {
     position: fixed;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    background-color: var(--clr-light-blue) !important;
-    min-width: 280px;    
+    /* background-color: var(--clr-light-blue) !important; */
+    min-width: 280px;
+    max-width: 100%;    
     z-index: 9999;
     transform: translateX(-100%);
     transition: transform 0.35s;
+    min-height: 74px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
 }
 .floating-message:not(.showing-top) {
     bottom: 32px;
@@ -157,7 +160,8 @@ button {
     top: 200px;
 }
 .floating-message.showing {
-    transform: translateX(var(--px-sec));
+    transform: translateX(calc(var(--side-navbar-width) + var(--px-sec)));
+    /* transform: translateX(var(--px-sec)); */
 }
 .floating-message:not(.showing) {
     transform: translateX(-100%);
@@ -417,9 +421,6 @@ button.close-dialogue:hover .close-icon.light {
         width: 90px;
         height: 3px;
     }
-    /* .contact-dialogue {
-        --padding-dialogue: 61px 6vw;
-    } */
     .task-dialogue button.close-dialogue {
         top: 24px;        
         right: 6vw;        
@@ -427,6 +428,9 @@ button.close-dialogue:hover .close-icon.light {
     .contact-dialogue button.close-dialogue {
         top: 24px;
         right: 16px;
+    }
+    .floating-message.showing {
+        transform: translateX(var(--px-sec));
     }
 }
 

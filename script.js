@@ -329,7 +329,7 @@ function toggleIconColorOnHover(event, hoverColor = 'blue') {
 async function showFloatingMessage(template, msg = '', timeout = 1500, optClass = 'showing-default') {
     let element = document.getElementById("floatingMsg");
     if(element) {
-        element.classList.remove(optClass);
+        element.classList.remove('showing-default', 'showing-top');
         element.innerHTML = (template == 'addedTask') ? getFloatingMessageTaskAddedTemplate() : getFloatingMessageTextTemplate(msg);
         element.classList.add('button', 'btn-icon', 'btn-primary', 'showing', optClass);
         setTimeout(function() { 

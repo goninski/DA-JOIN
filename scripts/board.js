@@ -69,7 +69,7 @@ async function filterTasks(event) {
   event.preventDefault();
   let taskSearchInput = document.getElementById('inputTaskSearch');
   let searchVal = taskSearchInput.value.toLowerCase();
-  let filteredTasks = tasks.filter(task => (task.searchBase).toLowerCase().includes(searchVal));
+  let filteredTasks = await tasks.filter(task => (task.searchBase).toLowerCase().includes(searchVal));
   if(hasLength(filteredTasks)) {
     renderTasks = filteredTasks;
   } else {
