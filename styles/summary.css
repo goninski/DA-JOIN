@@ -352,3 +352,74 @@
     }
 }
 
+@media (max-width: 400px) {
+    .ct-container.full-width,
+    .key-metrics {
+        padding: 0 2vw;
+        margin-left: 0;
+        margin-top: 32px;
+    }
+
+    .page-title-wrapper {
+        gap: 8px;
+        max-width: 100%;
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+
+    .page-subtitle {
+        font-size: 14px;
+    }
+
+    .title-deco-divider {
+        height: 18px;
+        margin: 0 4px;
+    }
+
+    .to-do,
+    .done,
+    .urgent-deadline,
+    .tasks-in-board,
+    .tasks-in-progress,
+    .awaiting-feedback {
+        width: 100% !important;
+        min-width: 0;
+        max-width: 100%;
+        height: auto;
+        padding: 16px 8px;
+        font-size: 16px;
+    }
+
+    .number {
+        font-size: 32px;
+    }
+
+    .date {
+        font-size: 14px;
+    }
+
+    .label,
+    .label-tasks {
+        font-size: 14px;
+        height: auto;
+        width: auto;
+    }
+
+    .all-todos,
+    .all-tasks {
+        gap: 8px;
+    }
+
+    .urgent-deadline {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 8px;
+    }
+
+    .deadline {
+        gap: 4px;
+    }
+}
+
