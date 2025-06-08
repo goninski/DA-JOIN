@@ -453,6 +453,10 @@ input::placeholder {
         justify-content: center;
     }
 
+    .login-error {
+        width: 276px !important;
+    }
+
     .header_login {
         position: static;
         width: 100%;
@@ -460,6 +464,23 @@ input::placeholder {
         display: flex;
         justify-content: center;
         margin-top: 24px;
+    }
+
+    .btn-fourth-size-login {
+        width: 180px;
+        height: 51px;
+    }
+
+    .btn-login-size,
+    .btn-fourth-size-login {
+        width: 100%;
+        min-width: 0;
+        max-width: 350px;
+        box-sizing: border-box;
+    }
+
+    .gap-35 {
+        gap: 30px;
     }
 }
 
@@ -482,6 +503,10 @@ input::placeholder {
         padding: 13px 21px;
     }
 
+    .login-error {
+        width: 276px !important;
+    }
+
     .btn-login-header-size {
         font-size: 18px;
     }
@@ -501,7 +526,6 @@ input::placeholder {
         left: 40px;
     }
 
-    
     .pos-absol-header-login {
         position: static;
         margin-top: 32px;
@@ -554,5 +578,17 @@ input::placeholder {
         display: flex;
         justify-content: center;
         margin-top: 24px;
+    }
+
+    .btn-login-size,
+    .btn-fourth-size-login {
+        width: 100%;
+        min-width: 0;
+        max-width: 276px;
+        box-sizing: border-box;
+    }
+
+    .gap-35 {
+        gap: 15px;
     }
 }
