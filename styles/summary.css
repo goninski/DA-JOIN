@@ -1,5 +1,7 @@
 .page-title-wrapper {
-    margin-bottom: 56px;
+    padding-bottom: 24px;
+    background-color: var(--bg-page);
+    z-index: 99;
 }
 .content-wrapper {
     gap: 80px;
@@ -130,7 +132,7 @@
     .page-title-wrapper {
         flex-direction: column;
         align-items: start;
-        margin-bottom: 48px;
+        padding-bottom: 16px;
     }
     .title-deco-divider {
         order: 99;

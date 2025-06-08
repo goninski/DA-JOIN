@@ -321,6 +321,10 @@
     position: absolute;
     inset: 0;
 }
+.pos-sticky-top {
+    position: sticky;
+    top: 0;
+}
 .inset {
     inset: 0;
 }
