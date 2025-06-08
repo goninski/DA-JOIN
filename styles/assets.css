@@ -143,28 +143,30 @@ button {
 }
 .floating-message {
     position: fixed;
-    /* background-color: var(--clr-light-blue) !important; */
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
     min-width: 280px;
     max-width: 100%;    
-    z-index: 9999;
-    transform: translateX(-100%);
-    transition: transform 0.35s;
     min-height: 74px;
     border-radius: 20px;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
+    transform: translateX(-100%);
+    transition: transform 0.35s;
 }
 .floating-message:not(.showing-top) {
-    bottom: 32px;
+    bottom: 20%;
 }
 .floating-message.showing-top {
-    top: 200px;
+    /* top: 200px; */
+    bottom: 20%;
 }
 .floating-message.showing {
-    transform: translateX(calc(var(--side-navbar-width) + var(--px-sec)));
-    /* transform: translateX(var(--px-sec)); */
+    left: 66%;
+    transform: translateX(-50%);
 }
 .floating-message:not(.showing) {
-    transform: translateX(-100%);
+    transform: translateX(100%);
 }
 :is(.floating-button-round, .floating-message) img {
     height: 32px;
@@ -430,7 +432,7 @@ button.close-dialogue:hover .close-icon.light {
         right: 16px;
     }
     .floating-message.showing {
-        transform: translateX(var(--px-sec));
+        left: 50%
     }
 }
 
