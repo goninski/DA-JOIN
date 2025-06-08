@@ -75,7 +75,7 @@
 }
 
 .login-privacy-policy {
-    position: absolute;
+    position: fixed;
     width: 246px;
     height: 35px;
     left: calc(50% - 246px/2);
@@ -428,7 +428,8 @@ input::placeholder {
 
     .login-privacy-policy {
         order: 3;
-        position: static;
+        position: fixed;
+        bottom: 40px;
         margin-top: 16px;
         display: flex;
         justify-content: space-between;
@@ -521,7 +522,8 @@ input::placeholder {
 
     .login-privacy-policy {
         order: 3;
-        position: static;
+        position: fixed;
+        bottom: 40px;
         margin-top: 16px;
         display: flex;
         justify-content: space-between;
