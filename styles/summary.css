@@ -1,11 +1,9 @@
 .content-wrapper {
     gap: 80px;
 }
-
 .greeting {
     margin: 0px;
 }
-
 .greeting-user {
     display: flex;
     flex-direction: column;
@@ -13,14 +11,12 @@
     font-size: 47px;
     font-weight: 500;
 }
-
 .username {
     font-weight: 700;
     font-size: 64px;
     color: #29ABE2;
     margin: 0px;
 }
-
 .widgets-wrapper {
     display: flex;
     flex-direction: column;
@@ -28,37 +24,44 @@
     max-width: 560px;
     gap: 32px;
 }
-
 .widgets-sub-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 32px;
 }
-
 .widget {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 18px;
     padding: 24px;
-    flex-basis: 100%;
     height: 168px;
     border-radius: 30px;
     padding-block: 38px;
     padding-inline: 19px;
     background-color: #FFFFFF;
+    flex-grow: 1;
 }
-
+.widget.upcomings {
+    /* justify-content: center; */
+}
+.widget.upcomings .urgent {
+    gap: 18px;
+    width: 130px;
+}
+.widget.upcomings .deadline {
+    gap: 13px;
+    /* flex-grow: 1; */
+}
+.widgets-sub-wrapper .widget-metrics {
+    flex-basis: 50%;
+}
 .widgets-sub-wrapper .widget-totals {
     flex-direction: column;
     text-align: center;
-    gap: 13px;
-}
-
-.widgets-sub-wrapper.upcomings {
-    background-color: #FFFFFF;
-    border-radius: 30px;
+    gap: 4px;
+    flex-basis: 33%;
 }
 .widget:hover {
     background-color: #2A3647;
@@ -70,13 +73,14 @@
 .done:hover img {
     content: url(/assets/icons/done-frame-white.png);
 }
-.widget .icon {
+.widget-icon {
     height: 69px;
     width: auto;
 }
 .widget .number {
     font-size: 64px;
-    font-weight: 600
+    font-weight: 600;
+    line-height: 1;
 }
 .widget .date {
     font-size: 21px;
@@ -84,6 +88,9 @@
 }
 .widget .label {
     font-size: var(--fs-lg);
+}
+.widget.deadline {
+    flex-direction: column;
 }
 /* .widget-divider {
     min-width: 2px;
@@ -98,9 +105,6 @@
     .greeting-user {
         display: none;
     }
-}
-
-@media(max-width: 939px) {
     .page-title-wrapper {
         flex-direction: column;
         align-items: start;
@@ -131,7 +135,7 @@
     .widget-totals {
         height: 116px;
     }
-    .widget .icon {
+    .widget-icon {
         height: 40px;
     }
     .widget .number {
@@ -150,19 +154,24 @@
     .widgets-wrapper,
     .widgets-sub-wrapper {
         gap: 16px;
-        border-radius: 20px;
     }
     .widget {
-        border-radius: 20px;
+        padding: 16px;
     }
     .widget .number {
-        font-size: 47px;
+        font-size: 36px;
     }
     .widget .date {
         font-size: 16px;
     }
-   .widget .label,
-   .widget .label-date {
+}
+
+@media (max-width: 374px) {
+    .widget {
+        padding: 12px;
+    }
+    .widget .label,
+    .widget .label-date {
         font-size: 12px;
     }
 }

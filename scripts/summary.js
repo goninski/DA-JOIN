@@ -70,6 +70,7 @@ function addSummaryBoxListeners() {
     });
 }
 
+
 /**
  * Set the summary object- this object serves all dynamic data for the summary page
  */
