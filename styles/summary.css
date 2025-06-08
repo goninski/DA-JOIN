@@ -42,6 +42,7 @@
     padding-inline: 19px;
     background-color: #FFFFFF;
     flex-grow: 1;
+    transition-duration: 175ms;
 }
 .widget.upcomings {
     /* justify-content: center; */
@@ -66,12 +67,22 @@
 .widget:hover {
     background-color: #2A3647;
     color: #FFFFFF;
+    transform: scale(1.05);
 }
 .to-do:hover img {
-    content: url(/assets/icons/todo-frame-white.png);
+    content: url(/assets/icons/summary-todo-white.png);
 }
 .done:hover img {
-    content: url(/assets/icons/done-frame-white.png);
+    content: url(/assets/icons/summary-done-white.png);
+}
+.widgets-sub-wrapper .widget:first-child:hover {
+    transform-origin: left center;
+}
+.widgets-sub-wrapper .widget:last-child:hover {
+    transform-origin: right center;
+}
+.widget.upcomings:hover {
+    transform-origin: left top;
 }
 .widget-icon {
     height: 69px;
