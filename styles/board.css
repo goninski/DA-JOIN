@@ -170,7 +170,6 @@
 }
 .task-options-menu li {
   display: flex;
-  width: 100%;
   min-height: 28px;
   padding-block: 4px;
   padding-inline: 3px 8px;
@@ -181,6 +180,7 @@
   color: var(--clr-disabled);
   justify-content: start;
   gap: 4px;
+  width: 100%
 }
 .task-options-menu li:hover {
   background-color: var(--clr-dark);

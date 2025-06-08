@@ -20,15 +20,32 @@ async function initSummary() {
  * Updates the summary numbers in the summary page
  */
 function renderSummaryNumbers() {
-
     document.querySelector('.to-do .number').textContent = summary.taskCountTodo || 0;
     document.querySelector('.done .number').textContent = summary.taskCountDone || 0;
-    document.querySelector('.urgent-deadline .number').textContent = summary.taskCountUrgent || 0;
+    document.querySelector('.upcomings .number').textContent = summary.taskCountUrgent || 0;
     document.querySelector('.deadline .date').textContent = summary.upcomingDeadline || '';
     document.querySelector('.tasks-in-board .number').textContent = summary.taskCountInBoard || 0;
     document.querySelector('.tasks-in-progress .number').textContent = summary.taskCountInProgress || 0;
     document.querySelector('.awaiting-feedback .number').textContent = summary.taskCountAwaitFeedback || 0;
 }
+
+
+/**
+ * Render the greeting and username on the summary page
+ */
+function renderGreetingUser() {
+    const greetingEl = document.querySelector('.greeting');
+    const usernameEl = document.querySelector('.username');
+    if (summary.userName && summary.userName.toLowerCase() !== 'guest') {
+        greetingEl.textContent = summary.welcomeMsg;
+        usernameEl.textContent = summary.userName;
+        usernameEl.style.display = '';
+    } else {
+        greetingEl.textContent = summary.welcomeMsg;
+        usernameEl.style.display = 'none';
+    }
+}
+
 
 /**
  * Add click listeners to summary boxes to open board.html
@@ -142,18 +159,3 @@ function getDaySegment() {
   return daySegment;
 }
 
-/**
- * Render the greeting and username on the summary page
- */
-function renderGreetingUser() {
-    const greetingEl = document.querySelector('.greeting');
-    const usernameEl = document.querySelector('.username');
-    if (summary.userName && summary.userName.toLowerCase() !== 'guest') {
-        greetingEl.textContent = summary.welcomeMsg;
-        usernameEl.textContent = summary.userName;
-        usernameEl.style.display = '';
-    } else {
-        greetingEl.textContent = summary.welcomeMsg;
-        usernameEl.style.display = 'none';
-    }
-}

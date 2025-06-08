@@ -14,74 +14,78 @@
     <script src="./scripts/summary.js"></script>
 </head>
 
-<body onload="initSummary()">
+<body onload="initSummary()" class="summary-page">
 
     <header id="header" class="section"></header>
 
-   <div class="ct-container full-width">
-    <div class="page-title-wrapper">
-        <h1 class="page-title">Join 360</h1>
-        <div class="title-deco-divider"></div>
-        <div class="page-subtitle">Key Metrics at a Glance</div>
-    </div>
-</div>
+    <main>
+        <div class="main-inner-absolute scrollable">
 
-    <div class="greeting-user">
-        <p class="greeting">Good morning,</p>
-        <p class="username">Username</p>
-    </div>
+            <div class="page-title-wrapper">
+                <h1 class="page-title">Join 360</h1>
+                <div class="title-deco-divider"></div>
+                <div class="page-subtitle">Key Metrics at a Glance</div>
+            </div>
 
-    <div class="key-metrics">
-        <div class="all-todos">
-            <div class="to-do black">
-                <div class="icon"><img src="./assets/icons/todo-frame.png" alt=""></div>
-                <div class="flex-direction">
-                    <div class="number">1</div>
-                    <div class="label">To-do</div>
+            <div class="content-wrapper flex-row justify-between align-center">
+
+                <div class="widgets-wrapper">
+
+                    <div class="widgets-sub-wrapper">
+                        <div class="widget widget-metrics to-do">
+                            <div class="icon"><img src="./assets/icons/todo-frame.png" alt=""></div>
+                            <div class="flex-direction">
+                                <div class="number">1</div>
+                                <div class="label">To-do</div>
+                            </div>
+                        </div>
+                        <div class="widget widget-metrics done">
+                            <div class="icon"><img src="./assets/icons/done-frame.png" alt=""></div>
+                            <div class="flex-direction">
+                                <div class="number">1</div>
+                                <div class="label">Done</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widgets-sub-wrapper upcomings ">
+                        <div class="widget urgency">
+                            <div class="icon"><img src="./assets/icons/urgent-frame.png" alt=""></div>
+                            <div class="number">1</div>
+                        </div>
+                        <hr class="widget-divider" style="width: 2px; margin:0;height: 102.02px; background-color: #D1D1D1; border: 2px;">
+                        <div class="widget deadline">
+                            <span class="date">October 16, 2022</span>
+                            <span class="label-date">Upcoming Deadline</span>
+                        </div>
+                    </div>
+
+                    <div class="widgets-sub-wrapper">
+                        <div class="widget widget-totals tasks-in-board">
+                            <div class="number">1</div>
+                            <div class="label">Tasks in Board</div>
+                        </div>
+                        <div class="widget widget-totals tasks-in-progress">
+                            <div class="number">1</div>
+                            <div class="label">Tasks in Progress</div>
+                        </div>
+                        <div class="widget widget-totals awaiting-feedback">
+                            <div class="number">1</div>
+                            <div class="label">Awaiting Feedback</div>
+                        </div>
+                    </div>
+
                 </div>
+                
+                <div class="greeting-user">
+                    <p class="greeting">Good morning,</p>
+                    <p class="username">Username</p>
+                </div>
+
+            </div>
+
         </div>
-        <div class="done black">
-            <div class="icon"><img src="./assets/icons/done-frame.png" alt=""></div>
-            <div class="flex-direction">
-                <div class="number">1</div>
-                <div class="label">Done</div>
-            </div>
-        </div>
-    </div>
-        <div class="urgent-deadline black">
-            <div class="urgency">
-                <div class="icon"><img src="./assets/icons/urgent-frame.png" alt=""></div>
-                <div class="number">1</div>
-            </div>
-            <hr style="width: 2px; margin:0;height: 102.02px; background-color: #D1D1D1; border: 2px;">
-            <div class="flex-direction">
-                <div class="deadline">
-                    <span class="date">October 16, 2022</span>
-                    <span>Upcoming Deadline</span>
-                </div>
-            </div>
-        </div>
-        <div class="all-tasks">
-            <div class="tasks-in-board black">
-                <div class="flex-direction">
-                    <div class="number">1</div>
-                    <div class="label label-tasks">Tasks in Board</div>
-                </div>
-            </div>
-            <div class="tasks-in-progress black">
-                <div class="flex-direction">
-                    <div class="number">1</div>
-                    <div class="label label-tasks">Tasks in Progress</div>
-                </div>
-            </div>
-            <div class="awaiting-feedback black">
-                <div class="flex-direction">
-                    <div class="number">1</div>
-                    <div class="label label-tasks">Awaiting Feedback</div>
-                </div>
-            </div>
-        </div>
-    </div>
+    </main>
 
     <div id="sideNavBar" class="nav-bar"></div>
     <div id="footerNavBar" class="nav-bar"></div>
