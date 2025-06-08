@@ -52,7 +52,7 @@
 
 .bg-grey {
     background-color: #F6F7F8;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 .bg-white {
@@ -160,10 +160,16 @@ a.login-privacy-policy-color:hover {
     display: flex;
     flex-direction: row;
     gap: 35px;
-    position: absolute;
+    position: sticky;
+    align-self: end;
+    margin-bottom: -30px;
+    padding: 2px;
     width: 279px;
     height: 49px;
     left: 1039px;
+}
+
+.header_login {
     top: 67px;
 }
 
@@ -270,6 +276,8 @@ input::placeholder {
 }
 
 #login-main-content {
+    display: flex;
+    flex-direction: column;
     opacity: 0;
     padding: 100px 30px;
     transition: opacity 1s ease-in-out;
@@ -354,6 +362,107 @@ input::placeholder {
     background-image: url('../assets/img/person.png');
 }
 
+@media(min-width: 1024px) {
+    .login-section {
+        width: 652px;
+        height: 493px;
+        gap: 32px;
+    }
+
+}
+
+@media (max-width: 800px) {
+    .login-section {
+        height: 530px;
+        width: 410px;
+        gap: 28px;
+        padding: 20px 0;
+    }
+
+    .login_title {
+        font-size: 45px;
+    }
+
+    .input-wrapper-signup-login {
+        width: 390px;
+        height: 46px;
+        padding: 13px 21px;
+    }
+
+    .btn-login-header-size {
+        font-size: 18px;
+    }
+
+    .flex-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #login_logo {
+        width: 80px !important;
+        height: auto;
+    }
+
+    #login_logo.moved {
+        top: 15px;
+        left: 40px;
+    }
+
+    .pos-absol-header-login {
+        position: static;
+        margin-top: 32px;
+        margin-bottom: 24px;
+        justify-content: center;
+        width: 100%;
+        height: auto;
+        order: 99;
+    }
+
+    .header_login {
+        order: 2;
+    }
+
+    .flex.justify-center {
+        order: 1;
+    }
+
+    .login-privacy-policy {
+        order: 3;
+        position: static;
+        margin-top: 16px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        gap: 16px;
+    }
+
+    #login-main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pos-absol-header-login {
+        position: static;
+        width: 100%;
+        height: auto;
+        margin-top: 8px;
+        margin-bottom: 16px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .header_login {
+        position: static;
+        width: 100%;
+        order: 2;
+        display: flex;
+        justify-content: center;
+        margin-top: 24px;
+    }
+}
+
+
 @media (max-width: 427px) {
     .login-section {
         height: 428px;
@@ -380,12 +489,68 @@ input::placeholder {
         flex-direction: column;
         align-items: center;
     }
-}
 
-@media(min-width: 1024px) {
-    .login-section {
-        width: 652px;
-        height: 493px;
-        gap: 32px;
+    #login_logo {
+        width: 65px !important;
+        height: auto;
+    }
+
+    #login_logo.moved {
+        top: 15px;
+        left: 40px;
+    }
+
+    
+    .pos-absol-header-login {
+        position: static;
+        margin-top: 32px;
+        margin-bottom: 24px;
+        justify-content: center;
+        width: 100%;
+        height: auto;
+        order: 99;
+    }
+
+    .header_login {
+        order: 2;
+    }
+
+    .flex.justify-center {
+        order: 1;
+    }
+
+    .login-privacy-policy {
+        order: 3;
+        position: static;
+        margin-top: 16px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        gap: 16px;
+    }
+
+    #login-main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pos-absol-header-login {
+        position: static;
+        width: 100%;
+        height: auto;
+        margin-top: 8px;
+        margin-bottom: 16px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .header_login {
+        position: static;
+        width: 100%;
+        order: 2;
+        display: flex;
+        justify-content: center;
+        margin-top: 24px;
     }
 }
