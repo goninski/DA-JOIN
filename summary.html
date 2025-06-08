@@ -18,6 +18,11 @@
 
     <header id="header" class="section"></header>
 
+    <div id="greetingScreen" class="greeting-wrapper hide" onclick="event.stopPropagation()">
+        <p class="greeting-message"></p>
+        <p class="greeting-username hide-if-empty"></p>
+    </div>
+
     <main>
         <div class="main-inner-absolute scrollable">
 
@@ -77,9 +82,9 @@
 
                 </div>
                 
-                <div class="greeting-user">
+                <div id="greetingWrapper" class="greeting-wrapper">
                     <p class="greeting-message"></p>
-                    <p class="greeting-username"></p>
+                    <p class="greeting-username hide-if-empty"></p>
                 </div>
 
             </div>

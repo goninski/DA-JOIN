@@ -11,25 +11,26 @@ async function initSummary() {
     getMainTemplates();
     await getTaskData();
     await setSummaryObj();
+    await showSummaryWelcomeScreen()
     updateSummaryValues();
-    renderGreetingUser();
     setSummaryWidgetProps();
 }
 
 
 /**
- * Render the greeting and username on the summary page
+ * Show welcome screen (<= 1259px)
  */
-function renderGreetingUser() {
-    const greetingEl = document.querySelector('.greeting-message');
-    const usernameEl = document.querySelector('.greeting-username');
-    if (summary.userName == '') {
-        greetingEl.textContent = summary.welcomeMsg;
-        usernameEl.style.display = 'none';
-    } else {
-        greetingEl.textContent = summary.welcomeMsg;
-        usernameEl.textContent = summary.userName;
-        usernameEl.style.display = '';
+async function showSummaryWelcomeScreen() {
+    const greetingScreen = document.getElementById('greetingScreen');
+    console.log(greetingScreen);
+    let mql = window.matchMedia("(max-width: 1259px)");
+    if(mql.matches) {
+      greetingScreen.classList.remove('hide');
+      setTimeout(() => greetingScreen.classList.add('active'), 1000);
+      setTimeout(() => {
+        greetingScreen.classList.add('hide')
+        greetingScreen.classList.remove('active')
+      } , 2000);
     }
 }
 
@@ -38,6 +39,7 @@ function renderGreetingUser() {
  * Updates the summary numbers in the summary page
  */
 function updateSummaryValues() {
+    updateUserWelcome();
     document.querySelector('.to-do .number').textContent = summary.taskCountTodo || 0;
     document.querySelector('.done .number').textContent = summary.taskCountDone || 0;
     document.querySelector('.upcomings .number').textContent = summary.taskCountUrgent || 0;
@@ -45,6 +47,21 @@ function updateSummaryValues() {
     document.querySelector('.tasks-in-board .number').textContent = summary.taskCountInBoard || 0;
     document.querySelector('.tasks-in-progress .number').textContent = summary.taskCountInProgress || 0;
     document.querySelector('.awaiting-feedback .number').textContent = summary.taskCountAwaitFeedback || 0;
+}
+
+
+/**
+ * Updates the welcome message and username on the summary page
+ */
+function updateUserWelcome() {
+    const greetingElements = document.querySelectorAll('.greeting-message');
+    const usernameElements = document.querySelectorAll('.greeting-username');
+    greetingElements.forEach(element => {
+      element.textContent = summary.welcomeMsg;
+    })
+    usernameElements.forEach(element => {
+      element.textContent = summary.userName;
+    })
 }
 
 

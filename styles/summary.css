@@ -1,3 +1,6 @@
+.main-inner-absolute {
+    inset-block-end: 32px;
+}
 .page-title-wrapper {
     padding-bottom: 24px;
     background-color: var(--bg-page);
@@ -6,12 +9,12 @@
 .content-wrapper {
     gap: 80px;
 }
-.greeting-user {
+.greeting-wrapper {
     display: flex;
     flex-direction: column;
     gap: 3px;
 }
-.greeting-user p {
+.greeting-wrapper p {
     margin: 0;
 }
 .greeting-message {
@@ -23,6 +26,23 @@
     font-weight: 700;
     color: var(--clr-light-blue);
 }
+#greetingScreen {
+    position: fixed;
+    inset: 0;
+    padding: var(--px-sec);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-page);
+    z-index: 9999;
+    text-align: center;
+    opacity: 1;
+}
+#greetingScreen.active {
+    transition: opacity 2s;
+    opacity: 0;
+}
+
 .widgets-wrapper {
     display: flex;
     flex-direction: column;
@@ -139,7 +159,7 @@
         width: 90px;
         height: 3px;
     }
-    .greeting-user {
+    #greetingWrapper {
         display: none;
     }
 }
@@ -158,6 +178,13 @@
 }
 
 @media (max-width: 599px) {
+    .greeting-message {
+        font-size: 36px;
+        font-weight: 400;
+    }
+    .greeting-username {
+        font-size: 47px;
+    }
     .widgets-wrapper,
     .widgets-sub-wrapper {
         gap: 24px;
