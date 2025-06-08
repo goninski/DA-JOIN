@@ -1,3 +1,6 @@
+.page-title-wrapper {
+    margin-bottom: 56px;
+}
 .content-wrapper {
     gap: 80px;
 }
@@ -16,7 +19,7 @@
 .greeting-username {
     font-size: 64px;
     font-weight: 700;
-    color: #29ABE2;
+    color: var(--clr-light-blue);
 }
 .widgets-wrapper {
     display: flex;
@@ -45,6 +48,11 @@
     flex-grow: 1;
     transition-duration: 175ms;
 }
+.widget .value-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
 .widget.upcomings {
     gap: 61px;
 }
@@ -60,13 +68,13 @@
     align-content: start;
     text-align: left;
 }
-.widgets-sub-wrapper .widget-metrics {
+.widget-metrics {
     flex-basis: 50%;
 }
-.widgets-sub-wrapper .widget-totals {
+.widget-totals {
     flex-direction: column;
     text-align: center;
-    gap: 4px;
+    gap: 8px;
     flex-basis: 33%;
 }
 .widget-icon {
@@ -90,7 +98,7 @@
 }
 .widget-divider {
     width: 2px;
-    height: 100%;
+    height: 102px;
     background-color: #D1D1D1;
 }
 .widget:hover {
@@ -118,17 +126,18 @@
 /* BREAKPOINTS */
 
 @media (max-width: 1259px) {
-    .greeting-user {
-        display: none;
-    }
     .page-title-wrapper {
         flex-direction: column;
         align-items: start;
+        margin-bottom: 48px;
     }
     .title-deco-divider {
         order: 99;
         width: 90px;
         height: 3px;
+    }
+    .greeting-user {
+        display: none;
     }
 }
 
@@ -155,14 +164,19 @@
         border-radius: 20px;
         height: 110px;
     }
+    .widget .value-wrapper {
+        gap: 6px;
+    }
     .widget.upcomings {
         gap: 20px;
     }
     .widget.upcomings .deadline {
         flex-grow: 0.45;
+        gap: 8px;
     }
     .widget-totals {
         height: 116px;
+        gap: 6px;
     }
     .widget-icon {
         height: 40px;
@@ -176,6 +190,9 @@
    .widget .label,
    .widget .label-date {
         font-size: 14px;
+    }
+    .widget-divider {
+        height: 68px;
     }
 }
 
