@@ -1,21 +1,22 @@
 .content-wrapper {
     gap: 80px;
 }
-.greeting {
-    margin: 0px;
-}
 .greeting-user {
     display: flex;
     flex-direction: column;
     gap: 3px;
+}
+.greeting-user p {
+    margin: 0;
+}
+.greeting-message {
     font-size: 47px;
     font-weight: 500;
 }
-.username {
-    font-weight: 700;
+.greeting-username {
     font-size: 64px;
+    font-weight: 700;
     color: #29ABE2;
-    margin: 0px;
 }
 .widgets-wrapper {
     display: flex;
@@ -35,7 +36,7 @@
     justify-content: center;
     align-items: center;
     gap: 18px;
-    padding: 24px;
+    padding-inline: 19px;
     height: 168px;
     border-radius: 30px;
     padding-block: 38px;
@@ -45,15 +46,19 @@
     transition-duration: 175ms;
 }
 .widget.upcomings {
-    /* justify-content: center; */
+    gap: 61px;
+}
+.widget.upcomings hr {
+    flex-shrink: 0;
 }
 .widget.upcomings .urgent {
     gap: 18px;
-    width: 130px;
 }
 .widget.upcomings .deadline {
     gap: 13px;
-    /* flex-grow: 1; */
+    flex-grow: 0.25;
+    align-content: start;
+    text-align: left;
 }
 .widgets-sub-wrapper .widget-metrics {
     flex-basis: 50%;
@@ -63,26 +68,6 @@
     text-align: center;
     gap: 4px;
     flex-basis: 33%;
-}
-.widget:hover {
-    background-color: #2A3647;
-    color: #FFFFFF;
-    transform: scale(1.05);
-}
-.to-do:hover img {
-    content: url(/assets/icons/summary-todo-white.png);
-}
-.done:hover img {
-    content: url(/assets/icons/summary-done-white.png);
-}
-.widgets-sub-wrapper .widget:first-child:hover {
-    transform-origin: left center;
-}
-.widgets-sub-wrapper .widget:last-child:hover {
-    transform-origin: right center;
-}
-.widget.upcomings:hover {
-    transform-origin: left top;
 }
 .widget-icon {
     height: 69px;
@@ -103,11 +88,31 @@
 .widget.deadline {
     flex-direction: column;
 }
-/* .widget-divider {
-    min-width: 2px;
-    color: #D1D1D1;
-    border: 2px;
-} */
+.widget-divider {
+    width: 2px;
+    height: 100%;
+    background-color: #D1D1D1;
+}
+.widget:hover {
+    background-color: #2A3647;
+    color: #FFFFFF;
+    transform: scale(1.05);
+}
+.widget.to-do:hover img {
+    content: url(/assets/icons/summary-todo-white.png);
+}
+.widget.done:hover img {
+    content: url(/assets/icons/summary-done-white.png);
+}
+.widgets-sub-wrapper .widget:first-child:hover {
+    transform-origin: left center;
+}
+.widgets-sub-wrapper .widget:last-child:hover {
+    transform-origin: right center;
+}
+.widget.upcomings:hover {
+    transform-origin: left top;
+}
 
 
 /* BREAKPOINTS */
@@ -131,6 +136,9 @@
     .widgets-wrapper {
         max-width: 100%;
     }
+    .widget.upcomings .deadline {
+        flex-grow: 0.33;
+    }
 }
 
 @media (max-width: 599px) {
@@ -142,6 +150,12 @@
     .widget {
         border-radius: 20px;
         height: 110px;
+    }
+    .widget.upcomings {
+        gap: 20px;
+    }
+    .widget.upcomings .deadline {
+        flex-grow: 0.45;
     }
     .widget-totals {
         height: 116px;
@@ -167,7 +181,10 @@
         gap: 16px;
     }
     .widget {
-        padding: 16px;
+        padding-inline: 12px;
+    }
+    .widget.upcomings .deadline {
+        flex-grow: 0.4;
     }
     .widget .number {
         font-size: 36px;
@@ -178,9 +195,6 @@
 }
 
 @media (max-width: 374px) {
-    .widget {
-        padding: 12px;
-    }
     .widget .label,
     .widget .label-date {
         font-size: 12px;

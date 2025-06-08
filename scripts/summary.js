@@ -11,15 +11,33 @@ async function initSummary() {
     getMainTemplates();
     await getTaskData();
     await setSummaryObj();
-    renderSummaryNumbers();
-    addSummaryBoxListeners();
+    updateSummaryValues();
     renderGreetingUser();
+    setSummaryWidgetListeners();
 }
+
+
+/**
+ * Render the greeting and username on the summary page
+ */
+function renderGreetingUser() {
+    const greetingEl = document.querySelector('.greeting-message');
+    const usernameEl = document.querySelector('.greeting-username');
+    if (summary.userName == '') {
+        greetingEl.textContent = summary.welcomeMsg;
+        usernameEl.style.display = 'none';
+    } else {
+        greetingEl.textContent = summary.welcomeMsg;
+        usernameEl.textContent = summary.userName;
+        usernameEl.style.display = '';
+    }
+}
+
 
 /**
  * Updates the summary numbers in the summary page
  */
-function renderSummaryNumbers() {
+function updateSummaryValues() {
     document.querySelector('.to-do .number').textContent = summary.taskCountTodo || 0;
     document.querySelector('.done .number').textContent = summary.taskCountDone || 0;
     document.querySelector('.upcomings .number').textContent = summary.taskCountUrgent || 0;
@@ -31,43 +49,15 @@ function renderSummaryNumbers() {
 
 
 /**
- * Render the greeting and username on the summary page
+ * Add click listeners to widgets to open board.html
  */
-function renderGreetingUser() {
-    const greetingEl = document.querySelector('.greeting');
-    const usernameEl = document.querySelector('.username');
-    if (summary.userName && summary.userName.toLowerCase() !== 'guest') {
-        greetingEl.textContent = summary.welcomeMsg;
-        usernameEl.textContent = summary.userName;
-        usernameEl.style.display = '';
-    } else {
-        greetingEl.textContent = summary.welcomeMsg;
-        usernameEl.style.display = 'none';
-    }
-}
-
-
-/**
- * Add click listeners to summary boxes to open board.html
- */
-function addSummaryBoxListeners() {
-    const selectors = [
-        '.to-do',
-        '.done',
-        '.urgent-deadline',
-        '.tasks-in-board',
-        '.tasks-in-progress',
-        '.awaiting-feedback'
-    ];
-    selectors.forEach(sel => {
-        const el = document.querySelector(sel);
-        if (el) {
-            el.style.cursor = 'pointer';
-            el.addEventListener('click', () => {
-                window.location.href = 'board.html';
-            });
-        }
+function setSummaryWidgetListeners() {
+  let elements = document.querySelectorAll('.widget');
+  elements.forEach(element => {
+    element.addEventListener('click', () => {
+        window.location.href = '/board.html';
     });
+  });
 }
 
 
