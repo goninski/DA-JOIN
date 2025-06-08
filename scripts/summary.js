@@ -13,7 +13,7 @@ async function initSummary() {
     await setSummaryObj();
     updateSummaryValues();
     renderGreetingUser();
-    setSummaryWidgetListeners();
+    setSummaryWidgetProps();
 }
 
 
@@ -49,11 +49,12 @@ function updateSummaryValues() {
 
 
 /**
- * Add click listeners to widgets to open board.html
+ * Add widget properties (click listenersto widgets to open board.html
  */
-function setSummaryWidgetListeners() {
+function setSummaryWidgetProps() {
   let elements = document.querySelectorAll('.widget');
   elements.forEach(element => {
+    element.title = 'Open Task Boards'
     element.addEventListener('click', () => {
         window.location.href = '/board.html';
     });

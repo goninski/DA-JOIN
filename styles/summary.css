@@ -136,6 +136,10 @@
     .widgets-wrapper {
         max-width: 100%;
     }
+    .widget.upcomings:hover {
+        transform: scale(0.95);
+        transform-origin: unset;
+    }
     .widget.upcomings .deadline {
         flex-grow: 0.33;
     }
