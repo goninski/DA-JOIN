@@ -28,8 +28,6 @@ form.scrollable .field-groups {
 }
 .field-group {
     width: var(--ct-w);
-    /* width: var(--field-width); */
-    /* min-width: var(--field-width); */
     max-width: var(--field-width);
     padding-left: 1px;
     padding-right: 1px;
@@ -38,7 +36,6 @@ form.scrollable .field-groups {
 .field-group-divider {
     border-left: solid 1px var(--clr-subtle);
 }
-
 
 /* INPUTS / LABEL */
 
@@ -117,16 +114,12 @@ textarea {
     color: var(--clr-subtle);
     font-size: 20px;
 }
-/* ::placeholder,
-[data-placeholder-style="true"] {
-    color: var(--clr-subtle);
-} */
 .input-wrapper {
     z-index: 1;
 }
 
-
 /* PRIORITY RADIO BUTTONS */
+
 .priority-input-wrapper  {
     gap: 16px;
 }
@@ -162,8 +155,8 @@ label.prio-low:has( > input:checked) {
     font-weight: var(--fw-bold);
 }
 
-
 /* CUSTOM SELECT */
+
 .select.custom-select {
     position: relative;
     width: 100%;
@@ -244,8 +237,8 @@ input[disabled] + .input-icon-wrapper.custom-select {
     display: none;
 }
 
-
 /** CUSTOM INPUT BUTTONS (VARIOUS) */
+
 .input-wrapper {
     display: flex;
     justify-content: space-between;
@@ -272,9 +265,6 @@ input[disabled] + .input-icon-wrapper.custom-select {
     position: absolute;
     right: 16px;
 }
-.input-icon-wrapper.custom-select:not(.multiple) {
-    /* pointer-events: none; */
-}
 .input-icon-wrapper.simple,
 .input-icon-wrapper.custom-select,
 .input-icon-wrapper :where(button, .checkbox-checked-wrapper) {
@@ -294,7 +284,6 @@ input:has(+ .input-icon-wrapper) {
     width: auto;
     object-fit: contain;
 }
-/* .input-icon-wrapper.custom-checkbox input, */
 input.custom-checkbox  {
     position: absolute;
     appearance: none;
@@ -309,7 +298,6 @@ input.custom-checkbox  {
 input.custom-checkbox.checkbox-end  {
     right: 2px;
 }
-/* .input-icon-wrapper.custom-checkbox .checkbox-checked-wrapper, */
 .checkbox-checked-wrapper,
 .radio-select-option {
     display: none;
@@ -362,8 +350,8 @@ input.custom-checkbox.checkbox-end  {
     border-radius: 100%;
 }
 
-
 /** TASK FORM SPECIFICS */
+
 .edit-task-form .hide-on-edit-mode {
     display: none;
 }
@@ -374,9 +362,6 @@ input.custom-checkbox.checkbox-end  {
 .edit-task-form {
     --field-width: 100%;
 }
-/* .task-form.add-task-form {
-    gap: 64px;
-} */
 .task-form .priority-input-wrapper {
     row-gap: 2px;
 }
@@ -450,20 +435,11 @@ input.custom-checkbox.checkbox-end  {
 }
 .input-wrapper-subtask.edit .input-icon-wrapper.edit {
     display: flex;
-} */
-/* .input-wrapper-subtask:not(.edit-mode) .subtask-input + .input-icon-wrapper-read {
-    display: none;      
-} */
-/* .subtask-wrapper .input-icon-wrapper button:hover {
-    background-color: #EEEEEE;
-    transform: scale(1.05);
-    border-radius: 100%;
-} */
+}
 #subtaskInputButtonAdd,
 .input-wrapper-subtask.invalid .input-icon-wrapper.edit button:last-of-type {
     pointer-events: none;
 }
-
 
 /* BREAKPOINTS */
 
