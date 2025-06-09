@@ -79,10 +79,7 @@ button.add-contact img {
 }
 .contact-item:where(.active, :hover, :focus) .email {
     background-color: var(--clr-main);
-    /* color: white; */
 }
-
-
 .floating-contact {
     display: flex;
     gap: 54px;
@@ -151,7 +148,6 @@ button.add-contact img {
     font-size: var(--fs-base);
     color: var(--clr-main);
 }
-
 
 /* BREAKPOINTS */
 

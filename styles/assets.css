@@ -43,9 +43,8 @@ a:hover {
     text-decoration: underline;
 }
 
-
-
 /* BUTTONS */
+
 button {
     display: flex;
     justify-content: center;
@@ -229,7 +228,6 @@ button {
   font-weight: var(--fw-bold) !important;
   color: var(--clr-light-blue) !important;
 }
-
 .profile-batches {
     list-style: none;
     display: flex;
@@ -251,7 +249,6 @@ button {
     background-color: var(--profile-color);
     font-size: 12px;
 }
-
 
 /* DIALOGUES */
 
@@ -313,7 +310,6 @@ button.close-dialogue:hover .close-icon.light {
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
     scrollbar-width: none;
 }
-
 .task-dialogue:not(.add-task) {
     --padding-dialogue: 48px 48px;
 }
@@ -394,8 +390,6 @@ button.close-dialogue:hover .close-icon.light {
     top: 40px;
     right: 40px;
 }
-
-
 
 /* BREAKPOINTS */
 
