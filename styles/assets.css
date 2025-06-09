@@ -118,8 +118,6 @@ button {
     border-radius: inherit;
     border: solid 1px var(--clr-light-blue);
 }
-.btn-secondary:disabled {
-}
 .button img {
     height: 12px;
     width: auto;
