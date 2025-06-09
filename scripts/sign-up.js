@@ -3,45 +3,65 @@ const emailField = document.getElementById('email');
 const passwordField = document.getElementById('pwd');
 const confirmPwdField = document.getElementById('confirm_pwd');
 
+
 async function signUpSubmitHandler(event) {
   event.preventDefault();
-  const nameInput = nameField.value.trim();
-  const emailInput = emailField.value.trim();
-  const passwordInput = passwordField.value.trim();
-  const passwordRepeatInput = confirmPwdField.value.trim();
+  const { nameInput, emailInput, passwordInput, passwordRepeatInput } = getSignUpInputs();
+  if (!validateSignUpForm(passwordInput, passwordRepeatInput)) return;
+  await processSignUp(nameInput, emailInput, passwordInput);
+}
 
-  if (!checkValidity()) return;
+
+function getSignUpInputs() {
+  return {
+    nameInput: nameField.value.trim(),
+    emailInput: emailField.value.trim(),
+    passwordInput: passwordField.value.trim(),
+    passwordRepeatInput: confirmPwdField.value.trim()
+  };
+}
+
+
+function validateSignUpForm(password, passwordRepeat) {
+  if (!checkValidity()) return false;
   resetErrorStyles();
-  if (!checkPasswords(passwordInput, passwordRepeatInput)) return;
+  if (!checkPasswords(password, passwordRepeat)) return false;
+  return true;
+}
 
-   try {
+
+async function processSignUp(nameInput, emailInput, passwordInput) {
+  try {
     await getUserData();
-
-    let user = {};
-    user.id = getNewContactId();
-    user.name = nameInput;
-    user.email = emailInput;
-    user.password = passwordInput;
-    user.title = "";
-    user.loggedIn = true;
-
+    let user = createUserObject(nameInput, emailInput, passwordInput);
     await createContact(user);
-
     loggedInUserId = user.id;
-
     await showFloatingMessage('text', 'You Signed Up successfully');
     loginRedirect();
   } catch (error) {
-    console.error("Sign-Up Fehler:", error);
-    showFloatingMessage('error', 'Sign-Up fehlgeschlagen');
+    handleSignUpError(error);
   }
 }
 
-/**
- * Sign up procedure
- * 
- * @param {object} newUser - new signed up user object
- */
+
+function createUserObject(name, email, password) {
+  return {
+    id: getNewContactId(),
+    name: name,
+    email: email,
+    password: password,
+    title: "",
+    loggedIn: true
+  };
+}
+
+
+function handleSignUpError(error) {
+  console.error("Sign-Up Fehler:", error);
+  showFloatingMessage('error', 'Sign-Up unsuccessful');
+}
+
+
 async function signUp(newUser) {
   try {
     await createContact(newUser);
@@ -53,6 +73,7 @@ async function signUp(newUser) {
   }
 }
 
+
 function checkValidity() {
   const form = document.getElementById("signup-form");
   if (!form.checkValidity()) {
@@ -62,13 +83,13 @@ function checkValidity() {
   return true;
 }
 
+
 function checkPasswords(password, passwordRepeat) {
   const errorMsgSignUp = document.getElementById('sign-up-error-message');
 
   if (password !== passwordRepeat) {
     confirmPwdField.setCustomValidity("");
     passwordField.setCustomValidity("");
-
     document.getElementById('confirm-pwd-div-sign-up').classList.add('input-error');
     errorMsgSignUp.classList.remove('hidden');
     return false;
@@ -80,11 +101,13 @@ function checkPasswords(password, passwordRepeat) {
   }
 }
 
+
 function resetErrorStyles() {
   document.getElementById('email-div-sign-up').classList.remove('input-error');
   document.getElementById('confirm-pwd-div-sign-up').classList.remove('input-error');
   document.getElementById('sign-up-error-message').classList.add('hidden');
 }
+
 
 function clearFields() {
   nameField.value = '';
@@ -93,17 +116,6 @@ function clearFields() {
   confirmPwdField.value = '';
 }
 
-// function showSignUpSuccessOverlay() {
-//   const overlaySignUp = document.querySelector('.overlay-sign-up-successfully-background');
-//   setTimeout(() => {
-//     overlaySignUp.classList.remove('hide');
-//     overlaySignUp.classList.add('flex');
-
-//     setTimeout(() => {
-//       window.location.href = "login.html";
-//     }, 1000);
-//   }, 800);
-// }
 
 function onPasswordInput(inputElement) {
   const wrapper = inputElement.parentElement;
@@ -122,6 +134,7 @@ function onPasswordInput(inputElement) {
   }
 }
 
+
 function togglePasswordVisibility(inputId, iconElement) {
   const input = document.getElementById(inputId);
 
@@ -137,12 +150,11 @@ function togglePasswordVisibility(inputId, iconElement) {
   }
 }
 
-/**
- * Redirects the user to the login page after successful sign up
- */
+
 function loginRedirect() {
     window.location.href = "login.html";
 }
+
 
 function toggleCheckboxBox(checkbox) {
     const box = checkbox.parentElement.getElementById('.terms-checkbox');
