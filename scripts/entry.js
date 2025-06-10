@@ -176,7 +176,7 @@ async function submitSignUpFormHandler(event) {
     event.preventDefault();
     if(formIsValid('signUpForm')) {
         let formInputs = await getFormInputObj('signUpForm');
-        await checkIfUserExists(formInputs.email) ? await signUpFail() : await signUpSuccessfull(formInputs);
+        await isExistingContact(formInputs.email) ? await signUpFail() : await signUpSuccessfull(formInputs);
     }
 }
 
@@ -198,18 +198,6 @@ async function signUpSuccessfull(formInputs) {
 async function signUpFail() {
       await showFloatingMessage('text', 'Your Email Address already exists. Please sign in.', 2000, 'alert');
       redirectToLogin();
-}
-
-
-/**
- * Helper: return true if user (email address) exists
- * 
- * @param {string} email - email address from signup form
- */
-async function checkIfUserExists(email) {
-    await getUserData();
-    let user = contacts.find(contact => contact.email == email);
-    return user ? true : false;
 }
 
 

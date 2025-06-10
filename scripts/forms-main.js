@@ -366,7 +366,7 @@ function setSubmitBtnStateOnEvent(event) {
  * 
  * @param {string} formId - id of the form element
  */
-async function resetForm(formId) {
+function resetForm(formId) {
     let form = document.getElementById(formId);
     form.reset();
     listboxElements = [];
@@ -374,8 +374,8 @@ async function resetForm(formId) {
     formElements.forEach(function(element) {
         resetFormElements(element);
     });
-    // getInvalidInputIds(formId);
-    setSubmitBtnState(formId);
+    getInvalidInputIds(formId);
+    // setSubmitBtnState(formId);
     let topElement = form.querySelector('.top-element');
     topElement ? topElement.scrollIntoView() : null;
     setTimeout(() => formElements[0].focus(), 200);

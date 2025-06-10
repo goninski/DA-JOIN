@@ -121,6 +121,7 @@ function closeContactDetail(contactId) {
  */
 async function openAddNewContactForm(event) {
     event.stopPropagation();
+    event.preventDefault();
     formMode = 'add';
     currentContact = {};
     await openContactsForm(formMode);
@@ -159,7 +160,7 @@ async function openContactsForm(formMode, contactId = '') {
     } else {
         await setEditContactValues(contactId);
     }
-    await setInitialFormState('contactsForm');
+    setInitialFormState('contactsForm');
 }
 
 
@@ -236,7 +237,16 @@ async function setEditContactValues(contactId) {
 async function submitContactsForm(event) {
     event.stopPropagation();
     event.preventDefault();
-    formMode == 'edit' ? await submitUpdateContact(event) : await submitCreateContact(event);
+    if(formIsValid('contactsForm')) {
+        let formInputs = await getFormInputObj('contactsForm');
+        console.log(formInputs.email);
+        let isExisting = await isExistingContact(formInputs.email);
+        if(isExisting) {
+            return await showFloatingMessage('text', 'This email address already exists !', 999, 'alert');
+        }
+        await setContactProperties(currentContact, formInputs);
+        formMode == 'edit' ? await submitUpdateContact(event, currentContact) : await submitCreateContact(event, currentContact);
+    }
 }
 
 
@@ -245,10 +255,8 @@ async function submitContactsForm(event) {
  * 
  * @param {event} event - inherit (submit contact form)
  */
-async function submitCreateContact(event) {
+async function submitCreateContact(event, currentContact) {
     event.stopPropagation();
-    let formInputs = await getFormInputObj('contactsForm');
-    await setContactProperties(currentContact, formInputs);
     await createContact(currentContact);
     lastListContactId = currentContact.id;
     await showFloatingMessage('text', 'Contact successfully created');
@@ -261,10 +269,8 @@ async function submitCreateContact(event) {
  * 
  * @param {event} event - inherit (submit contact form)
  */
-async function submitUpdateContact(event) {
+async function submitUpdateContact(event, currentContact) {
     event.stopPropagation();
-    let formInputs = await getFormInputObj('contactsForm');
-    await setContactProperties(currentContact, formInputs);
     await updateContact(currentContact);
     await showFloatingMessage('text', 'Contact successfully edited');
     setTimeout(function() {closeContactsFormDialogue(event)}, 1000);
@@ -278,15 +284,13 @@ async function submitUpdateContact(event) {
  * @param {object} formInputs - current form inputs object
  */
 async function setContactProperties(currentContact, formInputs ) {
-    if(hasLength(formInputs.name)) {
+    if(hasLength(formInputs.email)) {
         currentContact.name = formInputs.name;
         currentContact.email = formInputs.email;
         currentContact.phone = formInputs.phone;
     } else {
         console.log('error: no form inputs !');
     }
-    console.log(currentContact);
-    console.log(contacts);
 }
 
 
@@ -302,7 +306,7 @@ async function submitDeleteContact(event, contactId) {
     await deleteContact(contactId);
     currentContact = {};
     await showFloatingMessage('text', 'Contact deleted');
-    setTimeout(function() {closeContactsFormDialogue(event);}, 1000);
-    location.reload();
+    // setTimeout(() => closeContactsFormDialogue(event), 1500);
+    setTimeout(() => location.reload(), 1500);
 }
 

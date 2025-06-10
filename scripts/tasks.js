@@ -37,6 +37,7 @@ async function openAddTaskForm(event = null, source = 'board', boardId = 'todo')
     formMode = 'add';
     currentTask = {};
     taskStatus = (source == 'board') ? boardId : 'todo';
+    console.log(taskStatus);
     await showTaskDialogue('addTaskFormWrapper', source);
     await renderTaskForm('addTaskFieldGroups');
     if(source == 'add-task-page') {

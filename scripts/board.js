@@ -202,6 +202,7 @@ async function renderTaskOptionsMenu(event, taskId, currentStatus) {
  * @param {string} boardId - id of the current board
  */
 function addBoardTask(event, boardId) {
+  console.log(boardId);
   openAddTaskForm(event, 'board', boardId);
 }
 

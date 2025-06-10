@@ -326,19 +326,19 @@ function toggleIconColorOnHover(event, hoverColor = 'blue') {
  * 
  * @param {string} template - code name for specific template (text, addedTask)
  * @param {string} msg - message content
- * @param {number} timeout - timeout milliseconds
- * @param {string} optClass - optional class
+ * @param {number} timeout - timeout milliseconds (999 = default)
+ * @param {string} optClass - optional class (showing-default, alert)
  */
-async function showFloatingMessage(template, msg = '', timeout = 1500, optClass = 'showing-default') {
+async function showFloatingMessage(template, msg = '', timeout = 999, optClass = 'showing-default') {
     let element = document.getElementById("floatingMsg");
     element.innerHTML = '';
     if(element) {
+        timeout === 999 ? timeout = 1500 : null;
         element.classList.remove('showing-default', 'showing-top');
         element.innerHTML = (template == 'addedTask') ? getFloatingMessageTaskAddedTemplate() : getFloatingMessageTextTemplate(msg);
         element.classList.add('button', 'btn-icon', 'btn-primary', 'showing', optClass);
-        setTimeout(function() { 
-            element.classList.remove('showing', optClass);
-        }, timeout);
+        setTimeout(() => element.classList.remove('showing'), timeout);
+        setTimeout(() => element.classList.remove(optClass), timeout + 3000);
     }
 }
 

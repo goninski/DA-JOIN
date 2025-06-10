@@ -170,6 +170,12 @@
     }
 }
 
+@media(max-width: 374px) {
+    .login-page .custom-checkbox-wrapper {
+        max-width: 84%;
+    }
+}
+
 @media(min-width: 1440px) {
     :root {
         --px-sec: 77px;

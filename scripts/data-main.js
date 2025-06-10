@@ -64,7 +64,7 @@ async function getCategories() {
 
 
 /**
- * Helper: returns a task object by id
+ * Helper: return a task object by id
  * 
  * @param {string} taskId - task id
  */
@@ -74,7 +74,7 @@ async function getTaskById(taskId) {
 
 
 /**
- * Helper: returns a contact object by id
+ * Helper: return a contact object by id
  * 
  * @param {string} contactId - contact id
  */
@@ -84,12 +84,26 @@ async function getContactById(contactId) {
 
 
 /**
- * Helper: returns a category object by id
+ * Helper: return a category object by id
  * 
  * @param {string} categoryId - category id
  */
 async function getCategoryById(categoryId) {
     return categories.find(category => category.id == categoryId);
+}
+
+
+/**
+ * Helper: check if user (email address) already exists
+ * 
+ * @param {string} email - email address
+ * @returns {boolean} - true if user already exists
+ */
+async function isExistingContact(email) {
+    await getUserData();
+    let user = contacts.find(contact => contact.email == email);
+    console.log(user);
+    return user ? true : false;
 }
 
 
