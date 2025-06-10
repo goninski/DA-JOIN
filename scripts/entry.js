@@ -1,7 +1,6 @@
 currentContact = {};
 loggedInUserId = null;
 localStorage.removeItem('pseudoAuthStatus');
-// submitBtnStateMode = 2; // 1=full validation, 2=required
 
 
 /**
@@ -10,7 +9,7 @@ localStorage.removeItem('pseudoAuthStatus');
 async function initLogin() {
     document.getElementById('loginFailAlert').classList.add('hide');
     await runEntryAnimation();
-    await setInitialFormState('loginForm');
+    setInitialFormState('loginForm');
 }
 
 
@@ -18,7 +17,7 @@ async function initLogin() {
  * on page load sign-up.html
  */
 async function initSignUp() {
-    await setInitialFormState('signUpForm');
+    setInitialFormState('signUpForm');
 }
 
 
@@ -131,14 +130,13 @@ async function loginAsGuest(event) {
 async function submitLoginFormHandler(event, isGuest = false) {
     event.stopPropagation();
     event.preventDefault();
-    setFormFieldsValidity('loginForm');
-    if(!hasLength(invalidFields)) {
-        let formInputs = await getFormInputObj('loginForm');
-        if(isGuest) {
-            loggedInUserId = 'guest';
-            return await successfullLogin(formInputs);
-        }
-        await checkIfUserAndPasswordIsCorrect(formInputs.email, formInputs.password) ? await successfullLogin(formInputs) : await loginFail();
+    let formInputs = await getFormInputObj('loginForm');
+    if(isGuest) {
+        loggedInUserId = 'guest';
+        return await loginSuccessfull(formInputs);
+    }
+    if(formIsValid('loginForm')) {
+        await checkIfUserAndPasswordIsCorrect(formInputs.email, formInputs.password) ? await loginSuccessfull(formInputs) : await loginFail();
     }
 }
 
@@ -148,12 +146,12 @@ async function submitLoginFormHandler(event, isGuest = false) {
  * 
  * @param {object} formInputs - form input object
  */
-async function successfullLogin(formInputs) {
+async function loginSuccessfull(formInputs) {
     await saveToLocalStorage('pseudoAuthStatus', loggedInUserId);
-    let floatingMsg = 'You Signed Up successfully';
+    let floatingMsg = 'You logged in successfully';
     if(formInputs.loadFreshDataSet && formInputs.loadFreshDataSet == 'on') {
         await resetData();
-        floatingMsg = 'You Signed Up successfully and fresh set of dummy data is loaded';
+        floatingMsg = 'You logged in successfully - and fresh set of dummy data is loaded';
     }
     await showFloatingMessage('text', floatingMsg);
     setTimeout(() => window.location.href = '/summary.html', 2000);
@@ -176,10 +174,9 @@ async function loginFail() {
 async function submitSignUpFormHandler(event) {
     event.stopPropagation();
     event.preventDefault();
-    setFormFieldsValidity('signUpForm');
-    if(!hasLength(invalidFields)) {
+    if(formIsValid('signUpForm')) {
         let formInputs = await getFormInputObj('signUpForm');
-        await checkIfUserExists(formInputs.email) ? await signUpFail() : await successfullSignUp(formInputs);
+        await checkIfUserExists(formInputs.email) ? await signUpFail() : await signUpSuccessfull(formInputs);
     }
 }
 
@@ -187,7 +184,7 @@ async function submitSignUpFormHandler(event) {
 /**
  * Successfull sign up procedure (create user and redirect to login page)
  */
-async function successfullSignUp(formInputs) {
+async function signUpSuccessfull(formInputs) {
       await setContactPropertiesOnSignUp(currentContact, formInputs);
       await createContact(currentContact);
       await showFloatingMessage('text', 'You Signed Up successfully');

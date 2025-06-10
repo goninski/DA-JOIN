@@ -1,4 +1,3 @@
-let submitBtnStateMode = 1; // 1=full validation, 2=required (unstable)
 let formMode = '';
 let invalidFields = [];
 let listboxElements = [];
@@ -98,17 +97,28 @@ async function getFormInputObj(formId) {
  * Return an array (invalidFields) containing all form element id's with an invalid input
  * 
  * @param {string} formId - id of the form element
- * @param {number} validationMode - 1=full validation, other=required only
  */
-function getInvalidInputIds(formId, validationMode = 1) {
+async function getInvalidInputIds(formId) {
     invalidFields = [];
     let formElements = getFormElementsArray(formId);
     formElements.forEach(function(element) {
-        let isValidElement = validateElement(element, validationMode);
+        let isValidElement = validateElement(element);
         if(!isValidElement) {
             invalidFields.push(element.id);
         }
     });
+}
+
+
+/**
+ * Checks if all form inputs are valid
+ * 
+ * @param {string} formId - id of the form element
+ * @returns {boolean} - true if valid
+ */
+async function formIsValid(formId) {
+    await getInvalidInputIds(formId);
+    return !hasLength(invalidFields) ? true : false;
 }
 
 
@@ -153,7 +163,7 @@ function focusOutHandler(event) {
     event.preventDefault();
     let element = event.currentTarget;
     (element.dataset.type == 'password') ? togglePasswordVisibility(event) : null;
-    submitBtnStateMode === 1 ? validateInput(element, submitBtnStateMode) : null;
+    validateInput(element);
 }
 
 
@@ -163,6 +173,7 @@ function focusOutHandler(event) {
  * @param {string} formId - id of the form element
  */
 function getFormElementsArray(formId) {
+    console.log(formId);
     let form = document.getElementById(formId);
     let elements = form.elements;
     let elementsArr = Array.from(elements);
@@ -175,7 +186,7 @@ function getFormElementsArray(formId) {
  * 
  * @param {string} formId - id of the form element
  */
-async function setInitialFormState(formId) {
+function setInitialFormState(formId) {
     let form = document.getElementById(formId);
     let formElements = getFormElementsArray(formId);
     formElements.forEach(function(element) {
@@ -215,22 +226,35 @@ function setFieldValidity(element) {
 
 
 /**
+ * Set validity styles on all input elements (currently not in use)
+ * 
+ * @param {string} formId - id of the form
+ */
+function setFormFieldsValidity(formId) {
+    if(formIsValid(formId)) {
+        invalidFields.forEach((elementId) => {
+            let element = document.getElementById(elementId);
+            setFieldValidity(element);
+        });
+    }
+}
+
+
+/**
  * Validate input element
  * 
  * @param {element} element - input element
- * @param {number} validationMode - 1=full validation, other=required only
+ * @param {number} ) - 1=full validation, other=required only
  * @returns {boolean}
  */
-function validateElement(element, validationMode = 1) {
+function validateElement(element) {
     if(element.hasAttribute('required')) {
         if(element.value.replaceAll(' ', '') == '') {
             return false;
         };
     }
-    if(validationMode === 1) {
-        if(! element.checkValidity() || ! checkCustomValidation(element)) {
-            return false;
-        }
+    if(! element.checkValidity() || ! checkCustomValidation(element)) {
+        return false;
     }
     return true;
 }
@@ -326,40 +350,15 @@ function setSubmitBtnStateOnEvent(event) {
 
 
 /**
- * Check and set all form inputs validity
- * 
- * @param {string} formId - id of the form
- * @returns {boolean} - true if no invalid fields (full validity check)
- */
-function setFormFieldsValidity(formId) {
-    console.log(submitBtnStateMode);
-    if(submitBtnStateMode === 1) {
-        return;
-    }
-    getInvalidInputIds(formId, 1);
-    console.log(invalidFields);
-    if(hasLength(invalidFields)) {
-        invalidFields.forEach((elementId) => {
-            let element = document.getElementById(elementId);
-            setFieldValidity(element);
-        });
-    }
-}
-
-
-/**
  * Set the submit button state of a form
  * 
  * @param {string} formId - id of the form
- * @param {number} validationMode - 1=full validation, other=required only
  */
-function setSubmitBtnState(formId, validationMode = 1) {
-    validationMode = submitBtnStateMode ? submitBtnStateMode : validationMode;
-    getInvalidInputIds(formId, validationMode);
+function setSubmitBtnState(formId) {
     let form = document.getElementById(formId);
     let submitBtn = form.querySelector('[type="submit"]');
     submitBtn.setAttribute('disabled', '');
-    invalidFields.length > 0 ? submitBtn.setAttribute('disabled', '') : submitBtn.removeAttribute('disabled');
+    formIsValid(formId) ? submitBtn.removeAttribute('disabled', '') : submitBtn.setAttribute('disabled');
 }
 
 
@@ -376,7 +375,8 @@ async function resetForm(formId) {
     formElements.forEach(function(element) {
         resetFormElements(element);
     });
-    getInvalidInputIds(formId);
+    // getInvalidInputIds(formId);
+    setSubmitBtnState(formId);
     let topElement = form.querySelector('.top-element');
     topElement ? topElement.scrollIntoView() : null;
     setTimeout(() => formElements[0].focus(), 200);
