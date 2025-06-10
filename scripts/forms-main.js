@@ -179,10 +179,10 @@ async function setInitialFormState(formId) {
     formElements.forEach(function(element) {
         setPlaceholderStyle(element);
     });
-    setSubmitBtnState(formId);
     let topElement = form.querySelector('.top-element');
     topElement ? topElement.scrollIntoView() : null;
     setTimeout(() => formElements[0].focus(), 200);
+    setSubmitBtnState(formId);
 }
 
 
@@ -305,6 +305,18 @@ function removePlaceholderStyle(event) {
 function resetInputValidation(event) {
     let fieldWrapper = getFieldWrapperFromEvent(event);
     fieldWrapper ? fieldWrapper.classList.remove('invalid') : null;
+}
+
+
+/**
+ * Set submit button state from event
+ * 
+ * @param {string} formId - id of the form
+ */
+function setSubmitBtnStateOnEvent(event) {
+    event.stopPropagation();
+    let formId = event.currentTarget.form.id;
+    setSubmitBtnState(formId);
 }
 
 

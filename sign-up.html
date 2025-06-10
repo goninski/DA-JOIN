@@ -16,7 +16,7 @@
     <script src="scripts/entry.js"></script>
 </head>
 
-<body class="entry-page sign-up-page">
+<body class="entry-page sign-up-page" onload="initSignUp()">
 
     <div class="main ct-container">
 
@@ -38,7 +38,7 @@
                 <div class="field-group flex-col flex-grow">
                     <div class="field-wrapper has-alert">
                         <div class="input-wrapper">
-                            <input type="text" id="inputName" name="name" placeholder="Name" required maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)">
+                            <input type="text" id="inputName" name="name" placeholder="Name" required maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="setSubmitBtnStateOnEvent(event)">
                             <div class="input-icon-wrapper simple top-element">
                                 <img src="/assets/icons/input-name.svg" alt="person-icon" class="icon-name-input">
                             </div>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="field-wrapper has-alert">
                         <div class="input-wrapper">
-                            <input type="email" id="inputEmail" name="email" placeholder="Email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)"">
+                            <input type="email" id="inputEmail" name="email" placeholder="Email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required maxlength="64" onfocus="focusInHandler(event)"  onfocusout="focusOutHandler(event)" oninput="setSubmitBtnStateOnEvent(event)">
                             <div class="input-icon-wrapper simple">
                                 <img src="/assets/icons/input-email.svg" alt="email-icon" class="icon-email-input">
                             </div>
@@ -77,7 +77,7 @@
 
                     <div class="field-wrapper field-wrapper-terms">
                         <div class="input-wrapper custom-checkbox-wrapper left">
-                            <input type="checkbox" id="inputAcceptPrivacyPolicy" name="acceptPrivacyPolicy" required class="custom-checkbox clickable hide-focus" onchange="toggleTermsCheckbox(event)">
+                            <input type="checkbox" id="inputAcceptPrivacyPolicy" name="acceptPrivacyPolicy" required class="custom-checkbox clickable hide-focus" onchange="setSubmitBtnStateOnEvent(event)">
                             <img src="assets/icons/checkbox-checked.svg" alt="checkbox-checked" class="icon-checkbox-checked custom-checkbox-checked">
                             <label for="inputAcceptPrivacyPolicy" class="label pointer-events-none">I accept the&ensp;<a href="/privacy-policy.html">Privacy policy</a></label>
                         </div>

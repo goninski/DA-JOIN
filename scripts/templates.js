@@ -255,7 +255,7 @@ function getTaskFormFieldsTemplate(task) {
 
             <div class="field-wrapper has-alert">
                 <label for="title" class="required top-element">Title</label>
-                <input type="text" id="inputTitle" name="title" placeholder="Enter a title" required maxlength="128" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)">
+                <input type="text" id="inputTitle" name="title" placeholder="Enter a title" required maxlength="128" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="setSubmitBtnStateOnEvent(event)" oninput="setSubmitBtnStateOnEvent(event)">
                 <div role="alert" class="validation-alert">This field is required</div>
             </div>
             <div class="field-wrapper has-alert">
@@ -264,7 +264,7 @@ function getTaskFormFieldsTemplate(task) {
             </div>
             <div class="field-wrapper has-alert">
                 <label for="dueDate" class="required">Due date</label>
-                <input type="date" id="inputDueDate" name="dueDate" required min="2000-01-01" max="2099-12-31" step="1" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" onkeyup="removePlaceholderStyle(event)" data-placeholder-style="true">
+                <input type="date" id="inputDueDate" name="dueDate" required min="2000-01-01" max="2099-12-31" step="1" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" onkeyup="removePlaceholderStyle(event)"  oninput="setSubmitBtnStateOnEvent(event)" data-placeholder-style="true">
                 <div role="alert" class="validation-alert">Please enter a valid date</div>
             </div>
         </div>
@@ -355,7 +355,7 @@ function getCategoryFormFieldTemplate() {
             <label for="categorySelect" class="required">Category</label>
             <div class="select custom-select">
                 <div class="input-wrapper custom-select">
-                    <input type="text" id="categorySelect" name="categorySelect" role="combox" placeholder="Select task category" class="clickable" data-validation-type="required" data-active-index="-1" readonly onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" onclick="dropdownEventHandler(event)" onkeydown="dropdownEventHandler(event)"   >
+                    <input type="text" id="categorySelect" name="categorySelect" role="combox" placeholder="Select task category" class="clickable" data-validation-type="required" data-active-index="-1" readonly onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" onclick="dropdownEventHandler(event)" onkeydown="dropdownEventHandler(event)" oninput="setSubmitBtnStateOnEvent(event)">
                     <div class="input-icon-wrapper custom-select">
                         <button onclick="event.preventDefault(), dropdownEventHandler(event)">
                             <img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown">

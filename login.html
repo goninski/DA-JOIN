@@ -41,7 +41,7 @@
 
                     <div class="field-wrapper has-alert">
                         <div class="input-wrapper">
-                            <input type="email" id="inputEmail" name="email" placeholder="Email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)"">
+                            <input type="email" id="inputEmail" name="email" placeholder="Email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="setSubmitBtnStateOnEvent(event)">
                             <div class="input-icon-wrapper simple">
                                 <img src="/assets/icons/input-email.svg" alt="email-icon" class="icon-email-input">
                             </div>
@@ -60,7 +60,7 @@
                     </div>
 
                     <div class="field-wrapper field-wrapper-terms">
-                        <div class="input-wrapper custom-checkbox-wrapper left">
+                        <div class="input-wrapper custom-checkbox-wrapper left" title="Delete all data and start with a fresh set of dummy data (recommended on first use)">
                             <input type="checkbox" id="inputLoadFreshDataset" name="loadFreshDataSet" class="custom-checkbox clickable hide-focus">
                             <img src="assets/icons/checkbox-checked.svg" alt="checkbox-checked" class="icon-checkbox-checked custom-checkbox-checked">
                             <label for="inputLoadFreshDataset" class="label xpointer-events-none">Start with a fresh set of dummy&nbsp;data</label>

@@ -10,7 +10,14 @@ async function initLogin() {
     await runLogoEntryAnimation();
     await fadeInOnEntry();
     await setInitialFormState('loginForm');
-    // await setSubmitBtnState('loginForm');
+}
+
+
+/**
+ * on page load sign-up.html
+ */
+async function initSignUp() {
+    await setInitialFormState('signUpForm');
 }
 
 
@@ -57,6 +64,7 @@ function passwordInputHandler(event) {
         pwIconElement.classList.remove('hide');
         visibilityButton.classList.add('hide');
     }
+    setSubmitBtnStateOnEvent(event);
 }
 
 
@@ -99,16 +107,6 @@ function togglePasswordVisibility(event) {
         iconElement.src = iconElement.src.replace('hidden', 'visible');
         iconElement.alt = iconElement.alt.replace('hidden', 'visible');
     }
-}
-
-
-/**
- * Toggle Terms Checkbox (set submit button state)
- * 
- * @param {event} event - click (terms checkbox sign up form)
- */
-function toggleTermsCheckbox(event) {
-    setSubmitBtnState('signUpForm');
 }
 
 
