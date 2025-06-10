@@ -1,4 +1,4 @@
-let submitBtnStateMode = 1; // 1=full validation, 2=required
+let submitBtnStateMode = 1; // 1=full validation, 2=required (unstable)
 let formMode = '';
 let invalidFields = [];
 let listboxElements = [];

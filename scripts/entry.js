@@ -8,6 +8,7 @@ localStorage.removeItem('pseudoAuthStatus');
  * on page load login.html
  */
 async function initLogin() {
+    document.getElementById('loginFailAlert').classList.add('hide');
     await runLogoEntryAnimation();
     await fadeInOnEntry();
     await setInitialFormState('loginForm');
@@ -164,8 +165,7 @@ async function successfullLogin(formInputs) {
  * Login fail procedure (notification if user does not exist or password is wrong)
  */
 async function loginFail() {
-      await showFloatingMessage('text', 'Check your email and password. <br>Please try again.', 2000, 'alert');
-      setInitialFormState('loginForm');
+      document.getElementById('loginFailAlert').classList.remove('hide');
 }
 
 
