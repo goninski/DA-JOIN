@@ -2,6 +2,7 @@
     padding-inline: var(--px-sec);
     padding-block: var(--px-sec) 32px;
     align-items: center;
+    --height-diff: calc(32px - var(--px-sec));
 }
 .entry-page .main {
     position: relative;
@@ -60,6 +61,7 @@
     gap: 32px;
     align-self: center;
     margin-top: auto;
+    /* margin-bottom: -32px; */
 }
 .entry-page .term-links-wrapper a {
     color: #A8A8A8;
@@ -75,13 +77,12 @@
 .entry-form-wrapper {
     align-self: center;
     position: absolute;
-    top: 50%;
+    top: 47%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
     width: 100%;
     max-width: 598px;
-    /* max-height: 80vh; */
     border-radius: 30px;
     padding-block: 48px;
     padding-inline: 88px;
@@ -90,6 +91,7 @@
     overflow-y: auto;
     scrollbar-width: none;
     z-index: 1;
+    /* margin-top: var(--height-diff); */
 }
 .entry-form .field-group {
     gap: 4px;
@@ -170,12 +172,18 @@
     }
 }
 
-@media(max-width: 800px) and (max-height: 760px) {
+@media(max-height: 799px) {
+    .logo-entry {
+        position: fixed;
+        top: var(--px-sec) !important;
+        left: var(--px-sec) !important;
+    }
     .entry-form-wrapper {
         position: static;
         margin-top: auto;
         top: unset;
         left: unset;
         transform: translate(0,0);
+        /* max-height: 80vh; */
     }
 }
