@@ -43,8 +43,9 @@ a:hover {
     text-decoration: underline;
 }
 
-/* BUTTONS */
 
+
+/* BUTTONS */
 button {
     display: flex;
     justify-content: center;
@@ -52,12 +53,15 @@ button {
     font-family: inherit;
     font-size: var(--fs-base);
 }
+.button.hide {
+    pointer-events: none;
+}
 .button {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* font-family: var(--ff-primary); */
-    /* font-size: var(--fs-base); */
+    font-family: inherit;
+    font-size: var(--fs-base);
     line-height: 1.2;
     letter-spacing: 0;
     height: 100%;
@@ -118,6 +122,8 @@ button {
     border-radius: inherit;
     border: solid 1px var(--clr-light-blue);
 }
+.btn-secondary:disabled {
+}
 .button img {
     height: 12px;
     width: auto;
@@ -135,7 +141,6 @@ button {
 }
 .floating-button-round.bottom-right {
     right: 32px;
-    /* bottom: 32px; */
     bottom: calc(var(--height-footer) + 32px);
 }
 .floating-message {
@@ -143,13 +148,16 @@ button {
     right: 0;
     bottom: 0;
     z-index: 9999;
-    min-width: 280px;
+    min-width: 180px;
     max-width: 100%;    
     min-height: 74px;
     border-radius: 20px;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
     transform: translateX(-100%);
-    transition: transform 0.35s;
+    transition: transform 1s;
+}
+.floating-message.alert {
+    background-color: red;
 }
 .floating-message:not(.showing-top) {
     bottom: 20%;
@@ -208,7 +216,6 @@ button {
     display: flex;
     align-items: center;
     gap: 12px;
-    /* height: 24px; */
 }
 .option-buttons button img {
     height: 18px;
@@ -226,6 +233,7 @@ button {
   font-weight: var(--fw-bold) !important;
   color: var(--clr-light-blue) !important;
 }
+
 .profile-batches {
     list-style: none;
     display: flex;
@@ -247,6 +255,7 @@ button {
     background-color: var(--profile-color);
     font-size: 12px;
 }
+
 
 /* DIALOGUES */
 
@@ -308,6 +317,7 @@ button.close-dialogue:hover .close-icon.light {
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
     scrollbar-width: none;
 }
+
 .task-dialogue:not(.add-task) {
     --padding-dialogue: 48px 48px;
 }
@@ -388,6 +398,8 @@ button.close-dialogue:hover .close-icon.light {
     top: 40px;
     right: 40px;
 }
+
+
 
 /* BREAKPOINTS */
 

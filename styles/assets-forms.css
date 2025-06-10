@@ -9,14 +9,6 @@ form.scrollable {
     position: absolute;
     inset: 0;
 }
-.field-wrapper {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
-.field-wrapper {
-    padding-bottom: 16px;
-}
 form.scrollable .field-groups {
     overflow-x: hidden;
     overflow-y: auto;
@@ -36,6 +28,17 @@ form.scrollable .field-groups {
 .field-group-divider {
     border-left: solid 1px var(--clr-subtle);
 }
+.field-wrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex-wrap: nowrap;
+}
+.field-wrapper {
+    padding-bottom: 16px;
+}
+
+
 
 /* INPUTS / LABEL */
 
@@ -114,12 +117,16 @@ textarea {
     color: var(--clr-subtle);
     font-size: 20px;
 }
+/* ::placeholder,
+[data-placeholder-style="true"] {
+    color: var(--clr-subtle);
+} */
 .input-wrapper {
     z-index: 1;
 }
 
-/* PRIORITY RADIO BUTTONS */
 
+/* PRIORITY RADIO BUTTONS */
 .priority-input-wrapper  {
     gap: 16px;
 }
@@ -155,8 +162,8 @@ label.prio-low:has( > input:checked) {
     font-weight: var(--fw-bold);
 }
 
-/* CUSTOM SELECT */
 
+/* CUSTOM SELECT */
 .select.custom-select {
     position: relative;
     width: 100%;
@@ -237,17 +244,32 @@ input[disabled] + .input-icon-wrapper.custom-select {
     display: none;
 }
 
-/** CUSTOM INPUT BUTTONS (VARIOUS) */
 
+/** CUSTOM INPUT BUTTONS (VARIOUS) */
 .input-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
     flex-grow: 1;
+    padding-block: 5px;
 }
-.input-wrapper :is(input, select) {
-    width: 100%;
+.input-wrapper.left {
+    justify-content: start;
+}
+.custom-checkbox-wrapper.left label {
+    display: flex;
+    align-items: center;
+    margin-left: 32px;
+    margin-bottom: 0;
+    font-size: var(--fs-base);
+}
+.input-wrapper label a {
+    color: var(--clr-light-blue);
+    text-decoration: none;
+}
+.input-wrapper label a:hover {
+    text-decoration: underline;
 }
 .input-icon-wrapper {
     position: relative;
@@ -261,17 +283,20 @@ input[disabled] + .input-icon-wrapper.custom-select {
 }
 .input-icon-wrapper.simple,
 .input-wrapper .input-icon-wrapper,
-.input-icon-wrapper:where(.custom-checkbox) {
+.input-icon-wrapper:where(.custom-checkbox-wrapper) {
     position: absolute;
     right: 16px;
 }
+.input-icon-wrapper button {
+    border-radius: 100%;
+}
 .input-icon-wrapper.simple,
 .input-icon-wrapper.custom-select,
-.input-icon-wrapper :where(button, .checkbox-checked-wrapper) {
+.input-icon-wrapper :where(button, .xcheckbox-checked-wrapper) {
     width: 24px;
     height: 24px;
 }
-.input-icon-wrapper :where(button, .checkbox-checked-wrapper) {
+.input-icon-wrapper :where(button, .xcheckbox-checked-wrapper) {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -290,33 +315,38 @@ input.custom-checkbox  {
     box-sizing: content-box;
     border: solid 2px var(--clr-main);
     border-radius: 3px;
-    width: 12px;
-    height: 12px;
-    bottom: 2px;
+    width: 14px;
+    height: 14px;
     transition-duration: var(--transition-duration);
 }
-input.custom-checkbox.checkbox-end  {
+.multiple.select-contacts input.custom-checkbox  {
+    width: 13px;
+    height: 13px;
+}
+input.checkbox-end,
+input.checkbox-end + .custom-checkbox-checked  {
     right: 2px;
 }
-.checkbox-checked-wrapper,
+.custom-checkbox-checked {
+    position: absolute;
+}
+.custom-checkbox-checked,
 .radio-select-option {
     display: none;
+    pointer-events: none;
 }
-.input-icon-wrapper.custom-checkbox input:checked {
-    visibility: hidden;
+input.custom-checkbox:checked {
+    /* visibility: hidden; */
+    opacity: 0;
 }
-.input-icon-wrapper.custom-checkbox input:checked + .checkbox-checked-wrapper {
+input:checked + .custom-checkbox-checked {
     display: flex;
 }
-.input-icon-wrapper.custom-checkbox input:checked + .checkbox-checked-wrapper img {
-    margin-left: -2px;
-    height: 17px;
-}
-.input-icon-wrapper.custom-checkbox input:focus {
+.input.custom-checkbox:focus {
     box-shadow: none;
 }
 
-.input-icon-wrapper :is(.icon-24) {
+.input-icon-wrapper :is(.icon-size-default .icon-24) {
     height: 24px;
 }
 .input-icon-wrapper :is(.icon-22, .icon-phone-input) {
@@ -325,7 +355,7 @@ input.custom-checkbox.checkbox-end  {
 .input-icon-wrapper :is(.icon-20, .icon-email-input) {
     height: 20px;
 }
-.input-icon-wrapper :is(.icon-18, .icon-edit, .icon-delete, .icon-checkbox, .icon-search) {
+.input-icon-wrapper :is(.icon-18, .custom-checkbox-checked, .icon-edit, .icon-delete, .icon-checkbox, .icon-search) {
     height: 18px;
 }
 .input-icon-wrapper :is(.icon-14, .icon-add) {
@@ -347,11 +377,11 @@ input.custom-checkbox.checkbox-end  {
 }
 .input-icon-wrapper button:hover {
     background-color: #0C2E621F;
-    border-radius: 100%;
+    /* border-radius: 100%; */
 }
 
-/** TASK FORM SPECIFICS */
 
+/** TASK FORM SPECIFICS */
 .edit-task-form .hide-on-edit-mode {
     display: none;
 }
@@ -362,6 +392,9 @@ input.custom-checkbox.checkbox-end  {
 .edit-task-form {
     --field-width: 100%;
 }
+/* .task-form.add-task-form {
+    gap: 64px;
+} */
 .task-form .priority-input-wrapper {
     row-gap: 2px;
 }
@@ -440,6 +473,7 @@ input.custom-checkbox.checkbox-end  {
 .input-wrapper-subtask.invalid .input-icon-wrapper.edit button:last-of-type {
     pointer-events: none;
 }
+
 
 /* BREAKPOINTS */
 

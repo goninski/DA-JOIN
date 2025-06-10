@@ -4,99 +4,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign up</title>
+    <title>Sign up | Join</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="styles/login.css">
-    <link rel="stylesheet" href="styles/sign-up.css">
-    <script src="./scripts/data-main.js"></script>
-    <script src="./scripts/data-sub.js"></script>
-    <script src="./scripts/templates.js"></script>
+    <link rel="stylesheet" href="styles/entry.css">
+    <script src="scripts/data-main.js"></script>
+    <script src="scripts/data-sub.js"></script>
+    <script src="scripts/templates.js"></script>
     <script src="script.js"></script>
+    <script src="scripts/forms-main.js"></script>
+    <script src="scripts/forms-sub.js"></script>
+    <script src="scripts/entry.js"></script>
 </head>
 
-<body class="bg-grey flex justify-center entry-page signup-page">
-    <div>
-        <img class="logo_login" src="./assets/img/capa-2.png" alt="Logo" id="logo_sign_up">
-    </div>
-    <div class="page-sign-up-wrapper">
-        <div class="flex justify-center sign-up-main-part">
-            <div class="flex-col bg-white sign-up-div-size flex center gap_32px">
-                <div class="arrow_left_icon_position">
-                    <a href="./login.html" class="a-arrow_left_icon">
-                        <img src="./assets/img/arrow-left-line.png" alt="Arrow Left Icon" class="arrow_left_icon">
-                    </a>
-                </div>
+<body class="entry-page sign-up-page">
 
-                <div class="headline_login flex-col align-center gap_16px">
-                    <h1 class="login_title">Sign up</h1>
-                    <div class="login_border"></div>
-                </div>
+    <div class="main ct-container">
 
-                <div class="flex-col login-email-part-sign-up center gap_16px">
-                    <form id="signup-form">
-                        <div class="flex-col input-part-sign-up">
-                            <div class="input-wrapper-signup-login margin-bottom-24px flex justify-between">
-                                <input class="login-signup-input pictureinput person-pic" type="text" minlength="3"
-                                    placeholder="Name" id="sign-up-name" required>
-                            </div>
+        <img id="logoMain" class="logo-entry initial" src="./assets/img/logo-dark.svg" alt="logo-join">
 
-                            <div class="input-wrapper-signup-login margin-bottom-24px flex justify-between"
-                                id="email-div-sign-up">
-                                <input class="login-signup-input pictureinput mail-pic" type="email" name="email"
-                                    id="email" placeholder="Email" required>
-                            </div>
 
-                            <div class="input-wrapper-signup-login margin-bottom-24px flex justify-between">
-                                <input class="login-signup-input pictureinput" type="password" id="pwd" name="pwd"
-                                    minlength="8" placeholder="Password" required oninput="onPasswordInput(this)">
-                                <div class="pwd-icon pwd-pic" onclick="togglePasswordVisibility('pwd', this)"></div>
-                            </div>
+        <div class="entry-form-wrapper flex-col align-center pos-relative">
 
-                            <div class="input-wrapper-signup-login flex justify-between" id="confirm-pwd-div-sign-up">
-                                <input class="login-signup-input pictureinput" type="password" id="confirm_pwd"
-                                    name="pwd" minlength="8" placeholder="Confirm Password" required
-                                    oninput="onPasswordInput(this)">
-                                <div class="pwd-icon pwd-pic" onclick="togglePasswordVisibility('confirm_pwd', this)">
-                                </div>
-                            </div>
-                            <div id="sign-up-error-message" class="sign-up-error hidden margin-bottom-16px">
-                                Your passwords don't match. Please try again.
+            <div class="page-title-wrapper pos-relative">
+                <button class="back-button" onclick="redirectToLogin(event, 175)">
+                    <img src="./assets/icons/arrow-left-blue.svg" alt="arrow-left-icon">
+                </button>
+                <h1 class="page-title top-element">Sign up</h1>
+                <div class="title-deco-divider"></div>
+            </div>
+            
+            <form id="signUpForm" onsubmit="submitSignUpFormHandler(event)" class="flex-col entry-form sign-up-form">
+
+                <div class="field-group flex-col flex-grow">
+                    <div class="field-wrapper has-alert">
+                        <div class="input-wrapper">
+                            <input type="text" id="inputName" name="name" placeholder="Name" required maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)">
+                            <div class="input-icon-wrapper simple top-element">
+                                <img src="/assets/icons/input-name.svg" alt="person-icon" class="icon-name-input">
                             </div>
                         </div>
+                        <div role="alert" class="validation-alert">This field is required</div>
+                    </div>
+                    <div class="field-wrapper has-alert">
+                        <div class="input-wrapper">
+                            <input type="email" id="inputEmail" name="email" placeholder="Email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)"">
+                            <div class="input-icon-wrapper simple">
+                                <img src="/assets/icons/input-email.svg" alt="email-icon" class="icon-email-input">
+                            </div>
+                        </div>
+                        <div role="alert" class="validation-alert">Please enter a valid email address</div>
+                    </div>
+                    <div class="field-wrapper has-alert">
+                        <div class="input-wrapper">
+                            <input type="password" data-type="password" id="inputPassword" name="password" placeholder="Password" required minlength="8" maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="passwordInputHandler(event)">
+                            <div class="input-icon-wrapper simple">
+                                <img src="./assets/icons/input-password.svg" alt="password-icon" class="icon-size-default">
+                                <button onclick="togglePasswordVisibility(event)" tabindex="-1" class="hide hide-focus"><img src="./assets/icons/input-password-hidden.svg" alt="password-hidden-icon" class="icon-size-default"></button>
+                            </div>
+                        </div>
+                        <div role="alert" class="validation-alert">Please enter a minimum of 8 characters</div>
+                    </div>
+                    <div class="field-wrapper has-alert">
+                        <div class="input-wrapper">
+                            <input type="password" data-type="password" id="inputPasswordConfirm" name="passwordConfirm" placeholder="Confirm Password" required minlength="8" maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="passwordInputHandler(event)" data-validation-type="password-confirmation">
+                            <div class="input-icon-wrapper simple">
+                                <img src="./assets/icons/input-password.svg" alt="password-icon" class="icon-size-default">
+                                <button onclick="togglePasswordVisibility(event)" tabindex="-1" class="hide hide-focus"><img src="./assets/icons/input-password-hidden.svg" alt="password-hidden-icon" class="icon-size-default"></button>
+                            </div>
+                        </div>
+                        <div role="alert" class="validation-alert">Your passwords don't match. Please try again</div>
+                    </div>
 
+                    <div class="field-wrapper field-wrapper-terms">
+                        <div class="input-wrapper custom-checkbox-wrapper left">
+                            <input type="checkbox" id="inputAcceptPrivacyPolicy" name="acceptPrivacyPolicy" required class="custom-checkbox clickable hide-focus" onchange="toggleTermsCheckbox(event)">
+                            <img src="assets/icons/checkbox-checked.svg" alt="checkbox-checked" class="icon-checkbox-checked custom-checkbox-checked">
+                            <label for="inputAcceptPrivacyPolicy" class="label pointer-events-none">I accept the&ensp;<a href="/privacy-policy.html">Privacy policy</a></label>
+                        </div>
+                    </div>
 
-                        <label class="custom-checkbox-container">
-                            <input type="checkbox" id="terms-checkbox" required>
-                            <span class="custom-checkbox-visuals">
-                                <span class="custom-checkbox-box"></span>
-                                <img src="assets/icons/checkbox-checked.svg" class="custom-checkbox-icon" alt="checked">
-                            </span>
-                            <span class="checkbox-text">
-                                I accept the <a href="#" class="a-privacy-policy">Privacy policy</a>
-                            </span>
-                        </label>
-
-
+                    <div id="submitBtnWrapper" class="submit-button-wrapper flex-row justify-center align-center">
+                        <button id="btnSubmit" type="submit" class="button btn-check btn-icon btn-primary" disabled="">Sign up</button>
+                    </div>
                 </div>
-
-                <div class="flex-row align-end justify-center gap-35 btn-sign-up-part">
-                    <button id="signUpBtn" type="submit" value="Sign up"
-                        class="button btn-login-size btn-fourth btn-fourth-size-sign-up"
-                        onclick="signUpSubmitHandler(event)">Sign up</button>
-                </div>
-                </form>
-            </div>
+            </form>
         </div>
 
-        <div class="flex login-privacy-policy flex-row align-end justify-between">
-            <a href="#" class="login-privacy-policy-color">Privacy Policy</a>
-            <a href="#" class="login-privacy-policy-color">Legal notice</a>
+        <div class="term-links-wrapper flex-row justify-center">
+            <a href="/privacy-policy.html">Privacy Policy</a>
+            <a href="/legal-notice.html">Legal notice</a>
         </div>
+    
     </div>
 
     <div id="orientationOverlay" class="orientation-overlay"></div>
     <div id="floatingMsg" class="floating-message"></div>
-    <script src="scripts/sign-up.js"></script>
 
 </body>
 

@@ -142,17 +142,6 @@ function focusInHandler(event) {
 
 
 /**
- * Event handler: set todays date as value
- * 
- * @param {event} event - onfocus (due date input)
- */
-function setTodayAsDateValue(event) {
-    element = event.currentTarget;
-    element.valueAsDate = new Date();
-}
-
-
-/**
  * Event handler: procedure on element focus out
  * 
  * @param {event} event - onfocusout (inputs)
@@ -161,6 +150,7 @@ function focusOutHandler(event) {
     event.stopPropagation();
     event.preventDefault();
     let element = event.currentTarget;
+    (element.dataset.type == 'password') ? togglePasswordVisibility(event) : null;
     validateInput(element);
 }
 
@@ -253,11 +243,14 @@ function checkCustomValidation(element) {
         validatePhoneInput(element);
         return (element.value.length >= 10);
     }
-    if(! element.hasAttribute("data-custom-validation"))  {
+    if(! element.hasAttribute("data-validation-type"))  {
         return true;
     }
-    if(element.dataset.customValidation == 'required') {
+    if(element.dataset.validationType == 'required') {
         return (element.value.length > 0);
+    }
+    if(element.dataset.validationType == 'password-confirmation') {
+        return validateConfirmPassword(element);
     }
 }
 

@@ -11,18 +11,18 @@ async function initSummary() {
     getMainTemplates();
     await getTaskData();
     await setSummaryObj();
-    await showSummaryWelcomeScreen()
     updateSummaryValues();
     setSummaryWidgetProps();
+    showSummaryWelcomeScreen()
 }
 
 
 /**
  * Show welcome screen (<= 1259px)
  */
-async function showSummaryWelcomeScreen() {
+function showSummaryWelcomeScreen() {
     const greetingScreen = document.getElementById('greetingScreen');
-    console.log(greetingScreen);
+    // console.log(greetingScreen);
     let mql = window.matchMedia("(max-width: 1259px)");
     if(mql.matches) {
       greetingScreen.classList.remove('hide');
@@ -88,7 +88,6 @@ async function setSummaryObj() {
   await setUpcomings();
   await setTaskCounts();
   setWelcomeMsg();
-  console.log(summary);
 }
 
 

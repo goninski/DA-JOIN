@@ -15,7 +15,6 @@ function getHeaderTemplate() {
                     <a class="help-link-mobile" href="/help.html">Help</a>
                     <a href="/legal-notice.html">Legal Notice</a>
                     <a href="/privacy-policy.html">Privacy Policy</a>
-                    <a href="/data-handling.html">Data Handling</a>
                     <a href="#" onclick="signOut(event)">Log out</a>
                 </div> 
             </nav>
@@ -231,10 +230,10 @@ function getTaskDetailsAssignedContactTemplate(contact) {
  */
 function getTaskDetailsSubtaskTemplate(task, subtask, subtaskIndex) {
   return `
-    <li class="subtask-item flex-row align-center">
-        <input type="checkbox" ${subtask.done ? 'checked' : ''} class="custom custom-checkbox clickable hide-focus" onclick="toggleSubtaskStatus(event, ${task.id}, ${subtaskIndex})">
+    <li class="subtask-item flex-row align-center custom-checkbox-wrapper">
+        <input type="checkbox" id="subtaskStatus-${task.id}-${subtaskIndex}" ${subtask.done ? 'checked' : ''} class="custom-checkbox clickable hide-focus" onchange="toggleSubtaskStatus(event, ${task.id}, ${subtaskIndex})">
         <img src="assets/icons/checkbox-checked.svg" alt="checkbox-checked" class="icon-checkbox-checked custom-checkbox-checked">
-        <label>${subtask.title}</label>
+        <label for="subtaskStatus-${task.id}-${subtaskIndex}">${subtask.title}</label>
     </li>
   `;
 }
@@ -334,17 +333,18 @@ function getContactListboxOptionTemplate(contact, index) {
     <li class="select-option" role="option" data-index="${index}" onclick="event.stopPropagation()">
         <label for="checkboxAssignedContact-${contact.id}" class="hide-focus" onkeydown="event.stopPropagation()">${contact.name}
             <div class="profile-batch label-icon" style="--profile-color: ${contact.color};">${contact.initials}</div>
-            <div class="input-icon-wrapper custom-checkbox">
-                <input type="checkbox" class="custom custom-checkbox checkbox-end clickable" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}"  onchange="dropdownOptionClickHandlerMultiple(event, '${contact.id}')">
-                <div class="checkbox-checked-wrapper">
-                    <img src="assets/icons/checkbox-checked-white.svg" alt="checkbox-checked" class="icon-checkbox-checked">
-                </div>
+            <div class="input-icon-wrapper custom-checkbox-wrapper">
+                <input type="checkbox" class="custom-checkbox checkbox-end clickable" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}"  onchange="dropdownOptionClickHandlerMultiple(event, '${contact.id}')">
+                <img src="assets/icons/checkbox-checked-white.svg" alt="checkbox-checked" class="icon-checkbox-checked custom-checkbox-checked">
             </div>
         </label>
     </li>
     `
 }
 
+                // <div class="checkbox-checked-wrapper">
+                //     <img src="assets/icons/checkbox-checked-white.svg" alt="checkbox-checked" class="icon-checkbox-checked">
+                // </div>
 
 /**
  * Return html of the category form field group (task form/s)
@@ -355,7 +355,7 @@ function getCategoryFormFieldTemplate() {
             <label for="categorySelect" class="required">Category</label>
             <div class="select custom-select">
                 <div class="input-wrapper custom-select">
-                    <input type="text" id="categorySelect" name="categorySelect" role="combox" placeholder="Select task category" class="clickable" data-custom-validation="required" data-active-index="-1" readonly onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" onclick="dropdownEventHandler(event)" onkeydown="dropdownEventHandler(event)"   >
+                    <input type="text" id="categorySelect" name="categorySelect" role="combox" placeholder="Select task category" class="clickable" data-validation-type="required" data-active-index="-1" readonly onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" onclick="dropdownEventHandler(event)" onkeydown="dropdownEventHandler(event)"   >
                     <div class="input-icon-wrapper custom-select">
                         <button onclick="event.preventDefault(), dropdownEventHandler(event)">
                             <img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown">

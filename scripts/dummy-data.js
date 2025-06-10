@@ -243,8 +243,9 @@ async function resetData() {
         convertRelationalDueDatesToDateStringDB(task);
     });
     await saveAllData()
-    await showFloatingMessage('text', 'Dummy Data Reset successfull !');
-    setTimeout(() => {window.location.href = "/board.html";}, 1500);
+    // await showFloatingMessage('text', 'Dummy Data Reset successfull !');
+    // setTimeout(() => {window.location.href = "/board.html";}, 1500);
+    // setTimeout(() => {window.location.href = "/summary.html";}, 1500);
 }
 
 

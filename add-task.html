@@ -7,14 +7,14 @@
     <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
     <title>Add Task | Join</title>
     <link rel="stylesheet" href="style.css">
-    <script src="./scripts/data-main.js"></script>
-    <script src="./scripts/data-sub.js"></script>
-    <script src="./scripts/templates.js"></script>
+    <script src="scripts/data-main.js"></script>
+    <script src="scripts/data-sub.js"></script>
+    <script src="scripts/templates.js"></script>
     <script src="script.js"></script>
-    <script src="./scripts/forms-main.js"></script>
-    <script src="./scripts/forms-sub.js"></script>
-    <script src="./scripts/subtasks.js"></script>
-    <script src="./scripts/tasks.js"></script>
+    <script src="scripts/forms-main.js"></script>
+    <script src="scripts/forms-sub.js"></script>
+    <script src="scripts/subtasks.js"></script>
+    <script src="scripts/tasks.js"></script>
 </head>
 
 <body onload="initAddTask()" class="add-task-page">
@@ -22,7 +22,7 @@
     <header id="header" class="section"></header>
 
     <main>
-        <div class="main-inner-absolute task-page-inner add-task" style="--ct-w: 976px;">
+         <div class="main-inner-absolute task-page-inner add-task" style="--ct-w: 976px;">
 
 
             <div class="ct-container">
@@ -32,16 +32,13 @@
             </div>
 
             <div class="ct-container flex-grow pos-relative">
-                <form id="addTaskForm" onsubmit="submitCreateTask(event)"
-                    class="task-form add-task-form flex-col flex-grow gap scrollable">
+                <form id="addTaskForm" onsubmit="submitCreateTask(event)" class="task-form add-task-form flex-col flex-grow gap scrollable">
                     <div id="addTaskFieldGroups" class="field-groups flex-row"></div>
 
                     <div class="submit-button-wrapper flex-row flex-grow gap justify-end pos-relative">
                         <div class="required-info">This field is required</div>
-                        <button id="btnReset" class="button btn-cancel btn-icon btn-secondary"
-                            onclick="resetAddTaskForm(event)"></button>
-                        <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary"
-                            disabled></button>
+                        <button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetAddTaskForm(event)"></button>
+                        <button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled></button>
                     </div>
 
                 </form>
@@ -57,5 +54,4 @@
     <div id="orientationOverlay" class="orientation-overlay"></div>
 
 </body>
-
 </html>

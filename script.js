@@ -48,11 +48,14 @@ function signOut(event) {
 
 /**
  * Redirect to login page
+ * 
+ * @param {number} timeout - timeout milliseconds
  */
-function redirectToLogin() {
+function redirectToLogin(event = null, timeout = 1500) {
+    event ? event.stopPropagation() : null;
     // loggedInUserId = null;
     // localStorage.removeItem('pseudoAuthStatus');
-    setTimeout(function() {window.location.href = '/login.html'}, 1500);
+    setTimeout(function() {window.location.href = '/login.html'}, timeout);
 }
 
 
@@ -328,15 +331,29 @@ function toggleIconColorOnHover(event, hoverColor = 'blue') {
  */
 async function showFloatingMessage(template, msg = '', timeout = 1500, optClass = 'showing-default') {
     let element = document.getElementById("floatingMsg");
+    element.innerHTML = '';
     if(element) {
         element.classList.remove('showing-default', 'showing-top');
         element.innerHTML = (template == 'addedTask') ? getFloatingMessageTaskAddedTemplate() : getFloatingMessageTextTemplate(msg);
         element.classList.add('button', 'btn-icon', 'btn-primary', 'showing', optClass);
         setTimeout(function() { 
-            element.classList.remove('showing');
-            element.innerHTML = '';
+            element.classList.remove('showing', optClass);
         }, timeout);
     }
+}
+
+
+/**
+ * Helper: fade in on entry (fade in elements with the class 'fade-in-content')
+ * 
+ * @param {string} className - class to select elements
+ */
+async function fadeInOnEntry(className = 'fade-in-content') {
+    let content = document.querySelectorAll('.' + className);
+    content.forEach(element => element.classList.remove('animated'));
+    setTimeout(() => {
+        content.forEach(element => element.classList.add('animated'));
+    }, 125);
 }
 
 

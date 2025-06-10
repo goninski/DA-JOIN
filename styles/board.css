@@ -300,30 +300,13 @@
 #taskDetailsSubtaskWrapper li:hover {
   background-color: #EEEEEE; 
 }
-#taskDetailsSubtaskWrapper .custom-checkbox {
-  width: 14px;
-  height: 14px;
-  bottom: 7px;
-  margin: 0;
-}
-#taskDetailsSubtaskWrapper .custom-checkbox-checked {
-  display: none;
-}
 #taskDetailsSubtaskWrapper .custom-checkbox:not(:checked):hover {
   background-color: #ccc;
 }
-#taskDetailsSubtaskWrapper .custom-checkbox:checked {
-  opacity: 0;
-}
-#taskDetailsSubtaskWrapper .custom-checkbox:checked + .custom-checkbox-checked {
-  position: absolute;
-  display: flex;
-  pointer-events: none;
-}
-
 .board-task.dragging {
   transform: rotate(5deg);
 }
+
 
 /* BREAKPOINTS */
 

@@ -4,77 +4,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login | Join</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="styles/login.css">
-    <link rel="stylesheet" href="styles/sign-up.css">
-    <script src="./scripts/data-main.js"></script>
-    <script src="./scripts/data-sub.js"></script>
-    <script src="./scripts/templates.js"></script>
+    <link rel="stylesheet" href="styles/entry.css">
+    <script src="scripts/data-main.js"></script>
+    <script src="scripts/data-sub.js"></script>
+    <script src="scripts/dummy-data.js"></script>
+    <script src="scripts/templates.js"></script>
     <script src="script.js"></script>
-    <script src="./scripts/sign-up.js"></script>
+    <script src="scripts/forms-main.js"></script>
+    <script src="scripts/forms-sub.js"></script>
+    <script src="scripts/entry.js"></script>
 </head>
 
-<body class="bg-grey flex justify-center entry-page login-page">
-    <img src=" ./assets/img/capa-2.png" alt="Logo" id="login_logo_desktop">
-    <img src=" ./assets/img/logo_dark.png" alt="Logo" id="login_logo_mobile">
+<body class="entry-page login-page" onload="initLogin()">
 
-    <div class="page-sign-up-wrapper">
-        <div id="login-main-content" class="login-main-content flex justify-center">
-            <div class=" flex-row header_login">
-                <div class="pos-absol-header-login">
-                    <p class="not_a_join_user-login-header label">Not a Join user?</p>
-                    <a href="./sign-up.html">
-                        <button class="btn-login-header-size btn-login-header btn-fourth btn-fourth-size-login-top">Sign
-                            up</button>
-                    </a>
-                </div>
+    <div class="main ct-container">
+
+        <img id="logoMain" class="logo-entry initial" src="./assets/img/logo-dark.svg" alt="logo-join">
+
+        <div class="sign-up-links-wrapper flex-row justify-end align-center fade-in-content show">
+            <p>Not a Join user?</p>
+            <a id="signUpLinkBtn" href="/sign-up.html" class="button btn-check btn-iconless btn-primary" title="open SignUp Page">Sign up</a>
+        </div>
+
+        <div class="entry-form-wrapper flex-col align-center pos-relative fade-in-content animated">
+
+            <div class="page-title-wrapper pos-relative">
+                <h1 class="page-title top-element">Log in</h1>
+                <div class="title-deco-divider"></div>
             </div>
 
-            <div class="flex justify-center">
-                <div class="flex-col bg-white login-div-size flex center gap_32px login-section">
-                    <div class="gap_16px headline_login flex-col align-center">
-                        <h1 class="login_title">Log in</h1>
-                        <div class="login_border"></div>
+            <form id="loginForm" onsubmit="submitLoginFormHandler(event)" class="flex-col entry-form login-form">
+
+                <div class="field-group flex-col flex-grow">
+
+                    <div class="field-wrapper has-alert">
+                        <div class="input-wrapper">
+                            <input type="email" id="inputEmail" name="email" placeholder="Email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)"">
+                            <div class="input-icon-wrapper simple">
+                                <img src="/assets/icons/input-email.svg" alt="email-icon" class="icon-email-input">
+                            </div>
+                        </div>
+                        <div role="alert" class="validation-alert">Please enter a valid email address</div>
+                    </div>
+                    <div class="field-wrapper has-alert">
+                        <div class="input-wrapper">
+                            <input type="password" data-type="password" id="inputPassword" name="password" placeholder="Password" required minlength="8" maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="passwordInputHandler(event)">
+                            <div class="input-icon-wrapper simple">
+                                <img src="./assets/icons/input-password.svg" alt="password-icon" class="icon-size-default">
+                                <button onclick="togglePasswordVisibility(event)" tabindex="-1" class="hide hide-focus"><img src="./assets/icons/input-password-hidden.svg" alt="password-hidden-icon" class="icon-size-default"></button>
+                            </div>
+                        </div>
+                        <div role="alert" class="validation-alert">Please enter a minimum of 8 characters</div>
                     </div>
 
-                    <div class="flex-col login-email-part center">
-                        <div class="input-wrapper-signup-login flex justify-between" id="email-input-div">
-                            <input class="login-signup-input pictureinput mail-pic" type="email" name="email"
-                                id="email-login" placeholder="Email" required>
-                        </div>
-
-                        <div class="input-wrapper-signup-login flex justify-between" id="pwd-input-div">
-                            <input class="login-signup-input pictureinput-for-pwd" type="password" id="pwd-login"
-                                name="pwd" minlength="8" placeholder="Password" required
-                                oninput="onPasswordInput(this)">
-                            <div class="pwd-icon pwd-pic" onclick="togglePasswordVisibility('pwd-login', this)"></div>
-                        </div>
-
-                        <div id="login-error-message" class="login-error hidden">
-                            Check your email and password. Please try again.
+                    <div class="field-wrapper field-wrapper-terms">
+                        <div class="input-wrapper custom-checkbox-wrapper left">
+                            <input type="checkbox" id="inputLoadFreshDataset" name="loadFreshDataSet" class="custom-checkbox clickable hide-focus">
+                            <img src="assets/icons/checkbox-checked.svg" alt="checkbox-checked" class="icon-checkbox-checked custom-checkbox-checked">
+                            <label for="inputLoadFreshDataset" class="label xpointer-events-none">Start with a fresh set of dummy&nbsp;data</label>
                         </div>
                     </div>
 
-                    <div class="flex-row align-end justify-center gap-35 button-part-login">
-                        <button id="signInBtn" type="button" value="Log in"
-                            class="button btn-login-size btn-fourth btn-fourth-size-login"
-                            onclick="handleLogin(event)">Log
-                            in</button>
-                        <button id="signInGuestBtn" class="button btn-login-size btn-third"
-                            onclick="guestLogin(event)">Guest Log in</button>
+                    <div id="submitBtnWrapper" class="submit-button-wrapper flex-row justify-center align-center">
+                        <button id="btnSubmit" type="submit" class="button btn-check btn-icon btn-primary" disabled="">Log in</button>
+                        <button id="btnLoginAsGuest" class="button btn-check btn-icon btn-secondary" onclick="loginAsGuest(event)" title="Log in as Guest">Guest Log in</button>
                     </div>
                 </div>
-            </div>
+            </form>
+
         </div>
-        <div class="flex login-privacy-policy flex-row align-end justify-between">
-            <a href="/privacy-policy.html" class="login-privacy-policy-color">Privacy Policy</a>
-            <a href="/legal-notice.html" class="login-privacy-policy-color">Legal notice</a>
+
+        <div class="term-links-wrapper flex-row justify-center fade-in-content animated">
+            <a href="/privacy-policy.html">Privacy Policy</a>
+            <a href="/legal-notice.html">Legal notice</a>
         </div>
+
     </div>
-    <div id="orientationOverlay" class="orientation-overlay"></div>
 
-    <script src="scripts/login.js"></script>
+    <div id="orientationOverlay" class="orientation-overlay"></div>
+    <div id="floatingMsg" class="floating-message"></div>
 
 </body>
 

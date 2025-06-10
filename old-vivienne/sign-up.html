@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/login.css">
+    <link rel="stylesheet" href="styles/sign-up.css">
+    <script src="./scripts/data-main.js"></script>
+    <script src="./scripts/data-sub.js"></script>
+    <script src="./scripts/templates.js"></script>
+    <script src="script.js"></script>
+</head>
+
+<body class="bg-grey flex justify-center entry-page signup-page">
+    <div>
+        <img class="logo_login" src="./assets/img/capa-2.png" alt="Logo" id="logo_sign_up">
+    </div>
+    <div class="page-sign-up-wrapper">
+        <div class="flex justify-center sign-up-main-part">
+            <div class="flex-col bg-white sign-up-div-size flex center gap_32px">
+                <div class="arrow_left_icon_position">
+                    <a href="./login.html" class="a-arrow_left_icon">
+                        <img src="./assets/img/arrow-left-line.png" alt="Arrow Left Icon" class="arrow_left_icon">
+                    </a>
+                </div>
+
+                <div class="headline_login flex-col align-center gap_16px">
+                    <h1 class="login_title">Sign up</h1>
+                    <div class="login_border"></div>
+                </div>
+
+                <div class="flex-col login-email-part-sign-up center gap_16px">
+                    <form id="signup-form">
+                        <div class="flex-col input-part-sign-up">
+                            <div class="input-wrapper-signup-login margin-bottom-24px flex justify-between">
+                                <input class="login-signup-input pictureinput person-pic" type="text" minlength="3"
+                                    placeholder="Name" id="sign-up-name" required>
+                            </div>
+
+                            <div class="input-wrapper-signup-login margin-bottom-24px flex justify-between"
+                                id="email-div-sign-up">
+                                <input class="login-signup-input pictureinput mail-pic" type="email" name="email"
+                                    id="email" placeholder="Email" required>
+                            </div>
+
+                            <div class="input-wrapper-signup-login margin-bottom-24px flex justify-between">
+                                <input class="login-signup-input pictureinput" type="password" id="pwd" name="pwd"
+                                    minlength="8" placeholder="Password" required oninput="onPasswordInput(this)">
+                                <div class="pwd-icon pwd-pic" onclick="togglePasswordVisibility('pwd', this)"></div>
+                            </div>
+
+                            <div class="input-wrapper-signup-login flex justify-between" id="confirm-pwd-div-sign-up">
+                                <input class="login-signup-input pictureinput" type="password" id="confirm_pwd"
+                                    name="pwd" minlength="8" placeholder="Confirm Password" required
+                                    oninput="onPasswordInput(this)">
+                                <div class="pwd-icon pwd-pic" onclick="togglePasswordVisibility('confirm_pwd', this)">
+                                </div>
+                            </div>
+                            <div id="sign-up-error-message" class="sign-up-error hidden margin-bottom-16px">
+                                Your passwords don't match. Please try again.
+                            </div>
+                        </div>
+
+
+                        <label class="custom-checkbox-container">
+                            <input type="checkbox" id="terms-checkbox" required>
+                            <span class="custom-checkbox-visuals">
+                                <span class="custom-checkbox-box"></span>
+                                <img src="assets/icons/checkbox-checked.svg" class="custom-checkbox-icon" alt="checked">
+                            </span>
+                            <span class="checkbox-text">
+                                I accept the <a href="#" class="a-privacy-policy">Privacy policy</a>
+                            </span>
+                        </label>
+
+
+                </div>
+
+                <div class="flex-row align-end justify-center gap-35 btn-sign-up-part">
+                    <button id="signUpBtn" type="submit" value="Sign up"
+                        class="button btn-login-size btn-fourth btn-fourth-size-sign-up"
+                        onclick="signUpSubmitHandler(event)">Sign up</button>
+                </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="flex login-privacy-policy flex-row align-end justify-between">
+            <a href="#" class="login-privacy-policy-color">Privacy Policy</a>
+            <a href="#" class="login-privacy-policy-color">Legal notice</a>
+        </div>
+    </div>
+
+    <div id="orientationOverlay" class="orientation-overlay"></div>
+    <div id="floatingMsg" class="floating-message"></div>
+    <script src="scripts/sign-up.js"></script>
+
+</body>
+
+</html>
