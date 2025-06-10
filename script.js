@@ -344,14 +344,16 @@ async function showFloatingMessage(template, msg = '', timeout = 1500, optClass 
 
 
 /**
- * Helper: fade in on entry (fade in elements with the class 'fade-in-content')
+ * Helper: add and remove body class with timer (helper for animation styles)
  * 
  * @param {string} className - class to add
- * @param {number} timemout - timeout (ms) to add the class
+ * @param {number} timemoutAdd - timeout (ms) to add the class (-1 = do not add)
+ * @param {number} timemoutRemove - timeout (ms) to remove the class (-1 = do not remove)
  */
-async function addBodyClass(className, timeout = 0) {
+async function addBodyClass(className, timeoutAdd = 0, timeoutRemove = -1) {
     document.body.classList.remove(className);
-    setTimeout(() => document.body.classList.add(className), timeout);
+    timeoutAdd >= 0 ? setTimeout(() => document.body.classList.add(className), timeoutAdd) : null;
+    timeoutRemove >= 0 ? setTimeout(() => document.body.classList.remove(className), timeoutRemove) : null;
 }
 
 

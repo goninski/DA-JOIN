@@ -345,7 +345,7 @@ function setSubmitBtnState(formId) {
     let form = document.getElementById(formId);
     let submitBtn = form.querySelector('[type="submit"]');
     submitBtn.setAttribute('disabled', '');
-    formIsValid(formId) ? submitBtn.removeAttribute('disabled', '') : submitBtn.setAttribute('disabled');
+    formIsValid(formId) ? submitBtn.removeAttribute('disabled') : submitBtn.setAttribute('disabled', '');
 }
 
 
