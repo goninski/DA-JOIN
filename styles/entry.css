@@ -21,7 +21,7 @@
     width: 274px;
     transform: translate(-50%, -50%);
 }
-.login-page .logo-entry.animated,
+.login-page.logo-animation .logo-entry,
 .sign-up-page .logo-entry {
     top: 0;
     left: 0;
@@ -117,6 +117,13 @@
 @media(max-width: 800px) {
     :root {
         --field-width: 366px;
+    }
+    .entry-page.entry-animation {
+        transition: background 1s ease-in-out;
+        background-color: var(--bg-page);
+    }
+    .entry-page {
+        background-color: black;
     }
     .logo-entry {
         width: 64px !important;

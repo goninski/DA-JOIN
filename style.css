@@ -87,10 +87,10 @@ body {
     line-height: var(--lh-base);
     color: var(--clr-main);
 }
-.fade-in-content:not(.animated) {
+body:not(.entry-animation) .fade-in-content {
     opacity: 0;
 }
-.fade-in-content.animated {
+body.entry-animation .fade-in-content {
     opacity: 1;
     transition: opacity 1s ease-in-out;
 }

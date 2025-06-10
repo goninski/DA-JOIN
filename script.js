@@ -346,14 +346,12 @@ async function showFloatingMessage(template, msg = '', timeout = 1500, optClass 
 /**
  * Helper: fade in on entry (fade in elements with the class 'fade-in-content')
  * 
- * @param {string} className - class to select elements
+ * @param {string} className - class to add
+ * @param {number} timemout - timeout (ms) to add the class
  */
-async function fadeInOnEntry(className = 'fade-in-content') {
-    let content = document.querySelectorAll('.' + className);
-    content.forEach(element => element.classList.remove('animated'));
-    setTimeout(() => {
-        content.forEach(element => element.classList.add('animated'));
-    }, 125);
+async function addBodyClass(className, timeout = 0) {
+    document.body.classList.remove(className);
+    setTimeout(() => document.body.classList.add(className), timeout);
 }
 
 

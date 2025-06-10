@@ -9,8 +9,7 @@ localStorage.removeItem('pseudoAuthStatus');
  */
 async function initLogin() {
     document.getElementById('loginFailAlert').classList.add('hide');
-    await runLogoEntryAnimation();
-    await fadeInOnEntry();
+    await runEntryAnimation();
     await setInitialFormState('loginForm');
 }
 
@@ -26,9 +25,9 @@ async function initSignUp() {
 /**
  * Run Logo entry animation
  */
-async function runLogoEntryAnimation() {
-    let logo = document.getElementById('logoMain');
-    logo.classList.add('animated');
+async function runEntryAnimation() {
+    await addBodyClass('logo-animation', 0);
+    await addBodyClass('entry-animation', 125);
 }
 
 
