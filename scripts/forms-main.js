@@ -116,8 +116,8 @@ async function getInvalidInputIds(formId) {
  * @param {string} formId - id of the form element
  * @returns {boolean} - true if valid
  */
-async function formIsValid(formId) {
-    await getInvalidInputIds(formId);
+function formIsValid(formId) {
+    getInvalidInputIds(formId);
     return !hasLength(invalidFields) ? true : false;
 }
 
@@ -173,7 +173,6 @@ function focusOutHandler(event) {
  * @param {string} formId - id of the form element
  */
 function getFormElementsArray(formId) {
-    console.log(formId);
     let form = document.getElementById(formId);
     let elements = form.elements;
     let elementsArr = Array.from(elements);
@@ -338,18 +337,6 @@ function resetInputValidation(event) {
 
 
 /**
- * Set submit button state from event
- * 
- * @param {string} formId - id of the form
- */
-function setSubmitBtnStateOnEvent(event) {
-    event.stopPropagation();
-    let formId = event.currentTarget.form.id;
-    setSubmitBtnState(formId);
-}
-
-
-/**
  * Set the submit button state of a form
  * 
  * @param {string} formId - id of the form
@@ -359,6 +346,18 @@ function setSubmitBtnState(formId) {
     let submitBtn = form.querySelector('[type="submit"]');
     submitBtn.setAttribute('disabled', '');
     formIsValid(formId) ? submitBtn.removeAttribute('disabled', '') : submitBtn.setAttribute('disabled');
+}
+
+
+/**
+ * Set submit button state from event
+ * 
+ * @param {string} formId - id of the form
+ */
+function setSubmitBtnStateOnEvent(event) {
+    event.stopPropagation();
+    let formId = event.currentTarget.form.id;
+    setSubmitBtnState(formId);
 }
 
 

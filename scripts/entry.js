@@ -31,28 +31,13 @@ async function runEntryAnimation() {
 
 
 /**
- * Validate password confirmation
- * 
- * @param {element} element - input element (call form global focusOutHandler)
- */
-function validateConfirmPassword(element) {
-    let pwConfirm = element.value;
-    let form = element.form;
-    let pwInputElement = form.querySelector('[data-type="password"]');
-    if(pwInputElement) {
-      let pw = pwInputElement.value;
-      return (pwConfirm === pw);
-    }
-}
-
-
-/**
  * Event handler: password input (show/hide visibility button)
  * 
  * @param {event} event - oninput (password input)
  */
 function passwordInputHandler(event) {
     event.stopPropagation();
+    setSubmitBtnStateOnEvent(event);
     getCurrentFieldElements(event.currentTarget);
     let inputValue = currentFieldElements.input.value;
     let pwIconElement = currentFieldElements.fieldWrapper.querySelector('[alt="password-icon"]');
@@ -64,7 +49,6 @@ function passwordInputHandler(event) {
         pwIconElement.classList.remove('hide');
         visibilityButton.classList.add('hide');
     }
-    setSubmitBtnStateOnEvent(event);
 }
 
 
@@ -106,6 +90,22 @@ function togglePasswordVisibility(event) {
         inputElement.type = 'text';
         iconElement.src = iconElement.src.replace('hidden', 'visible');
         iconElement.alt = iconElement.alt.replace('hidden', 'visible');
+    }
+}
+
+
+/**
+ * Validate password confirmation
+ * 
+ * @param {element} element - input element (call form global focusOutHandler)
+ */
+function validateConfirmPassword(element) {
+    let pwConfirm = element.value;
+    let form = element.form;
+    let pwInputElement = form.querySelector('[data-type="password"]');
+    if(pwInputElement) {
+      let pw = pwInputElement.value;
+      return (pwConfirm === pw);
     }
 }
 
