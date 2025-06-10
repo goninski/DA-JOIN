@@ -1,6 +1,7 @@
 currentContact = {};
 loggedInUserId = null;
 localStorage.removeItem('pseudoAuthStatus');
+// submitBtnStateMode = 2; // 1=full validation, 2=required
 
 
 /**
@@ -130,13 +131,15 @@ async function loginAsGuest(event) {
 async function submitLoginFormHandler(event, isGuest = false) {
     event.stopPropagation();
     event.preventDefault();
-    let formInputs = await getFormInputObj('loginForm');
-    console.log(formInputs);
-    if(isGuest) {
-        loggedInUserId = 'guest';
-        return await successfullLogin(formInputs);
+    setFormFieldsValidity('loginForm');
+    if(!hasLength(invalidFields)) {
+        let formInputs = await getFormInputObj('loginForm');
+        if(isGuest) {
+            loggedInUserId = 'guest';
+            return await successfullLogin(formInputs);
+        }
+        await checkIfUserAndPasswordIsCorrect(formInputs.email, formInputs.password) ? await successfullLogin(formInputs) : await loginFail();
     }
-    await checkIfUserAndPasswordIsCorrect(formInputs.email, formInputs.password) ? await successfullLogin(formInputs) : await loginFail();
 }
 
 
@@ -174,8 +177,11 @@ async function loginFail() {
 async function submitSignUpFormHandler(event) {
     event.stopPropagation();
     event.preventDefault();
-    let formInputs = await getFormInputObj('signUpForm');
-    await checkIfUserExists(formInputs.email) ? await signUpFail() : await successfullSignUp(formInputs);
+    setFormFieldsValidity('signUpForm');
+    if(!hasLength(invalidFields)) {
+        let formInputs = await getFormInputObj('signUpForm');
+        await checkIfUserExists(formInputs.email) ? await signUpFail() : await successfullSignUp(formInputs);
+    }
 }
 
 

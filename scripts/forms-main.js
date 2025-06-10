@@ -1,3 +1,4 @@
+let submitBtnStateMode = 1; // 1=full validation, 2=required
 let formMode = '';
 let invalidFields = [];
 let listboxElements = [];
@@ -97,12 +98,13 @@ async function getFormInputObj(formId) {
  * Return an array (invalidFields) containing all form element id's with an invalid input
  * 
  * @param {string} formId - id of the form element
+ * @param {number} validationMode - 1=full validation, other=required only
  */
-function getInvalidInputIds(formId) {
+function getInvalidInputIds(formId, validationMode = 1) {
     invalidFields = [];
     let formElements = getFormElementsArray(formId);
     formElements.forEach(function(element) {
-        let isValidElement = validateElement(element);
+        let isValidElement = validateElement(element, validationMode);
         if(!isValidElement) {
             invalidFields.push(element.id);
         }
@@ -151,7 +153,7 @@ function focusOutHandler(event) {
     event.preventDefault();
     let element = event.currentTarget;
     (element.dataset.type == 'password') ? togglePasswordVisibility(event) : null;
-    validateInput(element);
+    submitBtnStateMode === 1 ? validateInput(element, submitBtnStateMode) : null;
 }
 
 
@@ -216,16 +218,19 @@ function setFieldValidity(element) {
  * Validate input element
  * 
  * @param {element} element - input element
+ * @param {number} validationMode - 1=full validation, other=required only
  * @returns {boolean}
  */
-function validateElement(element) {
+function validateElement(element, validationMode = 1) {
     if(element.hasAttribute('required')) {
         if(element.value.replaceAll(' ', '') == '') {
             return false;
         };
     }
-    if(! element.checkValidity() || ! checkCustomValidation(element)) {
-        return false;
+    if(validationMode === 1) {
+        if(! element.checkValidity() || ! checkCustomValidation(element)) {
+            return false;
+        }
     }
     return true;
 }
@@ -321,12 +326,36 @@ function setSubmitBtnStateOnEvent(event) {
 
 
 /**
+ * Check and set all form inputs validity
+ * 
+ * @param {string} formId - id of the form
+ * @returns {boolean} - true if no invalid fields (full validity check)
+ */
+function setFormFieldsValidity(formId) {
+    console.log(submitBtnStateMode);
+    if(submitBtnStateMode === 1) {
+        return;
+    }
+    getInvalidInputIds(formId, 1);
+    console.log(invalidFields);
+    if(hasLength(invalidFields)) {
+        invalidFields.forEach((elementId) => {
+            let element = document.getElementById(elementId);
+            setFieldValidity(element);
+        });
+    }
+}
+
+
+/**
  * Set the submit button state of a form
  * 
  * @param {string} formId - id of the form
+ * @param {number} validationMode - 1=full validation, other=required only
  */
-function setSubmitBtnState(formId) {
-    getInvalidInputIds(formId);
+function setSubmitBtnState(formId, validationMode = 1) {
+    validationMode = submitBtnStateMode ? submitBtnStateMode : validationMode;
+    getInvalidInputIds(formId, validationMode);
     let form = document.getElementById(formId);
     let submitBtn = form.querySelector('[type="submit"]');
     submitBtn.setAttribute('disabled', '');
