@@ -13,7 +13,7 @@
     align-self: flex-start;
     margin-left: auto;
     flex-grow: 1;
-    gap: 32px;
+    gap: 40px;
 }
 .logo-wrapper {
     position: fixed;
@@ -169,7 +169,6 @@
         gap: 20px;
         padding-block: 32px;
         padding-inline: 16px;
-        /* padding-inline: 5vw; */
         width: 100%;
         max-width: 396px;
     }
@@ -207,7 +206,7 @@
     }
 }
 
-@media(max-height: 830px) {
+@media(max-height: 849px) {
     .entry-form-wrapper {
         position: static;
         margin-top: auto;

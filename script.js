@@ -374,7 +374,7 @@ async function removeBodyClass(className, timeout = -1) {
 async function runSlideInAnimation(element, timeout = 0) {
     element.classList.remove('slide-out');
     element.classList.add('slide-in');
-    setTimeout(function() {element.style = '';}, timeout);
+    setTimeout(() => element.style = '', timeout);
 }
 
 
@@ -387,6 +387,6 @@ async function runSlideInAnimation(element, timeout = 0) {
 async function runSlideOutAnimation(element, timeout = 175) {
     element.classList.remove('slide-in');
     element.classList.add('slide-out');
-    setTimeout(function() {element.style = 'display: none';}, timeout);
+    setTimeout(() => element.style = 'display: none', timeout);
 }
 

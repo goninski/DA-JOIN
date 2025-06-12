@@ -5,6 +5,29 @@
 @import url("styles/assets-forms.css");
 
 
+@keyframes floating-message {
+    0%, 100% {left: 100%; transform: translateX(110%);}
+    50% {left: 66%; transform: translateX(-50%);}
+}
+
+/* @keyframes slide-in-right {
+    from {left: 100%; transform: translateX(110%);}
+    to {left: 50%; transform: translateX(-50%);}
+}
+@keyframes slide-out-right {
+    from {left: 50%; transform: translateX(-50%);}
+    to {left: 100%; transform: translateX(110%);}
+} */
+
+@keyframes slide-in-right {
+    from {margin-right: -100%;}
+    to {margin-right: 0;}
+} 
+@keyframes slide-out-right {
+    from {margin-right: 0;}
+    to {margin-right: -100%;}
+}
+
 :root {
     --bg-page: #f6f7f8;
     --clr-main: #2A3647;
@@ -58,29 +81,6 @@
     --height-header: 96px;
     --height-footer: 0px;
     --field-width: 424px;
-}
-
-@keyframes floating-message {
-    0%, 100% {left: 100%; transform: translateX(110%);}
-    50% {left: 66%;transform: translateX(-50%);}
-}
-
-@keyframes slide-in-right {
-    from {
-        margin-right: -100%
-    }
-    to {
-        margin-right: 0;
-    }
-}
-
-@keyframes slide-out-right {
-    from {
-        margin-right: 0
-    }
-    to {
-        margin-right: -100%;
-    }
 }
 
 html {

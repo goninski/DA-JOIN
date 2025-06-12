@@ -144,11 +144,11 @@ button {
 .floating-message {
     position: fixed;
     left: 100%;
-    bottom: 0;
     z-index: 9999;
     height: unset;
     max-height: max-content;
     width: 100%;
+    min-width: 272px;
     max-width: max-content;
     border-radius: 20px;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
@@ -166,7 +166,7 @@ button {
     bottom: 20%;
 }
 .floating-message.showing-top {
-    top: 200px;
+    top: calc(var(--height-header) + 16px);
 }
 :is(.floating-button-round, .floating-message) img {
     height: 32px;
@@ -254,10 +254,10 @@ button {
 /* DIALOGUES */
 
 .dialogue.slide-in {
-    animation: slide-in-right 175ms ease-in;
+    animation: slide-in-right 125ms;
 }
 .dialogue.slide-out {
-    animation: slide-out-right 175ms ease-in;
+    animation: slide-out-right 125ms;
 }
 .dialogue {
     position: fixed;
@@ -433,9 +433,8 @@ button.close-dialogue:hover .close-icon.light {
         left: 50%;
         transform: translateX(-50%);
     }
-    .floating-message.hiding {
-        right: 0;
-        transform: translateX(110%);
+    .floating-message.showing-top {
+        top: calc(var(--height-header) + 54px);
     }
 }
 
