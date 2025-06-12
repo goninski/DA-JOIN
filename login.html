@@ -17,11 +17,18 @@
     <script src="scripts/entry.js"></script>
 </head>
 
-<body class="entry-page login-page skip-fade-in" onload="initLogin()">
+<body class="entry-page login-page before-animation" onload="initLogin()">
+
+    <div class="logo-wrapper">
+        <div class="ct-container">
+            <img id="logoLight" class="logo-entry" src="./assets/img/logo-light.svg" alt="logo-join">
+            <img id="logoDark" class="logo-entry" src="./assets/img/logo-dark.svg" alt="logo-join">
+        </div>   
+    </div>
 
     <div class="main ct-container">
-
-        <img id="logoMain" class="logo-entry initial" src="./assets/img/logo-dark.svg" alt="logo-join">
+        
+        <!-- <img id="logoMain" class="logo-entry initial" src="./assets/img/logo-dark.svg" alt="logo-join"> -->
 
         <div class="sign-up-links-wrapper flex-row justify-end align-center fade-in-content show">
             <p>Not a Join user?</p>

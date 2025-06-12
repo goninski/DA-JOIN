@@ -7,8 +7,8 @@ localStorage.removeItem('pseudoAuthStatus');
  * on page load login.html
  */
 async function initLogin() {
-    await addBodyClass('logo-animation', 0);
-    await addBodyClass('entry-animation', 125);
+    await removeBodyClass('before-animation', 125);
+    await addBodyClass('animated', 1000);
     setInitialFormState('loginForm');
 }
 

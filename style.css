@@ -87,15 +87,8 @@ body {
     line-height: var(--lh-base);
     color: var(--clr-main);
 }
-body.fade-in-page {
+body.page-fade-in {
   animation: 33ms fadeIn;
-}
-body.entry-animation .fade-in-content {
-    opacity: 1;
-    transition: opacity 1s ease-in-out;
-}
-body:not(.entry-animation) .fade-in-content {
-    opacity: 0;
 }
 footer {
     margin-top: auto !important;

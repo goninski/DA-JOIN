@@ -22,7 +22,6 @@ async function initSummary() {
  */
 function showSummaryWelcomeScreen() {
     const greetingScreen = document.getElementById('greetingScreen');
-    // console.log(greetingScreen);
     let mql = window.matchMedia("(max-width: 1259px)");
     if(mql.matches) {
       greetingScreen.classList.remove('hide');

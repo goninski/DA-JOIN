@@ -2,26 +2,54 @@
     padding-inline: var(--px-sec);
     padding-block: var(--px-sec) 32px;
     align-items: center;
+    --ct-w: 1440px;
 }
 .entry-page .main {
     position: relative;
     align-items: start;
     align-self: flex-start;
     margin-left: auto;
-    --ct-w: 1440px;
     flex-grow: 1;
     gap: 32px;
 }
-.logo-entry {
-    position: absolute;
+.logo-wrapper {
+    position: fixed;
+    inset: 0;
+    padding-inline: var(--px-sec);
+    padding-block: var(--px-sec);
+    z-index: 1;
+}
+.entry-page.animated .logo-wrapper {
+    z-index: -1;
+}
+.login-page .logo-wrapper {
+    transition: background-color 1.25s;
+    background-color: transparent;
+}
+.login-page.before-animation .logo-wrapper {
+    background-color: var(--bg-page);
+}
+.login-page.animated #logoLight {
+    display: none;
+}
+.logo-wrapper > .ct-container {
+    position: relative;
+    margin-left: auto;
+    height: 100%;
 }
 .login-page .logo-entry {
+    position: absolute;
+}
+.login-page.before-animation .logo-entry {
     top: 50%;
     left: 50%;
     width: 274px;
     transform: translate(-50%, -50%);
 }
-.login-page.logo-animation .logo-entry,
+.login-page.before-animation #logoDark {
+    opacity: 0;
+}
+.login-page .logo-entry,
 .sign-up-page .logo-entry {
     top: 0;
     left: 0;
@@ -88,7 +116,6 @@
     overflow-x: hidden;
     overflow-y: auto;
     scrollbar-width: none;
-    z-index: 1;
 }
 .entry-form .field-group {
     gap: 4px;
@@ -118,11 +145,7 @@
     :root {
         --field-width: 366px;
     }
-    .entry-page.entry-animation {
-        transition: background 1s ease-in-out;
-        background-color: var(--bg-page);
-    }
-    .entry-page {
+    .login-page.before-animation .logo-wrapper {
         background-color: black;
     }
     .logo-entry {
@@ -173,6 +196,12 @@
 @media(max-width: 374px) {
     .login-page .custom-checkbox-wrapper {
         max-width: 84%;
+    }
+}
+
+@media(min-width: 801px) {
+    .login-page #logoLight {
+        display: none !important;
     }
 }
 
