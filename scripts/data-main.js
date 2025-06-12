@@ -1,6 +1,5 @@
 let localStorageMode = false;
 let fetchUrl = "https://da-join-449-default-rtdb.europe-west1.firebasedatabase.app/"
-// let fetchUrl = "eigene URL"
 let categories = [];
 let contacts = [];
 let tasks = [];

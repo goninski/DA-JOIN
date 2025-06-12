@@ -5,9 +5,7 @@
  */
 function dropdownEventHandler(event) {
     event.stopPropagation();
-    // console.log('f) dropdownEventHandler');
     getCurrentFieldElements(event.target);
-    // console.log(currentFieldElements);   
     listbox = currentFieldElements.listbox;
     if(['Enter', ' '].includes(event.key)) {
         event.preventDefault();

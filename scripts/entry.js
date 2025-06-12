@@ -110,7 +110,6 @@ function validateConfirmPassword(element) {
  */
 async function loginAsGuest(event) {
     event.preventDefault();
-    // resetForm('loginForm');
     await submitLoginFormHandler(event, true);
 }
 

@@ -217,16 +217,6 @@ const tasksDummy = [
 
 
 /**
- * On page load data.html
- */
-async function initData() {
-    getMainTemplates();
-    // await getAllData();
-    // await renderAllData();
-}
-
-
-/**
  * Delete all data and load a the fresh set of dummy data
  */
 async function resetData() {

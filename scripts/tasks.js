@@ -9,7 +9,6 @@ let taskStatus = 'todo';
  * On page load add-task.html
  */
 async function initAddTask() {
-    // await removeBodyClass('before-animation', 50);
     await getContacts();
     await checkAuth();
     getMainTemplates();
@@ -58,11 +57,9 @@ async function openEditTaskForm(event, taskId) {
     event.stopPropagation();
     formMode = 'edit';
     currentTask = await getTaskById(taskId);
-    // console.log(currentTask);
     await showTaskDialogue('editTaskFormWrapper');
     await renderTaskForm('editTaskFieldGroups', currentTask);
     document.getElementById('taskDialogue').classList.add('edit-task');
-    // document.getElementById('taskDialogue').classList.add('form-scrollable');
 }
 
 
@@ -236,7 +233,6 @@ async function renderTaskFormCategoryListbox(event = null, wrapperId = 'taskCate
     let optionsWrapper = document.getElementById(wrapperId);
     optionsWrapper.innerHTML = '';
     categories = await sortCategories(categories);
-    // let assignedCategory = 0;
     for (let index = 0; index < categories.length; index++) {
         optionsWrapper.innerHTML += getCategoryListboxOptionTemplate(categories[index], index);
     }
@@ -293,7 +289,6 @@ async function submitUpdateTask(event) {
         await updateTask(currentTask);
         let showConfMsg = 1;
         showConfMsg ? await showFloatingMessage('text', 'Task successfully edited') : null;
-        // showConfMsg ? setTimeout(function() {closeTaskDialogue(event)}, 0) : null;
         await showTaskDetail(event, currentTask.id, false);
     }
 }

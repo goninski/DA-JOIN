@@ -264,13 +264,10 @@ async function fetchDataFromFirebase(fetchPath = '', raw = false) {
  */
 async function firebaseObjToArray(fetchObj) {
     dataArr = [];
-    // console.log(fetchObj);
     let fetchEntries = Object.entries(fetchObj);
-    // console.log(fetchEntries);
     fetchEntries.forEach(function(item) {
         dataArr.push(item[1]);
     });
-    // console.log(dataArr);
     return dataArr;
 };
 
@@ -291,7 +288,6 @@ async function saveDataToFirebase(fetchPath, dataArr, postMethode="PUT") {
         body: JSON.stringify(dataArr),
     });
     let key = await response.json();
-    // console.log(key);
 }
 
 

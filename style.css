@@ -60,6 +60,11 @@
     --field-width: 424px;
 }
 
+@keyframes floating-message {
+    0%, 100% {left: 100%; transform: translateX(110%);}
+    50% {left: 66%;transform: translateX(-50%);}
+}
+
 @keyframes slide-in-right {
     from {
         margin-right: -100%
@@ -362,13 +367,13 @@ body.logged-out .nav-link-app {
 }
 
 @media(max-width: 800px) {
-    :root {
-        /* --px-sec: 16px; */
+    @keyframes floating-message {
+        0%, 100% {left: 100%; transform: translateX(110%);}
+        50% {left: 50%;transform: translateX(-50%);}
+    }
+   :root {
         --height-header: 80px;
         --height-footer: 80px;
-        /* --fs-main-title: 47px;
-        --fs-xxl: 27px;
-        --fs-xl: 20px; */
     }
     main,
     header,

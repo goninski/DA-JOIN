@@ -303,6 +303,6 @@ async function submitDeleteContact(event, contactId) {
     currentContact = {};
     lastListContactId = ''
     await showFloatingMessage('text', 'Contact deleted');
-    setTimeout(() => closeContactsFormDialogue(event), 1500);
+    setTimeout(() => closeContactsFormDialogue(event), 1000);
 }
 

@@ -17,7 +17,6 @@ async function checkAuth(isPublic = false) {
         if(!isPublic) return redirectToLogin();
     } else {
         loggedInUser = await getContactById(loggedInUserId);
-        // console.log(loggedInUser);
         if(!loggedInUser) {
             if(!isPublic) return redirectToLogin();
             return;
@@ -53,8 +52,8 @@ function signOut(event) {
  */
 function redirectToLogin(event = null, timeout = 1500) {
     event ? event.stopPropagation() : null;
-    // loggedInUserId = null;
-    // localStorage.removeItem('pseudoAuthStatus');
+    loggedInUserId = null;
+    localStorage.removeItem('pseudoAuthStatus');
     setTimeout(function() {window.location.href = '/login.html'}, timeout);
 }
 
@@ -165,7 +164,6 @@ function closeOpenElements(selector) {
     }
 }
 
-
 /**
  * Event Handler: close current element (multiple use)
  * 
@@ -269,7 +267,6 @@ function formatDateToStringDB(date) {
     let month = ('0'+ (date.getMonth() + 1)).slice(-2);
     let day = ('0' + date.getDate()).slice(-2);
     let formattedDate = year + '-' + month + '-' + day;
-    // console.log(formattedDate);
     return formattedDate;
 }
 
@@ -283,7 +280,6 @@ function formatDateFromStringDBToFull(dateStringDB) {
     let timeStamp = Date.parse(dateStringDB);
     let date = new Date(timeStamp);
     let formattedDate = date.toLocaleString('en-US', { month: 'long', day: 'numeric' , year: 'numeric'});
-    // console.log(formattedDate);
     return formattedDate;
 }
 
@@ -330,17 +326,14 @@ function toggleIconColorOnHover(event, hoverColor = 'blue') {
  * @param {string} optClass - optional class (showing-default, alert)
  */
 async function showFloatingMessage(template, msg = '', timeout = -1, optClass = 'showing-default') {
-    // mobileKeyboardIsOpen();
     let element = document.getElementById("floatingMsg");
     element.innerHTML = '';
     if(element) {
-        timeout === -1 ? timeout = 1000 : null;
+        timeout === -1 ? timeout = 3000 : null;
         element.classList.remove('showing-default', 'showing-top', optClass);
         element.innerHTML = (template == 'addedTask') ? getFloatingMessageTaskAddedTemplate() : getFloatingMessageTextTemplate(msg);
-        element.classList.add('button', 'btn-icon', 'btn-primary', 'showing', optClass);
-        setTimeout(() => element.classList.add('hiding'), timeout);
-        setTimeout(() => element.classList.remove('showing'), timeout);
-        setTimeout(() => element.classList.remove('showing', 'hiding'), timeout * 2);
+        element.classList.add('button', 'btn-icon', 'btn-primary', 'animate', optClass);
+        setTimeout(() => element.classList.remove('animate', optClass), timeout);
     }
 }
 

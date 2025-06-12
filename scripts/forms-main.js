@@ -372,7 +372,6 @@ function resetForm(formId) {
         resetFormElements(element);
     });
     getInvalidInputIds(formId);
-    // setSubmitBtnState(formId);
     let topElement = form.querySelector('.top-element');
     topElement ? topElement.scrollIntoView() : null;
     setTimeout(() => formElements[0].focus(), 200);

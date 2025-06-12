@@ -251,7 +251,6 @@ function onDragOver(event) {
  * @param {event} event - ondragleave (board tasklist)
  */
 function onDragLeave(event) {
-  // event.preventDefault();
   element = event.currentTarget;
   element.classList.remove('dropzone');
 }
