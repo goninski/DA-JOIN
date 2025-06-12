@@ -134,7 +134,7 @@ button.add-contact img {
 }
 #contactOptionsMenu {
     position: fixed;
-    right: 0;
+    right: -2px;
     bottom: calc(var(--height-footer) + 26px);
     z-index: 910;
     padding: 20px;
@@ -147,7 +147,7 @@ button.add-contact img {
 }
 #contactOptionsMenu.is-open {
     transition: transform 0.5s;
-    transform: translateX(-28px);
+    transform: translateX(-30px);
 }
 #contactOptionsMenu:not(.is-open) {
     transition: transform 0.5s;

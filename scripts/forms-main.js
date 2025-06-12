@@ -19,17 +19,20 @@ function getCurrentFieldElements(element) {
     if(fieldWrapper) {
         currentFieldElements.fieldWrapper = fieldWrapper;
         let input = fieldWrapper.querySelector('input');
-        if(input) {
-            currentFieldElements.input = input;
-        }
+        input ? currentFieldElements.input = input : null;
+        // if(input) {
+        //     currentFieldElements.input = input;
+        // }
         let alert = fieldWrapper.querySelector('[role="alert"]');
-        if(alert) {
-            currentFieldElements.alert = alert;
-        }
+        alert ? currentFieldElements.alert = alert : null;
+        // if(alert) {
+        //     currentFieldElements.alert = alert;
+        // }
         let combox = fieldWrapper.querySelector('[role="combox"]');
-        if(combox) {
-            currentFieldElements.combox = combox;
-        }
+        combox ? currentFieldElements.combox = combox : null;
+        // if(combox) {
+        //     currentFieldElements.combox = combox;
+        // }
         let listbox = fieldWrapper.querySelector('[role="listbox"]');
         if(listbox) {
             currentFieldElements.listbox = listbox;
@@ -335,7 +338,7 @@ function removePlaceholderStyle(event) {
  */
 function resetInputValidation(event) {
     let fieldWrapper = getFieldWrapperFromEvent(event);
-    fieldWrapper ? fieldWrapper.classList.remove('invalid') : null;
+    fieldWrapper ? fieldWrapper.classList.remove('invalid', 'fail') : null;
 }
 
 

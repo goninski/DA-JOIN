@@ -243,7 +243,7 @@ async function submitContactsForm(event) {
         console.log(formInputs.email);
         let isExisting = formMode == 'add' ? await isExistingContact(formInputs.email) : emailIsUpdated;
         if(isExisting) {
-            return await showFloatingMessage('text', 'This email address already exists !', 999, 'alert');
+            return await showFloatingMessage('text', 'This email address already exists !', -1, 'alert');
         }
         await setContactProperties(currentContact, formInputs);
         formMode == 'edit' ? await submitUpdateContact(event, currentContact) : await submitCreateContact(event, currentContact);

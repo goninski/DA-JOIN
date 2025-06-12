@@ -326,15 +326,15 @@ function toggleIconColorOnHover(event, hoverColor = 'blue') {
  * 
  * @param {string} template - code name for specific template (text, addedTask)
  * @param {string} msg - message content
- * @param {number} timeout - timeout milliseconds (999 = default)
+ * @param {number} timeout - timeout milliseconds (-1 = default)
  * @param {string} optClass - optional class (showing-default, alert)
  */
-async function showFloatingMessage(template, msg = '', timeout = 999, optClass = 'showing-default') {
+async function showFloatingMessage(template, msg = '', timeout = -1, optClass = 'showing-default') {
     // mobileKeyboardIsOpen();
     let element = document.getElementById("floatingMsg");
     element.innerHTML = '';
     if(element) {
-        timeout === 999 ? timeout = 1500 : null;
+        timeout === -1 ? timeout = 1500 : null;
         element.classList.remove('showing-default', 'showing-top', optClass);
         element.innerHTML = (template == 'addedTask') ? getFloatingMessageTaskAddedTemplate() : getFloatingMessageTextTemplate(msg);
         element.classList.add('button', 'btn-icon', 'btn-primary', 'showing', optClass);
@@ -347,10 +347,10 @@ async function showFloatingMessage(template, msg = '', timeout = 999, optClass =
  * Helper: add and remove body class with timer (helper for animation styles)
  * 
  * @param {string} className - class to add
- * @param {number} timemoutAdd - timeout (ms) to add the class (-1 = do not add)
- * @param {number} timemoutRemove - timeout (ms) to remove the class (-1 = do not remove)
+ * @param {number} timemoutAdd - timeout (ms) to add the class (-9 = do not add)
+ * @param {number} timemoutRemove - timeout (ms) to remove the class (-9 = do not remove)
  */
-async function addBodyClass(className, timeoutAdd = 0, timeoutRemove = -1) {
+async function addBodyClass(className, timeoutAdd = 0, timeoutRemove = -9) {
     document.body.classList.remove(className);
     timeoutAdd >= 0 ? setTimeout(() => document.body.classList.add(className), timeoutAdd) : null;
     timeoutRemove >= 0 ? setTimeout(() => document.body.classList.remove(className), timeoutRemove) : null;

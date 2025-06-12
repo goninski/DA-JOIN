@@ -7,7 +7,6 @@ localStorage.removeItem('pseudoAuthStatus');
  * on page load login.html
  */
 async function initLogin() {
-    document.getElementById('loginFailAlert').classList.add('hide');
     await runEntryAnimation();
     setInitialFormState('loginForm');
 }
@@ -117,7 +116,7 @@ function validateConfirmPassword(element) {
  */
 async function loginAsGuest(event) {
     event.preventDefault();
-    resetForm('loginForm');
+    // resetForm('loginForm');
     await submitLoginFormHandler(event, true);
 }
 
@@ -150,12 +149,14 @@ async function submitLoginFormHandler(event, isGuest = false) {
 async function loginSuccessfull(formInputs) {
     await saveToLocalStorage('pseudoAuthStatus', loggedInUserId);
     let floatingMsg = 'You logged in successfully';
+    let timeout = 1500;
     if(formInputs.loadFreshDataSet && formInputs.loadFreshDataSet == 'on') {
         await resetData();
-        floatingMsg = 'You logged in successfully - and fresh set of dummy data is loaded';
+        floatingMsg = 'You logged in successfully <br>and a fresh set of dummy data is loaded';
+        timeout = 2500;
     }
     await showFloatingMessage('text', floatingMsg);
-    setTimeout(() => window.location.href = '/summary.html', 2000);
+    setTimeout(() => window.location.href = '/summary.html', timeout);
 }
 
 
@@ -163,7 +164,9 @@ async function loginSuccessfull(formInputs) {
  * Login fail procedure (notification if user does not exist or password is wrong)
  */
 async function loginFail() {
-      document.getElementById('loginFailAlert').classList.remove('hide');
+    let element = document.getElementById('loginFailAlert');
+    let fieldWrapper = getFieldWrapperFromElement(element);
+    fieldWrapper ? fieldWrapper.classList.add('fail') : null;
 }
 
 
@@ -197,7 +200,7 @@ async function signUpSuccessfull(formInputs) {
  * Sign up fail procedure (notification if user already exists and redirect to login page)
  */
 async function signUpFail() {
-      await showFloatingMessage('text', 'Your Email Address already exists. Please sign in.', 2000, 'alert');
+      await showFloatingMessage('text', 'Your Email Address already exists. <br>Please sign in.', 2000, 'alert');
       redirectToLogin();
 }
 

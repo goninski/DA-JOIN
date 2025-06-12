@@ -92,7 +92,7 @@ textarea {
 .invalid input {
     border-color: var(--clr-warning) !important;
 }
-.validation-alert {
+.validation-alert, .fail-alert {
     visibility: hidden;
     position: absolute;
     bottom: 0;
@@ -100,8 +100,8 @@ textarea {
     font-size: 12px;
     color: var(--clr-warning);
 }
-.invalid .validation-alert,
-.validation-alert.fail-alert:not(.hide) {
+.has-alert.invalid .validation-alert,
+.has-alert.fail .fail-alert {
     visibility: visible;
 }
 .required-info {
@@ -118,10 +118,6 @@ textarea {
     color: var(--clr-subtle);
     font-size: 20px;
 }
-/* ::placeholder,
-[data-placeholder-style="true"] {
-    color: var(--clr-subtle);
-} */
 .input-wrapper {
     z-index: 1;
 }
