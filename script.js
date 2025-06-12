@@ -127,7 +127,7 @@ function toggleHeaderNav(event) {
 function getOrientationOverlay() {
     let element = document.getElementById('orientationOverlay');
     if(element) {
-        element.textContent = 'Please turn device or window to portrait orientation !'
+        element.textContent = 'Please turn device or window to portrait orientation !';
         element.addEventListener('click', event => {event.stopPropagation();})
     }
 }

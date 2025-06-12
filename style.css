@@ -419,11 +419,17 @@ body.logged-out .nav-link-app {
 }
 
 @media(max-width: 1259px) and (max-height: 649px) and (orientation: landscape) {
+    body {
+        overflow: hidden !important;
+    }
     .orientation-overlay {
         display: flex;
     }
 }
 @media(max-height: 599px) and (orientation: landscape) {
+    body {
+        overflow: hidden !important;
+    }
     .orientation-overlay {
         display: flex;
     }
