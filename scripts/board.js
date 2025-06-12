@@ -48,7 +48,6 @@ async function listenTaskSearchInput(event) {
   let taskSearchInput = document.getElementById('inputTaskSearch');
   let taskSearchBtn = document.getElementById('taskSearchBtn');
   let searchVal = taskSearchInput.value.toLowerCase();
-  console.log(searchVal);
   if(searchVal.length > 0) {
     taskSearchBtn.tabIndex = 0;
     taskSearchBtn.classList.remove('not-clickable');

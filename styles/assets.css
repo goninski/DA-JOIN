@@ -147,16 +147,12 @@ button {
     bottom: 0;
     z-index: 9999;
     height: unset;
-    max-height: unset;
+    max-height: max-content;
     width: 100%;
-    /* min-width: 272px !important; */
-    /* width: 100%; */
     max-width: max-content;
     border-radius: 20px;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
-    /* transform: translateX(-100%); */
     transition: transform 1s;
-    /* white-space: nowrap; */
     line-height: 1.5;
 }
 .floating-message.alert {
