@@ -8,7 +8,7 @@ localStorage.removeItem('pseudoAuthStatus');
  */
 async function initLogin() {
     await removeBodyClass('before-animation', 125);
-    await addBodyClass('animated', 1000);
+    await addBodyClass('animated', 1750);
     setInitialFormState('loginForm');
     getOrientationOverlay();
 }
