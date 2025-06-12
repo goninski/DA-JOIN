@@ -254,16 +254,16 @@ function getTaskFormFieldsTemplate(task) {
         <div class="field-group flex-col flex-grow">
 
             <div class="field-wrapper has-alert">
-                <label for="title" class="required top-element">Title</label>
+                <label for="inputTitle" class="required top-element">Title</label>
                 <input type="text" id="inputTitle" name="title" placeholder="Enter a title" required maxlength="128" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="setSubmitBtnStateOnEvent(event)" oninput="setSubmitBtnStateOnEvent(event)">
                 <div role="alert" class="validation-alert">This field is required</div>
             </div>
             <div class="field-wrapper has-alert">
-                <label for="description">Description</label>
+                <label for="inputDescription">Description</label>
                 <textarea id="inputDescription" name="description" placeholder="Enter a description"></textarea>
             </div>
             <div class="field-wrapper has-alert">
-                <label for="dueDate" class="required">Due date</label>
+                <label for="inputDueDate" class="required">Due date</label>
                 <input type="date" id="inputDueDate" name="dueDate" required min="2000-01-01" max="2099-12-31" step="1" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" onkeyup="removePlaceholderStyle(event)"  oninput="setSubmitBtnStateOnEvent(event)" data-placeholder-style="true">
                 <div role="alert" class="validation-alert">Please enter a valid date</div>
             </div>
@@ -287,7 +287,7 @@ function getTaskFormFieldsTemplate(task) {
 function getPriorityFormFieldTemplate() {
     return `
         <div class="field-wrapper">
-            <label for="priority">Priority</label>
+            <label> Priority</label>
             <div class="priority-input-wrapper flex-row justify-between align-center">
                 <label for="inputPrioHigh" id="labelPrioHigh" class="prio-high button btn-icon btn-radio hide-child-input" value="high"><input type="radio" id="inputPrioHigh" name="priority" value="high" class="focus-strong"><span>Urgent</span><div id="iconPrioHigh" class="icon-wrapper"></div></label>
 
@@ -342,9 +342,6 @@ function getContactListboxOptionTemplate(contact, index) {
     `
 }
 
-                // <div class="checkbox-checked-wrapper">
-                //     <img src="assets/icons/checkbox-checked-white.svg" alt="checkbox-checked" class="icon-checkbox-checked">
-                // </div>
 
 /**
  * Return html of the category form field group (task form/s)
@@ -390,12 +387,12 @@ function getCategoryListboxOptionTemplate(category, index) {
 function getSubtaskFormFieldTemplate() {
     return `
         <div class="field-wrapper subtask-wrapper">
-            <label for="subtasks">Subtasks</label>
+            <label for="inputSubtasks">Subtasks</label>
             <div class="input-wrapper input-wrapper-subtasks">
                 <!--<input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask"> -->
                 <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask" maxlength="128" onfocus="focusInHandler(event)" oninput="onInputAddSubtask(event)" onkeydown="addSubtaskInputEventHandler(event)">
                 <div id="subtaskInputButtonAdd" class="input-icon-wrapper">
-                    <button onclick="addSubtaskEventHandlerFocus(event)"><img src="/assets/icons/add.svg" class="icon-add"></button>
+                    <button class="hide-focus" onclick="addSubtaskEventHandlerFocus(event)"><img src="/assets/icons/add.svg" class="icon-add"></button>
                 </div>
                 <div id="subtaskInputButtons" class="input-icon-wrapper hide">
                     <button onclick="clearSubtaskEventHandler(event)"><img src="/assets/icons/cancel.svg" class="icon-cancel"></button>

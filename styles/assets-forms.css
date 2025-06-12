@@ -346,7 +346,9 @@ input:checked + .custom-checkbox-checked {
 .input.custom-checkbox:focus {
     box-shadow: none;
 }
-
+.input-icon-wrapper button {
+    padding-left: 1px;
+}
 .input-icon-wrapper :is(.icon-size-default .icon-24) {
     height: 24px;
 }
@@ -378,7 +380,6 @@ input:checked + .custom-checkbox-checked {
 }
 .input-icon-wrapper button:hover {
     background-color: #0C2E621F;
-    /* border-radius: 100%; */
 }
 
 
@@ -470,7 +471,7 @@ input:checked + .custom-checkbox-checked {
 .input-wrapper-subtask.edit .input-icon-wrapper.edit {
     display: flex;
 }
-#subtaskInputButtonAdd,
+/* #subtaskInputButtonAdd, */
 .input-wrapper-subtask.invalid .input-icon-wrapper.edit button:last-of-type {
     pointer-events: none;
 }

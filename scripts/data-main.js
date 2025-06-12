@@ -41,7 +41,6 @@ async function getTaskData() {
 async function getContacts() {
     contacts = localStorageMode ? await getFromLocalStorage('contacts') : await fetchDataFromFirebase('users/');
     await sortContacts(contacts);
-    console.log(contacts);
 }
 
 
@@ -51,7 +50,6 @@ async function getContacts() {
 async function getTasks() {
     tasks = localStorageMode ? await getFromLocalStorage('tasks') : await fetchDataFromFirebase('tasks/');
     await sortTasks(tasks, 'dueDate');
-    console.log(tasks);
 }
 
 

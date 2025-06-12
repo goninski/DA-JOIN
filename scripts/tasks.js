@@ -37,7 +37,6 @@ async function openAddTaskForm(event = null, source = 'board', boardId = 'todo')
     formMode = 'add';
     currentTask = {};
     taskStatus = (source == 'board') ? boardId : 'todo';
-    console.log(taskStatus);
     await showTaskDialogue('addTaskFormWrapper', source);
     await renderTaskForm('addTaskFieldGroups');
     if(source == 'add-task-page') {
@@ -269,11 +268,13 @@ async function renderEditTaskFormCategories(currentTask) {
 async function submitCreateTask(event) {
     event.stopPropagation();
     event.preventDefault();
-    let formInputs = await getFormInputObj('addTaskForm');
-    await setTaskProperties(currentTask, formInputs);
-    await createTask(currentTask);
-    await showFloatingMessage('addedTask');
-    setTimeout(function() {location.href = "/board.html";}, 1500);
+    if(formIsValid('addTaskForm')) {
+        let formInputs = await getFormInputObj('addTaskForm');
+        await setTaskProperties(currentTask, formInputs);
+        await createTask(currentTask);
+        await showFloatingMessage('addedTask');
+        setTimeout(function() {location.href = "/board.html";}, 1500);
+    }
 }
 
 
@@ -285,13 +286,15 @@ async function submitCreateTask(event) {
 async function submitUpdateTask(event) {
     event.stopPropagation();
     event.preventDefault();
-    let formInputs = await getFormInputObj('editTaskForm');
-    await setTaskProperties(currentTask, formInputs);
-    await updateTask(currentTask);
-    let showConfMsg = 1;
-    showConfMsg ? await showFloatingMessage('text', 'Task successfully edited') : null;
-    // showConfMsg ? setTimeout(function() {closeTaskDialogue(event)}, 0) : null;
-    await showTaskDetail(event, currentTask.id, false);
+    if(formIsValid('editTaskForm')) {
+        let formInputs = await getFormInputObj('editTaskForm');
+        await setTaskProperties(currentTask, formInputs);
+        await updateTask(currentTask);
+        let showConfMsg = 1;
+        showConfMsg ? await showFloatingMessage('text', 'Task successfully edited') : null;
+        // showConfMsg ? setTimeout(function() {closeTaskDialogue(event)}, 0) : null;
+        await showTaskDetail(event, currentTask.id, false);
+    }
 }
 
 

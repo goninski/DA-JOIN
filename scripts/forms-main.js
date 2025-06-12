@@ -128,7 +128,6 @@ function formIsValid(formId) {
  * @param {event} event - click, ESC (document)
  */
 function documentEventHandlerForms(event) {
-    console.log('f) documentEventHandlerForms');
     if( event.key === 'Escape' || event.type === "click" ) {
         closeAllDropdowns(listboxElements);
         focusCurrentCombox(event.target);
