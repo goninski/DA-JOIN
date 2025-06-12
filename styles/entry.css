@@ -208,11 +208,6 @@
 }
 
 @media(max-height: 830px) {
-    .logo-entry {
-        position: fixed;
-        top: var(--px-sec) !important;
-        left: var(--px-sec) !important;
-    }
     .entry-form-wrapper {
         position: static;
         margin-top: auto;
