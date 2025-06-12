@@ -194,6 +194,7 @@ async function closeContactsFormDialogue(event) {
  */
 async function setAddContactValues() {
     document.getElementById('dialogueProfileBatch').innerHTML = '<img src="/assets/icons/profile-placeholder.svg" alt="profile-placeholder">';
+    document.getElementById('dialogueProfileBatch').style = 'border: none;';
     document.getElementById('dialogueTeaser').style = '';
     document.getElementById('dialogueTitle').innerHTML = 'Add Contact';
     document.getElementById('submitBtnWrapper').innerHTML = getAddContactSubmitButtonsTemplate();
@@ -212,7 +213,7 @@ async function setEditContactValues(contactId) {
     document.getElementById('dialogueTitle').innerHTML = 'Edit Contact';
     let contact = await getContactById(contactId);
     document.getElementById('dialogueProfileBatch').innerHTML = contact.initials;
-    document.getElementById('dialogueProfileBatch').style = '--profile-color: white;';
+    document.getElementById('dialogueProfileBatch').style = '--profile-color: '+ contact.color;
     document.getElementById('inputName').value = contact.name;
     document.getElementById('inputEmail').value = contact.email;
     document.getElementById('inputEmail').dataset.valueBeforeUpdate = contact.email;

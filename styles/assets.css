@@ -253,9 +253,6 @@ button {
     background-color: var(--profile-color);
     font-size: 12px;
 }
-.add-contact-form .profile-batch {
-    border: none;
-}
 
 /* DIALOGUES */
 

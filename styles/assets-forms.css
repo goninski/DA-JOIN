@@ -476,7 +476,7 @@ input:checked + .custom-checkbox-checked {
 /* BREAKPOINTS */
 
 @media(max-width: 1259px) {
-    .contact-form {
+    .contacts-form {
         --field-width: 366px;
     }
     .task-form {
@@ -536,7 +536,7 @@ input:checked + .custom-checkbox-checked {
 }
 
 @media(max-width: 427px) {
-    .contact-form {
+    .contacts-form {
         --field-width: 100%;
     }
     .field-group {
