@@ -353,7 +353,20 @@ async function showFloatingMessage(template, msg = '', timeout = -1, optClass = 
 async function addBodyClass(className, timeoutAdd = 0, timeoutRemove = -9) {
     document.body.classList.remove(className);
     timeoutAdd >= 0 ? setTimeout(() => document.body.classList.add(className), timeoutAdd) : null;
-    timeoutRemove >= 0 ? setTimeout(() => document.body.classList.remove(className), timeoutRemove) : null;
+    timeoutRemove >= 0 ? removeBodyClass(className, timeoutRemove) : null;
+}
+
+
+/**
+ * Helper: remove body class with timer
+ * 
+ * @param {string} className - class to add
+ * @param {number} timemoutRemove - timeout (ms) to remove the class (-1 = default)
+ */
+async function removeBodyClass(className, timeout = -1) {
+    timeout === -1 ? timeout = 1500 : null;
+    document.body.classList.remove(className);
+    setTimeout(() => document.body.classList.remove(className), timeout);
 }
 
 

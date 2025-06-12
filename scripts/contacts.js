@@ -1,7 +1,6 @@
 let currentContact = {};
 let lastListContactId = '';
 
-
 /**
  * on page load contacts.html
  */
@@ -67,6 +66,7 @@ async function groupContacts(contacts) {
  */
 async function showContactDetail(event, contactId) {
     event.stopPropagation();
+    console.log(currentContact = false);
     if(lastListContactId != '' && lastListContactId != contactId){
         document.getElementById('listContactId-' + lastListContactId).classList.remove('active');
     }
@@ -154,12 +154,7 @@ async function openContactsForm(formMode, contactId = '') {
     let dialogue = document.getElementById('addContactDialogue');
     await runSlideInAnimation(dialogue);
     document.getElementById('addNewContactBtnFloating').style = 'display: none;';
-    // document.body.style = 'overflow: hidden;';
-    if(formMode == 'add'){
-        await setAddContactValues();
-    } else {
-        await setEditContactValues(contactId);
-    }
+    formMode == 'add' ? await setAddContactValues() : await setEditContactValues(contactId);
     setInitialFormState('contactsForm');
 }
 
@@ -188,7 +183,6 @@ async function closeContactsFormDialogue(event) {
     formMode = '';
     let dialogue = document.getElementById('addContactDialogue');
     document.getElementById('addNewContactBtnFloating').style = '';
-    // document.body.style = '';
     await runSlideOutAnimation(dialogue);
     await renderContactList();
     await showContactDetail(event, lastListContactId);
@@ -218,7 +212,7 @@ async function setEditContactValues(contactId) {
     document.getElementById('dialogueTitle').innerHTML = 'Edit Contact';
     let contact = await getContactById(contactId);
     document.getElementById('dialogueProfileBatch').innerHTML = contact.initials;
-    document.getElementById('dialogueProfileBatch').style = '--profile-color: violet;';
+    document.getElementById('dialogueProfileBatch').style = '--profile-color: white;';
     document.getElementById('inputName').value = contact.name;
     document.getElementById('inputEmail').value = contact.email;
     document.getElementById('inputEmail').dataset.valueBeforeUpdate = contact.email;
@@ -306,8 +300,8 @@ async function submitDeleteContact(event, contactId) {
     event.preventDefault();
     await deleteContact(contactId);
     currentContact = {};
+    lastListContactId = ''
     await showFloatingMessage('text', 'Contact deleted');
-    // setTimeout(() => closeContactsFormDialogue(event), 1500);
-    setTimeout(() => location.reload(), 1500);
+    setTimeout(() => closeContactsFormDialogue(event), 1500);
 }
 

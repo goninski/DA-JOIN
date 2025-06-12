@@ -19,6 +19,10 @@
     max-height: var(--height-full-ex-header);
     overflow: auto;
 }
+.contact-list-sidebar.fade-in {
+  animation: 125ms fadeIn;
+}
+
 .contact-list-sidebar-inner {
     position: relative;
 }

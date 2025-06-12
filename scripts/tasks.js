@@ -9,6 +9,7 @@ let taskStatus = 'todo';
  * On page load add-task.html
  */
 async function initAddTask() {
+    // await removeBodyClass('before-animation', 50);
     await getContacts();
     await checkAuth();
     getMainTemplates();

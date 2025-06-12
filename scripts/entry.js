@@ -7,7 +7,8 @@ localStorage.removeItem('pseudoAuthStatus');
  * on page load login.html
  */
 async function initLogin() {
-    await runEntryAnimation();
+    await addBodyClass('logo-animation', 0);
+    await addBodyClass('entry-animation', 125);
     setInitialFormState('loginForm');
 }
 
@@ -17,15 +18,6 @@ async function initLogin() {
  */
 async function initSignUp() {
     setInitialFormState('signUpForm');
-}
-
-
-/**
- * Run Logo entry animation
- */
-async function runEntryAnimation() {
-    await addBodyClass('logo-animation', 0);
-    await addBodyClass('entry-animation', 125);
 }
 
 
