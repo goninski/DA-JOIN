@@ -282,12 +282,11 @@
 #taskDetailsSubtaskWrapper {
   margin-block: 0;
   padding-inline: 0;
+  gap: 24px;
 }
 #taskDetailsSubtaskWrapper li {
   position: relative;
-  height: 32px !important;
   padding-inline: 16px;
-  height: 100%;
   border-radius: 10px;
   gap: 16px;
   width: max-content;

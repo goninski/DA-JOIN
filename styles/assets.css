@@ -436,7 +436,7 @@ button.close-dialogue:hover .close-icon.light {
         right: 16px;
     }
     .floating-message.showing {
-        left: 50%
+        right: 50%
     }
 }
 
@@ -466,7 +466,7 @@ button.close-dialogue:hover .close-icon.light {
         font-size: var(--fs-base);
     }
     .floating-message {
-        max-width: 90vw !important;
+        max-width: 85vw !important;
         white-space: wrap;
    }
 }

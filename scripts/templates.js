@@ -230,7 +230,7 @@ function getTaskDetailsAssignedContactTemplate(contact) {
  */
 function getTaskDetailsSubtaskTemplate(task, subtask, subtaskIndex) {
   return `
-    <li class="subtask-item flex-row align-center custom-checkbox-wrapper">
+    <li class="subtask-item flex-row custom-checkbox-wrapper">
         <input type="checkbox" id="subtaskStatus-${task.id}-${subtaskIndex}" ${subtask.done ? 'checked' : ''} class="custom-checkbox clickable hide-focus" onchange="toggleSubtaskStatus(event, ${task.id}, ${subtaskIndex})">
         <img src="assets/icons/checkbox-checked.svg" alt="checkbox-checked" class="icon-checkbox-checked custom-checkbox-checked">
         <label for="subtaskStatus-${task.id}-${subtaskIndex}">${subtask.title}</label>
