@@ -4,12 +4,13 @@ let boards = [
     {id: 'awaitFeedback', label: 'Await Feedback'},
     {id: 'done', label: 'Done'},
 ];
-
 let renderTasks = [];
 let currentDragTaskId;
 let dragScrollMouseIsDown = false;
 let dragScrollStartX;
 let dragScrollScrollLeft;
+
+
 document.addEventListener('click', documentEventHandlerBoard);
 document.addEventListener('keydown', documentEventHandlerBoard);
 

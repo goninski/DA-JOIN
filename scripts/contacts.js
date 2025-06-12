@@ -221,6 +221,7 @@ async function setEditContactValues(contactId) {
     document.getElementById('dialogueProfileBatch').style = '--profile-color: violet;';
     document.getElementById('inputName').value = contact.name;
     document.getElementById('inputEmail').value = contact.email;
+    document.getElementById('inputEmail').dataset.valueBeforeUpdate = contact.email;
     contact.phone ? document.getElementById('inputPhone').value = contact.phone : '';
     document.getElementById('submitBtnWrapper').innerHTML = getEditContactSubmitButtonsTemplate(contactId);
     let showDeleteBtn = 0;
@@ -240,7 +241,7 @@ async function submitContactsForm(event) {
     if(formIsValid('contactsForm')) {
         let formInputs = await getFormInputObj('contactsForm');
         console.log(formInputs.email);
-        let isExisting = await isExistingContact(formInputs.email);
+        let isExisting = formMode == 'add' ? await isExistingContact(formInputs.email) : emailIsUpdated;
         if(isExisting) {
             return await showFloatingMessage('text', 'This email address already exists !', 999, 'alert');
         }

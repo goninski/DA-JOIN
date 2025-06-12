@@ -96,6 +96,11 @@ button.add-contact img {
     height: 120px;
     font-size: 47px;
 }
+.profile-batch img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
 .floating-contact .profile-title {
     gap: 8px;
 }
@@ -264,6 +269,17 @@ button.add-contact img {
         width: 60px;
         height: 60px;
         font-size: var(--fs-lg);
+    }
+}
+
+@media(max-width: 374px) {
+    .contact-dialogue .batch-wrapper {
+        margin-top: -110px;
+    }
+    .contact-dialogue .profile-batch-large {
+        width: 100px;
+        height: 100px;
+        /* font-size: var(--fs-lg); */
     }
 }
 

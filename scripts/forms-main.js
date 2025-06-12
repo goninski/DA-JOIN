@@ -2,6 +2,7 @@ let formMode = '';
 let invalidFields = [];
 let listboxElements = [];
 let currentFieldElements = {};
+let emailIsUpdated = false;
 document.addEventListener('click', documentEventHandlerForms);
 document.addEventListener('keydown', documentEventHandlerForms);
 
@@ -253,6 +254,9 @@ function validateElement(element) {
     }
     if(! element.checkValidity() || ! checkCustomValidation(element)) {
         return false;
+    }
+    if(element.hasAttribute('data-value-before-update')) {
+        emailIsUpdated = (element.value != element.dataset.valueBeforeUpdate);
     }
     return true;
 }

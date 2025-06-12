@@ -65,7 +65,7 @@ button {
     line-height: 1.2;
     letter-spacing: 0;
     height: 100%;
-    max-width: max-content;
+    max-width: 100%;
     padding-inline: 22px;
     gap: 10px;
 }
@@ -94,7 +94,7 @@ button {
 .btn-primary:active {
     background-color: var(--clr-dark);
 }
-.btn-primary:hover {
+.btn-primary:not(.floating-message):hover {
     background-color: var(--clr-light-blue);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
@@ -122,8 +122,6 @@ button {
     border-radius: inherit;
     border: solid 1px var(--clr-light-blue);
 }
-.btn-secondary:disabled {
-}
 .button img {
     height: 12px;
     width: auto;
@@ -148,9 +146,9 @@ button {
     right: 0;
     bottom: 0;
     z-index: 9999;
-    min-width: 180px;
-    max-width: 100%;    
     min-height: 74px;
+    min-width: 272px;
+    max-width: 90vw;
     border-radius: 20px;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
     transform: translateX(-100%);
@@ -163,8 +161,7 @@ button {
     bottom: 20%;
 }
 .floating-message.showing-top {
-    /* top: 200px; */
-    bottom: 20%;
+    top: 200px;
 }
 .floating-message.showing {
     left: 66%;
@@ -176,11 +173,11 @@ button {
 :is(.floating-button-round, .floating-message) img {
     height: 32px;
 }
-.floating-button-round img[alt="three-dot-menu-icon"] {
-    height: 26px;
-}
 .floating-message img.icon-board {
     height: 30px;
+}
+.floating-button-round img[alt="three-dot-menu-icon"] {
+    height: 26px;
 }
 .floating-button-round:hover {
     background-color: var(--clr-light-blue);

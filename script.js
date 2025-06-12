@@ -330,15 +330,15 @@ function toggleIconColorOnHover(event, hoverColor = 'blue') {
  * @param {string} optClass - optional class (showing-default, alert)
  */
 async function showFloatingMessage(template, msg = '', timeout = 999, optClass = 'showing-default') {
+    // mobileKeyboardIsOpen();
     let element = document.getElementById("floatingMsg");
     element.innerHTML = '';
     if(element) {
         timeout === 999 ? timeout = 1500 : null;
-        element.classList.remove('showing-default', 'showing-top');
+        element.classList.remove('showing-default', 'showing-top', optClass);
         element.innerHTML = (template == 'addedTask') ? getFloatingMessageTaskAddedTemplate() : getFloatingMessageTextTemplate(msg);
         element.classList.add('button', 'btn-icon', 'btn-primary', 'showing', optClass);
         setTimeout(() => element.classList.remove('showing'), timeout);
-        setTimeout(() => element.classList.remove(optClass), timeout + 3000);
     }
 }
 
@@ -381,3 +381,4 @@ async function runSlideOutAnimation(element, timeout = 175) {
     element.classList.add('slide-out');
     setTimeout(function() {element.style = 'display: none';}, timeout);
 }
+
