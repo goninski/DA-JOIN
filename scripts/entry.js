@@ -10,6 +10,7 @@ async function initLogin() {
     await removeBodyClass('before-animation', 125);
     await addBodyClass('animated', 1000);
     setInitialFormState('loginForm');
+    getOrientationOverlay();
 }
 
 
@@ -18,6 +19,7 @@ async function initLogin() {
  */
 async function initSignUp() {
     setInitialFormState('signUpForm');
+    getOrientationOverlay();
 }
 
 

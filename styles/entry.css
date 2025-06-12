@@ -4,6 +4,9 @@
     align-items: center;
     --ct-w: 1440px;
 }
+.entry-page.ct-fw {
+    --ct-w: 100%;
+}
 .entry-page .main {
     position: relative;
     align-items: start;
@@ -145,6 +148,9 @@
     :root {
         --field-width: 366px;
     }
+    .entry-page {
+        padding-block-end: 24px;
+    }
     .login-page.before-animation .logo-wrapper {
         background-color: black;
     }
@@ -162,23 +168,13 @@
         order: -1;
         gap: 20px;
         padding-block: 32px;
-        padding-inline: 5vw;
-        /* padding-inline: 48px; */
+        padding-inline: 16px;
+        /* padding-inline: 5vw; */
+        width: 100%;
+        max-width: 396px;
     }
     .entry-page .back-button {
         left: 0;   
-    }
-}
-
-@media(max-width: 599px) {
-    .entry-page {
-        padding-block-end: 24px;
-    }
-    .entry-form-wrapper {
-        padding-block: 32px;
-        padding-inline: 16px;
-        width: 100%;
-        max-width: 396px;
     }
     .entry-page .sign-up-links-wrapper {
         font-size: var(--fs-base);
