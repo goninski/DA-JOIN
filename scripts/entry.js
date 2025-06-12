@@ -143,7 +143,7 @@ async function submitLoginFormHandler(event, isGuest = false) {
 async function loginSuccessfull(formInputs) {
     await saveToLocalStorage('pseudoAuthStatus', loggedInUserId);
     let floatingMsg = 'You logged in successfully';
-    let timeout = 1500;
+    let timeout = 2000;
     if(formInputs.loadFreshDataSet && formInputs.loadFreshDataSet == 'on') {
         await resetData();
         floatingMsg = 'You logged in successfully <br>and a fresh set of dummy data is loaded';

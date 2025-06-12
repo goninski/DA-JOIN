@@ -382,10 +382,13 @@
 }
 
 @media(max-width: 599px) {
-    .task-details-wrapper {
-        --fs-main-title: 36px;
-        --fs-lg: var(--fs-base);
-    }
+  .add-task-button {
+    top: 8px;
+  }
+  .task-details-wrapper {
+      --fs-main-title: 36px;
+      --fs-lg: var(--fs-base);
+  }
 }
 
 @media(max-width: 427px) {

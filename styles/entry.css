@@ -207,7 +207,7 @@
     }
 }
 
-@media(max-height: 799px) {
+@media(max-height: 830px) {
     .logo-entry {
         position: fixed;
         top: var(--px-sec) !important;

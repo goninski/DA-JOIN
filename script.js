@@ -334,7 +334,7 @@ async function showFloatingMessage(template, msg = '', timeout = -1, optClass = 
     let element = document.getElementById("floatingMsg");
     element.innerHTML = '';
     if(element) {
-        timeout === -1 ? timeout = 1500 : null;
+        timeout === -1 ? timeout = 1000 : null;
         element.classList.remove('showing-default', 'showing-top', optClass);
         element.innerHTML = (template == 'addedTask') ? getFloatingMessageTaskAddedTemplate() : getFloatingMessageTextTemplate(msg);
         element.classList.add('button', 'btn-icon', 'btn-primary', 'showing', optClass);
