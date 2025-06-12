@@ -261,7 +261,7 @@ button.add-contact img {
     }
 }
 
-@media(max-width: 434px) {
+@media(max-width: 427px) {
     .contact-list-sidebar {
         padding-inline: 10px !important;
     }

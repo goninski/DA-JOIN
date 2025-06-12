@@ -20,19 +20,10 @@ function getCurrentFieldElements(element) {
         currentFieldElements.fieldWrapper = fieldWrapper;
         let input = fieldWrapper.querySelector('input');
         input ? currentFieldElements.input = input : null;
-        // if(input) {
-        //     currentFieldElements.input = input;
-        // }
         let alert = fieldWrapper.querySelector('[role="alert"]');
         alert ? currentFieldElements.alert = alert : null;
-        // if(alert) {
-        //     currentFieldElements.alert = alert;
-        // }
         let combox = fieldWrapper.querySelector('[role="combox"]');
         combox ? currentFieldElements.combox = combox : null;
-        // if(combox) {
-        //     currentFieldElements.combox = combox;
-        // }
         let listbox = fieldWrapper.querySelector('[role="listbox"]');
         if(listbox) {
             currentFieldElements.listbox = listbox;

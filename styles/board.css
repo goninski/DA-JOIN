@@ -389,7 +389,7 @@
     }
 }
 
-@media(max-width: 434px) {
+@media(max-width: 427px) {
   #taskDetailsSubtaskWrapper li label {
         --fs-base: 14px;
   }

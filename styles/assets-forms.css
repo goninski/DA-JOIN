@@ -535,7 +535,7 @@ input:checked + .custom-checkbox-checked {
     }
 }
 
-@media(max-width: 434px) {
+@media(max-width: 427px) {
     .contact-form {
         --field-width: 100%;
     }

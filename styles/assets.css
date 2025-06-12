@@ -461,7 +461,7 @@ button.close-dialogue:hover .close-icon.light {
    }
 }
 
-@media(max-width: 434px) {
+@media(max-width: 427px) {
     .submit-button-wrapper button {
         font-size: var(--fs-base);
     }

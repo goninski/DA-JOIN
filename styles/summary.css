@@ -226,7 +226,7 @@
     }
 }
 
-@media (max-width: 434px) {
+@media (max-width: 427px) {
     .widgets-wrapper,
     .widgets-sub-wrapper {
         gap: 16px;

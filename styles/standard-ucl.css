@@ -356,7 +356,6 @@
     display: none !important;
 }
 
-
 @media(max-width: 800px) {
     .flex-wrap--ss-mob {
         flex-wrap: wrap;
@@ -367,10 +366,6 @@
     .hide--ss-mob {
         display: none !important;
     }
-}
-@media(max-width: 435px) {
-}
-@media(min-width: 1516px) {
 }
 
 @media(min-width: 801px) {
