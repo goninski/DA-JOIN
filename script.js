@@ -338,7 +338,9 @@ async function showFloatingMessage(template, msg = '', timeout = -1, optClass = 
         element.classList.remove('showing-default', 'showing-top', optClass);
         element.innerHTML = (template == 'addedTask') ? getFloatingMessageTaskAddedTemplate() : getFloatingMessageTextTemplate(msg);
         element.classList.add('button', 'btn-icon', 'btn-primary', 'showing', optClass);
+        setTimeout(() => element.classList.add('hiding'), timeout);
         setTimeout(() => element.classList.remove('showing'), timeout);
+        setTimeout(() => element.classList.remove('showing', 'hiding'), timeout * 2);
     }
 }
 

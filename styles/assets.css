@@ -170,6 +170,10 @@ button {
     left: 60%;
     transform: translateX(-50%);
 }
+.floating-message.hiding {
+    right: 0;
+    transform: translateX(110%);
+}
 :is(.floating-button-round, .floating-message) img {
     height: 32px;
 }
@@ -365,7 +369,7 @@ button.close-dialogue:hover .close-icon.light {
     gap: 12px;
     align-items: start;
     width: 100%;
-    /* flex-grow: 1; */
+    user-select: none;
 }
 .contact-dialogue .dialogue-sidebar {
     max-width: 469px;
@@ -434,6 +438,10 @@ button.close-dialogue:hover .close-icon.light {
     .floating-message.showing {
         left: 50%;
         transform: translateX(-50%);
+    }
+    .floating-message.hiding {
+        right: 0;
+        transform: translateX(110%);
     }
 }
 
