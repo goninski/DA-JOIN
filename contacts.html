@@ -17,7 +17,7 @@
     <script src="scripts/contacts.js"></script>
 </head>
 
-<body onload="initContacts()" class="contact-page page-fade-in">
+<body onload="initContacts()" class="contact-page xpage-fade-in">
 
     <header id="header" class="section"></header>
 
@@ -59,7 +59,7 @@
     </main>
 
 
-    <div id="addContactDialogue" class="dialogue contact-dialogue add-contact-dialogue" style="display: none;">
+    <div id="addContactDialogue" class="dialogue contact-dialogue add-contact-dialogue" aria-hidden="true">
         <div class="dialogue-inner flex-row align-center pos-relative">
 
             <button class="close-dialogue top-element" onclick="closeContactsFormDialogue(event)" title="close dialogue">
@@ -76,7 +76,7 @@
     
             <div class="dialogue-main flex-col justifiy-center align-center pos-relative">
 
-                <form id="contactsForm" onsubmit="submitContactsForm(event)" class="flex-col xcontact-form contacts-form">
+                <form id="contactsForm" onsubmit="submitContactsForm(event)" class="flex-col contacts-form">
                         <div class="field-groups flex-row align-center justify-between">
     
                             <div class="xfield-group batch-wrapper flex-col">

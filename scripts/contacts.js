@@ -124,7 +124,7 @@ async function openAddNewContactForm(event) {
     event.preventDefault();
     formMode = 'add';
     currentContact = {};
-    await openContactsForm(formMode);
+    await openContactsFormDialogue(formMode);
 
 }
 
@@ -139,7 +139,7 @@ async function openEditContactForm(event, contactId) {
     event.preventDefault();
     event.stopPropagation();
     formMode = 'edit';
-    await openContactsForm(formMode, currentContact.id);
+    await openContactsFormDialogue(formMode, currentContact.id);
 }
 
 
@@ -149,10 +149,10 @@ async function openEditContactForm(event, contactId) {
  * @param {string} formMode - form mode (add, edit)
  * @param {string} contactId - id of the current contact (empty for new contact)
  */
-async function openContactsForm(formMode, contactId = '') {
+async function openContactsFormDialogue(formMode, contactId = '') {
     await resetForm('contactsForm');
     let dialogue = document.getElementById('addContactDialogue');
-    await runSlideInAnimation(dialogue);
+    dialogue.setAttribute('aria-hidden', 'false');
     document.getElementById('addNewContactBtnFloating').style = 'display: none;';
     formMode == 'add' ? await setAddContactValues() : await setEditContactValues(contactId);
     setInitialFormState('contactsForm');
@@ -181,9 +181,9 @@ async function closeContactsFormDialogue(event) {
     event.stopPropagation();
     resetForm('contactsForm');
     formMode = '';
-    let dialogue = document.getElementById('addContactDialogue');
     document.getElementById('addNewContactBtnFloating').style = '';
-    await runSlideOutAnimation(dialogue);
+    let dialogue = document.getElementById('addContactDialogue');
+    dialogue.setAttribute('aria-hidden', 'true');
     await renderContactList();
     await showContactDetail(event, lastListContactId);
 }
@@ -305,4 +305,3 @@ async function submitDeleteContact(event, contactId) {
     await showFloatingMessage('text', 'Contact deleted');
     setTimeout(() => closeContactsFormDialogue(event), 1000);
 }
-

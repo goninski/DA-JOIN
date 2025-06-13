@@ -106,7 +106,6 @@ button {
 .btn-secondary {
     position: relative;
     color: var(--clr-main);
-    /* border: solid 1px var(--clr-main); */
     border: solid 1px var(--clr-main);
 }
 .btn-secondary:hover {
@@ -157,7 +156,7 @@ button {
     transform: translateX(110%);
 }
 .floating-message.animate {
-    animation: floating-message 3s;
+    animation: floating-message 2s;
 }
 .floating-message.alert {
     background-color: red;
@@ -261,10 +260,7 @@ button {
 }
 .dialogue {
     position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    inset: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -272,36 +268,13 @@ button {
     padding: 16px;
     background-color: rgba(0,0,0,0.4);
     z-index: 1000;
+    transition: all 175ms;
 }
-button.close-dialogue {
-    position: absolute;
-    width: 32px;
-    height: 32px;
-    z-index: 2000;
-    border-radius: 100%;
-    transition-duration: 175ms;
+.dialogue[aria-hidden="true"] {
+    transform: translateX(100%);
 }
-.contact-dialogue button.close-dialogue img {
-    margin-left: 2px;
-}
-button.close-dialogue .close-icon.light {
-    display: none;
-}
-button.close-dialogue:hover {
-    background-color: var(--clr-light-blue);
-}
-button.close-dialogue:hover .close-icon.dark {
-    display: none;
-}
-button.close-dialogue:hover .close-icon.light {
-    display: flex;
-}
-.task-dialogue button.close-dialogue {
-    top: 32px;
-    right: 40px;
-}
-.task-dialogue.add-task button.close-dialogue {
-    top: 64px;
+.dialogue[aria-hidden="false"] {
+    transform: translateX(0);
 }
 .dialogue-inner {
     background-color: white;
@@ -311,7 +284,6 @@ button.close-dialogue:hover .close-icon.light {
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
     scrollbar-width: none;
 }
-
 .task-dialogue:not(.add-task) {
     --padding-dialogue: 48px 48px;
 }
@@ -388,9 +360,40 @@ button.close-dialogue:hover .close-icon.light {
 .contact-dialogue .submit-button-wrapper {
     margin-top: 18px;
 }
+
+button.close-dialogue {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    z-index: 2000;
+    border-radius: 100%;
+    transition-duration: 175ms;
+}
+button.close-dialogue .close-icon.light {
+    display: none;
+}
+button.close-dialogue:hover {
+    background-color: var(--clr-light-blue);
+}
+button.close-dialogue:hover .close-icon.dark {
+    display: none;
+}
+button.close-dialogue:hover .close-icon.light {
+    display: flex;
+}
+.task-dialogue button.close-dialogue {
+    top: 32px;
+    right: 40px;
+}
+.task-dialogue.add-task button.close-dialogue {
+    top: 64px;
+}
 .contact-dialogue button.close-dialogue {
     top: 40px;
     right: 40px;
+}
+.contact-dialogue button.close-dialogue img {
+    margin-left: 2px;
 }
 
 
@@ -468,4 +471,3 @@ button.close-dialogue:hover .close-icon.light {
         white-space: wrap;
    }
 }
-

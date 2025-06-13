@@ -68,9 +68,8 @@ async function openEditTaskForm(event, taskId) {
  * 
  * @param {string} elementId - id of the inner dialogue wrapper
  * @param {string} source - source from where the dialoge was opened (add-task-page, board)
- * @param {boolean} animated - show dialogue with animation true/false
  */
-async function showTaskDialogue(elementId, source = 'board', animated = true) {
+async function showTaskDialogue(elementId, source = 'board') {
     if(source == 'board') {
         document.getElementById('addTaskFieldGroups').innerHTML = '';
         document.getElementById('editTaskFieldGroups').innerHTML = '';
@@ -80,7 +79,7 @@ async function showTaskDialogue(elementId, source = 'board', animated = true) {
         document.getElementById(elementId).style = '';
         let dialogue = document.getElementById('taskDialogue');
         dialogue.classList.remove('show-task', 'add-task', 'edit-task');
-        animated ? await runSlideInAnimation(dialogue) : dialogue.style = '';
+        dialogue.setAttribute('aria-hidden', 'false');
     }
 }
 
@@ -361,7 +360,7 @@ async function closeTaskDialogue(event) {
     event.preventDefault();
     (formMode == 'add' || formMode == 'edit') ? resetAddTaskForm(event) : null;
     formMode = '';
-    let dialogue = document.getElementById('taskDialogue');
     await renderBoards();
-    await runSlideOutAnimation(dialogue);
+    let dialogue = document.getElementById('taskDialogue');
+    dialogue.setAttribute('aria-hidden', 'true');
 }
