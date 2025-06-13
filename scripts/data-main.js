@@ -66,7 +66,7 @@ async function getCategories() {
  * @param {string} taskId - task id
  */
 async function getTaskById(taskId) {
-    return tasks.find(task => task.id == taskId);
+    return tasks ? tasks.find(task => task.id == taskId) : null;
 }
 
 
@@ -76,7 +76,7 @@ async function getTaskById(taskId) {
  * @param {string} contactId - contact id
  */
 async function getContactById(contactId) {
-    return contacts.find(contact => contact.id == contactId);
+    return contacts ? contacts.find(contact => contact.id == contactId) : null;
 }
 
 
@@ -86,7 +86,7 @@ async function getContactById(contactId) {
  * @param {string} categoryId - category id
  */
 async function getCategoryById(categoryId) {
-    return categories.find(category => category.id == categoryId);
+    return categories ? categories.find(category => category.id == categoryId) : null;
 }
 
 
@@ -98,8 +98,11 @@ async function getCategoryById(categoryId) {
  */
 async function isExistingContact(email) {
     await getUserData();
-    let user = contacts.find(contact => contact.email == email);
-    return user ? true : false;
+    if(contacts) {
+        let user = await contacts.find(contact => contact.email == email);
+        return user ? true : false;
+    }
+    return false;
 }
 
 
@@ -110,6 +113,7 @@ async function isExistingContact(email) {
  */
 async function createContact(contact) {
     await validateContactProperties(contact);
+    !contacts ? contacts = [] : null;
     contacts.push(contact);
     localStorageMode ? await saveContactsToLS() : await saveContactToDB(contact);
 }
@@ -122,6 +126,7 @@ async function createContact(contact) {
  */
 async function createTask(task) {
     await validateTaskProperties(task);
+    !tasks ? tasks = [] : null;
     tasks.push(task);
     localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task);
 }

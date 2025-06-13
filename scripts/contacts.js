@@ -16,15 +16,17 @@ async function initContacts() {
  * Render the contact list, alphabetically, grouped by first letter of names
  */
 async function renderContactList() {
-    contactListRef = document.getElementById('contactList');
-    contactListRef.innerHTML = '';
-    let contactsGrouped = await groupContacts(contacts);
-    for (let index = 0; index < contactsGrouped.length; index++) {
-        let contactGroupObj = contactsGrouped[index];
-        let groupName = contactGroupObj[0];
-        let contactGroup = contactGroupObj[1];
-        contactListRef.innerHTML += getContactListTemplate(groupName);
-        await renderContactGroupItems(contactGroup, groupName);
+    if(contacts){
+        contactListRef = document.getElementById('contactList');
+        contactListRef.innerHTML = '';
+        let contactsGrouped = await groupContacts(contacts);
+        for (let index = 0; index < contactsGrouped.length; index++) {
+            let contactGroupObj = contactsGrouped[index];
+            let groupName = contactGroupObj[0];
+            let contactGroup = contactGroupObj[1];
+            contactListRef.innerHTML += getContactListTemplate(groupName);
+            await renderContactGroupItems(contactGroup, groupName);
+        }
     }
 }
 
@@ -83,6 +85,7 @@ async function showContactDetail(event, contactId) {
  * @param {string} contactId - id of the current contact
  */
 async function setContactDetailProps(event, contactId) {
+    if(contacts) {
     document.getElementById('contactPageInner').classList.add('show-contact-detail');
     document.getElementById('listContactId-' + contactId).classList.add('active');
     document.getElementById('btnCloseContactDetails').addEventListener('click', function(event) {
@@ -94,6 +97,7 @@ async function setContactDetailProps(event, contactId) {
     document.getElementById('floatingContact').innerHTML = getContactDetailProfileBatchTemplate(currentContact);
     document.getElementById('contactInfo').innerHTML = getContactDetailInfoTemplate(currentContact);
     document.getElementById('contactOptionsMenu').innerHTML = getContactOptionButtons(currentContact);
+    }
 }
 
 

@@ -106,7 +106,7 @@ async function validateTaskProperties(task) {
  * @returns {string}
  */
 async function getNewContactId() {
-    let lastId = await getMaxIdFromObjArray(contacts);
+    let lastId = await getMaxIdFromObjArray(contacts, 1000);
     lastId++;
     return lastId.toString();
 }
@@ -118,7 +118,7 @@ async function getNewContactId() {
  * @returns {string}
  */
 async function getNewTaskId() {
-    let lastId = await getMaxIdFromObjArray(tasks);
+    let lastId = await getMaxIdFromObjArray(tasks, 10000);
     lastId++;
     return lastId.toString();
 }
@@ -130,7 +130,7 @@ async function getNewTaskId() {
  * @returns {string}
  */
 async function getNewCategoryId() {
-    let lastId = await getMaxIdFromObjArray(categories);
+    let lastId = await getMaxIdFromObjArray(categories, 100);
     lastId++;
     return lastId.toString();
 }
@@ -142,7 +142,7 @@ async function getNewCategoryId() {
  * @param {string} contactId - contact id
  */
 async function getContactIndexFromId(contactId) {
-    return contacts.findIndex(contact => contact.id == contactId);
+    return contacts ? contacts.findIndex(contact => contact.id == contactId) : -1;
 }
 
 
@@ -152,7 +152,7 @@ async function getContactIndexFromId(contactId) {
  * @param {string} taskId - task id
  */
 async function getTaskIndexFromId(taskId) {
-    return tasks.findIndex(task => task.id == taskId);
+    return tasks ? tasks.findIndex(task => task.id == taskId) : -1;
 }
 
 
@@ -162,7 +162,7 @@ async function getTaskIndexFromId(taskId) {
  * @param {string} categoryId - category id
  */
 async function getCategoryIndexFromId(categoryId) {
-    return categories.findIndex(category => category.id == categoryId);
+    return  categories ? categories.findIndex(category => category.id == categoryId) : -1;
 }
 
 
@@ -172,7 +172,7 @@ async function getCategoryIndexFromId(categoryId) {
  * @param {array} contacts - contacts objects array
  */
 async function sortContacts(contacts) {
-    return await contacts.sort((a, b) => a.name.localeCompare(b.name));
+    return contacts ? await contacts.sort((a, b) => a.name.localeCompare(b.name)) : null;
 }
 
 
@@ -183,7 +183,7 @@ async function sortContacts(contacts) {
  * @param {string} sortByProperty - property to sort by
  */
 async function sortTasks(tasks, sortByProperty = 'dueDate') {
-    return await tasks.sort((a, b) => a[sortByProperty].localeCompare(b[sortByProperty]));
+    return tasks ? await tasks.sort((a, b) => a[sortByProperty].localeCompare(b[sortByProperty])) : null;
 }
 
 
@@ -193,7 +193,7 @@ async function sortTasks(tasks, sortByProperty = 'dueDate') {
  * @param {object} categories - categories objects array
  */
 async function sortCategories(categories) {
-    return await categories.sort((a, b) => a.id.localeCompare(b.id));
+    return categories ? await categories.sort((a, b) => a.id.localeCompare(b.id)) : null;
 }
 
 
@@ -363,9 +363,10 @@ function getInitialOfLastWord(string) {
  * Helper: return the highest id of an object array
  * 
  * @param {array} objArray - array with objects (needs a property of id)
+ * @param {number} lastDefault - last id if empty
  */
-async function getMaxIdFromObjArray(objArray) {
-    return Math.max(...objArray.map(item => item.id));
+async function getMaxIdFromObjArray(objArray, lastDefault = 0) {
+    return objArray ? Math.max(...objArray.map(item => item.id)) : lastDefault;
 }
 
 

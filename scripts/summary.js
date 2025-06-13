@@ -94,7 +94,7 @@ async function setSummaryObj() {
  * Set upcoming task values on summary object
  */
 async function setUpcomings() {
-  let futureTasks = tasks.filter(task => task.dueDate >= currentFormattedDate);
+  let futureTasks = tasks ? tasks.filter(task => task.dueDate >= currentFormattedDate) : [];
   if(hasLength(futureTasks)) {
     await futureTasks.sort((a, b) => a.dueDate.localeCompare(b.dueDate));
     let upcomingDeadline = futureTasks[0].dueDate;
@@ -112,13 +112,15 @@ async function setUpcomings() {
  */
 async function setTaskCounts() {
   summary.taskCountInBoard = hasLength(tasks) ? tasks.length : 0;
-  tasks.forEach(task => {
-    task.status == 'todo' ? summary.taskCountTodo++ : null;
-    task.status == 'inProgress' ? summary.taskCountInProgress++ : null;
-    task.status == 'awaitFeedback' ? summary.taskCountAwaitFeedback++ : null;
-    task.status == 'done' ? summary.taskCountDone++ : null;
-    task.priority == 'high' ? summary.taskCountUrgent++ : null;
-  });
+  if(tasks) {
+    tasks.forEach(task => {
+      task.status == 'todo' ? summary.taskCountTodo++ : null;
+      task.status == 'inProgress' ? summary.taskCountInProgress++ : null;
+      task.status == 'awaitFeedback' ? summary.taskCountAwaitFeedback++ : null;
+      task.status == 'done' ? summary.taskCountDone++ : null;
+      task.priority == 'high' ? summary.taskCountUrgent++ : null;
+    });
+  }
 }
 
 

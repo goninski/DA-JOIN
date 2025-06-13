@@ -11,6 +11,7 @@ let categoriesDefault = [
     },
 ];
 
+
 let contactsDummy = [
     {
         "id": "1001",
@@ -73,6 +74,7 @@ let contactsDummy = [
         "email": "info@developerakademie.com",
     },
 ];
+
 
 const tasksDummy = [
   {
@@ -218,24 +220,21 @@ const tasksDummy = [
 
 /**
  * Delete all data and load a the fresh set of dummy data
+ * 
+ * @param {boolean} confirm - confirm reset true/false
  */
-async function resetData() {
-    // if(! window.confirm('All data will be reset to default dummy data! OK?')) { return; }
+async function resetData(confirm) {
+    if(confirm) {
+      if(! window.confirm('All data will be reset to default dummy data! OK?')) return;
+    }
     await deleteAllData();
     categories = categoriesDefault;
     contacts = contactsDummy;
     contacts.sort((a, b) => a.name.localeCompare(b.name));
     tasks = tasksDummy;
-    contacts.forEach(function(contact) {
-        validateContactProperties(contact);
-    });
-    tasks.forEach(function(task) {
-        convertRelationalDueDatesToDateStringDB(task);
-    });
+    contacts.forEach((contact) => validateContactProperties(contact));
+    tasks.forEach((task) => convertRelationalDueDatesToDateStringDB(task));
     await saveAllData()
-    // await showFloatingMessage('text', 'Dummy Data Reset successfull !');
-    // setTimeout(() => {window.location.href = "/board.html";}, 1500);
-    // setTimeout(() => {window.location.href = "/summary.html";}, 1500);
 }
 
 

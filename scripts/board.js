@@ -105,7 +105,7 @@ async function renderBoards() {
  * @param {element} boardTaskList - html element of the task list wrapper
  */
 async function renderBoardTasks(renderTasks, boardId, boardTaskList) {
-  let boardTasks = await renderTasks.filter(task => task.status == boardId);
+  let boardTasks = tasks ? await renderTasks.filter(task => task.status == boardId) : [];
   if(hasLength(boardTasks)) {
     for (let index = 0; index < boardTasks.length; index++) {
       let task = boardTasks[index];
