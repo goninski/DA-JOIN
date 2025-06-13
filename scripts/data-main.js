@@ -99,7 +99,6 @@ async function getCategoryById(categoryId) {
 async function isExistingContact(email) {
     await getUserData();
     let user = contacts.find(contact => contact.email == email);
-    console.log(user);
     return user ? true : false;
 }
 
@@ -124,9 +123,6 @@ async function createContact(contact) {
 async function createTask(task) {
     await validateTaskProperties(task);
     tasks.push(task);
-    console.log(currentTask);
-    console.log(task);
-    console.log(tasks);
     localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task);
 }
 
@@ -160,7 +156,6 @@ async function updateTask(task) {
  */
 async function updateCategory(category) {
     localStorageMode ? await saveCategoriesToLS() : await saveCategoryToDB(category);
-    console.log(categories);
 }
 
 
@@ -175,7 +170,6 @@ async function updateContactProperty(contactId, property, value = null) {
     let contact = await getContactById(contactId);
     if(contact) {
         value === null ? delete contact[property] : contact[property] = value;
-        console.log(contacts);
         localStorageMode ? await saveContactsToLS() : await saveContactToDB(contact, 'update');
     }
 }
@@ -209,7 +203,6 @@ async function updateSubtaskStatus(taskId, subtaskIndex, value) {
     let task = await getTaskById(taskId);
     if(task){
         task.subtasks[subtaskIndex].done = value;
-        console.log(tasks);
         localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task, 'update');
     }
 }

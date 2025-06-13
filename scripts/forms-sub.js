@@ -42,7 +42,6 @@ function dropdownArrowUpDownHandler(event) {
  */
 function dropdownOptionClickHandler(event) {
     event.stopPropagation();
-    console.log('f) dropdownOptionClickHandler');
     let option = event.currentTarget.closest('[role="option"]');
     if(option) {
         getCurrentFieldElements(option);         
@@ -64,7 +63,6 @@ function dropdownOptionClickHandler(event) {
  */
 async function dropdownOptionClickHandlerMultiple(event, contactId) {
     event.stopPropagation();
-    console.log('f) dropdownOptionClickHandlerMultiple');
     let option = event.currentTarget.closest('[role="option"]');
     if(option) {
         let checkbox = event.target;
@@ -125,7 +123,6 @@ function getCurrentSelectOptionValues(listbox, multiple = false) {
         option.name = element.textContent;
         selectOptionValues.push(option);
     });
-    console.log(selectOptionValues);
     return selectOptionValues;
 }
 

@@ -227,7 +227,5 @@ async function setContactPropertiesOnSignUp(currentContact, formInputs ) {
         currentContact.name = formInputs.name;
         currentContact.email = formInputs.email;
         currentContact.password = formInputs.password;
-    } else {
-        console.log('error: no form inputs !');
     }
 }

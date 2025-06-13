@@ -21,7 +21,7 @@
 
     <div class="logo-wrapper">
         <div class="ct-container">
-            <img id="logoDark" class="logo-entry" src="./assets/img/logo-dark.svg" alt="logo-join">
+            <img id="logoDark" class="logo-entry" src="assets/img/logo-dark.svg" alt="logo-join">
         </div>   
     </div>
 
@@ -31,7 +31,7 @@
 
             <div class="page-title-wrapper pos-relative">
                 <button class="back-button" onclick="redirectToLogin(event, 175)">
-                    <img src="./assets/icons/arrow-left-blue.svg" alt="arrow-left-icon">
+                    <img src="assets/icons/arrow-left-blue.svg" alt="arrow-left-icon">
                 </button>
                 <h1 class="page-title top-element">Sign up</h1>
                 <div class="title-deco-divider"></div>
@@ -44,7 +44,7 @@
                         <div class="input-wrapper">
                             <input type="text" id="inputName" name="name" placeholder="Name" required maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="setSubmitBtnStateOnEvent(event)">
                             <div class="input-icon-wrapper simple top-element">
-                                <img src="/assets/icons/input-name.svg" alt="person-icon" class="icon-name-input">
+                                <img src="assets/icons/input-name.svg" alt="person-icon" class="icon-name-input">
                             </div>
                         </div>
                         <div role="alert" class="validation-alert">This field is required</div>
@@ -53,7 +53,7 @@
                         <div class="input-wrapper">
                             <input type="email" id="inputEmail" name="email" placeholder="Email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required maxlength="64" onfocus="focusInHandler(event)"  onfocusout="focusOutHandler(event)" oninput="setSubmitBtnStateOnEvent(event)">
                             <div class="input-icon-wrapper simple">
-                                <img src="/assets/icons/input-email.svg" alt="email-icon" class="icon-email-input">
+                                <img src="assets/icons/input-email.svg" alt="email-icon" class="icon-email-input">
                             </div>
                         </div>
                         <div role="alert" class="validation-alert">Please enter a valid email address</div>
@@ -62,8 +62,8 @@
                         <div class="input-wrapper">
                             <input type="password" data-type="password" id="inputPassword" name="password" placeholder="Password" required minlength="8" maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="passwordInputHandler(event)">
                             <div class="input-icon-wrapper simple">
-                                <img src="./assets/icons/input-password.svg" alt="password-icon" class="icon-size-default">
-                                <button onclick="togglePasswordVisibility(event)" tabindex="-1" class="hide hide-focus"><img src="./assets/icons/input-password-hidden.svg" alt="password-hidden-icon" class="icon-size-default"></button>
+                                <img src="assets/icons/input-password.svg" alt="password-icon" class="icon-size-default">
+                                <button onclick="togglePasswordVisibility(event)" tabindex="-1" class="hide hide-focus"><img src="assets/icons/input-password-hidden.svg" alt="password-hidden-icon" class="icon-size-default"></button>
                             </div>
                         </div>
                         <div role="alert" class="validation-alert">Please enter a minimum of 8 characters</div>
@@ -72,8 +72,8 @@
                         <div class="input-wrapper">
                             <input type="password" data-type="password" id="inputPasswordConfirm" name="passwordConfirm" placeholder="Confirm Password" required minlength="8" maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="passwordInputHandler(event)" data-validation-type="password-confirmation">
                             <div class="input-icon-wrapper simple">
-                                <img src="./assets/icons/input-password.svg" alt="password-icon" class="icon-size-default">
-                                <button onclick="togglePasswordVisibility(event)" tabindex="-1" class="hide hide-focus"><img src="./assets/icons/input-password-hidden.svg" alt="password-hidden-icon" class="icon-size-default"></button>
+                                <img src="assets/icons/input-password.svg" alt="password-icon" class="icon-size-default">
+                                <button onclick="togglePasswordVisibility(event)" tabindex="-1" class="hide hide-focus"><img src="assets/icons/input-password-hidden.svg" alt="password-hidden-icon" class="icon-size-default"></button>
                             </div>
                         </div>
                         <div role="alert" class="validation-alert">Your passwords don't match. Please try again</div>
@@ -83,7 +83,7 @@
                         <div class="input-wrapper custom-checkbox-wrapper left">
                             <input type="checkbox" id="inputAcceptPrivacyPolicy" name="acceptPrivacyPolicy" required class="custom-checkbox clickable hide-focus" onchange="setSubmitBtnStateOnEvent(event)">
                             <img src="assets/icons/checkbox-checked.svg" alt="checkbox-checked" class="icon-checkbox-checked custom-checkbox-checked">
-                            <label for="inputAcceptPrivacyPolicy" class="label pointer-events-none">I accept the&ensp;<a href="/privacy-policy.html">Privacy policy</a></label>
+                            <label for="inputAcceptPrivacyPolicy" class="label pointer-events-none">I accept the&ensp;<a href="privacy-policy.html">Privacy policy</a></label>
                         </div>
                     </div>
 
@@ -95,8 +95,8 @@
         </div>
 
         <div class="term-links-wrapper flex-row justify-center">
-            <a href="/privacy-policy.html">Privacy Policy</a>
-            <a href="/legal-notice.html">Legal notice</a>
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="legal-notice.html">Legal notice</a>
         </div>
     
     </div>

@@ -253,7 +253,6 @@ async function saveAllData() {
  * Save all categories 
  */
 async function saveAllCategories() {
-    console.log(categories);
     categories.forEach(function(category) {
         updateCategory(category);
     });
@@ -264,7 +263,6 @@ async function saveAllCategories() {
  * Save all contacts
  */
 async function saveAllContacts() {
-    console.log(contacts);
     contacts.forEach(function(contact) {
         updateContact(contact);
     });
@@ -275,7 +273,6 @@ async function saveAllContacts() {
  * Save all Tasks
  */
 async function saveAllTasks() {
-    console.log(tasks);
     tasks.forEach(function(task) {
         updateTask(task);
     });

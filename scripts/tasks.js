@@ -309,8 +309,6 @@ async function setTaskProperties(currentTask, formInputs ) {
         currentTask.contactIds = assignedContacts;
         currentTask.subtasks = assignedSubtasks;
         !hasLength(currentTask.status) ? currentTask.status = taskStatus : null;
-    } else {
-        console.log('error: no form inputs !');
     }
 }
 

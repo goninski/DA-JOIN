@@ -247,7 +247,6 @@ async function submitContactsForm(event) {
     event.preventDefault();
     if(formIsValid('contactsForm')) {
         let formInputs = await getFormInputObj('contactsForm');
-        console.log(formInputs.email);
         let isExisting = formMode == 'add' ? await isExistingContact(formInputs.email) : emailIsUpdated;
         if(isExisting) {
             return await showFloatingMessage('text', 'This email address already exists !', -1, 'alert');
@@ -296,8 +295,6 @@ async function setContactProperties(currentContact, formInputs ) {
         currentContact.name = formInputs.name;
         currentContact.email = formInputs.email;
         currentContact.phone = formInputs.phone;
-    } else {
-        console.log('error: no form inputs !');
     }
 }
 
