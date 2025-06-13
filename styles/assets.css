@@ -158,6 +158,9 @@ button {
 .floating-message.animate {
     animation: floating-message 2s;
 }
+.floating-message.animate.alert {
+    animation: floating-message 5s;
+}
 .floating-message.alert {
     background-color: red;
 }
@@ -270,10 +273,10 @@ button {
     z-index: 1000;
     transition: all 175ms;
 }
-.dialogue[aria-hidden="true"] {
+.dialogue.dialogue-closed {
     transform: translateX(100%);
 }
-.dialogue[aria-hidden="false"] {
+.dialogue.dialogue-open {
     transform: translateX(0);
 }
 .dialogue-inner {

@@ -54,7 +54,7 @@ function redirectToLogin(event = null, timeout = 1500) {
     event ? event.stopPropagation() : null;
     loggedInUserId = null;
     localStorage.removeItem('pseudoAuthStatus');
-    setTimeout(function() {window.location.href = '/login.html'}, timeout);
+    setTimeout(() => window.location.href = '/login.html', timeout);
 }
 
 
@@ -318,27 +318,6 @@ function toggleIconColorOnHover(event, hoverColor = 'blue') {
 
 
 /**
- * Helper: show floating message with timeout
- * 
- * @param {string} template - code name for specific template (text, addedTask)
- * @param {string} msg - message content
- * @param {number} timeout - timeout milliseconds (-1 = default)
- * @param {string} optClass - optional class (showing-default, alert)
- */
-async function showFloatingMessage(template, msg = '', timeout = -1, optClass = 'showing-default') {
-    let element = document.getElementById("floatingMsg");
-    element.innerHTML = '';
-    if(element) {
-        timeout === -1 ? timeout = 3000 : null;
-        element.classList.remove('showing-default', 'showing-top', optClass);
-        element.innerHTML = (template == 'addedTask') ? getFloatingMessageTaskAddedTemplate() : getFloatingMessageTextTemplate(msg);
-        element.classList.add('button', 'btn-icon', 'btn-primary', 'animate', optClass);
-        setTimeout(() => element.classList.remove('animate', optClass), timeout);
-    }
-}
-
-
-/**
  * Helper: add and remove body class with timer (helper for animation styles)
  * 
  * @param {string} className - class to add
@@ -362,4 +341,25 @@ async function removeBodyClass(className, timeout = -1) {
     timeout === -1 ? timeout = 1500 : null;
     document.body.classList.remove(className);
     setTimeout(() => document.body.classList.remove(className), timeout);
+}
+
+
+/**
+ * Helper: show floating message with timeout
+ * 
+ * @param {string} template - code name for specific template (text, addedTask)
+ * @param {string} msg - message content
+ * @param {number} timeout - timeout milliseconds for class remove (-1 = default)
+ * @param {string} optClass - optional class (showing-default, alert)
+ */
+async function showFloatingMessage(template, msg = '', timeout = -1, optClass = 'showing-default') {
+    let element = document.getElementById("floatingMsg");
+    element.innerHTML = '';
+    if(element) {
+        timeout === -1 ? timeout = 3000 : null;
+        element.classList.remove('showing-default', 'showing-top', optClass);
+        element.innerHTML = (template == 'addedTask') ? getFloatingMessageTaskAddedTemplate() : getFloatingMessageTextTemplate(msg);
+        element.classList.add('button', 'btn-icon', 'btn-primary', 'animate', optClass);
+        setTimeout(() => element.classList.remove('animate', optClass), timeout);
+    }
 }

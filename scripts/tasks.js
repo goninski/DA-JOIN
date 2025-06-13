@@ -78,8 +78,8 @@ async function showTaskDialogue(elementId, source = 'board') {
         document.getElementById('editTaskFormWrapper').style = 'display: none;';
         document.getElementById(elementId).style = '';
         let dialogue = document.getElementById('taskDialogue');
-        dialogue.classList.remove('show-task', 'add-task', 'edit-task');
-        dialogue.setAttribute('aria-hidden', 'false');
+        dialogue.classList.remove('show-task', 'add-task', 'edit-task', 'dialogue-closed');
+        dialogue.classList.add('dialogue-open');
     }
 }
 
@@ -362,5 +362,6 @@ async function closeTaskDialogue(event) {
     formMode = '';
     await renderBoards();
     let dialogue = document.getElementById('taskDialogue');
-    dialogue.setAttribute('aria-hidden', 'true');
+    dialogue.classList.add('dialogue-closed');
+    dialogue.classList.remove('dialogue-open');
 }

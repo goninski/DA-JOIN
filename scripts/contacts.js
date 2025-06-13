@@ -66,13 +66,23 @@ async function groupContacts(contacts) {
  */
 async function showContactDetail(event, contactId) {
     event.stopPropagation();
-    console.log(currentContact = false);
     if(lastListContactId != '' && lastListContactId != contactId){
         document.getElementById('listContactId-' + lastListContactId).classList.remove('active');
     }
     if(contactId == '') {
         return closeContactDetail(contactId);
     }
+    await setContactDetailProps(event, contactId);
+}
+
+
+/**
+ * Set contact detail properties (for the contact detail view)
+ * 
+ * @param {event} event - inherit 
+ * @param {string} contactId - id of the current contact
+ */
+async function setContactDetailProps(event, contactId) {
     document.getElementById('contactPageInner').classList.add('show-contact-detail');
     document.getElementById('listContactId-' + contactId).classList.add('active');
     document.getElementById('btnCloseContactDetails').addEventListener('click', function(event) {
@@ -152,7 +162,8 @@ async function openEditContactForm(event, contactId) {
 async function openContactsFormDialogue(formMode, contactId = '') {
     await resetForm('contactsForm');
     let dialogue = document.getElementById('addContactDialogue');
-    dialogue.setAttribute('aria-hidden', 'false');
+    dialogue.classList.add('dialogue-open');
+    dialogue.classList.remove('dialogue-closed');
     document.getElementById('addNewContactBtnFloating').style = 'display: none;';
     formMode == 'add' ? await setAddContactValues() : await setEditContactValues(contactId);
     setInitialFormState('contactsForm');
@@ -183,7 +194,8 @@ async function closeContactsFormDialogue(event) {
     formMode = '';
     document.getElementById('addNewContactBtnFloating').style = '';
     let dialogue = document.getElementById('addContactDialogue');
-    dialogue.setAttribute('aria-hidden', 'true');
+    dialogue.classList.remove('dialogue-open');
+    dialogue.classList.add('dialogue-closed');
     await renderContactList();
     await showContactDetail(event, lastListContactId);
 }

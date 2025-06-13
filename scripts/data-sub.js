@@ -382,4 +382,3 @@ function getRandomColor(format = 'hex') {
     }
     return clr;
 }
-
