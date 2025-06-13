@@ -40,7 +40,7 @@ function animateMobileLogo() {
   }, 100);
 
   setTimeout(() => {
-    logo.src = "./assets/img/capa-2.png"; 
+    logo.src = "./assets/img/old/capa-2.png"; 
   }, 400);
 }
 

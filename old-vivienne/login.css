@@ -379,11 +379,11 @@
  }
 
  .pwd-pic {
-     background-image: url('../assets/img/lock.png');
+     background-image: url('../assets/img/old/lock.png');
  }
 
  .eye-pic {
-     background-image: url('../assets/img/eye.png');
+     background-image: url('../assets/img/old/eye.png');
      cursor: pointer;
      margin: 0 auto;
      font-size: 16px;
@@ -392,16 +392,16 @@
  }
 
  .eye-text-pic {
-     background-image: url('../assets/img/eye-text.png');
+     background-image: url('../assets/img/old/eye-text.png');
      cursor: pointer;
  }
 
  .mail-pic {
-     background-image: url('../assets/img/mail.png');
+     background-image: url('../assets/img/old/mail.png');
  }
 
  .person-pic {
-     background-image: url('../assets/img/person.png');
+     background-image: url('../assets/img/old/person.png');
  }
 
  @media(min-width: 1024px) {
