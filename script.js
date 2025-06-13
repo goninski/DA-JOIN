@@ -50,7 +50,7 @@ function signOut(event) {
  * 
  * @param {number} timeout - timeout milliseconds
  */
-function redirectToLogin(event = null, timeout = 1500) {
+function redirectToLogin(event = null, timeout = 250) {
     event ? event.stopPropagation() : null;
     loggedInUserId = null;
     localStorage.removeItem('pseudoAuthStatus');
