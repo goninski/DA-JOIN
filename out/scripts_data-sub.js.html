@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: script.js</title>
+    <title>JSDoc: Source: scripts/data-sub.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: script.js</h1>
+    <h1 class="page-title">Source: scripts/data-sub.js</h1>
 
     
 
@@ -26,372 +26,391 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>let currentPage = window.location.pathname;
-let loggedInUserId = null;
-let loggedInUser = null;
-document.addEventListener('click', documentEventHandler);
+            <pre class="prettyprint source linenums"><code>/**
+ * Save contacts (object array) to local storage
+ */
+async function saveContactsToLS() {
+    saveToLocalStorage('contacts', contacts);
+}
 
 
 /**
- * Checks authorization (redirect to login if unauthorized, if page not public)
- * 
- * @param {boolean} isPublic - public page true/false (e.g. terms pages)
+ * Save tasks (object array) to local storage
  */
-async function checkAuth(isPublic = false) {
-    loggedInUserId = await getFromLocalStorage('pseudoAuthStatus');
-    if(loggedInUserId == 'guest') return;
-    document.body.classList.add('logged-out');
-    if(loggedInUserId === null) {
-        if(!isPublic) return redirectToLogin();
+async function saveTasksToLS() {
+    saveToLocalStorage('tasks', tasks);
+}
+
+
+/**
+ * Save categories (object array) to local storage
+ */
+async function saveCategoriesToLS() {
+    saveToLocalStorage('categories', categories);
+}
+
+
+/**
+ * Save a contact object to db
+ * 
+ * @param {object} contact - a contact object
+ * @param {string} mode - mode (add, update) currently not is use
+ */
+async function saveContactToDB(contact, mode = 'add') {
+    let contactId;
+    if(hasLength(contact.id)) {
+        contactId = contact.id;
     } else {
-        loggedInUser = await getContactById(loggedInUserId);
-        if(!loggedInUser) {
-            if(!isPublic) return redirectToLogin();
-            return;
-        }
-        document.body.classList.remove('logged-out');
+        return alert('Contact not saved due missing Id !');
+    }
+    await saveDataToFirebase('users/' + contactId, contact);
+}
+
+
+/**
+ * Save a task object to db
+ * 
+ * @param {object} task - a task object
+ * @param {string} mode - mode (add, update) currently not is use
+ */
+async function saveTaskToDB(task, mode = 'add') {
+    let taskId;
+    if(hasLength(task.id)) {
+        taskId = task.id;
+        await saveDataToFirebase('tasks/' + taskId, task);
+    } else {
+        return alert('Task not saved due missing Id !');
     }
 }
 
 
 /**
- * On page load terms pages
- */
-async function initTermsPages(linkIdSuffix = '') {
-    await getUserData();
-    await checkAuth(true);
-    getMainTemplates();
-}
-
-
-/**
- * Sign out procedure (remove auth status and redirect to login)
- */
-function signOut(event) {
-    event.stopPropagation();
-    redirectToLogin();
-}
-
-
-/**
- * Redirect to login page
+ * Save a category object to db
  * 
- * @param {number} timeout - timeout milliseconds
+ * @param {object} category - a category object
  */
-function redirectToLogin(event = null, timeout = 250) {
-    event ? event.stopPropagation() : null;
-    loggedInUserId = null;
-    localStorage.removeItem('pseudoAuthStatus');
-    setTimeout(() => window.location.href = '/login.html', timeout);
-}
-
-
-/**
- * Get html main templates (header, sideNavBar etc.)
- */
-function getMainTemplates() {
-    getHeader();
-    getNavBar();
-    setNavLinkProps();
-    getOrientationOverlay();
-}
-
-
-/**
- * Get html header
- */
-function getHeader() {
-    document.getElementById('header').innerHTML = getHeaderTemplate();
-}
-
-
-/**
- * Get html sideNavBar/mobile bottom bar
- */
-function getNavBar() {
-    let sideNavBar = document.getElementById('sideNavBar');
-    sideNavBar.innerHTML = getNavBarTemplate();
-    sideNavBar.classList.add('hide--ss-mob');
-
-    let footerNavBar = document.getElementById('footerNavBar');
-    footerNavBar.innerHTML = getNavBarTemplate();
-    footerNavBar.classList.add('show--ss-mob');
-}
-
-
-/**
- * Set dynamic nav properties (user batch, active url styles/icons)
- */
-function setNavLinkProps() {
-    let headerNavToggle = document.getElementById('headerNavTrigger');
-    headerNavToggle.innerText = loggedInUser ? loggedInUser.initials : 'G';
-    let navLinks = document.querySelectorAll('nav .nav-links a');
-    navLinks.forEach(link => {
-        if(link.href === window.location.href) {
-            link.classList.add('active');
-            let iconElement = link.querySelector('img');
-            iconElement ? iconElement.src = iconElement.src.replace('.svg', '-active.svg') : null;
-        }
-    });
-}
-
-
-/**
- * Toggle header navigation
- * 
- * @param {event} event - click (header nav button)
- */
-function toggleHeaderNav(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    document.getElementById('headerNavDropdown').classList.toggle('is-open');
-}
-
-
-/**
- * Get html orientation overlay
- */
-function getOrientationOverlay() {
-    let element = document.getElementById('orientationOverlay');
-    if(element) {
-        element.textContent = 'Please turn device or window to portrait orientation !';
-        element.addEventListener('click', event => {event.stopPropagation();})
+async function saveCategoryToDB(category) {
+    let categoryId;
+    if(hasLength(category.id)) {
+        categoryId = category.id;
+    } else {
+        return alert('Category not saved due missing Id !');
     }
+    await saveDataToFirebase('categories/' + categoryId, category);
 }
 
 
 /**
- * Document Event handler: close various dialogues
+ * Validate a contact object
  * 
- * @param {event} event - click (document)
+ * @param {object} contact - a contact object
  */
-function documentEventHandler(event) {
-    if( event.type === "click" ) {
-        let elementIds = ['headerNavDropdown', 'contactOptionsMenu'];
-        elementIds.forEach(elementId => {
-            let element = document.getElementById(elementId);
-            element ? element.classList.remove('is-open') : null;
-        });
-    }
+async function validateContactProperties(contact) {
+    contact.id = hasLength(contact.id) ? contact.id : await getNewContactId();
+    contact.initials = await getInitialsOfFirstAndLastWord(contact.name);
+    !hasLength(contact.color) ? contact.color = getRandomColor() : null;
+    !hasLength(contact.phone) ? delete contact.phone : null;
 }
 
 
 /**
- * Close all open elements of certain selector (multiple use)
+ * Validate a task object
  * 
- * @param {string} selector - query-all selector 
+ * @param {object} task - a task object
  */
-function closeOpenElements(selector) {
-    let elements = document.querySelectorAll(selector);
-    if(elements) {
-        elements.forEach(element => {
-            if(element.classList.contains('is-open')) {
-                element.classList.remove('is-open');
-            };
-        });
-    }
+async function validateTaskProperties(task) {
+    delete task.searchBase;
+    task.id = hasLength(task.id) ? task.id : await getNewTaskId();
+    task.status = hasLength(task.status) ? task.status : 'todo';
+    !hasLength(task.description) ? delete task.description : null;
+    !hasLength(task.contacts) ? delete task.contacts : null;
+    !hasLength(task.subtasks) ? delete task.subtasks : null;
 }
 
+
 /**
- * Event Handler: close current element (multiple use)
+ * Get a new contact id (by checking the current highest number)
  * 
- * @param {event} event - various
+ * @returns {string}
  */
-function closeElementByCurrentTarget(event) {
-    event.stopPropagation();
-    let element = event.currentTarget;
-    element ? element.classList.remove('is-open') : null;
+async function getNewContactId() {
+    let lastId = await getMaxIdFromObjArray(contacts, 1000);
+    lastId++;
+    return lastId.toString();
 }
 
 
 /**
- * Helper: check if object exists and has length
+ * Get a new task id (by checking the current highest number)
  * 
- * @param {object} object - any object
- * @returns {boolean}
+ * @returns {string}
  */
-function hasLength(object) {
-    if(object &amp;&amp; object.length > 0) {
-        return true;
-    }
+async function getNewTaskId() {
+    let lastId = await getMaxIdFromObjArray(tasks, 10000);
+    lastId++;
+    return lastId.toString();
 }
 
 
 /**
- * Helper: close parent wrapper
+ * Get a new category id (by checking the current highest number)
  * 
- * @param {event} event - inherit
- * @param {string} selector - selector of the wrapper to close
+ * @returns {string}
  */
-function closeParentWrapper(event, selector = '.close-on-event') {
-    let wrapper = getClosestParentElementFromEvent(event, selector);
-    wrapper ? wrapper.classList.remove('is-open') : null;
+async function getNewCategoryId() {
+    let lastId = await getMaxIdFromObjArray(categories, 100);
+    lastId++;
+    return lastId.toString();
 }
 
 
 /**
- * Helper: sort and return array alphabetically
+ * Helper: returns contact index id of the contacts object, from contact
  * 
- * @param {array} array - data array
+ * @param {string} contactId - contact id
+ */
+async function getContactIndexFromId(contactId) {
+    return contacts ? contacts.findIndex(contact => contact.id == contactId) : -1;
+}
+
+
+/**
+ * Helper: returns task index of the tasks object, from task id
+ * 
+ * @param {string} taskId - task id
+ */
+async function getTaskIndexFromId(taskId) {
+    return tasks ? tasks.findIndex(task => task.id == taskId) : -1;
+}
+
+
+/**
+ * Helper: returns category index of the categories object, from category id
+ * 
+ * @param {string} categoryId - category id
+ */
+async function getCategoryIndexFromId(categoryId) {
+    return  categories ? categories.findIndex(category => category.id == categoryId) : -1;
+}
+
+
+/**
+ * Helper: sort the contacts objects array alphabetically
+ * 
+ * @param {array} contacts - contacts objects array
+ */
+async function sortContacts(contacts) {
+    return contacts ? await contacts.sort((a, b) => a.name.localeCompare(b.name)) : null;
+}
+
+
+/**
+ * Helper: sort the tasks objects array
+ * 
+ * @param {array} tasks - tasks objects array
  * @param {string} sortByProperty - property to sort by
  */
-async function sortArray(array, sortByProperty = 'id') {
-    return await array.sort((a, b) => a[sortByProperty].localeCompare(b[sortByProperty]));
+async function sortTasks(tasks, sortByProperty = 'dueDate') {
+    return tasks ? await tasks.sort((a, b) => a[sortByProperty].localeCompare(b[sortByProperty])) : null;
 }
 
 
 /**
- * Helper: return closest specific parent element from element
+ * Helper: sort the category objects array alphabetically
  * 
- * @param {element} element - dom element
- * @param {string} selector - css selector of the specific parent element
+ * @param {object} categories - categories objects array
  */
-function getClosestParentElementFromElement(element, selector = '') {
-    return element.closest(selector);
+async function sortCategories(categories) {
+    return categories ? await categories.sort((a, b) => a.id.localeCompare(b.id)) : null;
 }
 
 
 /**
- * Helper: return closest specific parent element from event
+ * Remove deleted contacts from task assignment
  * 
- * @param {event} event - inherit
- * @param {string} selector - css selector of the specific parent element
+ * @param {string} deletedContactId - id of the deleted contact
  */
-function getClosestParentElementFromEvent(event, selector = '') {
-    let element = event.currentTarget;
-    if(element) {return element.closest(selector);}
-}
-
-
-/**
- * Helper: return closest specific parent element from id
- * 
- * @param {string} id - current element id
- * @param {string} selector - css selector of the specific parent element
- */
-function getClosestParentElementFromId(id, selector = '') {
-    let element = document.getElementById(id);
-    if(element) {return element.closest(selector);}
-}
-
-
-/**
- * Helper: return boolean from string true/false
- * 
- * @param {string} booleanString - string ('true'/'false')
- */
-function getBooleanFromString(booleanString) {
-    return (booleanString == 'true') ? true : false;
-}
-
-
-/**
- * Helper: convert a date to string for DB (YYYY-MM-DD)
- * 
- * @param {date} date - a date object
- */
-function formatDateToStringDB(date) {
-    let year = date.getFullYear();
-    let month = ('0'+ (date.getMonth() + 1)).slice(-2);
-    let day = ('0' + date.getDate()).slice(-2);
-    let formattedDate = year + '-' + month + '-' + day;
-    return formattedDate;
-}
-
-
-/**
- * Helper: convert a DB date string (YYYY-MM-DD) to a full date string (Month Day, Year)
- * 
- * @param {string} dateStringDB  - date string (YYYY-MM-DD)
- */
-function formatDateFromStringDBToFull(dateStringDB) {
-    let timeStamp = Date.parse(dateStringDB);
-    let date = new Date(timeStamp);
-    let formattedDate = date.toLocaleString('en-US', { month: 'long', day: 'numeric' , year: 'numeric'});
-    return formattedDate;
-}
-
-
-/**
- * Helper: add days to a date
- * 
- * @param {date} date - date object
- * @param {number} days - number of days to add
- * @returns {date}
- */
-function addDaysToDate(date, days) {
-    return new Date(date.getTime() + days * 24 * 60 * 60 * 1000);
-}
-
-
-/**
- * Helper: toggle icon color on hover (only for svg sources on img element)
- * 
- * @param {event} event - current event
- * @param {string} hoverColor - file suffix for the hover svg file
- */
-function toggleIconColorOnHover(event, hoverColor = 'blue') {
-    event.stopPropagation();
-    let iconElement = event.currentTarget.querySelector('img');
-    if(!iconElement) return;
-    let hoverFileSuffix = '-' + hoverColor + '.svg';
-    let iconSource = iconElement.src;
-    if(event.type == 'mouseover') {
-        return (!iconSource.endsWith(hoverFileSuffix)) ? iconElement.src = iconElement.src.replace('.svg', hoverFileSuffix) : null;
-    }
-    if(event.type == 'mouseleave') {
-        return (iconSource.endsWith(hoverFileSuffix)) ? iconElement.src = iconElement.src.replace(hoverFileSuffix, '.svg') : null;
+async function removeDeletedContactsFromTasks(deletedContactId) {
+    for (let i = 0; i &lt; tasks.length; i++) {
+        let task = tasks[i]
+        let index = task.contactIds.indexOf(deletedContactId)
+        index >= 0 ? task.contactIds.splice(index, 1) : null;
+        await updateTaskProperty(task.id, 'contacts');
     }
 }
 
 
 /**
- * Helper: add and remove body class with timer (helper for animation styles)
- * 
- * @param {string} className - class to add
- * @param {number} timemoutAdd - timeout (ms) to add the class (-9 = do not add)
- * @param {number} timemoutRemove - timeout (ms) to remove the class (-9 = do not remove)
+ * Get item data from local storage
+ * @param {*} key - local storage key
  */
-async function addBodyClass(className, timeoutAdd = 0, timeoutRemove = -9) {
-    document.body.classList.remove(className);
-    timeoutAdd >= 0 ? setTimeout(() => document.body.classList.add(className), timeoutAdd) : null;
-    timeoutRemove >= 0 ? removeBodyClass(className, timeoutRemove) : null;
+async function getFromLocalStorage(key){
+    return await JSON.parse(localStorage.getItem(key));
 }
 
 
 /**
- * Helper: remove body class with timer
- * 
- * @param {string} className - class to add
- * @param {number} timemoutRemove - timeout (ms) to remove the class (-1 = default)
+ * Save item data to local storage
+ * @param {*} key - local storage key
+ * @param {*} data - data
  */
-async function removeBodyClass(className, timeout = -1) {
-    timeout === -1 ? timeout = 1500 : null;
-    document.body.classList.remove(className);
-    setTimeout(() => document.body.classList.remove(className), timeout);
+async function saveToLocalStorage(key, data){
+    localStorage.setItem(key, JSON.stringify(data));
 }
 
 
 /**
- * Helper: show floating message with timeout
- * 
- * @param {string} template - code name for specific template (text, addedTask)
- * @param {string} msg - message content
- * @param {number} timeout - timeout milliseconds for class remove (-1 = default)
- * @param {string} optClass - optional class (showing-default, alert)
+ * Clear local storage
  */
-async function showFloatingMessage(template, msg = '', timeout = -1, optClass = 'showing-default') {
-    let element = document.getElementById("floatingMsg");
-    element.innerHTML = '';
-    if(element) {
-        timeout === -1 ? timeout = 3000 : null;
-        element.classList.remove('showing-default', 'showing-top', optClass);
-        element.innerHTML = (template == 'addedTask') ? getFloatingMessageTaskAddedTemplate() : getFloatingMessageTextTemplate(msg);
-        element.classList.add('button', 'btn-icon', 'btn-primary', 'animate', optClass);
-        setTimeout(() => element.classList.remove('animate', optClass), timeout);
+async function clearLocalStorage(){
+    localStorage.clear();
+}
+
+
+/**
+ * Fetch data from firebase
+ * 
+ * @param {string} fetchPath - sub path (users, tasks, categories etc.)
+ * @param {boolean} raw - true: return raw fetch object (no conversion to array)
+ */
+async function fetchDataFromFirebase(fetchPath = '', raw = false) {
+    let response = await fetch(fetchUrl + fetchPath + '.json');
+    let fetchObj = await response.json();
+    if(fetchObj) {
+        if(raw) {
+            return fetchObj;
+        }
+        return firebaseObjToArray(fetchObj);
     }
 }
-</code></pre>
+
+
+/**
+ * Convert firebase fetch object to js object array
+ * @param {object} fetchObj - raw fetch object
+ * @returns {array}
+ */
+async function firebaseObjToArray(fetchObj) {
+    dataArr = [];
+    let fetchEntries = Object.entries(fetchObj);
+    fetchEntries.forEach(function(item) {
+        dataArr.push(item[1]);
+    });
+    return dataArr;
+};
+
+
+/**
+ * Save/Update data to firebase
+ * 
+ * @param {string} fetchPath - sub path (users, tasks, categories etc.)
+ * @param {array} dataArr - data array (???)
+ * @param {string} postMethode - fetch methode (use PUT only)
+ */
+async function saveDataToFirebase(fetchPath, dataArr, postMethode="PUT") {
+    let response = await fetch(fetchUrl + fetchPath + '.json', {
+        method: postMethode,
+        header: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataArr),
+    });
+    let key = await response.json();
+}
+
+
+/**
+ * Delete data from firebase
+ * 
+ * @param {string} fetchPath - sub path to delete (empty for all data)
+ */
+async function deleteFirebaseData(fetchPath="x") {
+    let response = await fetch(fetchUrl + fetchPath + ".json",{
+        method: "DELETE",
+    });
+    dataObj = await response.json();
+}
+
+
+/**
+ * Helper: return the first word of a string
+ * 
+ * @param {string} string - string
+ */
+function getFirstWord(string, index = 0) {
+    let array = string.split(" ");
+    return array[index];
+}
+
+
+/**
+ * Helper: return the last word of a string
+ * 
+ * @param {string} string - string
+ */
+function getLastWord(string) {
+    let array = string.split(" ");
+    return array[array.length - 1];
+}
+
+
+/**
+ * Helper: set the first letter of string to upper case and returns the full string
+ * 
+ * @param {string} string - string
+ */
+function setFirstLetterUpperCase(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
+
+/**
+ * Helper: return first letter of first and last word of a string, in upper case
+ * 
+ * @param {string} string - string
+ */
+function getInitialsOfFirstAndLastWord(string) {
+    let firstWord = getFirstWord(string);
+    let lastWord = getLastWord(string);
+    return (firstWord[0] + lastWord[0]).toUpperCase();
+}
+
+
+/**
+ * Helper: return first letter of last word of a string, in upper case
+ * 
+ * @param {string} string - string
+ */
+function getInitialOfLastWord(string) {
+    let lastWord = getLastWord(string);
+    return lastWord[0].toUpperCase();
+}
+
+
+/**
+ * Helper: return the highest id of an object array
+ * 
+ * @param {array} objArray - array with objects (needs a property of id)
+ * @param {number} lastDefault - last id if empty
+ */
+async function getMaxIdFromObjArray(objArray, lastDefault = 0) {
+    return objArray ? Math.max(...objArray.map(item => item.id)) : lastDefault;
+}
+
+
+/**
+ * Helper: return a random hex color string
+ * 
+ * @param {string} format - color format (hex)
+ */
+function getRandomColor(format = 'hex') {
+    let clr = Math.floor(Math.random()*16777215).toString(16);
+    clr = '#' + clr;
+    if(clr.length == 6) {
+        clr = clr + '0';
+    }
+    return clr;
+}</code></pre>
         </article>
     </section>
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: script.js</title>
+    <title>JSDoc: Source: scripts/forms-sub.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: script.js</h1>
+    <h1 class="page-title">Source: scripts/forms-sub.js</h1>
 
     
 
@@ -26,370 +26,262 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>let currentPage = window.location.pathname;
-let loggedInUserId = null;
-let loggedInUser = null;
-document.addEventListener('click', documentEventHandler);
+            <pre class="prettyprint source linenums"><code>/**
+ * Event handler: dropdown (custom select)
+ * 
+ * @param {event} event - onclick (combox), onkeydown (combox single select)
+ */
+function dropdownEventHandler(event) {
+    event.stopPropagation();
+    getCurrentFieldElements(event.target);
+    listbox = currentFieldElements.listbox;
+    if(['Enter', ' '].includes(event.key)) {
+        event.preventDefault();
+        return toggleDropdown(listbox);
+    }
+    if( event.type === 'click') {
+        return toggleDropdown(listbox);
+    }
+    if( event.key === 'Escape') {
+        return closeDropdown(listbox);
+    }
+    return dropdownArrowUpDownHandler(event);
+}
 
 
 /**
- * Checks authorization (redirect to login if unauthorized, if page not public)
+ * Custom dropdown arrow up/down handler
  * 
- * @param {boolean} isPublic - public page true/false (e.g. terms pages)
+ * @param {event} event - inherit
  */
-async function checkAuth(isPublic = false) {
-    loggedInUserId = await getFromLocalStorage('pseudoAuthStatus');
-    if(loggedInUserId == 'guest') return;
-    document.body.classList.add('logged-out');
-    if(loggedInUserId === null) {
-        if(!isPublic) return redirectToLogin();
-    } else {
-        loggedInUser = await getContactById(loggedInUserId);
-        if(!loggedInUser) {
-            if(!isPublic) return redirectToLogin();
-            return;
+function dropdownArrowUpDownHandler(event) {
+    if(!event.currentTarget.hasAttribute('data-select-multiple')) {
+        if(['ArrowDown', 'ArrowUp'].includes(event.key)) {
+            return dropdownOptionKeyHandler(event, false);
         }
-        document.body.classList.remove('logged-out');
     }
 }
 
 
 /**
- * On page load terms pages
- */
-async function initTermsPages(linkIdSuffix = '') {
-    await getUserData();
-    await checkAuth(true);
-    getMainTemplates();
-}
-
-
-/**
- * Sign out procedure (remove auth status and redirect to login)
- */
-function signOut(event) {
-    event.stopPropagation();
-    redirectToLogin();
-}
-
-
-/**
- * Redirect to login page
+ * Event handler: dropdown single option (custom select single)
  * 
- * @param {number} timeout - timeout milliseconds
+ * @param {event} event - onclick (select option)
  */
-function redirectToLogin(event = null, timeout = 250) {
-    event ? event.stopPropagation() : null;
-    loggedInUserId = null;
-    localStorage.removeItem('pseudoAuthStatus');
-    setTimeout(() => window.location.href = '/login.html', timeout);
+function dropdownOptionClickHandler(event) {
+    event.stopPropagation();
+    let option = event.currentTarget.closest('[role="option"]');
+    if(option) {
+        getCurrentFieldElements(option);         
+        let options = currentFieldElements.options;
+        options.forEach(element => {
+            element.setAttribute('aria-selected', 'false');
+        });
+        setDropdownOption(currentFieldElements.combox, option, null);
+        toggleDropdown(currentFieldElements.listbox);
+    }
 }
 
 
 /**
- * Get html main templates (header, sideNavBar etc.)
+ * Event handler: dropdown multiple option (custom multiple select (for assigned contacts))
+ * 
+ * @param {event} event - onchange (on checkbox input)
+ * @param {string} contactId - contact id of the selected contact option
  */
-function getMainTemplates() {
-    getHeader();
-    getNavBar();
-    setNavLinkProps();
-    getOrientationOverlay();
+async function dropdownOptionClickHandlerMultiple(event, contactId) {
+    event.stopPropagation();
+    let option = event.currentTarget.closest('[role="option"]');
+    if(option) {
+        let checkbox = event.target;
+        if(checkbox.checked) {
+            assignedContacts.push(contactId);
+        } else {
+            assignedContacts.splice(assignedContacts.indexOf(contactId), 1);
+        };
+        await renderTaskFormContactBatches(assignedContacts);
+    }
 }
 
 
 /**
- * Get html header
+ * Set dropdown options (custom single select)
+ * 
+ * @param {element} combox - combox dom element
+ * @param {element} option - option dom element
+ * @param {element} activeOption - active option dom element 
  */
-function getHeader() {
-    document.getElementById('header').innerHTML = getHeaderTemplate();
+function setDropdownOption(combox, option, activeOption = null) {
+    combox.value = option.textContent;
+    combox.setAttribute('data-option-id', option.dataset.optionId);
+    combox.setAttribute('data-active-index', option.dataset.index);
+    activeOption ? activeOption.setAttribute('aria-selected', 'false') : null;
+    option.setAttribute('aria-selected', 'true');
 }
 
 
 /**
- * Get html sideNavBar/mobile bottom bar
+ * Helper: return an array with all option elements of a listbox (custom select)
+ * 
+ * @param {element} listbox - listbox element
+ * @param {boolean} multiple - is multiple select (currently not in use)
  */
-function getNavBar() {
-    let sideNavBar = document.getElementById('sideNavBar');
-    sideNavBar.innerHTML = getNavBarTemplate();
-    sideNavBar.classList.add('hide--ss-mob');
-
-    let footerNavBar = document.getElementById('footerNavBar');
-    footerNavBar.innerHTML = getNavBarTemplate();
-    footerNavBar.classList.add('show--ss-mob');
+function getCurrentSelectOptions(listbox, multiple = false) {
+    let selectOptions = [];
+    let options = listbox.querySelectorAll('[role="option"]');
+    options.forEach(function(option) {
+        selectOptions.push(option);
+    });
+    return selectOptions;
 }
 
 
 /**
- * Set dynamic nav properties (user batch, active url styles/icons)
+ * Helper: return an array with all option values of a listbox (custom select)
+ * 
+ * @param {element} listbox - listbox element
+ * @param {boolean} multiple - is multiple select (currently not in use)
  */
-function setNavLinkProps() {
-    let headerNavToggle = document.getElementById('headerNavTrigger');
-    headerNavToggle.innerText = loggedInUser ? loggedInUser.initials : 'G';
-    let navLinks = document.querySelectorAll('nav .nav-links a');
-    navLinks.forEach(link => {
-        if(link.href === window.location.href) {
-            link.classList.add('active');
-            let iconElement = link.querySelector('img');
-            iconElement ? iconElement.src = iconElement.src.replace('.svg', '-active.svg') : null;
-        }
+function getCurrentSelectOptionValues(listbox, multiple = false) {
+    let selectOptionValues = [];
+    let options = listbox.querySelectorAll('[role="option"]');
+    options.forEach(function(element) {
+        let option = {};
+        option.id = element.dataset.optionId;
+        option.name = element.textContent;
+        selectOptionValues.push(option);
+    });
+    return selectOptionValues;
+}
+
+
+/**
+ * Toggle dropdown (custom select) of current element
+ * 
+ * @param {element} element - current element
+ */
+function toggleDropdown(element) {                      
+    getCurrentFieldElements(element);
+    let listbox = currentFieldElements.listbox;
+    closeAllDropdowns(listboxElements, listbox);
+    currentFieldElements.fieldWrapper.classList.toggle('select-expanded');
+    let isExpanded = getBooleanFromString(listbox.getAttribute('aria-expanded'));
+    isExpanded = !isExpanded;
+    listbox.setAttribute('aria-expanded', isExpanded);
+    !isExpanded ? validateInput(currentFieldElements.combox) : null;
+}
+
+
+/**
+ * Helper: open dropdown (custom select)
+ * 
+ * @param {element} listbox - current listbox element
+ */
+function openDropdown(listbox) {
+    let fieldWrapper = getFieldWrapperFromElement(listbox);
+    if(fieldWrapper) {
+        listbox.setAttribute('aria-expanded', 'true');
+        fieldWrapper.classList.add('select-expanded');
+    }
+}
+
+
+/**
+ * Helper: close a dropdown (custom select)
+ * 
+ * @param {element} listbox - current listbox element
+ */
+function closeDropdown(listbox) {
+    let fieldWrapper = getFieldWrapperFromElement(listbox);
+    if(fieldWrapper) {
+        listbox.setAttribute('aria-expanded', 'false');
+        fieldWrapper.classList.remove('select-expanded');
+    }
+}
+
+
+/**
+ * Helper: close all dropdowns (custom select) except the current (???)
+ * 
+ * @param {element} listboxElements - array of all listbox elements
+ * @param {element} currentListbox - the current listbox, optional
+ */
+function closeAllDropdowns(listboxElements, currentListbox = null) {
+    listboxElements.forEach(function(listbox) {
+        listbox !== currentListbox ? closeDropdown(listbox) : null;
     });
 }
 
 
 /**
- * Toggle header navigation
+ * Focus dropdown (custom select) from current element
  * 
- * @param {event} event - click (header nav button)
+ * @param {element} element - current element
  */
-function toggleHeaderNav(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    document.getElementById('headerNavDropdown').classList.toggle('is-open');
+function focusCurrentCombox(element) {
+    getCurrentFieldElements(element);
+    currentFieldElements.combox ? currentFieldElements.combox.focus() : null;
 }
 
 
 /**
- * Get html orientation overlay
- */
-function getOrientationOverlay() {
-    let element = document.getElementById('orientationOverlay');
-    if(element) {
-        element.textContent = 'Please turn device or window to portrait orientation !';
-        element.addEventListener('click', event => {event.stopPropagation();})
-    }
-}
-
-
-/**
- * Document Event handler: close various dialogues
+ * Helper: arrow down/up navigation of custom single select
  * 
- * @param {event} event - click (document)
+ * @param {event} event - inherit (from dropdownEventHandler)
+ * @param {boolean} loop - loop the index
  */
-function documentEventHandler(event) {
-    if( event.type === "click" ) {
-        let elementIds = ['headerNavDropdown', 'contactOptionsMenu'];
-        elementIds.forEach(elementId => {
-            let element = document.getElementById(elementId);
-            element ? element.classList.remove('is-open') : null;
-        });
-    }
+function dropdownOptionKeyHandler(event, loop = false) {
+    getCurrentFieldElements(event.currentTarget);
+    let combox = currentFieldElements.combox;
+    let options = currentFieldElements.options;
+    let activeIndex = combox.dataset.activeIndex;
+    index = getSelectedDropdownIndex(event, activeIndex, options.length, loop);
+    setDropdownOption(combox, options[index], options[activeIndex]);
 }
 
 
 /**
- * Close all open elements of certain selector (multiple use)
- * 
- * @param {string} selector - query-all selector 
- */
-function closeOpenElements(selector) {
-    let elements = document.querySelectorAll(selector);
-    if(elements) {
-        elements.forEach(element => {
-            if(element.classList.contains('is-open')) {
-                element.classList.remove('is-open');
-            };
-        });
-    }
-}
-
-/**
- * Event Handler: close current element (multiple use)
- * 
- * @param {event} event - various
- */
-function closeElementByCurrentTarget(event) {
-    event.stopPropagation();
-    let element = event.currentTarget;
-    element ? element.classList.remove('is-open') : null;
-}
-
-
-/**
- * Helper: check if object exists and has length
- * 
- * @param {object} object - any object
- * @returns {boolean}
- */
-function hasLength(object) {
-    if(object &amp;&amp; object.length > 0) {
-        return true;
-    }
-}
-
-
-/**
- * Helper: close parent wrapper
+ * Helper: return selected dropdown index
  * 
  * @param {event} event - inherit
- * @param {string} selector - selector of the wrapper to close
+ * @param {number} index - current option index
+ * @param {number} length - total number of options
+ * @param {boolean} loop - loop the index
  */
-function closeParentWrapper(event, selector = '.close-on-event') {
-    let wrapper = getClosestParentElementFromEvent(event, selector);
-    wrapper ? wrapper.classList.remove('is-open') : null;
-}
-
-
-/**
- * Helper: sort and return array alphabetically
- * 
- * @param {array} array - data array
- * @param {string} sortByProperty - property to sort by
- */
-async function sortArray(array, sortByProperty = 'id') {
-    return await array.sort((a, b) => a[sortByProperty].localeCompare(b[sortByProperty]));
-}
-
-
-/**
- * Helper: return closest specific parent element from element
- * 
- * @param {element} element - dom element
- * @param {string} selector - css selector of the specific parent element
- */
-function getClosestParentElementFromElement(element, selector = '') {
-    return element.closest(selector);
-}
-
-
-/**
- * Helper: return closest specific parent element from event
- * 
- * @param {event} event - inherit
- * @param {string} selector - css selector of the specific parent element
- */
-function getClosestParentElementFromEvent(event, selector = '') {
-    let element = event.currentTarget;
-    if(element) {return element.closest(selector);}
-}
-
-
-/**
- * Helper: return closest specific parent element from id
- * 
- * @param {string} id - current element id
- * @param {string} selector - css selector of the specific parent element
- */
-function getClosestParentElementFromId(id, selector = '') {
-    let element = document.getElementById(id);
-    if(element) {return element.closest(selector);}
-}
-
-
-/**
- * Helper: return boolean from string true/false
- * 
- * @param {string} booleanString - string ('true'/'false')
- */
-function getBooleanFromString(booleanString) {
-    return (booleanString == 'true') ? true : false;
-}
-
-
-/**
- * Helper: convert a date to string for DB (YYYY-MM-DD)
- * 
- * @param {date} date - a date object
- */
-function formatDateToStringDB(date) {
-    let year = date.getFullYear();
-    let month = ('0'+ (date.getMonth() + 1)).slice(-2);
-    let day = ('0' + date.getDate()).slice(-2);
-    let formattedDate = year + '-' + month + '-' + day;
-    return formattedDate;
-}
-
-
-/**
- * Helper: convert a DB date string (YYYY-MM-DD) to a full date string (Month Day, Year)
- * 
- * @param {string} dateStringDB  - date string (YYYY-MM-DD)
- */
-function formatDateFromStringDBToFull(dateStringDB) {
-    let timeStamp = Date.parse(dateStringDB);
-    let date = new Date(timeStamp);
-    let formattedDate = date.toLocaleString('en-US', { month: 'long', day: 'numeric' , year: 'numeric'});
-    return formattedDate;
-}
-
-
-/**
- * Helper: add days to a date
- * 
- * @param {date} date - date object
- * @param {number} days - number of days to add
- * @returns {date}
- */
-function addDaysToDate(date, days) {
-    return new Date(date.getTime() + days * 24 * 60 * 60 * 1000);
-}
-
-
-/**
- * Helper: toggle icon color on hover (only for svg sources on img element)
- * 
- * @param {event} event - current event
- * @param {string} hoverColor - file suffix for the hover svg file
- */
-function toggleIconColorOnHover(event, hoverColor = 'blue') {
-    event.stopPropagation();
-    let iconElement = event.currentTarget.querySelector('img');
-    if(!iconElement) return;
-    let hoverFileSuffix = '-' + hoverColor + '.svg';
-    let iconSource = iconElement.src;
-    if(event.type == 'mouseover') {
-        return (!iconSource.endsWith(hoverFileSuffix)) ? iconElement.src = iconElement.src.replace('.svg', hoverFileSuffix) : null;
+function getSelectedDropdownIndex(event, index, length, loop = false) {
+    !index ? index = -1 : null;
+    if(event.key === 'ArrowDown' ) {
+        index = getNextIndex(index, length, loop);
+    } else if (event.key === 'ArrowUp' ) {
+        index = getPreviousIndex(index, length, loop);
     }
-    if(event.type == 'mouseleave') {
-        return (iconSource.endsWith(hoverFileSuffix)) ? iconElement.src = iconElement.src.replace(hoverFileSuffix, '.svg') : null;
+    return index;
+}
+
+
+/**
+ * Helper: return next dropdown index
+ */
+function getNextIndex(index, length, loop = false) {
+    if(index &lt; length - 1 ) {
+        index++;
+    } else {
+        loop ? index = 0 : null;
     }
+    return index;
 }
 
 
 /**
- * Helper: add and remove body class with timer (helper for animation styles)
- * 
- * @param {string} className - class to add
- * @param {number} timemoutAdd - timeout (ms) to add the class (-9 = do not add)
- * @param {number} timemoutRemove - timeout (ms) to remove the class (-9 = do not remove)
+ * Helper: return previous dropdown index
  */
-async function addBodyClass(className, timeoutAdd = 0, timeoutRemove = -9) {
-    document.body.classList.remove(className);
-    timeoutAdd >= 0 ? setTimeout(() => document.body.classList.add(className), timeoutAdd) : null;
-    timeoutRemove >= 0 ? removeBodyClass(className, timeoutRemove) : null;
-}
-
-
-/**
- * Helper: remove body class with timer
- * 
- * @param {string} className - class to add
- * @param {number} timemoutRemove - timeout (ms) to remove the class (-1 = default)
- */
-async function removeBodyClass(className, timeout = -1) {
-    timeout === -1 ? timeout = 1500 : null;
-    document.body.classList.remove(className);
-    setTimeout(() => document.body.classList.remove(className), timeout);
-}
-
-
-/**
- * Helper: show floating message with timeout
- * 
- * @param {string} template - code name for specific template (text, addedTask)
- * @param {string} msg - message content
- * @param {number} timeout - timeout milliseconds for class remove (-1 = default)
- * @param {string} optClass - optional class (showing-default, alert)
- */
-async function showFloatingMessage(template, msg = '', timeout = -1, optClass = 'showing-default') {
-    let element = document.getElementById("floatingMsg");
-    element.innerHTML = '';
-    if(element) {
-        timeout === -1 ? timeout = 3000 : null;
-        element.classList.remove('showing-default', 'showing-top', optClass);
-        element.innerHTML = (template == 'addedTask') ? getFloatingMessageTaskAddedTemplate() : getFloatingMessageTextTemplate(msg);
-        element.classList.add('button', 'btn-icon', 'btn-primary', 'animate', optClass);
-        setTimeout(() => element.classList.remove('animate', optClass), timeout);
+function getPreviousIndex(index, length, loop = false) {
+    if(index &lt;= 0) {
+        loop ? index = length - 1 : null;
+    } else {
+        index--;
     }
+    return index;
 }
 </code></pre>
         </article>

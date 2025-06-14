@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: scripts/templates.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: scripts/templates.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Return html of the global header
+ */
+function getHeaderTemplate() {
+    return `
+        &lt;div class="ct-container flex-row justify-between align-center">
+            &lt;div class="logo-link">
+                &lt;img src="./assets/img/logo-dark.svg" alt="join-logo" class="logo logo-small">
+            &lt;/div>
+            &lt;p class="header-title">Kanban Project Management&amp;nbsp;Tool&lt;/p>
+            &lt;a class="help-link" href="help.html" title="Show Help Page">&lt;img class="help-icon" src="./assets/icons/help.svg" alt="help-icon">&lt;/a>
+            &lt;nav class="header-nav flex-col pos-relative">
+                &lt;button id="headerNavTrigger" onclick="toggleHeaderNav(event)" class="profile-batch">G&lt;/button>
+                &lt;div id="headerNavDropdown" class="nav-links" onclick="event.stopPropagation()">
+                    &lt;a class="help-link-mobile" href="/help.html">Help&lt;/a>
+                    &lt;a href="/legal-notice.html">Legal Notice&lt;/a>
+                    &lt;a href="/privacy-policy.html">Privacy Policy&lt;/a>
+                    &lt;a href="/data-handling.html">Data Handling&lt;/a>
+                    &lt;a href="#" onclick="signOut(event)">Log out&lt;/a>
+                &lt;/div> 
+            &lt;/nav>
+        &lt;/div>
+    `
+}
+
+
+/**
+ * Return html of the global navbar (sidbar / footerbar
+ * 
+ * @param {string} locationIdSuffix - 'mob' for mobile navbar
+ */
+function getNavBarTemplate() {
+    return `
+        &lt;div href="/summary.html" class="nav-link-logo">
+            &lt;img src="./assets/img/logo-light.svg" alt="join-logo" class="logo logo-large">
+        &lt;/div>
+        &lt;nav class="flex flex-grow"> 
+            &lt;div class="nav-links nav-links-main flex flex-grow">
+                &lt;a class="nav-link-login" href="/login.html" style>
+                    &lt;img src="./assets/icons/menu-login.svg">Log In
+                &lt;/a>
+                &lt;a class="nav-link-app" href="/summary.html">
+                    &lt;img src="./assets/icons/menu-summary.svg">Summary
+                &lt;/a>
+                &lt;a class="nav-link-app" href="/add-task.html">
+                    &lt;img src="./assets/icons/menu-add-task.svg">Add Task
+                &lt;/a>
+                &lt;a class="nav-link-app" href="/board.html">
+                    &lt;img src="./assets/icons/menu-board.svg">Board
+                &lt;/a>
+                &lt;a class="nav-link-app" href="/contacts.html">
+                    &lt;img src="./assets/icons/menu-contacts.svg">Contacts
+                &lt;/a>
+            &lt;/div>
+            &lt;div class="nav-links nav-links-terms flex">
+                &lt;a href="/privacy-policy.html">Privacy Policy&lt;/a>
+                &lt;a href="/legal-notice.html">Legal notice&lt;/a>
+            &lt;/div>
+        &lt;/nav>
+    `
+}
+
+
+/**
+ * Return html of a single board (status board on board page)
+ * 
+ * @param {object} board - a board object (of boards)
+ */
+function getBoardTemplate(board) {
+    let addTaskBtn = getIconTemplatePlus();
+    return `
+        &lt;div class="board" id="board-${board.id}">
+            &lt;div class="board-title-bar">
+                &lt;h3 class="board-title">${board.label}&lt;/h3>
+                &lt;button class="add-task-button-board" title="add new Task" onclick="addBoardTask(event, 'todo')">
+                    ${addTaskBtn}
+                &lt;/button>
+            &lt;/div>
+            &lt;div id="boardTaskList-${board.id}" class="board-task-list" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="taskDrop(event, '${board.id}')">
+            &lt;/div>
+        &lt;/div>
+`
+}
+
+
+/**
+ * Return html of the no-task drop zone (for boards with no tasks assigned)
+ */
+function getBoardNoTaskTemplate() {
+    return `
+        &lt;div class="board-no-task">No tasks To Do&lt;/div>
+`
+}
+
+
+/**
+ * Return html of a single task of a status board
+ * 
+ * @param {object} task - a task object (of tasks)
+ * @param {object} category - the category object (of categories) for the current task
+ * @param {string} subtaskCount - number of subtasks and subtasks done for the current task
+ * @param {string} subtaskProressWidth - the px-width for the subtask progress bar style (done subtasks)
+ */
+async function getBoardTasksTemplate(task, category, subtaskCount, subtaskProgressWidth) {
+    let hideDescription = task.description == null ? 'hide': null;
+    // let hideBatches = task.contactIds == null ? 'hide': null;
+    let hideSubtask = subtaskCount == null ? 'hide': null;
+    return `
+        &lt;div class="board-task clickable-task" onclick="showTaskDetail(event, '${task.id}')" draggable="true" ondragstart="onDragStartTask(event, '${task.id}')" ondragend="onDragEnd(event)">
+            &lt;div class="task-options-menu-wrapper flex-col">
+                &lt;button class="task-options-menu-button hide-focus" title="Move Task" onclick="renderTaskOptionsMenu(event,'${task.id}', '${task.status}')">&lt;img src="./assets/icons/swap-status.svg" alt="swap-icon">&lt;/button>
+                &lt;div id="taskOptionsMenu-${task.id}" class="task-options-menu close-on-event flex-col not-clickable" onclick="event.stopPropagation()" xonmouseleave="closeElementByCurrentTarget(event)">&lt;/div>
+            &lt;/div>
+            &lt;div class="board-task-category" style="background-color: ${category.color};">${category.name}&lt;/div>
+            &lt;div class="board-task-title">${task.title}&lt;/div>
+            &lt;div class="board-task-description ${hideDescription}">${task.description}&lt;/div>
+            &lt;div class="board-subtask-info flex-row justify-between align-center ${hideSubtask}">
+                &lt;div class="board-task-progress-bar">
+                    &lt;div class="board-task-progress-done" style="width: ${subtaskProgressWidth}">&lt;/div>
+                &lt;/div>
+                &lt;div class="board-subtask-count">${subtaskCount} Subtasks&lt;/div>
+            &lt;/div>
+            &lt;div class="board-task-user flex-row align-center"> 
+                &lt;ul id="profileBatchesTaskBoard-${task.id}" class="profile-batches task-board hide-if-empty">&lt;/ul>
+                &lt;img src="./assets/icons/prio-${task.priority}.svg" class="board-task-priority ml-auto">
+            &lt;/div>
+        &lt;/div>
+    `
+}
+
+
+/**
+ * Return html of board task option menu (change task status / move to board)
+ * 
+ * @param {string} taskId - id of the current task
+ * @param {string} currentStatus - current status of the current task
+ * @param {number} statusIndex - current status index
+ */
+function getMoveToBoardMenuTemplate(taskId, currentStatus, statusIndex) {
+    let hideTodo = (statusIndex == 0) ? 'hide' : '';
+    let hideInProgress = (statusIndex == 1) ? 'hide' : '';
+    let hideAwaitFeedback = (statusIndex == 2) ? 'hide' : '';
+    let hideDone = (statusIndex == 3) ? 'hide' : '';
+    let arrowInProgress = (statusIndex &lt; 1) ? 'downward' : 'upward';
+    let arrowAwaitFeedback = (statusIndex &lt; 2) ? 'downward' : 'upward';
+        // &lt;button class="close-task-options-menu" onclick="closeParentWrapper(event)" title="close menu">
+        //     &lt;img src="assets/icons/close-white.svg" alt="close-icon" class="close-icon light">
+        // &lt;/button>
+    return `
+        &lt;strong>Move to&lt;/strong>
+        &lt;ul class"ul-reset">  
+            &lt;li class="${hideTodo}">&lt;button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[0].id}')">&lt;img src="./assets/icons/arrow-upward.svg">${boards[0].label}&lt;/button>&lt;/li>
+            &lt;li class="${hideInProgress}">&lt;button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[1].id}')">&lt;img src="./assets/icons/arrow-${arrowInProgress}.svg">${boards[1].label}&lt;/button>&lt;/li>
+            &lt;li class="${hideAwaitFeedback}">&lt;button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[2].id}')">&lt;img src="./assets/icons/arrow-${arrowAwaitFeedback}.svg">${boards[2].label}&lt;/button>&lt;/li>
+            &lt;li class="${hideDone}">&lt;button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[3].id}')">&lt;img src="./assets/icons/arrow-downward.svg">${boards[3].label}&lt;/button>&lt;/li>
+        &lt;/ul>  `
+}
+
+
+/**
+ * Return html of the task details (within status board dialogue)
+ * 
+ * @param {object} task - a task object (of tasks)
+ * @param {object} category - the category object (of categories) for the current task
+ */
+function getTaskDetailsTemplate(task, category) {
+  let hideDescription = task.description == null ? 'hide': null;
+  let hideContacts = !hasLength(task.contactIds) ? 'hide': null;
+  let hideSubtasks = !hasLength(task.subtasks) ? 'hide': null;
+  let dueDate = new Date(task.dueDate).toLocaleDateString('en-GB'); 
+  let priority = setFirstLetterUpperCase(task.priority);
+  return `
+    &lt;div class="task-details-wrapper flex-col">
+        &lt;div class="board-task-category" style="background-color: ${category.color};">${category.name}&lt;/div>
+        &lt;h3 class="board-task-title">${task.title}&lt;/h3>  
+        &lt;div class="board-task-description ${hideDescription}">${task.description}&lt;/div>
+        &lt;div class="board-task-meta flex align-center">
+            &lt;label>Due Date:&lt;/label>
+            &lt;div>${dueDate}&lt;/div>
+        &lt;/div>
+        &lt;div class="board-task-meta board-task-priority flex">
+            &lt;label>Priority:&lt;/label>
+            &lt;div class="flex align-center">${priority}
+                &lt;img src="./assets/icons/prio-${task.priority}.svg" alt="${task.priority}-icon">
+            &lt;/div>
+        &lt;/div>
+        &lt;div class="board-task-meta board-task-assigned-to flex-col ${hideContacts}">
+            &lt;label>Assigned To:&lt;/label>
+            &lt;ul id="taskDetailsAssignedContactsWrapper" class="profile-batches task-board-detail-view hide-if-empty flex-col">&lt;/ul>
+        &lt;/div>
+        &lt;div class="board-task-meta board-task-subtasks flex-col ${hideSubtasks}">
+            &lt;label>Subtasks&lt;/label>
+            &lt;ul id="taskDetailsSubtaskWrapper" class="task-board-detail-view hide-if-empty flex-col">&lt;/ul>
+        &lt;/div>
+    &lt;/div>
+             
+    &lt;div class="option-buttons flex-row align-center justify-end mt-auto">
+        &lt;button onclick="openEditTaskForm(event, '${task.id}')" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)" class="option-button-edit">
+            &lt;img src="assets/icons/edit.svg" alt="edit-icon">Edit
+        &lt;/button>
+        &lt;button onclick="submitDeleteTask(event, '${task.id}')" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)" class="option-button-delete">
+            &lt;img src="assets/icons/delete.svg" alt="delete-icon">Delete
+        &lt;/button>
+    &lt;/div>
+  `;
+}
+
+
+/**
+ * Return html of a assigned contacts for task details (within status board dialogue)
+ * 
+ * @param {object} contact - a contact object (of assigned contacts)
+ */
+function getTaskDetailsAssignedContactTemplate(contact) {
+  return `
+    &lt;li class="flex-row gap align-center">
+        &lt;div class="profile-batch label-icon" style="--profile-color: ${contact.color};">${contact.initials}&lt;/div>
+        ${contact.name}
+    &lt;/li>
+  `;
+}
+
+
+/**
+ * Return html of a subtask for task details (within status board dialogue)
+ * 
+ * @param {object} task - current task object
+ * @param {object} subtask - a subtask object (of the current task)
+ * @param {number} subtaskIndex - index of the current subtask
+ */
+function getTaskDetailsSubtaskTemplate(task, subtask, subtaskIndex) {
+  return `
+    &lt;li class="subtask-item flex-row align-center">
+        &lt;input type="checkbox" ${subtask.done ? 'checked' : ''} class="custom custom-checkbox clickable hide-focus" onclick="toggleSubtaskStatus(event, ${task.id}, ${subtaskIndex})">
+        &lt;img src="assets/icons/checkbox-checked.svg" alt="checkbox-checked" class="icon-checkbox-checked custom-checkbox-checked">
+        &lt;label>${subtask.title}&lt;/label>
+    &lt;/li>
+  `;
+}
+
+
+/**
+ * Return html of the add/edit task forms (form inner content)
+ * 
+ * @param {object} task - a task object (of tasks) > currently not in use
+ */
+function getTaskFormFieldsTemplate(task) {
+    let priorityFieldGroup = getPriorityFormFieldTemplate();
+    let assignedContactsFieldGroup = getAssignedContactsFormFieldTemplate();
+    let categoryFieldGroup = getCategoryFormFieldTemplate();
+    let subtaskFieldGroup = getSubtaskFormFieldTemplate();
+
+    return `
+        &lt;div class="field-group flex-col flex-grow">
+
+            &lt;div class="field-wrapper has-alert">
+                &lt;label for="title" class="required top-element">Title&lt;/label>
+                &lt;input type="text" id="inputTitle" name="title" placeholder="Enter a title" required maxlength="128" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)">
+                &lt;div role="alert" class="validation-alert">This field is required&lt;/div>
+            &lt;/div>
+            &lt;div class="field-wrapper has-alert">
+                &lt;label for="description">Description&lt;/label>
+                &lt;textarea id="inputDescription" name="description" placeholder="Enter a description">&lt;/textarea>
+            &lt;/div>
+            &lt;div class="field-wrapper has-alert">
+                &lt;label for="dueDate" class="required">Due date&lt;/label>
+                &lt;input type="date" id="inputDueDate" name="dueDate" required min="2000-01-01" max="2099-12-31" step="1" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" onkeyup="removePlaceholderStyle(event)" data-placeholder-style="true">
+                &lt;div role="alert" class="validation-alert">Please enter a valid date&lt;/div>
+            &lt;/div>
+        &lt;/div>
+
+        &lt;div class="field-group-divider">&lt;/div>
+
+        &lt;div class="field-group flex-col flex-grow gap">
+            ${priorityFieldGroup}
+            ${assignedContactsFieldGroup}
+            ${categoryFieldGroup}
+            ${subtaskFieldGroup}
+        &lt;/div>       `
+}
+
+
+/**
+ * Return html of the priority form field group (task form/s)
+ */
+function getPriorityFormFieldTemplate() {
+    return `
+        &lt;div class="field-wrapper">
+            &lt;label for="priority">Priority&lt;/label>
+            &lt;div class="priority-input-wrapper flex-row justify-between align-center">
+                &lt;label for="inputPrioHigh" id="labelPrioHigh" class="prio-high button btn-icon btn-radio hide-child-input" value="high">&lt;input type="radio" id="inputPrioHigh" name="priority" value="high" class="focus-strong">&lt;span>Urgent&lt;/span>&lt;div id="iconPrioHigh" class="icon-wrapper">&lt;/div>&lt;/label>
+
+                &lt;label for="inputPrioMedium" id="labelPrioMedium" class="prio-medium button btn-icon btn-radio hide-child-input" value="medium">&lt;input type="radio" id="inputPrioMedium" name="priority" value="medium" checked class="focus-strong">&lt;span>Medium&lt;/span>&lt;div id="iconPrioMedium" class="icon-wrapper">&lt;/div>&lt;/label>
+
+                &lt;label for="inputPrioLow" id="labelPrioLow" class="prio-low button btn-icon btn-radio hide-child-input" value="low">&lt;input type="radio" id="inputPrioLow" name="priority" value="low" class="focus-strong">&lt;span>Low&lt;/span>&lt;div id="iconPrioLow" class="icon-wrapper">&lt;/div>&lt;/label>
+            &lt;/div>
+        &lt;/div>
+    `
+}
+
+
+/**
+ * Return html of the assigned contacts form field group (task form/s)
+ */
+function getAssignedContactsFormFieldTemplate() {
+    return `
+        &lt;div class="field-wrapper">
+            &lt;label for="selectContacts">Assigned to&lt;/label>
+            &lt;div class="select custom-select multiple select-contacts">
+                &lt;div class="input-wrapper custom-select">
+                    &lt;input type="text" role="combox" id="selectContacts" name="selectContacts" class="clickable" placeholder="Select contacts to assign" data-select-multiple="true" oninput="listenTaskFormContactsListboxSearch(event)" onfocusout="focusOutHandler(event)" onclick="dropdownEventHandler(event)">
+                    &lt;div class="input-icon-wrapper custom-select multiple">
+                        &lt;button onclick="event.preventDefault(), dropdownEventHandler(event)">&lt;img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown">&lt;/button>
+                    &lt;/div>
+                &lt;/div>
+                &lt;ol  role="listbox" id="taskContactsListbox" class="select-options-wrapper multiple right">&lt;/ol>
+            &lt;/div>
+            &lt;ul id="profileBatches" class="profile-batches hide-if-empty" style="margin-top: 12px;">&lt;/ul>
+        &lt;/div>
+    `
+}
+
+
+/**
+ * Return html of the multiple select datalist for the assigned contacts form field (task form/s)
+ * 
+ * @param {object} contact - a contact object (of contacts)
+ * @param {number} index - the listing index of the current contact
+ */
+function getContactListboxOptionTemplate(contact, index) {
+    return `
+    &lt;li class="select-option" role="option" data-index="${index}" onclick="event.stopPropagation()">
+        &lt;label for="checkboxAssignedContact-${contact.id}" class="hide-focus" onkeydown="event.stopPropagation()">${contact.name}
+            &lt;div class="profile-batch label-icon" style="--profile-color: ${contact.color};">${contact.initials}&lt;/div>
+            &lt;div class="input-icon-wrapper custom-checkbox">
+                &lt;input type="checkbox" class="custom custom-checkbox checkbox-end clickable" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}"  onchange="dropdownOptionClickHandlerMultiple(event, '${contact.id}')">
+                &lt;div class="checkbox-checked-wrapper">
+                    &lt;img src="assets/icons/checkbox-checked-white.svg" alt="checkbox-checked" class="icon-checkbox-checked">
+                &lt;/div>
+            &lt;/div>
+        &lt;/label>
+    &lt;/li>
+    `
+}
+
+
+/**
+ * Return html of the category form field group (task form/s)
+ */
+function getCategoryFormFieldTemplate() {
+    return `
+        &lt;div class="field-wrapper has-alert hide-on-edit-mode">
+            &lt;label for="categorySelect" class="required">Category&lt;/label>
+            &lt;div class="select custom-select">
+                &lt;div class="input-wrapper custom-select">
+                    &lt;input type="text" id="categorySelect" name="categorySelect" role="combox" placeholder="Select task category" class="clickable" data-custom-validation="required" data-active-index="-1" readonly onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" onclick="dropdownEventHandler(event)" onkeydown="dropdownEventHandler(event)"   >
+                    &lt;div class="input-icon-wrapper custom-select">
+                        &lt;button onclick="event.preventDefault(), dropdownEventHandler(event)">
+                            &lt;img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown">
+                        &lt;/button>
+                    &lt;/div>
+                &lt;/div>
+                &lt;ol id="taskCategoryListbox" class="select-options-wrapper" role="listbox" xdata-combox-id="categorySelect">&lt;/ol>
+            &lt;/div>
+            &lt;div role="alert" class="validation-alert">This field is required&lt;/div>
+        &lt;/div>
+    `
+}
+
+
+/**
+ * Return html of the select datalist for the category form field group (task form/s)
+ * 
+ * @param {object} category - a category object (of categories)
+ * @param {number} index - the listing index of the current category
+ */
+function getCategoryListboxOptionTemplate(category, index) {
+    return `
+    &lt;li id="categoryOptionId-${category.id}" class="select-option" role="option" onclick="dropdownOptionClickHandler(event)" aria-selected="false" data-index="${index}" data-option-id="${category.id}">${category.name}
+    &lt;/li>
+    `
+}
+
+
+/**
+ * Return html of the subtask form field group (task form/s)
+ */
+function getSubtaskFormFieldTemplate() {
+    return `
+        &lt;div class="field-wrapper subtask-wrapper">
+            &lt;label for="subtasks">Subtasks&lt;/label>
+            &lt;div class="input-wrapper input-wrapper-subtasks">
+                &lt;!--&lt;input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask"> -->
+                &lt;input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask" maxlength="128" onfocus="focusInHandler(event)" oninput="onInputAddSubtask(event)" onkeydown="addSubtaskInputEventHandler(event)">
+                &lt;div id="subtaskInputButtonAdd" class="input-icon-wrapper">
+                    &lt;button onclick="addSubtaskEventHandlerFocus(event)">&lt;img src="/assets/icons/add.svg" class="icon-add">&lt;/button>
+                &lt;/div>
+                &lt;div id="subtaskInputButtons" class="input-icon-wrapper hide">
+                    &lt;button onclick="clearSubtaskEventHandler(event)">&lt;img src="/assets/icons/cancel.svg" class="icon-cancel">&lt;/button>
+                    &lt;div class="divider">&lt;/div>
+                    &lt;button onclick="addSubtaskEventHandler(event)">&lt;img src="/assets/icons/check.svg" class="icon-check">&lt;/button>
+                &lt;/div>
+            &lt;/div>
+            &lt;ul id="assignedSubtasks" class="subtask-listing">&lt;/ul>
+        &lt;/div>
+    `
+}
+
+
+/**
+ * Return html of the subtask listing for the subtask form field group (task form/s)
+ * 
+ * @param {object} subtask - current subtask object
+ * @param {number} index - listing index of the current subtask
+ * @param {string} taskId - current task id > currently not in use
+ */
+function getSubtasksTemplate(subtask, index, taskId) {
+    return `
+    &lt;li class="input-wrapper input-wrapper-subtask read-only">
+        &lt;div class="list-bullet">&amp;#x2022&lt;/div>
+        &lt;input type="text" id="subtask-i-${index}" class="subtask-input clickable" value="${subtask.title}" xonmouseover="subtaskOnHover(event, 1)" xonmouseleave="subtaskOnHover(event, 0)" oninput="onInputUpdateSubtask(event)" ondblclick="editSubtaskEventHandler(event)">
+        &lt;div class="input-icon-wrapper read-only">
+            &lt;button onclick="editSubtaskEventHandler(event)">&lt;img src="/assets/icons/edit.svg" class="icon-edit">&lt;/button>&lt;div class="divider">&lt;/div>
+            &lt;button onclick="deleteSubtaskEventHandler(event, ${index})">&lt;img src="/assets/icons/delete.svg" class="icon-delete">&lt;/button>
+        &lt;/div>
+        &lt;div class="input-icon-wrapper edit">
+            &lt;button class="delete-subtask-button" onclick="deleteSubtaskEventHandler(event, ${index})">&lt;img src="/assets/icons/delete.svg" class="icon-delete">&lt;/button>
+            &lt;div class="divider">&lt;/div>
+            &lt;button class="update-subtask-button" onclick="updateSubtaskEventHandler(event, ${index})">&lt;img src="/assets/icons/check.svg" class="icon-check">&lt;/button>
+        &lt;/div>
+    &lt;/li>
+    `
+}
+
+
+/**
+ * Return html of the cancel and submit button in the add contact form
+ */
+function getAddContactSubmitButtonsTemplate() {
+    return `
+        &lt;button id="btnReset" class="button btn-cancel btn-icon btn-secondary" onclick="resetContactsForm(event)">Cancel&lt;/button>
+        &lt;button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled>Create Contact&lt;/button>
+    `
+}
+
+
+/**
+ * Return html of the delete and submit button in the edit contact form
+ * 
+ * @param {string} contactId - contact id of the contact to edit
+ */
+function getEditContactSubmitButtonsTemplate(contactId) {
+    return `
+        &lt;button id="dialogueBtnDelete" class="button btn-delete btn-icon btn-secondary" onclick="submitDeleteContact(event, '${contactId}')">Delete&lt;/button>
+        &lt;button type="submit" id="btnSubmit" class="button btn-check btn-icon btn-primary" disabled>Save&lt;/button>
+    `
+}
+
+
+/**
+ * Return html of the contact list on the contact page
+ * 
+ * @param {string} groupName - group name (first name letter) of a contact group (grouped by first name letter)
+ */
+function getContactListTemplate(groupName) {
+    return `
+        &lt;h3 class="contact-letter flex-row align-center"> &amp;ensp;${groupName}&lt;/h3>
+        &lt;ol id="contactListGroup-${groupName}">&lt;/ol>
+    `
+}
+
+
+/**
+ * Return html of a single contact in the contact list
+ * 
+ * @param {object} contact - contact object (of contacts)
+ */
+function getContactListGroupTemplate(contact) {
+    return `
+        &lt;li id="listContactId-${contact.id}" class="contact-item flex-row align-center" onclick="showContactDetail(event, '${contact.id}')">
+            &lt;div class="profile-batch" style="--profile-color: ${contact.color};">${contact.initials}&lt;/div>
+            &lt;div class="contact-details flex-col">
+                &lt;div class="name">${contact.name}&lt;/div>
+                &lt;div class="email">${contact.email}&lt;/div>
+            &lt;/div>
+        &lt;/li>
+    `
+}
+
+
+/**
+ * Return html of the contact name and profile batch (within the detail view of a selected contact via contact list)
+ * 
+ * @param {object} contact - current contact object
+ */
+function getContactDetailProfileBatchTemplate(contact) {
+    let optionButtons = getContactOptionButtons(contact);
+    return `
+        &lt;div class="profile-batch profile-batch-large" style="--profile-color: ${contact.color};">${contact.initials}&lt;/div>
+        &lt;div class="profile-title flex-col">
+            &lt;h2 class="">${contact.name}&lt;/h2>                        
+            &lt;div class="option-buttons flex-row align-center">
+                ${optionButtons}
+            &lt;/div>
+        &lt;/div>
+    `
+}
+
+
+/**
+ * Return html of the contact option buttons (within detail view of a selected contact)
+ * 
+ * @param {object} contact - current contact object
+ */
+function getContactOptionButtons(contact) {
+    return `
+        &lt;button onclick="openEditContactForm(event, '${contact.id}'), closeParentWrapper(event)" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)" class="option-button-edit" title="Edit current contact">
+            &lt;img src="assets/icons/edit.svg" alt="edit-icon">Edit
+        &lt;/button>
+        &lt;button onclick="submitDeleteContact(event, '${contact.id}'), closeParentWrapper(event)" onmouseover="toggleIconColorOnHover(event)" onmouseleave="toggleIconColorOnHover(event)" class="option-button-delete" title="Delete current contact">
+            &lt;img src="assets/icons/delete.svg" alt="delete-icon">Delete
+        &lt;/button>
+    `
+}
+
+
+/**
+ * Return html of further contact informations (within the detail view of a selected contact via contact list)
+ * 
+ * @param {object} contact - current contact object
+ */
+function getContactDetailInfoTemplate(contact) {
+    let hidePhone = hasLength(contact.phone) ? '' : 'hide';
+    return `
+        &lt;h3 class="fs-lg fw-regular flex-col justifiy-center">Contact Information&lt;/h3>                        
+        &lt;div class="contact-property flex-col">
+            &lt;div class="label" >Email&lt;/div>
+            &lt;a href="mailto:${contact.email}" class="email" title="Email senden">${contact.email}&lt;/a>
+        &lt;/div>
+        &lt;div class="contact-property flex-col ${hidePhone}">
+            &lt;div class="label">Phone&lt;/div>
+            &lt;div class="phone">${contact.phone}&lt;/div>
+        &lt;/div>
+    `
+}
+
+
+/**
+ * Return html of a single contact profile batch (for multiple usage)
+ * 
+ * @param {object} contact - current contact object
+ */
+function getContactProfileBatchTemplate(contact) {
+    return `
+        &lt;li class="profile-batch" style="--profile-color: ${contact.color};">${contact.initials}&lt;/li>
+    `
+}
+
+
+/**
+ * Return html of a floating text confirmation popup (for multiple usage)
+ * 
+ * @param {string} msg - message
+ */
+function getFloatingMessageTextTemplate(msg) {
+    return `${msg}`
+}
+
+
+/**
+ * Return html of the floating added task confirmation popup
+ */
+function getFloatingMessageTaskAddedTemplate() {
+    return `
+    Task added to board
+    &lt;img src="assets/icons/board-white.svg" alt="board-icon" class="icon-board">
+    `
+}
+
+
+/**
+ * Return html of a svg plus icon (for multiple usage, mainly for buttons)
+ * (the color contains a css variable for flexible styling)
+ * 
+ * @param {string} label - optional label before the icon
+ */
+function getIconTemplatePlus(label = "") {
+    label = (label == '') ? '' : '&lt;span>' + label + '&lt;/span>';
+    return `
+        ${label}
+        &lt;svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+        &lt;rect x="1.6665" y="1.5" width="22" height="22" rx="7" stroke="var(--icon-color)" stroke-width="2"/>
+        &lt;path d="M12.6665 8.5V16.5" stroke="var(--icon-color)" stroke-width="2" stroke-linecap="round"/>
+        &lt;path d="M16.6665 12.5754L8.6665 12.5754" stroke="var(--icon-color)" stroke-width="2" stroke-linecap="round"/>
+        &lt;/svg>
+    `
+}
+
+
+/**
+ * Return html of a svg close icon (for multiple usage, mainly for buttons)
+ * (the color contains a css variable for flexible styling)
+ * 
+ * @param {string} label - optional label before the icon
+ */
+function getIconTemplateClose(label = "") {
+    label = (label == '') ? '' : '&lt;span>' + label + '&lt;/span>';
+    return `
+        ${label}
+        &lt;svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        &lt;path d="M6.24959 6.99984L11.4926 12.2428M1.00659 12.2428L6.24959 6.99984L1.00659 12.2428ZM11.4926 1.75684L6.24859 6.99984L11.4926 1.75684ZM6.24859 6.99984L1.00659 1.75684L6.24859 6.99984Z" stroke="var(--icon-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        &lt;/svg>
+    `
+}
+
+
+/**
+ * Return html of a svg cancel icon (for multiple usage, mainly for buttons)
+ * (the color contains a css variable for flexible styling)
+ * 
+ * @param {string} label - optional label before the icon
+ */
+function getIconTemplateCancel(label = "") {
+    label = (label == '') ? '' : '&lt;span>' + label + '&lt;/span>';
+    return `
+        ${label}
+        &lt;svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        &lt;path d="M6.24959 6.99984L11.4926 12.2428M1.00659 12.2428L6.24959 6.99984L1.00659 12.2428ZM11.4926 1.75684L6.24859 6.99984L11.4926 1.75684ZM6.24859 6.99984L1.00659 1.75684L6.24859 6.99984Z" stroke="var(--icon-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        &lt;/svg>
+    `
+}
+
+
+/**
+ * Return html of a svg check icon (for multiple usage, mainly for buttons)
+ * (the color contains a css variable for flexible styling)
+ * 
+ * @param {string} label - optional label before the icon
+ */
+function getIconTemplateCheck(label = "") {
+    label = (label == '') ? '' : '&lt;span>' + label + '&lt;/span>';
+    return `
+        ${label}
+        &lt;svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        &lt;path d="M5.61905 9.15L14.0941 0.675C14.2941 0.475 14.5316 0.375 14.8066 0.375C15.0816 0.375 15.3191 0.475 15.5191 0.675C15.7191 0.875 15.8191 1.1125 15.8191 1.3875C15.8191 1.6625 15.7191 1.9 15.5191 2.1L6.31905 11.3C6.11905 11.5 5.88572 11.6 5.61905 11.6C5.35239 11.6 5.11905 11.5 4.91905 11.3L0.619055 7C0.419055 6.8 0.323221 6.5625 0.331555 6.2875C0.339888 6.0125 0.444055 5.775 0.644055 5.575C0.844055 5.375 1.08155 5.275 1.35655 5.275C1.63155 5.275 1.86905 5.375 2.06905 5.575L5.61905 9.15Z" fill="var(--icon-color)"/>
+        &lt;/svg>
+    `
+}
+
+
+/**
+ * Return html of a svg high priority icon (for multiple usage, mainly for buttons)
+ * (the color contains a css variable for flexible styling)
+ * 
+ * @param {string} label - optional label before the icon
+ */
+function getIconTemplatePrioHigh(label = "") {
+    label = (label == '') ? '' : '&lt;span>' + label + '&lt;/span>';
+    return `
+        ${label}
+        &lt;svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        &lt;path d="M19.6528 15.2547C19.4182 15.2551 19.1896 15.1803 19.0007 15.0412L10.7487 8.958L2.49663 15.0412C2.38078 15.1267 2.24919 15.1887 2.10939 15.2234C1.96959 15.2582 1.82431 15.2651 1.68184 15.2437C1.53937 15.2223 1.40251 15.1732 1.27906 15.099C1.15562 15.0247 1.04801 14.927 0.96238 14.8112C0.876751 14.6954 0.814779 14.5639 0.780002 14.4243C0.745226 14.2846 0.738325 14.1394 0.759696 13.997C0.802855 13.7095 0.958545 13.4509 1.19252 13.2781L10.0966 6.70761C10.2853 6.56802 10.5139 6.49268 10.7487 6.49268C10.9835 6.49268 11.212 6.56802 11.4007 6.70761L20.3048 13.2781C20.4908 13.415 20.6286 13.6071 20.6988 13.827C20.7689 14.0469 20.7678 14.2833 20.6955 14.5025C20.6232 14.7216 20.4834 14.9124 20.2962 15.0475C20.1089 15.1826 19.8837 15.2551 19.6528 15.2547Z" fill="var(--icon-color)"/>
+        &lt;path d="M19.6528 9.50568C19.4182 9.50609 19.1896 9.43124 19.0007 9.29214L10.7487 3.20898L2.49663 9.29214C2.26266 9.46495 1.96957 9.5378 1.68184 9.49468C1.39412 9.45155 1.13532 9.29597 0.962385 9.06218C0.789449 8.82838 0.716541 8.53551 0.7597 8.24799C0.802859 7.96048 0.95855 7.70187 1.19252 7.52906L10.0966 0.958588C10.2853 0.818997 10.5139 0.743652 10.7487 0.743652C10.9835 0.743652 11.212 0.818997 11.4007 0.958588L20.3048 7.52906C20.4908 7.66598 20.6286 7.85809 20.6988 8.07797C20.769 8.29785 20.7678 8.53426 20.6955 8.75344C20.6232 8.97262 20.4834 9.16338 20.2962 9.29847C20.1089 9.43356 19.8837 9.50608 19.6528 9.50568Z" fill="var(--icon-color)"/>
+        &lt;/svg>
+    `
+}
+
+
+/**
+ * Return html of a svg medium priority icon (for multiple usage, mainly for buttons)
+ * (the color contains a css variable for flexible styling)
+ * 
+ * @param {string} label - optional label before the icon
+ */
+function getIconTemplatePrioMedium(label = "") {
+    label = (label == '') ? '' : '&lt;span>' + label + '&lt;/span>';
+    return `
+        ${label}
+        &lt;svg width="21" height="8" viewBox="0 0 21 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+        &lt;path d="M19.1526 7.72528H1.34443C1.05378 7.72528 0.775033 7.60898 0.569514 7.40197C0.363995 7.19495 0.248535 6.91419 0.248535 6.62143C0.248535 6.32867 0.363995 6.0479 0.569514 5.84089C0.775033 5.63388 1.05378 5.51758 1.34443 5.51758H19.1526C19.4433 5.51758 19.722 5.63388 19.9276 5.84089C20.1331 6.0479 20.2485 6.32867 20.2485 6.62143C20.2485 6.91419 20.1331 7.19495 19.9276 7.40197C19.722 7.60898 19.4433 7.72528 19.1526 7.72528Z" fill="var(--icon-color)"/>
+        &lt;path d="M19.1526 2.48211H1.34443C1.05378 2.48211 0.775033 2.36581 0.569514 2.1588C0.363995 1.95179 0.248535 1.67102 0.248535 1.37826C0.248535 1.0855 0.363995 0.804736 0.569514 0.597724C0.775033 0.390712 1.05378 0.274414 1.34443 0.274414L19.1526 0.274414C19.4433 0.274414 19.722 0.390712 19.9276 0.597724C20.1331 0.804736 20.2485 1.0855 20.2485 1.37826C20.2485 1.67102 20.1331 1.95179 19.9276 2.1588C19.722 2.36581 19.4433 2.48211 19.1526 2.48211Z" fill="var(--icon-color)"/>
+        &lt;/svg>
+    `
+}
+
+
+/**
+ * Return html of a svg low priority icon (for multiple usage, mainly for buttons)
+ * (the color contains a css variable for flexible styling)
+ * 
+ * @param {string} label - optional label before the icon
+ */
+function getIconTemplatePrioLow(label = "") {
+    label = (label == '') ? '' : ('&lt;span>' + label + '&lt;/span>');
+    return `
+        ${label}
+        &lt;svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        &lt;path d="M10.2485 9.50589C10.0139 9.5063 9.7854 9.43145 9.59655 9.29238L0.693448 2.72264C0.57761 2.63708 0.47977 2.52957 0.405515 2.40623C0.33126 2.28289 0.282043 2.14614 0.260675 2.00379C0.217521 1.71631 0.290421 1.42347 0.463337 1.1897C0.636253 0.955928 0.895022 0.800371 1.18272 0.757248C1.47041 0.714126 1.76347 0.786972 1.99741 0.95976L10.2485 7.04224L18.4997 0.95976C18.6155 0.874204 18.7471 0.812285 18.8869 0.777538C19.0266 0.742791 19.1719 0.735896 19.3144 0.757248C19.4568 0.7786 19.5937 0.82778 19.7171 0.901981C19.8405 0.976181 19.9481 1.07395 20.0337 1.1897C20.1194 1.30545 20.1813 1.43692 20.2161 1.57661C20.2509 1.71629 20.2578 1.86145 20.2364 2.00379C20.215 2.14614 20.1658 2.28289 20.0916 2.40623C20.0173 2.52957 19.9195 2.63708 19.8036 2.72264L10.9005 9.29238C10.7117 9.43145 10.4831 9.5063 10.2485 9.50589Z" fill="var(--icon-color)"/>
+        &lt;path d="M10.2485 15.2544C10.0139 15.2548 9.7854 15.18 9.59655 15.0409L0.693448 8.47117C0.459502 8.29839 0.30383 8.03981 0.260675 7.75233C0.217521 7.46485 0.290421 7.17201 0.463337 6.93824C0.636253 6.70446 0.895021 6.54891 1.18272 6.50578C1.47041 6.46266 1.76347 6.53551 1.99741 6.7083L10.2485 12.7908L18.4997 6.7083C18.7336 6.53551 19.0267 6.46266 19.3144 6.50578C19.602 6.54891 19.8608 6.70446 20.0337 6.93824C20.2066 7.17201 20.2795 7.46485 20.2364 7.75233C20.1932 8.03981 20.0376 8.29839 19.8036 8.47117L10.9005 15.0409C10.7117 15.18 10.4831 15.2548 10.2485 15.2544Z" fill="var(--icon-color)"/>
+        &lt;/svg>
+    `
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addBoardTask">addBoardTask</a></li><li><a href="global.html#addBodyClass">addBodyClass</a></li><li><a href="global.html#addDaysToDate">addDaysToDate</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#addSubtaskEventHandler">addSubtaskEventHandler</a></li><li><a href="global.html#addSubtaskEventHandlerFocus">addSubtaskEventHandlerFocus</a></li><li><a href="global.html#addSubtaskInputEventHandler">addSubtaskInputEventHandler</a></li><li><a href="global.html#changeBoardTaskStatus">changeBoardTaskStatus</a></li><li><a href="global.html#checkAuth">checkAuth</a></li><li><a href="global.html#checkCustomValidation">checkCustomValidation</a></li><li><a href="global.html#checkIfUserAndPasswordIsCorrect">checkIfUserAndPasswordIsCorrect</a></li><li><a href="global.html#clearLocalStorage">clearLocalStorage</a></li><li><a href="global.html#clearSubtaskEventHandler">clearSubtaskEventHandler</a></li><li><a href="global.html#clearSubtaskInput">clearSubtaskInput</a></li><li><a href="global.html#closeAllDropdowns">closeAllDropdowns</a></li><li><a href="global.html#closeContactDetail">closeContactDetail</a></li><li><a href="global.html#closeContactsFormDialogue">closeContactsFormDialogue</a></li><li><a href="global.html#closeDropdown">closeDropdown</a></li><li><a href="global.html#closeElementByCurrentTarget">closeElementByCurrentTarget</a></li><li><a href="global.html#closeOpenElements">closeOpenElements</a></li><li><a href="global.html#closeParentWrapper">closeParentWrapper</a></li><li><a href="global.html#closeTaskDialogue">closeTaskDialogue</a></li><li><a href="global.html#convertRelationalDueDatesToDateStringDB">convertRelationalDueDatesToDateStringDB</a></li><li><a href="global.html#createContact">createContact</a></li><li><a href="global.html#createTask">createTask</a></li><li><a href="global.html#deleteAllData">deleteAllData</a></li><li><a href="global.html#deleteCategory">deleteCategory</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteDataFromLS">deleteDataFromLS</a></li><li><a href="global.html#deleteFirebaseData">deleteFirebaseData</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteSubtaskEventHandler">deleteSubtaskEventHandler</a></li><li><a href="global.html#deleteTask">deleteTask</a></li><li><a href="global.html#documentEventHandler">documentEventHandler</a></li><li><a href="global.html#documentEventHandlerBoard">documentEventHandlerBoard</a></li><li><a href="global.html#documentEventHandlerForms">documentEventHandlerForms</a></li><li><a href="global.html#dropdownArrowUpDownHandler">dropdownArrowUpDownHandler</a></li><li><a href="global.html#dropdownEventHandler">dropdownEventHandler</a></li><li><a href="global.html#dropdownOptionClickHandler">dropdownOptionClickHandler</a></li><li><a href="global.html#dropdownOptionClickHandlerMultiple">dropdownOptionClickHandlerMultiple</a></li><li><a href="global.html#dropdownOptionKeyHandler">dropdownOptionKeyHandler</a></li><li><a href="global.html#editSubtaskEventHandler">editSubtaskEventHandler</a></li><li><a href="global.html#fetchDataFromFirebase">fetchDataFromFirebase</a></li><li><a href="global.html#filterTaskFormContactsListbox">filterTaskFormContactsListbox</a></li><li><a href="global.html#filterTasks">filterTasks</a></li><li><a href="global.html#firebaseObjToArray">firebaseObjToArray</a></li><li><a href="global.html#focusCurrentCombox">focusCurrentCombox</a></li><li><a href="global.html#focusInHandler">focusInHandler</a></li><li><a href="global.html#focusOutHandler">focusOutHandler</a></li><li><a href="global.html#formIsValid">formIsValid</a></li><li><a href="global.html#formatDateFromStringDBToFull">formatDateFromStringDBToFull</a></li><li><a href="global.html#formatDateToStringDB">formatDateToStringDB</a></li><li><a href="global.html#getAddContactSubmitButtonsTemplate">getAddContactSubmitButtonsTemplate</a></li><li><a href="global.html#getAllData">getAllData</a></li><li><a href="global.html#getAssignedContactsFormFieldTemplate">getAssignedContactsFormFieldTemplate</a></li><li><a href="global.html#getBoardNoTaskTemplate">getBoardNoTaskTemplate</a></li><li><a href="global.html#getBoardTasksTemplate">getBoardTasksTemplate</a></li><li><a href="global.html#getBoardTemplate">getBoardTemplate</a></li><li><a href="global.html#getBooleanFromString">getBooleanFromString</a></li><li><a href="global.html#getCategories">getCategories</a></li><li><a href="global.html#getCategoryById">getCategoryById</a></li><li><a href="global.html#getCategoryFormFieldTemplate">getCategoryFormFieldTemplate</a></li><li><a href="global.html#getCategoryIndexFromId">getCategoryIndexFromId</a></li><li><a href="global.html#getCategoryListboxOptionTemplate">getCategoryListboxOptionTemplate</a></li><li><a href="global.html#getClosestParentElementFromElement">getClosestParentElementFromElement</a></li><li><a href="global.html#getClosestParentElementFromEvent">getClosestParentElementFromEvent</a></li><li><a href="global.html#getClosestParentElementFromId">getClosestParentElementFromId</a></li><li><a href="global.html#getContactById">getContactById</a></li><li><a href="global.html#getContactDetailInfoTemplate">getContactDetailInfoTemplate</a></li><li><a href="global.html#getContactDetailProfileBatchTemplate">getContactDetailProfileBatchTemplate</a></li><li><a href="global.html#getContactIndexFromId">getContactIndexFromId</a></li><li><a href="global.html#getContactListGroupTemplate">getContactListGroupTemplate</a></li><li><a href="global.html#getContactListTemplate">getContactListTemplate</a></li><li><a href="global.html#getContactListboxOptionTemplate">getContactListboxOptionTemplate</a></li><li><a href="global.html#getContactOptionButtons">getContactOptionButtons</a></li><li><a href="global.html#getContactProfileBatchTemplate">getContactProfileBatchTemplate</a></li><li><a href="global.html#getContacts">getContacts</a></li><li><a href="global.html#getCurrentFieldElements">getCurrentFieldElements</a></li><li><a href="global.html#getCurrentInputWrapper">getCurrentInputWrapper</a></li><li><a href="global.html#getCurrentSelectOptionValues">getCurrentSelectOptionValues</a></li><li><a href="global.html#getCurrentSelectOptions">getCurrentSelectOptions</a></li><li><a href="global.html#getCurrentSubtaskInputFromEvent">getCurrentSubtaskInputFromEvent</a></li><li><a href="global.html#getCurrentSubtaskInputWrapper">getCurrentSubtaskInputWrapper</a></li><li><a href="global.html#getDaySegment">getDaySegment</a></li><li><a href="global.html#getEditContactSubmitButtonsTemplate">getEditContactSubmitButtonsTemplate</a></li><li><a href="global.html#getFieldWrapperFromElement">getFieldWrapperFromElement</a></li><li><a href="global.html#getFieldWrapperFromEvent">getFieldWrapperFromEvent</a></li><li><a href="global.html#getFieldWrapperFromId">getFieldWrapperFromId</a></li><li><a href="global.html#getFirstWord">getFirstWord</a></li><li><a href="global.html#getFloatingMessageTaskAddedTemplate">getFloatingMessageTaskAddedTemplate</a></li><li><a href="global.html#getFloatingMessageTextTemplate">getFloatingMessageTextTemplate</a></li><li><a href="global.html#getFormData">getFormData</a></li><li><a href="global.html#getFormElementsArray">getFormElementsArray</a></li><li><a href="global.html#getFormInputObj">getFormInputObj</a></li><li><a href="global.html#getFromLocalStorage">getFromLocalStorage</a></li><li><a href="global.html#getHeader">getHeader</a></li><li><a href="global.html#getHeaderTemplate">getHeaderTemplate</a></li><li><a href="global.html#getIconTemplateCancel">getIconTemplateCancel</a></li><li><a href="global.html#getIconTemplateCheck">getIconTemplateCheck</a></li><li><a href="global.html#getIconTemplateClose">getIconTemplateClose</a></li><li><a href="global.html#getIconTemplatePlus">getIconTemplatePlus</a></li><li><a href="global.html#getIconTemplatePrioHigh">getIconTemplatePrioHigh</a></li><li><a href="global.html#getIconTemplatePrioLow">getIconTemplatePrioLow</a></li><li><a href="global.html#getIconTemplatePrioMedium">getIconTemplatePrioMedium</a></li><li><a href="global.html#getInitialOfLastWord">getInitialOfLastWord</a></li><li><a href="global.html#getInitialsOfFirstAndLastWord">getInitialsOfFirstAndLastWord</a></li><li><a href="global.html#getInvalidInputIds">getInvalidInputIds</a></li><li><a href="global.html#getLastWord">getLastWord</a></li><li><a href="global.html#getMainTemplates">getMainTemplates</a></li><li><a href="global.html#getMaxIdFromObjArray">getMaxIdFromObjArray</a></li><li><a href="global.html#getMoveToBoardMenuTemplate">getMoveToBoardMenuTemplate</a></li><li><a href="global.html#getNavBar">getNavBar</a></li><li><a href="global.html#getNavBarTemplate">getNavBarTemplate</a></li><li><a href="global.html#getNewCategoryId">getNewCategoryId</a></li><li><a href="global.html#getNewContactId">getNewContactId</a></li><li><a href="global.html#getNewTaskId">getNewTaskId</a></li><li><a href="global.html#getNextIndex">getNextIndex</a></li><li><a href="global.html#getOrientationOverlay">getOrientationOverlay</a></li><li><a href="global.html#getPreviousIndex">getPreviousIndex</a></li><li><a href="global.html#getPriorityFormFieldTemplate">getPriorityFormFieldTemplate</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#getSelectedDropdownIndex">getSelectedDropdownIndex</a></li><li><a href="global.html#getSubtaskFormFieldTemplate">getSubtaskFormFieldTemplate</a></li><li><a href="global.html#getSubtaskProgress">getSubtaskProgress</a></li><li><a href="global.html#getSubtasksTemplate">getSubtasksTemplate</a></li><li><a href="global.html#getTaskById">getTaskById</a></li><li><a href="global.html#getTaskData">getTaskData</a></li><li><a href="global.html#getTaskDetailsAssignedContactTemplate">getTaskDetailsAssignedContactTemplate</a></li><li><a href="global.html#getTaskDetailsSubtaskTemplate">getTaskDetailsSubtaskTemplate</a></li><li><a href="global.html#getTaskDetailsTemplate">getTaskDetailsTemplate</a></li><li><a href="global.html#getTaskFormFieldsTemplate">getTaskFormFieldsTemplate</a></li><li><a href="global.html#getTaskIndexFromId">getTaskIndexFromId</a></li><li><a href="global.html#getTasks">getTasks</a></li><li><a href="global.html#getUserData">getUserData</a></li><li><a href="global.html#groupContacts">groupContacts</a></li><li><a href="global.html#guestLogin">guestLogin</a></li><li><a href="global.html#hasLength">hasLength</a></li><li><a href="global.html#hidePasswordInput">hidePasswordInput</a></li><li><a href="global.html#initAddTask">initAddTask</a></li><li><a href="global.html#initBoard">initBoard</a></li><li><a href="global.html#initContacts">initContacts</a></li><li><a href="global.html#initLogin">initLogin</a></li><li><a href="global.html#initSignUp">initSignUp</a></li><li><a href="global.html#initSummary">initSummary</a></li><li><a href="global.html#initTermsPages">initTermsPages</a></li><li><a href="global.html#isExistingContact">isExistingContact</a></li><li><a href="global.html#listenTaskFormContactsListboxSearch">listenTaskFormContactsListboxSearch</a></li><li><a href="global.html#listenTaskSearchInput">listenTaskSearchInput</a></li><li><a href="global.html#loginAsGuest">loginAsGuest</a></li><li><a href="global.html#loginFail">loginFail</a></li><li><a href="global.html#loginSuccessfull">loginSuccessfull</a></li><li><a href="global.html#onDragEnd">onDragEnd</a></li><li><a href="global.html#onDragLeave">onDragLeave</a></li><li><a href="global.html#onDragOver">onDragOver</a></li><li><a href="global.html#onDragStartTask">onDragStartTask</a></li><li><a href="global.html#onInputAddSubtask">onInputAddSubtask</a></li><li><a href="global.html#onInputUpdateSubtask">onInputUpdateSubtask</a></li><li><a href="global.html#openAddNewContactForm">openAddNewContactForm</a></li><li><a href="global.html#openAddTaskForm">openAddTaskForm</a></li><li><a href="global.html#openAddTaskPage">openAddTaskPage</a></li><li><a href="global.html#openContactOptionsMenu">openContactOptionsMenu</a></li><li><a href="global.html#openContactsFormDialogue">openContactsFormDialogue</a></li><li><a href="global.html#openDropdown">openDropdown</a></li><li><a href="global.html#openEditContactForm">openEditContactForm</a></li><li><a href="global.html#openEditTaskForm">openEditTaskForm</a></li><li><a href="global.html#passwordInputHandler">passwordInputHandler</a></li><li><a href="global.html#redirectToLogin">redirectToLogin</a></li><li><a href="global.html#removeBodyClass">removeBodyClass</a></li><li><a href="global.html#removeDeletedContactsFromTasks">removeDeletedContactsFromTasks</a></li><li><a href="global.html#removePlaceholderStyle">removePlaceholderStyle</a></li><li><a href="global.html#renderAddTaskFormProps">renderAddTaskFormProps</a></li><li><a href="global.html#renderBoardTasks">renderBoardTasks</a></li><li><a href="global.html#renderBoards">renderBoards</a></li><li><a href="global.html#renderContactGroupItems">renderContactGroupItems</a></li><li><a href="global.html#renderContactList">renderContactList</a></li><li><a href="global.html#renderEditTaskFormCategories">renderEditTaskFormCategories</a></li><li><a href="global.html#renderEditTaskFormProps">renderEditTaskFormProps</a></li><li><a href="global.html#renderTaskDetailsAssignedContacts">renderTaskDetailsAssignedContacts</a></li><li><a href="global.html#renderTaskDetailsSubtasks">renderTaskDetailsSubtasks</a></li><li><a href="global.html#renderTaskForm">renderTaskForm</a></li><li><a href="global.html#renderTaskFormCategoryListbox">renderTaskFormCategoryListbox</a></li><li><a href="global.html#renderTaskFormContactBatches">renderTaskFormContactBatches</a></li><li><a href="global.html#renderTaskFormContactListbox">renderTaskFormContactListbox</a></li><li><a href="global.html#renderTaskFormSubtasks">renderTaskFormSubtasks</a></li><li><a href="global.html#renderTaskOptionsMenu">renderTaskOptionsMenu</a></li><li><a href="global.html#resetAddTaskForm">resetAddTaskForm</a></li><li><a href="global.html#resetContactsForm">resetContactsForm</a></li><li><a href="global.html#resetData">resetData</a></li><li><a href="global.html#resetForm">resetForm</a></li><li><a href="global.html#resetFormElements">resetFormElements</a></li><li><a href="global.html#resetInputValidation">resetInputValidation</a></li><li><a href="global.html#resetSummaryObj">resetSummaryObj</a></li><li><a href="global.html#saveAllCategories">saveAllCategories</a></li><li><a href="global.html#saveAllContacts">saveAllContacts</a></li><li><a href="global.html#saveAllData">saveAllData</a></li><li><a href="global.html#saveAllTasks">saveAllTasks</a></li><li><a href="global.html#saveCategoriesToLS">saveCategoriesToLS</a></li><li><a href="global.html#saveCategoryToDB">saveCategoryToDB</a></li><li><a href="global.html#saveContactToDB">saveContactToDB</a></li><li><a href="global.html#saveContactsToLS">saveContactsToLS</a></li><li><a href="global.html#saveDataToFirebase">saveDataToFirebase</a></li><li><a href="global.html#saveTaskToDB">saveTaskToDB</a></li><li><a href="global.html#saveTasksToLS">saveTasksToLS</a></li><li><a href="global.html#saveToLocalStorage">saveToLocalStorage</a></li><li><a href="global.html#setAddContactValues">setAddContactValues</a></li><li><a href="global.html#setContactDetailProps">setContactDetailProps</a></li><li><a href="global.html#setContactProperties">setContactProperties</a></li><li><a href="global.html#setContactPropertiesOnSignUp">setContactPropertiesOnSignUp</a></li><li><a href="global.html#setDropdownOption">setDropdownOption</a></li><li><a href="global.html#setEditContactValues">setEditContactValues</a></li><li><a href="global.html#setFieldValidity">setFieldValidity</a></li><li><a href="global.html#setFirstLetterUpperCase">setFirstLetterUpperCase</a></li><li><a href="global.html#setFormFieldsValidity">setFormFieldsValidity</a></li><li><a href="global.html#setInitialFormState">setInitialFormState</a></li><li><a href="global.html#setNavLinkProps">setNavLinkProps</a></li><li><a href="global.html#setPlaceholderStyle">setPlaceholderStyle</a></li><li><a href="global.html#setSubmitBtnState">setSubmitBtnState</a></li><li><a href="global.html#setSubmitBtnStateOnEvent">setSubmitBtnStateOnEvent</a></li><li><a href="global.html#setSummaryObj">setSummaryObj</a></li><li><a href="global.html#setSummaryWidgetProps">setSummaryWidgetProps</a></li><li><a href="global.html#setTaskCounts">setTaskCounts</a></li><li><a href="global.html#setTaskProperties">setTaskProperties</a></li><li><a href="global.html#setUpcomings">setUpcomings</a></li><li><a href="global.html#setWelcomeMsg">setWelcomeMsg</a></li><li><a href="global.html#showContactDetail">showContactDetail</a></li><li><a href="global.html#showFloatingMessage">showFloatingMessage</a></li><li><a href="global.html#showSummaryWelcomeScreen">showSummaryWelcomeScreen</a></li><li><a href="global.html#showTaskDetail">showTaskDetail</a></li><li><a href="global.html#showTaskDialogue">showTaskDialogue</a></li><li><a href="global.html#signIn">signIn</a></li><li><a href="global.html#signOut">signOut</a></li><li><a href="global.html#signUpFail">signUpFail</a></li><li><a href="global.html#signUpSuccessfull">signUpSuccessfull</a></li><li><a href="global.html#sortArray">sortArray</a></li><li><a href="global.html#sortCategories">sortCategories</a></li><li><a href="global.html#sortContacts">sortContacts</a></li><li><a href="global.html#sortTasks">sortTasks</a></li><li><a href="global.html#submitContactsForm">submitContactsForm</a></li><li><a href="global.html#submitCreateContact">submitCreateContact</a></li><li><a href="global.html#submitCreateTask">submitCreateTask</a></li><li><a href="global.html#submitDeleteContact">submitDeleteContact</a></li><li><a href="global.html#submitDeleteTask">submitDeleteTask</a></li><li><a href="global.html#submitLoginFormHandler">submitLoginFormHandler</a></li><li><a href="global.html#submitSignUpFormHandler">submitSignUpFormHandler</a></li><li><a href="global.html#submitUpdateContact">submitUpdateContact</a></li><li><a href="global.html#submitUpdateTask">submitUpdateTask</a></li><li><a href="global.html#subtaskEventAllowed">subtaskEventAllowed</a></li><li><a href="global.html#taskDrop">taskDrop</a></li><li><a href="global.html#toggleDropdown">toggleDropdown</a></li><li><a href="global.html#toggleHeaderNav">toggleHeaderNav</a></li><li><a href="global.html#toggleIconColorOnHover">toggleIconColorOnHover</a></li><li><a href="global.html#togglePasswordVisibility">togglePasswordVisibility</a></li><li><a href="global.html#toggleSubtaskStatus">toggleSubtaskStatus</a></li><li><a href="global.html#updateCategory">updateCategory</a></li><li><a href="global.html#updateContact">updateContact</a></li><li><a href="global.html#updateContactProperty">updateContactProperty</a></li><li><a href="global.html#updateSubtaskEventHandler">updateSubtaskEventHandler</a></li><li><a href="global.html#updateSubtaskStatus">updateSubtaskStatus</a></li><li><a href="global.html#updateSummaryValues">updateSummaryValues</a></li><li><a href="global.html#updateTask">updateTask</a></li><li><a href="global.html#updateTaskProperty">updateTaskProperty</a></li><li><a href="global.html#updateUserWelcome">updateUserWelcome</a></li><li><a href="global.html#validateConfirmPassword">validateConfirmPassword</a></li><li><a href="global.html#validateContactProperties">validateContactProperties</a></li><li><a href="global.html#validateElement">validateElement</a></li><li><a href="global.html#validateInput">validateInput</a></li><li><a href="global.html#validatePhoneInput">validatePhoneInput</a></li><li><a href="global.html#validateSubtaskInput">validateSubtaskInput</a></li><li><a href="global.html#validateTaskProperties">validateTaskProperties</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Jun 14 2025 14:24:09 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

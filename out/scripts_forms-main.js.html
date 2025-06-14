@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: script.js</title>
+    <title>JSDoc: Source: scripts/forms-main.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: script.js</h1>
+    <h1 class="page-title">Source: scripts/forms-main.js</h1>
 
     
 
@@ -26,371 +26,408 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>let currentPage = window.location.pathname;
-let loggedInUserId = null;
-let loggedInUser = null;
-document.addEventListener('click', documentEventHandler);
+            <pre class="prettyprint source linenums"><code>let formMode = '';
+let invalidFields = [];
+let listboxElements = [];
+let currentFieldElements = {};
+let emailIsUpdated = false;
+document.addEventListener('click', documentEventHandlerForms);
+document.addEventListener('keydown', documentEventHandlerForms);
 
 
 /**
- * Checks authorization (redirect to login if unauthorized, if page not public)
+ * Helper: set and return an object 'currentFieldElements' with all relevant elements within a field wrapper
+ * (e.g. wrapper, input, alert, combox, listbox)
  * 
- * @param {boolean} isPublic - public page true/false (e.g. terms pages)
+ * @param {element} element - a dom element within a field wrapper
  */
-async function checkAuth(isPublic = false) {
-    loggedInUserId = await getFromLocalStorage('pseudoAuthStatus');
-    if(loggedInUserId == 'guest') return;
-    document.body.classList.add('logged-out');
-    if(loggedInUserId === null) {
-        if(!isPublic) return redirectToLogin();
-    } else {
-        loggedInUser = await getContactById(loggedInUserId);
-        if(!loggedInUser) {
-            if(!isPublic) return redirectToLogin();
-            return;
+function getCurrentFieldElements(element) {
+    currentFieldElements = {};
+    let fieldWrapper = element.closest('.field-wrapper');
+    if(fieldWrapper) {
+        currentFieldElements.fieldWrapper = fieldWrapper;
+        let input = fieldWrapper.querySelector('input');
+        input ? currentFieldElements.input = input : null;
+        let alert = fieldWrapper.querySelector('[role="alert"]');
+        alert ? currentFieldElements.alert = alert : null;
+        let combox = fieldWrapper.querySelector('[role="combox"]');
+        combox ? currentFieldElements.combox = combox : null;
+        let listbox = fieldWrapper.querySelector('[role="listbox"]');
+        if(listbox) {
+            currentFieldElements.listbox = listbox;
+            currentFieldElements.options = getCurrentSelectOptions(listbox);
         }
-        document.body.classList.remove('logged-out');
     }
+    return currentFieldElements;
 }
 
 
 /**
- * On page load terms pages
- */
-async function initTermsPages(linkIdSuffix = '') {
-    await getUserData();
-    await checkAuth(true);
-    getMainTemplates();
-}
-
-
-/**
- * Sign out procedure (remove auth status and redirect to login)
- */
-function signOut(event) {
-    event.stopPropagation();
-    redirectToLogin();
-}
-
-
-/**
- * Redirect to login page
+ * Helper: return field wrapper element from element
  * 
- * @param {number} timeout - timeout milliseconds
+ * @param {element} element - current element
  */
-function redirectToLogin(event = null, timeout = 250) {
-    event ? event.stopPropagation() : null;
-    loggedInUserId = null;
-    localStorage.removeItem('pseudoAuthStatus');
-    setTimeout(() => window.location.href = '/login.html', timeout);
+function getFieldWrapperFromElement(element) {
+    return element.closest('.field-wrapper');
 }
 
 
 /**
- * Get html main templates (header, sideNavBar etc.)
+ * Helper: return field wrapper element from event
+ * 
+ * @param {event} event - inherit
  */
-function getMainTemplates() {
-    getHeader();
-    getNavBar();
-    setNavLinkProps();
-    getOrientationOverlay();
+function getFieldWrapperFromEvent(event) {
+    return getClosestParentElementFromEvent(event, '.field-wrapper');
 }
 
 
 /**
- * Get html header
+ * Helper: return field wrapper element from id
+ * 
+ * @param {string} id - id of the current element
  */
-function getHeader() {
-    document.getElementById('header').innerHTML = getHeaderTemplate();
+function getFieldWrapperFromId(id) {
+    return getClosestParentElementFromId(id, '.field-wrapper');
 }
 
 
 /**
- * Get html sideNavBar/mobile bottom bar
+ * Helper: return FormData
+ * 
+ * @param {string} formId - id of the form
  */
-function getNavBar() {
-    let sideNavBar = document.getElementById('sideNavBar');
-    sideNavBar.innerHTML = getNavBarTemplate();
-    sideNavBar.classList.add('hide--ss-mob');
-
-    let footerNavBar = document.getElementById('footerNavBar');
-    footerNavBar.innerHTML = getNavBarTemplate();
-    footerNavBar.classList.add('show--ss-mob');
+async function getFormData(formId) {
+    let form = document.getElementById(formId);
+    let formData = new FormData(form);
+    return formData;
 }
 
 
 /**
- * Set dynamic nav properties (user batch, active url styles/icons)
+ * Helper: return formInputs as object
+ * 
+ * @param {string} formId - id of the form
  */
-function setNavLinkProps() {
-    let headerNavToggle = document.getElementById('headerNavTrigger');
-    headerNavToggle.innerText = loggedInUser ? loggedInUser.initials : 'G';
-    let navLinks = document.querySelectorAll('nav .nav-links a');
-    navLinks.forEach(link => {
-        if(link.href === window.location.href) {
-            link.classList.add('active');
-            let iconElement = link.querySelector('img');
-            iconElement ? iconElement.src = iconElement.src.replace('.svg', '-active.svg') : null;
+async function getFormInputObj(formId) {
+    let formData = await getFormData(formId);
+    let formInputObj = Object.fromEntries(formData);
+    return formInputObj;
+}
+
+
+/**
+ * Return an array (invalidFields) containing all form element id's with an invalid input
+ * 
+ * @param {string} formId - id of the form element
+ */
+async function getInvalidInputIds(formId) {
+    invalidFields = [];
+    let formElements = getFormElementsArray(formId);
+    formElements.forEach(function(element) {
+        let isValidElement = validateElement(element);
+        if(!isValidElement) {
+            invalidFields.push(element.id);
         }
     });
 }
 
 
 /**
- * Toggle header navigation
+ * Checks if all form inputs are valid
  * 
- * @param {event} event - click (header nav button)
+ * @param {string} formId - id of the form element
+ * @returns {boolean} - true if valid
  */
-function toggleHeaderNav(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    document.getElementById('headerNavDropdown').classList.toggle('is-open');
+function formIsValid(formId) {
+    getInvalidInputIds(formId);
+    return !hasLength(invalidFields) ? true : false;
 }
 
 
 /**
- * Get html orientation overlay
+ * Document Event handler: close dropdowns on outslide click or ESC
+ * 
+ * @param {event} event - click, ESC (document)
  */
-function getOrientationOverlay() {
-    let element = document.getElementById('orientationOverlay');
-    if(element) {
-        element.textContent = 'Please turn device or window to portrait orientation !';
-        element.addEventListener('click', event => {event.stopPropagation();})
+function documentEventHandlerForms(event) {
+    if( event.key === 'Escape' || event.type === "click" ) {
+        closeAllDropdowns(listboxElements);
+        focusCurrentCombox(event.target);
+        return;
+    }
+    if( event.key === 'Enter') {
+        event.preventDefault();
     }
 }
 
 
 /**
- * Document Event handler: close various dialogues
+ * Event handler: procedure on element focus
  * 
- * @param {event} event - click (document)
+ * @param {event} event - onfocus (inputs)
  */
-function documentEventHandler(event) {
-    if( event.type === "click" ) {
-        let elementIds = ['headerNavDropdown', 'contactOptionsMenu'];
-        elementIds.forEach(elementId => {
-            let element = document.getElementById(elementId);
-            element ? element.classList.remove('is-open') : null;
-        });
-    }
-}
-
-
-/**
- * Close all open elements of certain selector (multiple use)
- * 
- * @param {string} selector - query-all selector 
- */
-function closeOpenElements(selector) {
-    let elements = document.querySelectorAll(selector);
-    if(elements) {
-        elements.forEach(element => {
-            if(element.classList.contains('is-open')) {
-                element.classList.remove('is-open');
-            };
-        });
-    }
-}
-
-/**
- * Event Handler: close current element (multiple use)
- * 
- * @param {event} event - various
- */
-function closeElementByCurrentTarget(event) {
+function focusInHandler(event) {
     event.stopPropagation();
     let element = event.currentTarget;
-    element ? element.classList.remove('is-open') : null;
+    getCurrentFieldElements(element);
+    resetInputValidation(event);
 }
 
 
 /**
- * Helper: check if object exists and has length
+ * Event handler: procedure on element focus out
  * 
- * @param {object} object - any object
+ * @param {event} event - onfocusout (inputs)
+ */
+function focusOutHandler(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    let element = event.currentTarget;
+    (element.dataset.type == 'password') ? togglePasswordVisibility(event) : null;
+    validateInput(element);
+}
+
+
+/**
+ * Helper: return an array with all form elements (inputs, selects, buttons)
+ * 
+ * @param {string} formId - id of the form element
+ */
+function getFormElementsArray(formId) {
+    let form = document.getElementById(formId);
+    let elements = form.elements;
+    let elementsArr = Array.from(elements);
+    return elementsArr;
+}
+
+
+/**
+ * Set edit form state
+ * 
+ * @param {string} formId - id of the form element
+ */
+function setInitialFormState(formId) {
+    let form = document.getElementById(formId);
+    let formElements = getFormElementsArray(formId);
+    formElements.forEach(function(element) {
+        setPlaceholderStyle(element);
+    });
+    let topElement = form.querySelector('.top-element');
+    topElement ? topElement.scrollIntoView() : null;
+    setTimeout(() => formElements[0].focus(), 200);
+    setSubmitBtnState(formId);
+}
+
+
+/**
+ * Set input validations for an input element
+ * 
+ * @param {element} element - input element
+ */
+function validateInput(element) {
+    setFieldValidity(element);
+    setSubmitBtnState(element.form.id);
+}
+
+
+/**
+ * Set validity styles of an input element
+ * 
+ * @param {element} element - input element
+ */
+function setFieldValidity(element) {
+    let isValidElement = validateElement(element);
+    let fieldWrapper = getFieldWrapperFromId(element.id);
+    if(fieldWrapper){
+        isValidElement ? fieldWrapper.classList.remove('invalid') : fieldWrapper.classList.add('invalid');
+    }
+    setPlaceholderStyle(element);
+}
+
+
+/**
+ * Set validity styles on all input elements (currently not in use)
+ * 
+ * @param {string} formId - id of the form
+ */
+function setFormFieldsValidity(formId) {
+    if(formIsValid(formId)) {
+        invalidFields.forEach((elementId) => {
+            let element = document.getElementById(elementId);
+            setFieldValidity(element);
+        });
+    }
+}
+
+
+/**
+ * Validate input element
+ * 
+ * @param {element} element - input element
+ * @param {number} ) - 1=full validation, other=required only
  * @returns {boolean}
  */
-function hasLength(object) {
-    if(object &amp;&amp; object.length > 0) {
+function validateElement(element) {
+    if(element.hasAttribute('required')) {
+        if(element.value.replaceAll(' ', '') == '') {
+            return false;
+        };
+    }
+    if(! element.checkValidity() || ! checkCustomValidation(element)) {
+        return false;
+    }
+    if(element.hasAttribute('data-value-before-update')) {
+        emailIsUpdated = (element.value != element.dataset.valueBeforeUpdate);
+    }
+    return true;
+}
+
+
+/**
+ * Validate custom validations of an input element, can be enhanced
+ * 
+ * @param {element} element - input element
+ * @returns {boolean}
+ */
+function checkCustomValidation(element) {
+    if(element.getAttribute("type") == 'tel') {
+        if(element.value.length === 0) return true;
+        validatePhoneInput(element);
+        return (element.value.length >= 10);
+    }
+    if(! element.hasAttribute("data-validation-type"))  {
         return true;
     }
+    if(element.dataset.validationType == 'required') {
+        return (element.value.length > 0);
+    }
+    if(element.dataset.validationType == 'password-confirmation') {
+        return validateConfirmPassword(element);
+    }
 }
 
 
 /**
- * Helper: close parent wrapper
+ * Validate and format phone input
  * 
- * @param {event} event - inherit
- * @param {string} selector - selector of the wrapper to close
+ * @param {element} element - input element
  */
-function closeParentWrapper(event, selector = '.close-on-event') {
-    let wrapper = getClosestParentElementFromEvent(event, selector);
-    wrapper ? wrapper.classList.remove('is-open') : null;
+function validatePhoneInput(element) {
+    let inputValue = element.value;
+    let formattedValue = inputValue;
+    let rawValue = inputValue.replaceAll(' ', '');
+    if(rawValue.length >= 10){
+        if(! inputValue.startsWith("+")) {
+            formattedValue = "+49 " + inputValue;
+        }
+    }
+    element.value = formattedValue;
 }
 
 
 /**
- * Helper: sort and return array alphabetically
+ * Set placeholder style for input without placeholder functionality if needed (e.g date)
  * 
- * @param {array} array - data array
- * @param {string} sortByProperty - property to sort by
+ * @param {element} element - input element
  */
-async function sortArray(array, sortByProperty = 'id') {
-    return await array.sort((a, b) => a[sortByProperty].localeCompare(b[sortByProperty]));
+function setPlaceholderStyle(element) {
+    if(element.hasAttribute('data-placeholder-style')) {
+        element.value == '' ? element.dataset.placeholderStyle = 'true' : element.dataset.placeholderStyle = 'false';
+    }
 }
 
 
 /**
- * Helper: return closest specific parent element from element
+ * Remove placeholder style for input without placeholder functionality if needed (e.g date)
  * 
- * @param {element} element - dom element
- * @param {string} selector - css selector of the specific parent element
+ * @param {element} element - input element
  */
-function getClosestParentElementFromElement(element, selector = '') {
-    return element.closest(selector);
-}
-
-
-/**
- * Helper: return closest specific parent element from event
- * 
- * @param {event} event - inherit
- * @param {string} selector - css selector of the specific parent element
- */
-function getClosestParentElementFromEvent(event, selector = '') {
-    let element = event.currentTarget;
-    if(element) {return element.closest(selector);}
-}
-
-
-/**
- * Helper: return closest specific parent element from id
- * 
- * @param {string} id - current element id
- * @param {string} selector - css selector of the specific parent element
- */
-function getClosestParentElementFromId(id, selector = '') {
-    let element = document.getElementById(id);
-    if(element) {return element.closest(selector);}
-}
-
-
-/**
- * Helper: return boolean from string true/false
- * 
- * @param {string} booleanString - string ('true'/'false')
- */
-function getBooleanFromString(booleanString) {
-    return (booleanString == 'true') ? true : false;
-}
-
-
-/**
- * Helper: convert a date to string for DB (YYYY-MM-DD)
- * 
- * @param {date} date - a date object
- */
-function formatDateToStringDB(date) {
-    let year = date.getFullYear();
-    let month = ('0'+ (date.getMonth() + 1)).slice(-2);
-    let day = ('0' + date.getDate()).slice(-2);
-    let formattedDate = year + '-' + month + '-' + day;
-    return formattedDate;
-}
-
-
-/**
- * Helper: convert a DB date string (YYYY-MM-DD) to a full date string (Month Day, Year)
- * 
- * @param {string} dateStringDB  - date string (YYYY-MM-DD)
- */
-function formatDateFromStringDBToFull(dateStringDB) {
-    let timeStamp = Date.parse(dateStringDB);
-    let date = new Date(timeStamp);
-    let formattedDate = date.toLocaleString('en-US', { month: 'long', day: 'numeric' , year: 'numeric'});
-    return formattedDate;
-}
-
-
-/**
- * Helper: add days to a date
- * 
- * @param {date} date - date object
- * @param {number} days - number of days to add
- * @returns {date}
- */
-function addDaysToDate(date, days) {
-    return new Date(date.getTime() + days * 24 * 60 * 60 * 1000);
-}
-
-
-/**
- * Helper: toggle icon color on hover (only for svg sources on img element)
- * 
- * @param {event} event - current event
- * @param {string} hoverColor - file suffix for the hover svg file
- */
-function toggleIconColorOnHover(event, hoverColor = 'blue') {
+function removePlaceholderStyle(event) {
     event.stopPropagation();
-    let iconElement = event.currentTarget.querySelector('img');
-    if(!iconElement) return;
-    let hoverFileSuffix = '-' + hoverColor + '.svg';
-    let iconSource = iconElement.src;
-    if(event.type == 'mouseover') {
-        return (!iconSource.endsWith(hoverFileSuffix)) ? iconElement.src = iconElement.src.replace('.svg', hoverFileSuffix) : null;
-    }
-    if(event.type == 'mouseleave') {
-        return (iconSource.endsWith(hoverFileSuffix)) ? iconElement.src = iconElement.src.replace(hoverFileSuffix, '.svg') : null;
+    let element = event.currentTarget;
+    element.hasAttribute('data-placeholder-style') ? element.dataset.placeholderStyle = 'false' : null;
+}
+
+
+/**
+ * Reset validation style of the current element
+ * 
+ * @param {event} event - inherit
+ */
+function resetInputValidation(event) {
+    let fieldWrapper = getFieldWrapperFromEvent(event);
+    fieldWrapper ? fieldWrapper.classList.remove('invalid', 'fail') : null;
+}
+
+
+/**
+ * Set the submit button state of a form
+ * 
+ * @param {string} formId - id of the form
+ */
+function setSubmitBtnState(formId) {
+    let form = document.getElementById(formId);
+    let submitBtn = form.querySelector('[type="submit"]');
+    if(submitBtn) {
+        submitBtn.setAttribute('disabled', '');
+        formIsValid(formId) ? submitBtn.removeAttribute('disabled') : submitBtn.setAttribute('disabled', '');
     }
 }
 
 
 /**
- * Helper: add and remove body class with timer (helper for animation styles)
+ * Set submit button state from event
  * 
- * @param {string} className - class to add
- * @param {number} timemoutAdd - timeout (ms) to add the class (-9 = do not add)
- * @param {number} timemoutRemove - timeout (ms) to remove the class (-9 = do not remove)
+ * @param {string} formId - id of the form
  */
-async function addBodyClass(className, timeoutAdd = 0, timeoutRemove = -9) {
-    document.body.classList.remove(className);
-    timeoutAdd >= 0 ? setTimeout(() => document.body.classList.add(className), timeoutAdd) : null;
-    timeoutRemove >= 0 ? removeBodyClass(className, timeoutRemove) : null;
+function setSubmitBtnStateOnEvent(event) {
+    event.stopPropagation();
+    let formId = event.currentTarget.form.id;
+    setSubmitBtnState(formId);
 }
 
 
 /**
- * Helper: remove body class with timer
+ * Reset form
  * 
- * @param {string} className - class to add
- * @param {number} timemoutRemove - timeout (ms) to remove the class (-1 = default)
+ * @param {string} formId - id of the form element
  */
-async function removeBodyClass(className, timeout = -1) {
-    timeout === -1 ? timeout = 1500 : null;
-    document.body.classList.remove(className);
-    setTimeout(() => document.body.classList.remove(className), timeout);
+function resetForm(formId) {
+    let form = document.getElementById(formId);
+    form.reset();
+    listboxElements = [];
+    let formElements = getFormElementsArray(formId);
+    formElements.forEach(function(element) {
+        resetFormElements(element);
+    });
+    getInvalidInputIds(formId);
+    let topElement = form.querySelector('.top-element');
+    topElement ? topElement.scrollIntoView() : null;
+    setTimeout(() => formElements[0].focus(), 200);
 }
 
 
 /**
- * Helper: show floating message with timeout
+ * Reset a form element
  * 
- * @param {string} template - code name for specific template (text, addedTask)
- * @param {string} msg - message content
- * @param {number} timeout - timeout milliseconds for class remove (-1 = default)
- * @param {string} optClass - optional class (showing-default, alert)
+ * @param {element} element - form element
  */
-async function showFloatingMessage(template, msg = '', timeout = -1, optClass = 'showing-default') {
-    let element = document.getElementById("floatingMsg");
-    element.innerHTML = '';
-    if(element) {
-        timeout === -1 ? timeout = 3000 : null;
-        element.classList.remove('showing-default', 'showing-top', optClass);
-        element.innerHTML = (template == 'addedTask') ? getFloatingMessageTaskAddedTemplate() : getFloatingMessageTextTemplate(msg);
-        element.classList.add('button', 'btn-icon', 'btn-primary', 'animate', optClass);
-        setTimeout(() => element.classList.remove('animate', optClass), timeout);
+function resetFormElements(element) {
+    setPlaceholderStyle(element);
+    getCurrentFieldElements(element);
+    if(currentFieldElements.fieldWrapper) {
+        currentFieldElements.fieldWrapper.classList.remove('invalid');
     }
-}
+    if(currentFieldElements.combox) {
+        currentFieldElements.combox.removeAttribute('data-option-id');
+        currentFieldElements.combox.removeAttribute('data-active-index');
+    }
+    if(currentFieldElements.listbox) {
+        listboxElements.push(currentFieldElements.listbox);
+        closeDropdown(currentFieldElements.listbox);
+    }
+};
 </code></pre>
         </article>
     </section>

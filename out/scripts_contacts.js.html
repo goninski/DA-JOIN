@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: script.js</title>
+    <title>JSDoc: Source: scripts/contacts.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: script.js</h1>
+    <h1 class="page-title">Source: scripts/contacts.js</h1>
 
     
 
@@ -26,372 +26,326 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>let currentPage = window.location.pathname;
-let loggedInUserId = null;
-let loggedInUser = null;
-document.addEventListener('click', documentEventHandler);
+            <pre class="prettyprint source linenums"><code>let currentContact = {};
+let lastListContactId = '';
+
+/**
+ * on page load contacts.html
+ */
+async function initContacts() {
+    await getContacts();
+    await checkAuth();
+    getMainTemplates();
+    await renderContactList();
+}
 
 
 /**
- * Checks authorization (redirect to login if unauthorized, if page not public)
- * 
- * @param {boolean} isPublic - public page true/false (e.g. terms pages)
+ * Render the contact list, alphabetically, grouped by first letter of names
  */
-async function checkAuth(isPublic = false) {
-    loggedInUserId = await getFromLocalStorage('pseudoAuthStatus');
-    if(loggedInUserId == 'guest') return;
-    document.body.classList.add('logged-out');
-    if(loggedInUserId === null) {
-        if(!isPublic) return redirectToLogin();
-    } else {
-        loggedInUser = await getContactById(loggedInUserId);
-        if(!loggedInUser) {
-            if(!isPublic) return redirectToLogin();
-            return;
+async function renderContactList() {
+    if(contacts){
+        contactListRef = document.getElementById('contactList');
+        contactListRef.innerHTML = '';
+        let contactsGrouped = await groupContacts(contacts);
+        for (let index = 0; index &lt; contactsGrouped.length; index++) {
+            let contactGroupObj = contactsGrouped[index];
+            let groupName = contactGroupObj[0];
+            let contactGroup = contactGroupObj[1];
+            contactListRef.innerHTML += getContactListTemplate(groupName);
+            await renderContactGroupItems(contactGroup, groupName);
         }
-        document.body.classList.remove('logged-out');
     }
 }
 
 
 /**
- * On page load terms pages
+ * Render contact group items within the contact list (subfunction of renderContactList)
+ * 
+ * @param {object} contactGroup - contactGroup object (of contactsGrouped)
+ * @param {string} groupName - name of the group (first letter of name)
  */
-async function initTermsPages(linkIdSuffix = '') {
-    await getUserData();
-    await checkAuth(true);
-    getMainTemplates();
+async function renderContactGroupItems(contactGroup, groupName) {
+    let contactListGroupRef = document.getElementById('contactListGroup-' + groupName);
+    contactListGroupRef.innerHTML = '';
+    for (let index = 0; index &lt; contactGroup.length; index++) {
+        let contact = contactGroup[index];
+        contactListGroupRef.innerHTML += getContactListGroupTemplate(contact);
+    }
 }
 
 
 /**
- * Sign out procedure (remove auth status and redirect to login)
+ * Helper: returns a alphabetically grouped (by first letter of name) and sorted object for the contact list
+ * 
+ * @param {object} contacts - the global contacts object
  */
-function signOut(event) {
+async function groupContacts(contacts) {
+    await sortContacts(contacts);
+    let contactsGroupedObj = await Map.groupBy(contacts, contact => contact.name[0].toUpperCase());
+    let contactsGrouped = Array.from(contactsGroupedObj);
+    return contactsGrouped;
+}
+
+
+/**
+ * Event handler: show contact details from selected contact in list
+ * 
+ * @param {event} event - onclick (contact in contact list)
+ * @param {string} contactId - id of the current contact
+ */
+async function showContactDetail(event, contactId) {
     event.stopPropagation();
-    redirectToLogin();
+    if(lastListContactId != '' &amp;&amp; lastListContactId != contactId){
+        document.getElementById('listContactId-' + lastListContactId).classList.remove('active');
+    }
+    if(contactId == '') {
+        return closeContactDetail(contactId);
+    }
+    await setContactDetailProps(event, contactId);
 }
 
 
 /**
- * Redirect to login page
+ * Set contact detail properties (for the contact detail view)
  * 
- * @param {number} timeout - timeout milliseconds
+ * @param {event} event - inherit 
+ * @param {string} contactId - id of the current contact
  */
-function redirectToLogin(event = null, timeout = 250) {
-    event ? event.stopPropagation() : null;
-    loggedInUserId = null;
-    localStorage.removeItem('pseudoAuthStatus');
-    setTimeout(() => window.location.href = '/login.html', timeout);
-}
-
-
-/**
- * Get html main templates (header, sideNavBar etc.)
- */
-function getMainTemplates() {
-    getHeader();
-    getNavBar();
-    setNavLinkProps();
-    getOrientationOverlay();
-}
-
-
-/**
- * Get html header
- */
-function getHeader() {
-    document.getElementById('header').innerHTML = getHeaderTemplate();
-}
-
-
-/**
- * Get html sideNavBar/mobile bottom bar
- */
-function getNavBar() {
-    let sideNavBar = document.getElementById('sideNavBar');
-    sideNavBar.innerHTML = getNavBarTemplate();
-    sideNavBar.classList.add('hide--ss-mob');
-
-    let footerNavBar = document.getElementById('footerNavBar');
-    footerNavBar.innerHTML = getNavBarTemplate();
-    footerNavBar.classList.add('show--ss-mob');
-}
-
-
-/**
- * Set dynamic nav properties (user batch, active url styles/icons)
- */
-function setNavLinkProps() {
-    let headerNavToggle = document.getElementById('headerNavTrigger');
-    headerNavToggle.innerText = loggedInUser ? loggedInUser.initials : 'G';
-    let navLinks = document.querySelectorAll('nav .nav-links a');
-    navLinks.forEach(link => {
-        if(link.href === window.location.href) {
-            link.classList.add('active');
-            let iconElement = link.querySelector('img');
-            iconElement ? iconElement.src = iconElement.src.replace('.svg', '-active.svg') : null;
-        }
+async function setContactDetailProps(event, contactId) {
+    if(contacts) {
+    document.getElementById('contactPageInner').classList.add('show-contact-detail');
+    document.getElementById('listContactId-' + contactId).classList.add('active');
+    document.getElementById('btnCloseContactDetails').addEventListener('click', function(event) {
+        event.stopPropagation();
+        closeContactDetail(contactId);
     });
+    lastListContactId = contactId;
+    currentContact = await getContactById(contactId);
+    document.getElementById('floatingContact').innerHTML = getContactDetailProfileBatchTemplate(currentContact);
+    document.getElementById('contactInfo').innerHTML = getContactDetailInfoTemplate(currentContact);
+    document.getElementById('contactOptionsMenu').innerHTML = getContactOptionButtons(currentContact);
+    }
 }
 
 
 /**
- * Toggle header navigation
+ * Event handler: open contact options menu (mobile view only) 
  * 
- * @param {event} event - click (header nav button)
+ * @param {event} event - click (contact options menu button)
  */
-function toggleHeaderNav(event) {
+function openContactOptionsMenu(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    document.getElementById('contactOptionsMenu').classList.add('is-open');
+}
+
+
+/**
+ * Close current contact details (only for screen &lt; 1180px)
+ * 
+ * @param {string} contactId - id of the current contact
+ */
+function closeContactDetail(contactId) {
+    document.getElementById('contactPageInner').classList.remove('show-contact-detail');
+    document.getElementById('floatingContact').innerHTML = '';
+    document.getElementById('contactInfo').innerHTML = '';
+    if(contactId != '') {
+        document.getElementById('listContactId-' + contactId).classList.remove('active');
+    }
+}
+
+
+/**
+ * Event handler: open add new contact form
+ * 
+ * @param {event} event - onclick (add new contact button/s)
+ */
+async function openAddNewContactForm(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    formMode = 'add';
+    currentContact = {};
+    await openContactsFormDialogue(formMode);
+
+}
+
+
+/**
+ * Event handler: edit current contact
+ * 
+ * @param {event} event - onclick (edit button)
+ * @param {string} contactId - id of the current contact (currently no in use due global variable)
+ */
+async function openEditContactForm(event, contactId) {
     event.preventDefault();
     event.stopPropagation();
-    document.getElementById('headerNavDropdown').classList.toggle('is-open');
+    formMode = 'edit';
+    await openContactsFormDialogue(formMode, currentContact.id);
 }
 
 
 /**
- * Get html orientation overlay
- */
-function getOrientationOverlay() {
-    let element = document.getElementById('orientationOverlay');
-    if(element) {
-        element.textContent = 'Please turn device or window to portrait orientation !';
-        element.addEventListener('click', event => {event.stopPropagation();})
-    }
-}
-
-
-/**
- * Document Event handler: close various dialogues
+ * Opens the dialogue to add/edit a contact
  * 
- * @param {event} event - click (document)
+ * @param {string} formMode - form mode (add, edit)
+ * @param {string} contactId - id of the current contact (empty for new contact)
  */
-function documentEventHandler(event) {
-    if( event.type === "click" ) {
-        let elementIds = ['headerNavDropdown', 'contactOptionsMenu'];
-        elementIds.forEach(elementId => {
-            let element = document.getElementById(elementId);
-            element ? element.classList.remove('is-open') : null;
-        });
-    }
+async function openContactsFormDialogue(formMode, contactId = '') {
+    await resetForm('contactsForm');
+    let dialogue = document.getElementById('addContactDialogue');
+    dialogue.classList.add('dialogue-open');
+    dialogue.classList.remove('dialogue-closed');
+    document.getElementById('addNewContactBtnFloating').style = 'display: none;';
+    formMode == 'add' ? await setAddContactValues() : await setEditContactValues(contactId);
+    setInitialFormState('contactsForm');
 }
 
 
 /**
- * Close all open elements of certain selector (multiple use)
+ * Event handler: reset contacts form
  * 
- * @param {string} selector - query-all selector 
+ * @param {event} event - onclick (cancel button)
  */
-function closeOpenElements(selector) {
-    let elements = document.querySelectorAll(selector);
-    if(elements) {
-        elements.forEach(element => {
-            if(element.classList.contains('is-open')) {
-                element.classList.remove('is-open');
-            };
-        });
-    }
-}
-
-/**
- * Event Handler: close current element (multiple use)
- * 
- * @param {event} event - various
- */
-function closeElementByCurrentTarget(event) {
+function resetContactsForm(event) {
     event.stopPropagation();
-    let element = event.currentTarget;
-    element ? element.classList.remove('is-open') : null;
+    event.preventDefault();
+    currentContact = {};
+    resetForm('contactsForm');
 }
 
 
 /**
- * Helper: check if object exists and has length
+ * Event handler: close add/edit contacts form dialogue
  * 
- * @param {object} object - any object
- * @returns {boolean}
+ * @param {event} event - click (close button)
  */
-function hasLength(object) {
-    if(object &amp;&amp; object.length > 0) {
-        return true;
-    }
-}
-
-
-/**
- * Helper: close parent wrapper
- * 
- * @param {event} event - inherit
- * @param {string} selector - selector of the wrapper to close
- */
-function closeParentWrapper(event, selector = '.close-on-event') {
-    let wrapper = getClosestParentElementFromEvent(event, selector);
-    wrapper ? wrapper.classList.remove('is-open') : null;
-}
-
-
-/**
- * Helper: sort and return array alphabetically
- * 
- * @param {array} array - data array
- * @param {string} sortByProperty - property to sort by
- */
-async function sortArray(array, sortByProperty = 'id') {
-    return await array.sort((a, b) => a[sortByProperty].localeCompare(b[sortByProperty]));
-}
-
-
-/**
- * Helper: return closest specific parent element from element
- * 
- * @param {element} element - dom element
- * @param {string} selector - css selector of the specific parent element
- */
-function getClosestParentElementFromElement(element, selector = '') {
-    return element.closest(selector);
-}
-
-
-/**
- * Helper: return closest specific parent element from event
- * 
- * @param {event} event - inherit
- * @param {string} selector - css selector of the specific parent element
- */
-function getClosestParentElementFromEvent(event, selector = '') {
-    let element = event.currentTarget;
-    if(element) {return element.closest(selector);}
-}
-
-
-/**
- * Helper: return closest specific parent element from id
- * 
- * @param {string} id - current element id
- * @param {string} selector - css selector of the specific parent element
- */
-function getClosestParentElementFromId(id, selector = '') {
-    let element = document.getElementById(id);
-    if(element) {return element.closest(selector);}
-}
-
-
-/**
- * Helper: return boolean from string true/false
- * 
- * @param {string} booleanString - string ('true'/'false')
- */
-function getBooleanFromString(booleanString) {
-    return (booleanString == 'true') ? true : false;
-}
-
-
-/**
- * Helper: convert a date to string for DB (YYYY-MM-DD)
- * 
- * @param {date} date - a date object
- */
-function formatDateToStringDB(date) {
-    let year = date.getFullYear();
-    let month = ('0'+ (date.getMonth() + 1)).slice(-2);
-    let day = ('0' + date.getDate()).slice(-2);
-    let formattedDate = year + '-' + month + '-' + day;
-    return formattedDate;
-}
-
-
-/**
- * Helper: convert a DB date string (YYYY-MM-DD) to a full date string (Month Day, Year)
- * 
- * @param {string} dateStringDB  - date string (YYYY-MM-DD)
- */
-function formatDateFromStringDBToFull(dateStringDB) {
-    let timeStamp = Date.parse(dateStringDB);
-    let date = new Date(timeStamp);
-    let formattedDate = date.toLocaleString('en-US', { month: 'long', day: 'numeric' , year: 'numeric'});
-    return formattedDate;
-}
-
-
-/**
- * Helper: add days to a date
- * 
- * @param {date} date - date object
- * @param {number} days - number of days to add
- * @returns {date}
- */
-function addDaysToDate(date, days) {
-    return new Date(date.getTime() + days * 24 * 60 * 60 * 1000);
-}
-
-
-/**
- * Helper: toggle icon color on hover (only for svg sources on img element)
- * 
- * @param {event} event - current event
- * @param {string} hoverColor - file suffix for the hover svg file
- */
-function toggleIconColorOnHover(event, hoverColor = 'blue') {
+async function closeContactsFormDialogue(event) {
     event.stopPropagation();
-    let iconElement = event.currentTarget.querySelector('img');
-    if(!iconElement) return;
-    let hoverFileSuffix = '-' + hoverColor + '.svg';
-    let iconSource = iconElement.src;
-    if(event.type == 'mouseover') {
-        return (!iconSource.endsWith(hoverFileSuffix)) ? iconElement.src = iconElement.src.replace('.svg', hoverFileSuffix) : null;
-    }
-    if(event.type == 'mouseleave') {
-        return (iconSource.endsWith(hoverFileSuffix)) ? iconElement.src = iconElement.src.replace(hoverFileSuffix, '.svg') : null;
+    resetForm('contactsForm');
+    formMode = '';
+    document.getElementById('addNewContactBtnFloating').style = '';
+    let dialogue = document.getElementById('addContactDialogue');
+    dialogue.classList.remove('dialogue-open');
+    dialogue.classList.add('dialogue-closed');
+    await renderContactList();
+    await showContactDetail(event, lastListContactId);
+}
+
+
+/**
+ * Set specific values for add contact mode
+ */
+async function setAddContactValues() {
+    document.getElementById('dialogueProfileBatch').innerHTML = '&lt;img src="/assets/icons/profile-placeholder.svg" alt="profile-placeholder">';
+    document.getElementById('dialogueProfileBatch').style = 'border: none;';
+    document.getElementById('dialogueTeaser').style = '';
+    document.getElementById('dialogueTitle').innerHTML = 'Add Contact';
+    document.getElementById('submitBtnWrapper').innerHTML = getAddContactSubmitButtonsTemplate();
+    document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Create contact');
+    document.getElementById('btnReset').innerHTML = getIconTemplateCancel('Cancel');
+}
+
+
+/**
+ * Set specific values for edit contact mode
+ * 
+ * @param {string} contactId - id of the current contact
+ */
+async function setEditContactValues(contactId) {
+    document.getElementById('dialogueTeaser').style = 'display: none;';
+    document.getElementById('dialogueTitle').innerHTML = 'Edit Contact';
+    let contact = await getContactById(contactId);
+    document.getElementById('dialogueProfileBatch').innerHTML = contact.initials;
+    document.getElementById('dialogueProfileBatch').style = '--profile-color: '+ contact.color;
+    document.getElementById('inputName').value = contact.name;
+    document.getElementById('inputEmail').value = contact.email;
+    document.getElementById('inputEmail').dataset.valueBeforeUpdate = contact.email;
+    contact.phone ? document.getElementById('inputPhone').value = contact.phone : '';
+    document.getElementById('submitBtnWrapper').innerHTML = getEditContactSubmitButtonsTemplate(contactId);
+    let showDeleteBtn = 0;
+    showDeleteBtn ? document.getElementById('dialogueBtnDelete').innerHTML = getIconTemplateCancel('Cancel') : null;
+    document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Save');
+}
+
+
+/**
+ * Event handler: calls submit create or save contact on contacts form
+ * 
+ * @param {event} event - onsubmit (contacts form)
+ */
+async function submitContactsForm(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    if(formIsValid('contactsForm')) {
+        let formInputs = await getFormInputObj('contactsForm');
+        let isExisting = formMode == 'add' ? await isExistingContact(formInputs.email) : emailIsUpdated;
+        if(isExisting) {
+            return await showFloatingMessage('text', 'This email address already exists !', -1, 'alert');
+        }
+        await setContactProperties(currentContact, formInputs);
+        formMode == 'edit' ? await submitUpdateContact(event, currentContact) : await submitCreateContact(event, currentContact);
     }
 }
 
 
 /**
- * Helper: add and remove body class with timer (helper for animation styles)
+ * Create contact from contacts form
  * 
- * @param {string} className - class to add
- * @param {number} timemoutAdd - timeout (ms) to add the class (-9 = do not add)
- * @param {number} timemoutRemove - timeout (ms) to remove the class (-9 = do not remove)
+ * @param {event} event - inherit (submit contact form)
  */
-async function addBodyClass(className, timeoutAdd = 0, timeoutRemove = -9) {
-    document.body.classList.remove(className);
-    timeoutAdd >= 0 ? setTimeout(() => document.body.classList.add(className), timeoutAdd) : null;
-    timeoutRemove >= 0 ? removeBodyClass(className, timeoutRemove) : null;
+async function submitCreateContact(event, currentContact) {
+    event.stopPropagation();
+    await createContact(currentContact);
+    lastListContactId = currentContact.id;
+    await showFloatingMessage('text', 'Contact successfully created');
+    setTimeout(function() {closeContactsFormDialogue(event);}, 1000);
 }
 
 
 /**
- * Helper: remove body class with timer
+ * Update contact from contacts form
  * 
- * @param {string} className - class to add
- * @param {number} timemoutRemove - timeout (ms) to remove the class (-1 = default)
+ * @param {event} event - inherit (submit contact form)
  */
-async function removeBodyClass(className, timeout = -1) {
-    timeout === -1 ? timeout = 1500 : null;
-    document.body.classList.remove(className);
-    setTimeout(() => document.body.classList.remove(className), timeout);
+async function submitUpdateContact(event, currentContact) {
+    event.stopPropagation();
+    await updateContact(currentContact);
+    await showFloatingMessage('text', 'Contact successfully edited');
+    setTimeout(function() {closeContactsFormDialogue(event)}, 1000);
 }
 
 
 /**
- * Helper: show floating message with timeout
+ * Helper: sets contact properties of the created/edited contact object
  * 
- * @param {string} template - code name for specific template (text, addedTask)
- * @param {string} msg - message content
- * @param {number} timeout - timeout milliseconds for class remove (-1 = default)
- * @param {string} optClass - optional class (showing-default, alert)
+ * @param {object} currentContact - current contact object
+ * @param {object} formInputs - current form inputs object
  */
-async function showFloatingMessage(template, msg = '', timeout = -1, optClass = 'showing-default') {
-    let element = document.getElementById("floatingMsg");
-    element.innerHTML = '';
-    if(element) {
-        timeout === -1 ? timeout = 3000 : null;
-        element.classList.remove('showing-default', 'showing-top', optClass);
-        element.innerHTML = (template == 'addedTask') ? getFloatingMessageTaskAddedTemplate() : getFloatingMessageTextTemplate(msg);
-        element.classList.add('button', 'btn-icon', 'btn-primary', 'animate', optClass);
-        setTimeout(() => element.classList.remove('animate', optClass), timeout);
+async function setContactProperties(currentContact, formInputs ) {
+    if(hasLength(formInputs.email)) {
+        currentContact.name = formInputs.name;
+        currentContact.email = formInputs.email;
+        currentContact.phone = formInputs.phone;
     }
 }
-</code></pre>
+
+
+/**
+ * Event handler: delete contact
+ * 
+ * @param {event} event - onclick (delete button)
+ * @param {string} contactId - id of the current contact
+ */
+async function submitDeleteContact(event, contactId) {
+    event.stopPropagation();
+    event.preventDefault();
+    await deleteContact(contactId);
+    currentContact = {};
+    lastListContactId = ''
+    await showFloatingMessage('text', 'Contact deleted');
+    setTimeout(() => closeContactsFormDialogue(event), 1000);
+}</code></pre>
         </article>
     </section>
 

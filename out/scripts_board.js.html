@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: script.js</title>
+    <title>JSDoc: Source: scripts/board.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: script.js</h1>
+    <h1 class="page-title">Source: scripts/board.js</h1>
 
     
 
@@ -26,371 +26,298 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>let currentPage = window.location.pathname;
-let loggedInUserId = null;
-let loggedInUser = null;
-document.addEventListener('click', documentEventHandler);
+            <pre class="prettyprint source linenums"><code>let boards = [
+  { id: 'todo', label: 'To do' },
+  { id: 'inProgress', label: 'In progress' },
+  { id: 'awaitFeedback', label: 'Await Feedback' },
+  { id: 'done', label: 'Done' },
+];
+
+
+let renderTasks = [];
+let currentDragTaskId;
+let dragScrollMouseIsDown = false;
+let dragScrollStartX;
+let dragScrollScrollLeft;
+document.addEventListener('click', documentEventHandlerBoard);
+document.addEventListener('keydown', documentEventHandlerBoard);
 
 
 /**
- * Checks authorization (redirect to login if unauthorized, if page not public)
- * 
- * @param {boolean} isPublic - public page true/false (e.g. terms pages)
+ * On page load board.html
+ * @returns {Promise&lt;void>}
  */
-async function checkAuth(isPublic = false) {
-    loggedInUserId = await getFromLocalStorage('pseudoAuthStatus');
-    if(loggedInUserId == 'guest') return;
-    document.body.classList.add('logged-out');
-    if(loggedInUserId === null) {
-        if(!isPublic) return redirectToLogin();
-    } else {
-        loggedInUser = await getContactById(loggedInUserId);
-        if(!loggedInUser) {
-            if(!isPublic) return redirectToLogin();
-            return;
-        }
-        document.body.classList.remove('logged-out');
+async function initBoard() {
+  await getContacts()
+  await checkAuth();
+  getMainTemplates();
+  await getTaskData()
+  renderTasks = tasks;
+  await renderBoards();
+}
+
+
+/**
+ * Document Event handler: close popups on outslide click or ESC
+ * @param {Event} event - click or keydown event (ESC)
+ */
+function documentEventHandlerBoard(event) {
+  if (event.key === 'Escape' || event.type === "click") {
+    closeOpenElements('.task-options-menu');
+  }
+}
+
+
+/**
+ * Event handler: listen to search input and start actions
+ * @param {Event} event - oninput (search input)
+ * @returns {Promise&lt;void>}
+ */
+async function listenTaskSearchInput(event) {
+  let taskSearchInput = document.getElementById('inputTaskSearch');
+  let taskSearchBtn = document.getElementById('taskSearchBtn');
+  let searchVal = taskSearchInput.value.toLowerCase();
+  console.log(searchVal);
+  if (searchVal.length > 0) {
+    taskSearchBtn.tabIndex = 0;
+    taskSearchBtn.classList.remove('not-clickable');
+  } else {
+    taskSearchBtn.tabIndex = -1;
+    taskSearchBtn.classList.add('not-clickable');
+  }
+  await filterTasks(event);
+}
+
+
+/**
+ * Filter board tasks based on search input
+ * @param {Event} event - input event
+ * @returns {Promise&lt;void>}
+ */
+async function filterTasks(event) {
+  event.preventDefault();
+  let taskSearchInput = document.getElementById('inputTaskSearch');
+  let searchVal = taskSearchInput.value.toLowerCase();
+  renderTasks = await tasks.forEach(task => task.searchBase = (task.title + ' ' + task.description));
+  let filteredTasks = await tasks.filter(task => (task.searchBase).toLowerCase().includes(searchVal));
+  if (hasLength(filteredTasks)) {
+    renderTasks = filteredTasks;
+  } else {
+    await showFloatingMessage('text', 'no Tasks found !', 1500, 'showing-top');
+    setTimeout(() => { taskSearchInput.value = '' }, 1500)
+    renderTasks = tasks;
+  }
+  await renderBoards();
+}
+
+
+/**
+ * Render task boards
+ * @returns {Promise&lt;void>}
+ */
+async function renderBoards() {
+  let boardsWrapper = document.getElementById('boardsWrapper');
+  boardsWrapper.innerHTML = '';
+  for (let index = 0; index &lt; boards.length; index++) {
+    let board = boards[index];
+    boardsWrapper.innerHTML += getBoardTemplate(board);
+    let boardTaskList = document.getElementById('boardTaskList-' + board.id);
+    boardTaskList.innerHTML = '';
+    hasLength(renderTasks) ? await renderBoardTasks(renderTasks, board.id, boardTaskList) : await renderBoardTasks(tasks, board.id, boardTaskList);
+  }
+}
+
+
+/**
+ * Render board tasks
+ * @param {Array&lt;Object>} renderTasks - Array of task objects
+ * @param {string} boardId - id of the current board
+ * @param {HTMLElement} boardTaskList - html element of the task list wrapper
+ * @returns {Promise&lt;void>}
+ */
+async function renderBoardTasks(renderTasks, boardId, boardTaskList) {
+  let boardTasks = await renderTasks.filter(task => task.status == boardId);
+  if (hasLength(boardTasks)) {
+    for (let index = 0; index &lt; boardTasks.length; index++) {
+      let task = boardTasks[index];
+      let category = await getCategoryById(task.categoryId);
+      let subtaskCount = await getSubtaskProgress(task, 'count');
+      let subtaskProgressWidth = (128 * await getSubtaskProgress(task, 'progress') / 100) + 'px';
+      boardTaskList.innerHTML += await getBoardTasksTemplate(task, category, subtaskCount, subtaskProgressWidth);
+      await renderTaskFormContactBatches(task.contactIds, elementId = 'profileBatchesTaskBoard-' + task.id);
     }
+  } else {
+    boardTaskList.innerHTML = getBoardNoTaskTemplate();
+  }
 }
 
 
 /**
- * On page load terms pages
+ * Event handler: open task details in dialogue
+ * @param {Event} event - onclick (board task)
+ * @param {string} taskId - id of the clicked task
+ * @param {boolean} [animated=true] - show dialogue with animation true/false
+ * @returns {Promise&lt;void>}
  */
-async function initTermsPages(linkIdSuffix = '') {
-    await getUserData();
-    await checkAuth(true);
-    getMainTemplates();
+async function showTaskDetail(event, taskId, animated = true) {
+  event.stopPropagation();
+  formMode = 'show';
+  let task = await getTaskById(taskId);
+  let category = await getCategoryById(task.categoryId);
+  await showTaskDialogue('taskDetailsWrapper', 'board', animated);
+  document.getElementById('taskDetailsWrapper').innerHTML = getTaskDetailsTemplate(task, category);
+  document.getElementById('taskDialogue').classList.add('show-task');
+  await renderTaskDetailsAssignedContacts(task);
+  await renderTaskDetailsSubtasks(task);
 }
 
 
 /**
- * Sign out procedure (remove auth status and redirect to login)
+ * Render assigned contacts on task detail
+ * @param {Object} task - current task
+ * @returns {Promise&lt;void>}
  */
-function signOut(event) {
-    event.stopPropagation();
-    redirectToLogin();
-}
-
-
-/**
- * Redirect to login page
- * 
- * @param {number} timeout - timeout milliseconds
- */
-function redirectToLogin(event = null, timeout = 250) {
-    event ? event.stopPropagation() : null;
-    loggedInUserId = null;
-    localStorage.removeItem('pseudoAuthStatus');
-    setTimeout(() => window.location.href = '/login.html', timeout);
-}
-
-
-/**
- * Get html main templates (header, sideNavBar etc.)
- */
-function getMainTemplates() {
-    getHeader();
-    getNavBar();
-    setNavLinkProps();
-    getOrientationOverlay();
-}
-
-
-/**
- * Get html header
- */
-function getHeader() {
-    document.getElementById('header').innerHTML = getHeaderTemplate();
-}
-
-
-/**
- * Get html sideNavBar/mobile bottom bar
- */
-function getNavBar() {
-    let sideNavBar = document.getElementById('sideNavBar');
-    sideNavBar.innerHTML = getNavBarTemplate();
-    sideNavBar.classList.add('hide--ss-mob');
-
-    let footerNavBar = document.getElementById('footerNavBar');
-    footerNavBar.innerHTML = getNavBarTemplate();
-    footerNavBar.classList.add('show--ss-mob');
-}
-
-
-/**
- * Set dynamic nav properties (user batch, active url styles/icons)
- */
-function setNavLinkProps() {
-    let headerNavToggle = document.getElementById('headerNavTrigger');
-    headerNavToggle.innerText = loggedInUser ? loggedInUser.initials : 'G';
-    let navLinks = document.querySelectorAll('nav .nav-links a');
-    navLinks.forEach(link => {
-        if(link.href === window.location.href) {
-            link.classList.add('active');
-            let iconElement = link.querySelector('img');
-            iconElement ? iconElement.src = iconElement.src.replace('.svg', '-active.svg') : null;
-        }
-    });
-}
-
-
-/**
- * Toggle header navigation
- * 
- * @param {event} event - click (header nav button)
- */
-function toggleHeaderNav(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    document.getElementById('headerNavDropdown').classList.toggle('is-open');
-}
-
-
-/**
- * Get html orientation overlay
- */
-function getOrientationOverlay() {
-    let element = document.getElementById('orientationOverlay');
-    if(element) {
-        element.textContent = 'Please turn device or window to portrait orientation !';
-        element.addEventListener('click', event => {event.stopPropagation();})
+async function renderTaskDetailsAssignedContacts(task) {
+  let contactIds = task.contactIds;
+  let wrapper = document.getElementById('taskDetailsAssignedContactsWrapper');
+  wrapper.innerHTML = '';
+  if (hasLength(contactIds)) {
+    for (let index = 0; index &lt; contactIds.length; index++) {
+      let contact = await getContactById(contactIds[index]);
+      contact ? wrapper.innerHTML += getTaskDetailsAssignedContactTemplate(contact) : null;
     }
+  }
 }
 
 
 /**
- * Document Event handler: close various dialogues
- * 
- * @param {event} event - click (document)
+ * Render subtasks on task detail
+ * @param {Object} task - current task
+ * @returns {Promise&lt;void>}
  */
-function documentEventHandler(event) {
-    if( event.type === "click" ) {
-        let elementIds = ['headerNavDropdown', 'contactOptionsMenu'];
-        elementIds.forEach(elementId => {
-            let element = document.getElementById(elementId);
-            element ? element.classList.remove('is-open') : null;
-        });
+async function renderTaskDetailsSubtasks(task) {
+  let subtasks = task.subtasks;
+  let wrapper = document.getElementById('taskDetailsSubtaskWrapper');
+  wrapper.innerHTML = '';
+  if (hasLength(subtasks)) {
+    for (let subtaskIndex = 0; subtaskIndex &lt; subtasks.length; subtaskIndex++) {
+      let subtask = subtasks[subtaskIndex];
+      wrapper.innerHTML += getTaskDetailsSubtaskTemplate(task, subtask, subtaskIndex);
     }
+  }
 }
 
 
 /**
- * Close all open elements of certain selector (multiple use)
- * 
- * @param {string} selector - query-all selector 
+ * Render task options menu (change status/move to board)
+ * @param {Event} event - click (three dot menu button)
+ * @param {string} taskId - id of the current task
+ * @param {string} currentStatus - current status of the current task
+ * @returns {Promise&lt;void>}
  */
-function closeOpenElements(selector) {
-    let elements = document.querySelectorAll(selector);
-    if(elements) {
-        elements.forEach(element => {
-            if(element.classList.contains('is-open')) {
-                element.classList.remove('is-open');
-            };
-        });
-    }
-}
-
-/**
- * Event Handler: close current element (multiple use)
- * 
- * @param {event} event - various
- */
-function closeElementByCurrentTarget(event) {
-    event.stopPropagation();
-    let element = event.currentTarget;
-    element ? element.classList.remove('is-open') : null;
+async function renderTaskOptionsMenu(event, taskId, currentStatus) {
+  event.stopPropagation();
+  event.preventDefault();
+  closeOpenElements('.task-options-menu');
+  let wrapper = document.getElementById('taskOptionsMenu-' + taskId);
+  let statusIndex = boards.findIndex((item) => item.id == currentStatus);
+  wrapper.innerHTML = getMoveToBoardMenuTemplate(taskId, currentStatus, statusIndex);
+  wrapper.classList.add('is-open');
 }
 
 
 /**
- * Helper: check if object exists and has length
- * 
- * @param {object} object - any object
- * @returns {boolean}
+ * Event handler: add task to current board
+ * @param {Event} event - onclick (button)
+ * @param {string} boardId - id of the current board
  */
-function hasLength(object) {
-    if(object &amp;&amp; object.length > 0) {
-        return true;
-    }
+function addBoardTask(event, boardId) {
+  openAddTaskForm(event, 'board', boardId);
 }
 
 
 /**
- * Helper: close parent wrapper
- * 
- * @param {event} event - inherit
- * @param {string} selector - selector of the wrapper to close
+ * Event handler: on drag start, board task
+ * @param {DragEvent} event - ondragstart (board task)
+ * @param {string} taskId - current task id
  */
-function closeParentWrapper(event, selector = '.close-on-event') {
-    let wrapper = getClosestParentElementFromEvent(event, selector);
-    wrapper ? wrapper.classList.remove('is-open') : null;
+function onDragStartTask(event, taskId) {
+  event.stopPropagation();
+  currentDragTaskId = taskId;
+  element = event.currentTarget;
+  element.classList.add('dragging');
 }
 
 
 /**
- * Helper: sort and return array alphabetically
- * 
- * @param {array} array - data array
- * @param {string} sortByProperty - property to sort by
+ * Event handler: on drag end
+ * @param {DragEvent} event - ondragend (board task)
  */
-async function sortArray(array, sortByProperty = 'id') {
-    return await array.sort((a, b) => a[sortByProperty].localeCompare(b[sortByProperty]));
+function onDragEnd(event) {
+  event.stopPropagation();
+  element = event.currentTarget;
+  element.classList.remove('dragging');
 }
 
 
 /**
- * Helper: return closest specific parent element from element
- * 
- * @param {element} element - dom element
- * @param {string} selector - css selector of the specific parent element
+ * Event handler: on drag over
+ * @param {DragEvent} event - ondragover (board tasklist)
  */
-function getClosestParentElementFromElement(element, selector = '') {
-    return element.closest(selector);
+function onDragOver(event) {
+  event.preventDefault();
+  element = event.currentTarget;
+  element.classList.add('dropzone');
 }
 
 
 /**
- * Helper: return closest specific parent element from event
- * 
- * @param {event} event - inherit
- * @param {string} selector - css selector of the specific parent element
+ * Event handler: on drag leave
+ * @param {DragEvent} event - ondragleave (board tasklist)
  */
-function getClosestParentElementFromEvent(event, selector = '') {
-    let element = event.currentTarget;
-    if(element) {return element.closest(selector);}
+function onDragLeave(event) {
+  // event.preventDefault();
+  element = event.currentTarget;
+  element.classList.remove('dropzone');
 }
 
 
 /**
- * Helper: return closest specific parent element from id
- * 
- * @param {string} id - current element id
- * @param {string} selector - css selector of the specific parent element
+ * Event handler: task drop
+ * @param {DragEvent} event - ondrop (board tasklist)
+ * @param {string} boardId - id of the target board
+ * @returns {Promise&lt;void>}
  */
-function getClosestParentElementFromId(id, selector = '') {
-    let element = document.getElementById(id);
-    if(element) {return element.closest(selector);}
+async function taskDrop(event, boardId) {
+  element = event.currentTarget;
+  element.classList.remove('dropzone');
+  await changeBoardTaskStatus(event, currentDragTaskId, boardId)
 }
 
 
 /**
- * Helper: return boolean from string true/false
- * 
- * @param {string} booleanString - string ('true'/'false')
+ * Event handler: change task status (move to board)
+ * @param {Event} event - inherit, click (move to board menu buttons)
+ * @param {string} taskId - id of the selected task
+ * @param {string} statusNew - id of the new status (target board)
+ * @param {string} [msg=''] - confirmation message
+ * @returns {Promise&lt;void>}
  */
-function getBooleanFromString(booleanString) {
-    return (booleanString == 'true') ? true : false;
+async function changeBoardTaskStatus(event, taskId, statusNew, msg = '') {
+  event.stopPropagation();
+  event.preventDefault();
+  let task = await getTaskById(taskId);
+  task.status = statusNew;
+  let board = boards.find(board => board.id == statusNew);
+  await updateTaskProperty(taskId, 'status', statusNew);
+  await renderBoards();
+  if (msg != '') {
+    await showFloatingMessage('text', 'Task succesfully moved to ' + board.label + ' Board');
+    closeParentWrapper(event);
+  }
 }
 
 
-/**
- * Helper: convert a date to string for DB (YYYY-MM-DD)
- * 
- * @param {date} date - a date object
- */
-function formatDateToStringDB(date) {
-    let year = date.getFullYear();
-    let month = ('0'+ (date.getMonth() + 1)).slice(-2);
-    let day = ('0' + date.getDate()).slice(-2);
-    let formattedDate = year + '-' + month + '-' + day;
-    return formattedDate;
-}
-
-
-/**
- * Helper: convert a DB date string (YYYY-MM-DD) to a full date string (Month Day, Year)
- * 
- * @param {string} dateStringDB  - date string (YYYY-MM-DD)
- */
-function formatDateFromStringDBToFull(dateStringDB) {
-    let timeStamp = Date.parse(dateStringDB);
-    let date = new Date(timeStamp);
-    let formattedDate = date.toLocaleString('en-US', { month: 'long', day: 'numeric' , year: 'numeric'});
-    return formattedDate;
-}
-
-
-/**
- * Helper: add days to a date
- * 
- * @param {date} date - date object
- * @param {number} days - number of days to add
- * @returns {date}
- */
-function addDaysToDate(date, days) {
-    return new Date(date.getTime() + days * 24 * 60 * 60 * 1000);
-}
-
-
-/**
- * Helper: toggle icon color on hover (only for svg sources on img element)
- * 
- * @param {event} event - current event
- * @param {string} hoverColor - file suffix for the hover svg file
- */
-function toggleIconColorOnHover(event, hoverColor = 'blue') {
-    event.stopPropagation();
-    let iconElement = event.currentTarget.querySelector('img');
-    if(!iconElement) return;
-    let hoverFileSuffix = '-' + hoverColor + '.svg';
-    let iconSource = iconElement.src;
-    if(event.type == 'mouseover') {
-        return (!iconSource.endsWith(hoverFileSuffix)) ? iconElement.src = iconElement.src.replace('.svg', hoverFileSuffix) : null;
-    }
-    if(event.type == 'mouseleave') {
-        return (iconSource.endsWith(hoverFileSuffix)) ? iconElement.src = iconElement.src.replace(hoverFileSuffix, '.svg') : null;
-    }
-}
-
-
-/**
- * Helper: add and remove body class with timer (helper for animation styles)
- * 
- * @param {string} className - class to add
- * @param {number} timemoutAdd - timeout (ms) to add the class (-9 = do not add)
- * @param {number} timemoutRemove - timeout (ms) to remove the class (-9 = do not remove)
- */
-async function addBodyClass(className, timeoutAdd = 0, timeoutRemove = -9) {
-    document.body.classList.remove(className);
-    timeoutAdd >= 0 ? setTimeout(() => document.body.classList.add(className), timeoutAdd) : null;
-    timeoutRemove >= 0 ? removeBodyClass(className, timeoutRemove) : null;
-}
-
-
-/**
- * Helper: remove body class with timer
- * 
- * @param {string} className - class to add
- * @param {number} timemoutRemove - timeout (ms) to remove the class (-1 = default)
- */
-async function removeBodyClass(className, timeout = -1) {
-    timeout === -1 ? timeout = 1500 : null;
-    document.body.classList.remove(className);
-    setTimeout(() => document.body.classList.remove(className), timeout);
-}
-
-
-/**
- * Helper: show floating message with timeout
- * 
- * @param {string} template - code name for specific template (text, addedTask)
- * @param {string} msg - message content
- * @param {number} timeout - timeout milliseconds for class remove (-1 = default)
- * @param {string} optClass - optional class (showing-default, alert)
- */
-async function showFloatingMessage(template, msg = '', timeout = -1, optClass = 'showing-default') {
-    let element = document.getElementById("floatingMsg");
-    element.innerHTML = '';
-    if(element) {
-        timeout === -1 ? timeout = 3000 : null;
-        element.classList.remove('showing-default', 'showing-top', optClass);
-        element.innerHTML = (template == 'addedTask') ? getFloatingMessageTaskAddedTemplate() : getFloatingMessageTextTemplate(msg);
-        element.classList.add('button', 'btn-icon', 'btn-primary', 'animate', optClass);
-        setTimeout(() => element.classList.remove('animate', optClass), timeout);
-    }
-}
 </code></pre>
         </article>
     </section>
