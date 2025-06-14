@@ -17,6 +17,7 @@ document.addEventListener('keydown', documentEventHandlerBoard);
 
 /**
  * On page load board.html
+ * @returns {Promise<void>}
  */
 async function initBoard() {
   await getContacts()
@@ -30,8 +31,7 @@ async function initBoard() {
 
 /**
  * Document Event handler: close popups on outslide click or ESC
- * 
- * @param {event} event - click, ESC (document)
+ * @param {Event} event - click or keydown event (ESC)
  */
 function documentEventHandlerBoard(event) {
   if (event.key === 'Escape' || event.type === "click") {
@@ -42,8 +42,8 @@ function documentEventHandlerBoard(event) {
 
 /**
  * Event handler: listen to search input and start actions
- * 
- * @param {event} event - oninput (search input)
+ * @param {Event} event - oninput (search input)
+ * @returns {Promise<void>}
  */
 async function listenTaskSearchInput(event) {
   let taskSearchInput = document.getElementById('inputTaskSearch');
@@ -63,8 +63,8 @@ async function listenTaskSearchInput(event) {
 
 /**
  * Filter board tasks based on search input
- * 
- * @param {event} event - inherit
+ * @param {Event} event - input event
+ * @returns {Promise<void>}
  */
 async function filterTasks(event) {
   event.preventDefault();
@@ -85,6 +85,7 @@ async function filterTasks(event) {
 
 /**
  * Render task boards
+ * @returns {Promise<void>}
  */
 async function renderBoards() {
   let boardsWrapper = document.getElementById('boardsWrapper');
@@ -101,10 +102,10 @@ async function renderBoards() {
 
 /**
  * Render board tasks
- * 
- * @param {object} renderTask - task object (of renderTasks)
+ * @param {Array<Object>} renderTasks - Array of task objects
  * @param {string} boardId - id of the current board
- * @param {element} boardTaskList - html element of the task list wrapper
+ * @param {HTMLElement} boardTaskList - html element of the task list wrapper
+ * @returns {Promise<void>}
  */
 async function renderBoardTasks(renderTasks, boardId, boardTaskList) {
   let boardTasks = await renderTasks.filter(task => task.status == boardId);
@@ -125,10 +126,10 @@ async function renderBoardTasks(renderTasks, boardId, boardTaskList) {
 
 /**
  * Event handler: open task details in dialogue
- * 
- * @param {event} event - onclick (board task)
+ * @param {Event} event - onclick (board task)
  * @param {string} taskId - id of the clicked task
- * @param {boolean} animated - show dialogue with animation true/false
+ * @param {boolean} [animated=true] - show dialogue with animation true/false
+ * @returns {Promise<void>}
  */
 async function showTaskDetail(event, taskId, animated = true) {
   event.stopPropagation();
@@ -145,8 +146,8 @@ async function showTaskDetail(event, taskId, animated = true) {
 
 /**
  * Render assigned contacts on task detail
- * 
- * @param {object} task - current task
+ * @param {Object} task - current task
+ * @returns {Promise<void>}
  */
 async function renderTaskDetailsAssignedContacts(task) {
   let contactIds = task.contactIds;
@@ -163,8 +164,8 @@ async function renderTaskDetailsAssignedContacts(task) {
 
 /**
  * Render subtasks on task detail
- * 
- * @param {object} task - current task
+ * @param {Object} task - current task
+ * @returns {Promise<void>}
  */
 async function renderTaskDetailsSubtasks(task) {
   let subtasks = task.subtasks;
@@ -181,10 +182,10 @@ async function renderTaskDetailsSubtasks(task) {
 
 /**
  * Render task options menu (change status/move to board)
- * 
- * @param {event} event - click (three dot menu button)
+ * @param {Event} event - click (three dot menu button)
  * @param {string} taskId - id of the current task
  * @param {string} currentStatus - current status of the current task
+ * @returns {Promise<void>}
  */
 async function renderTaskOptionsMenu(event, taskId, currentStatus) {
   event.stopPropagation();
@@ -199,8 +200,7 @@ async function renderTaskOptionsMenu(event, taskId, currentStatus) {
 
 /**
  * Event handler: add task to current board
- * 
- * @param {event} event - onclick (button)
+ * @param {Event} event - onclick (button)
  * @param {string} boardId - id of the current board
  */
 function addBoardTask(event, boardId) {
@@ -210,8 +210,7 @@ function addBoardTask(event, boardId) {
 
 /**
  * Event handler: on drag start, board task
- * 
- * @param {event} event - ondragstart (board task)
+ * @param {DragEvent} event - ondragstart (board task)
  * @param {string} taskId - current task id
  */
 function onDragStartTask(event, taskId) {
@@ -224,8 +223,7 @@ function onDragStartTask(event, taskId) {
 
 /**
  * Event handler: on drag end
- * 
- * @param {event} event - ondragend (board task)
+ * @param {DragEvent} event - ondragend (board task)
  */
 function onDragEnd(event) {
   event.stopPropagation();
@@ -236,8 +234,7 @@ function onDragEnd(event) {
 
 /**
  * Event handler: on drag over
- * 
- * @param {event} event - ondragover (board tasklist)
+ * @param {DragEvent} event - ondragover (board tasklist)
  */
 function onDragOver(event) {
   event.preventDefault();
@@ -248,8 +245,7 @@ function onDragOver(event) {
 
 /**
  * Event handler: on drag leave
- * 
- * @param {event} event - ondragleave (board tasklist)
+ * @param {DragEvent} event - ondragleave (board tasklist)
  */
 function onDragLeave(event) {
   // event.preventDefault();
@@ -260,9 +256,9 @@ function onDragLeave(event) {
 
 /**
  * Event handler: task drop
- * 
- * @param {event} event - ondrop (board tasklist)
+ * @param {DragEvent} event - ondrop (board tasklist)
  * @param {string} boardId - id of the target board
+ * @returns {Promise<void>}
  */
 async function taskDrop(event, boardId) {
   element = event.currentTarget;
@@ -273,11 +269,11 @@ async function taskDrop(event, boardId) {
 
 /**
  * Event handler: change task status (move to board)
- * 
- * @param {event} event - inherit, click (move to board menu buttons)
+ * @param {Event} event - inherit, click (move to board menu buttons)
  * @param {string} taskId - id of the selected task
  * @param {string} statusNew - id of the new status (target board)
- * @param {string} msg - confirmation message
+ * @param {string} [msg=''] - confirmation message
+ * @returns {Promise<void>}
  */
 async function changeBoardTaskStatus(event, taskId, statusNew, msg = '') {
   event.stopPropagation();
