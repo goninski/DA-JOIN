@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: script.js</title>
+    <title>JSDoc: Source: scripts/entry.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: script.js</h1>
+    <h1 class="page-title">Source: scripts/entry.js</h1>
 
     
 
@@ -26,372 +26,237 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>let currentPage = window.location.pathname;
-let loggedInUserId = null;
-let loggedInUser = null;
-document.addEventListener('click', documentEventHandler);
+            <pre class="prettyprint source linenums"><code>currentContact = {};
+loggedInUserId = null;
+localStorage.removeItem('pseudoAuthStatus');
 
 
 /**
- * Checks authorization (redirect to login if unauthorized, if page not public)
- * 
- * @param {boolean} isPublic - public page true/false (e.g. terms pages)
+ * on page load login.html
  */
-async function checkAuth(isPublic = false) {
-    loggedInUserId = await getFromLocalStorage('pseudoAuthStatus');
-    if(loggedInUserId == 'guest') return;
-    document.body.classList.add('logged-out');
-    if(loggedInUserId === null) {
-        if(!isPublic) return redirectToLogin();
-    } else {
-        loggedInUser = await getContactById(loggedInUserId);
-        if(!loggedInUser) {
-            if(!isPublic) return redirectToLogin();
-            return;
-        }
-        document.body.classList.remove('logged-out');
-    }
-}
-
-
-/**
- * On page load terms pages
- */
-async function initTermsPages(linkIdSuffix = '') {
-    await getUserData();
-    await checkAuth(true);
-    getMainTemplates();
-}
-
-
-/**
- * Sign out procedure (remove auth status and redirect to login)
- */
-function signOut(event) {
-    event.stopPropagation();
-    redirectToLogin();
-}
-
-
-/**
- * Redirect to login page
- * 
- * @param {number} timeout - timeout milliseconds
- */
-function redirectToLogin(event = null, timeout = 250) {
-    event ? event.stopPropagation() : null;
-    loggedInUserId = null;
-    localStorage.removeItem('pseudoAuthStatus');
-    setTimeout(() => window.location.href = '/login.html', timeout);
-}
-
-
-/**
- * Get html main templates (header, sideNavBar etc.)
- */
-function getMainTemplates() {
-    getHeader();
-    getNavBar();
-    setNavLinkProps();
+async function initLogin() {
+    await removeBodyClass('before-animation', 125);
+    await addBodyClass('animated', 1750);
+    setInitialFormState('loginForm');
     getOrientationOverlay();
 }
 
 
 /**
- * Get html header
+ * on page load sign-up.html
  */
-function getHeader() {
-    document.getElementById('header').innerHTML = getHeaderTemplate();
+async function initSignUp() {
+    setInitialFormState('signUpForm');
+    getOrientationOverlay();
 }
 
 
 /**
- * Get html sideNavBar/mobile bottom bar
- */
-function getNavBar() {
-    let sideNavBar = document.getElementById('sideNavBar');
-    sideNavBar.innerHTML = getNavBarTemplate();
-    sideNavBar.classList.add('hide--ss-mob');
-
-    let footerNavBar = document.getElementById('footerNavBar');
-    footerNavBar.innerHTML = getNavBarTemplate();
-    footerNavBar.classList.add('show--ss-mob');
-}
-
-
-/**
- * Set dynamic nav properties (user batch, active url styles/icons)
- */
-function setNavLinkProps() {
-    let headerNavToggle = document.getElementById('headerNavTrigger');
-    headerNavToggle.innerText = loggedInUser ? loggedInUser.initials : 'G';
-    let navLinks = document.querySelectorAll('nav .nav-links a');
-    navLinks.forEach(link => {
-        if(link.href === window.location.href) {
-            link.classList.add('active');
-            let iconElement = link.querySelector('img');
-            iconElement ? iconElement.src = iconElement.src.replace('.svg', '-active.svg') : null;
-        }
-    });
-}
-
-
-/**
- * Toggle header navigation
+ * Event handler: password input (show/hide visibility button)
  * 
- * @param {event} event - click (header nav button)
+ * @param {event} event - oninput (password input)
  */
-function toggleHeaderNav(event) {
+function passwordInputHandler(event) {
+    event.stopPropagation();
+    setSubmitBtnStateOnEvent(event);
+    getCurrentFieldElements(event.currentTarget);
+    let inputValue = currentFieldElements.input.value;
+    let pwIconElement = currentFieldElements.fieldWrapper.querySelector('[alt="password-icon"]');
+    let visibilityButton = currentFieldElements.fieldWrapper.querySelector('button');
+    if(inputValue.length > 0) {
+        pwIconElement.classList.add('hide');
+        visibilityButton.classList.remove('hide');
+    } else {
+        pwIconElement.classList.remove('hide');
+        visibilityButton.classList.add('hide');
+    }
+}
+
+
+/**
+ * Event handler: password input (show/hide visibility button)
+ * 
+ * @param {event} event - oninput (password input)
+ */
+function hidePasswordInput(element) {
+    getCurrentFieldElements(element);
+    let pwIconElement = currentFieldElements.fieldWrapper.querySelector('[alt="password-icon"]');
+    let visibilityButton = currentFieldElements.fieldWrapper.querySelector('button');
+    if(inputValue.length > 0) {
+        pwIconElement.classList.add('hide');
+        visibilityButton.classList.remove('hide');
+    } else {
+        pwIconElement.classList.remove('hide');
+        visibilityButton.classList.add('hide');
+    }
+}
+
+
+/**
+ * Event handler: toggle password visibility (hidden/visible)
+ * 
+ * @param {event} event - onclick (password visibility icon) / onfocusout
+ */
+function togglePasswordVisibility(event) {
+    event.stopPropagation();
     event.preventDefault();
+    getCurrentFieldElements(event.currentTarget);
+    let inputElement = currentFieldElements.input;
+    let iconElement = currentFieldElements.fieldWrapper.querySelector('button').querySelector('img');
+    if(inputElement.type === 'text' || event.type == 'focusout') {
+        inputElement.type = 'password';
+        iconElement.src = iconElement.src.replace('visible', 'hidden');
+        iconElement.alt = iconElement.alt.replace('visible', 'hidden');
+    } else {
+        inputElement.type = 'text';
+        iconElement.src = iconElement.src.replace('hidden', 'visible');
+        iconElement.alt = iconElement.alt.replace('hidden', 'visible');
+    }
+}
+
+
+/**
+ * Validate password confirmation
+ * 
+ * @param {element} element - input element (call form global focusOutHandler)
+ */
+function validateConfirmPassword(element) {
+    let pwConfirm = element.value;
+    let form = element.form;
+    let pwInputElement = form.querySelector('[data-type="password"]');
+    if(pwInputElement) {
+      let pw = pwInputElement.value;
+      return (pwConfirm === pw);
+    }
+}
+
+
+/**
+ * Sign in as guest
+ * 
+ * @param {event} event - onclick (guest log in button)
+ */
+async function loginAsGuest(event) {
+    event.preventDefault();
+    await submitLoginFormHandler(event, true);
+}
+
+
+/**
+ * Event handler: submit login form handler
+ * 
+ * @param {event} event - click (login form submit)
+ * @param {boolean} isGuest - is guest login true/false
+ */
+async function submitLoginFormHandler(event, isGuest = false) {
     event.stopPropagation();
-    document.getElementById('headerNavDropdown').classList.toggle('is-open');
-}
-
-
-/**
- * Get html orientation overlay
- */
-function getOrientationOverlay() {
-    let element = document.getElementById('orientationOverlay');
-    if(element) {
-        element.textContent = 'Please turn device or window to portrait orientation !';
-        element.addEventListener('click', event => {event.stopPropagation();})
+    event.preventDefault();
+    let formInputs = await getFormInputObj('loginForm');
+    if(isGuest) {
+        loggedInUserId = 'guest';
+        return await loginSuccessfull(formInputs);
+    }
+    if(formIsValid('loginForm')) {
+        await checkIfUserAndPasswordIsCorrect(formInputs.email, formInputs.password) ? await loginSuccessfull(formInputs) : await loginFail();
     }
 }
 
 
 /**
- * Document Event handler: close various dialogues
+ * Successfull login procedure
  * 
- * @param {event} event - click (document)
+ * @param {object} formInputs - form input object
  */
-function documentEventHandler(event) {
-    if( event.type === "click" ) {
-        let elementIds = ['headerNavDropdown', 'contactOptionsMenu'];
-        elementIds.forEach(elementId => {
-            let element = document.getElementById(elementId);
-            element ? element.classList.remove('is-open') : null;
-        });
+async function loginSuccessfull(formInputs) {
+    await saveToLocalStorage('pseudoAuthStatus', loggedInUserId);
+    let floatingMsg = 'You logged in successfully';
+    let timeout = 2000;
+    if(formInputs.loadFreshDataSet &amp;&amp; formInputs.loadFreshDataSet == 'on') {
+        await resetData();
+        floatingMsg = 'You logged in successfully &lt;br>and a fresh set of dummy data is loaded';
+        timeout = 2500;
     }
+    await showFloatingMessage('text', floatingMsg);
+    setTimeout(() => window.location.href = '/summary.html', timeout);
 }
 
 
 /**
- * Close all open elements of certain selector (multiple use)
- * 
- * @param {string} selector - query-all selector 
+ * Login fail procedure (notification if user does not exist or password is wrong)
  */
-function closeOpenElements(selector) {
-    let elements = document.querySelectorAll(selector);
-    if(elements) {
-        elements.forEach(element => {
-            if(element.classList.contains('is-open')) {
-                element.classList.remove('is-open');
-            };
-        });
-    }
+async function loginFail() {
+    let element = document.getElementById('loginFailAlert');
+    let fieldWrapper = getFieldWrapperFromElement(element);
+    fieldWrapper ? fieldWrapper.classList.add('fail') : null;
 }
 
+
 /**
- * Event Handler: close current element (multiple use)
+ * Event handler: submit sign up form
  * 
- * @param {event} event - various
+ * @param {event} event - click (signup form submit)
  */
-function closeElementByCurrentTarget(event) {
+async function submitSignUpFormHandler(event) {
     event.stopPropagation();
-    let element = event.currentTarget;
-    element ? element.classList.remove('is-open') : null;
+    event.preventDefault();
+    if(formIsValid('signUpForm')) {
+        let formInputs = await getFormInputObj('signUpForm');
+        await isExistingContact(formInputs.email) ? await signUpFail() : await signUpSuccessfull(formInputs);
+    }
 }
 
 
 /**
- * Helper: check if object exists and has length
- * 
- * @param {object} object - any object
- * @returns {boolean}
+ * Successfull sign up procedure (create user and redirect to login page)
  */
-function hasLength(object) {
-    if(object &amp;&amp; object.length > 0) {
+async function signUpSuccessfull(formInputs) {
+      await setContactPropertiesOnSignUp(currentContact, formInputs);
+      await createContact(currentContact);
+      await showFloatingMessage('text', 'You Signed Up successfully');
+      redirectToLogin();
+}
+
+
+/**
+ * Sign up fail procedure (notification if user already exists and redirect to login page)
+ */
+async function signUpFail() {
+      await showFloatingMessage('text', 'Your Email Address already exists. &lt;br>Please sign in.', 7000, 'alert');
+      redirectToLogin(null, 4000);
+}
+
+
+/**
+ * Helper: set loggedInUserId and return true if user exists and password is correct
+ * 
+ * @param {string} email - email address and password from login form
+ */
+async function checkIfUserAndPasswordIsCorrect(email, password) {
+    await getUserData();
+    let user = contacts.find(contact => contact.email == email);
+    if(!user) {
+        return false;
+    }
+    if(user.password === password) {
+        loggedInUserId = user.id;
         return true;
     }
 }
 
 
 /**
- * Helper: close parent wrapper
+ * Helper: set contact (user) properties for the signed up user
  * 
- * @param {event} event - inherit
- * @param {string} selector - selector of the wrapper to close
+ * @param {object} currentContact - current contact object
+ * @param {object} formInputs - current form inputs object
  */
-function closeParentWrapper(event, selector = '.close-on-event') {
-    let wrapper = getClosestParentElementFromEvent(event, selector);
-    wrapper ? wrapper.classList.remove('is-open') : null;
-}
-
-
-/**
- * Helper: sort and return array alphabetically
- * 
- * @param {array} array - data array
- * @param {string} sortByProperty - property to sort by
- */
-async function sortArray(array, sortByProperty = 'id') {
-    return await array.sort((a, b) => a[sortByProperty].localeCompare(b[sortByProperty]));
-}
-
-
-/**
- * Helper: return closest specific parent element from element
- * 
- * @param {element} element - dom element
- * @param {string} selector - css selector of the specific parent element
- */
-function getClosestParentElementFromElement(element, selector = '') {
-    return element.closest(selector);
-}
-
-
-/**
- * Helper: return closest specific parent element from event
- * 
- * @param {event} event - inherit
- * @param {string} selector - css selector of the specific parent element
- */
-function getClosestParentElementFromEvent(event, selector = '') {
-    let element = event.currentTarget;
-    if(element) {return element.closest(selector);}
-}
-
-
-/**
- * Helper: return closest specific parent element from id
- * 
- * @param {string} id - current element id
- * @param {string} selector - css selector of the specific parent element
- */
-function getClosestParentElementFromId(id, selector = '') {
-    let element = document.getElementById(id);
-    if(element) {return element.closest(selector);}
-}
-
-
-/**
- * Helper: return boolean from string true/false
- * 
- * @param {string} booleanString - string ('true'/'false')
- */
-function getBooleanFromString(booleanString) {
-    return (booleanString == 'true') ? true : false;
-}
-
-
-/**
- * Helper: convert a date to string for DB (YYYY-MM-DD)
- * 
- * @param {date} date - a date object
- */
-function formatDateToStringDB(date) {
-    let year = date.getFullYear();
-    let month = ('0'+ (date.getMonth() + 1)).slice(-2);
-    let day = ('0' + date.getDate()).slice(-2);
-    let formattedDate = year + '-' + month + '-' + day;
-    return formattedDate;
-}
-
-
-/**
- * Helper: convert a DB date string (YYYY-MM-DD) to a full date string (Month Day, Year)
- * 
- * @param {string} dateStringDB  - date string (YYYY-MM-DD)
- */
-function formatDateFromStringDBToFull(dateStringDB) {
-    let timeStamp = Date.parse(dateStringDB);
-    let date = new Date(timeStamp);
-    let formattedDate = date.toLocaleString('en-US', { month: 'long', day: 'numeric' , year: 'numeric'});
-    return formattedDate;
-}
-
-
-/**
- * Helper: add days to a date
- * 
- * @param {date} date - date object
- * @param {number} days - number of days to add
- * @returns {date}
- */
-function addDaysToDate(date, days) {
-    return new Date(date.getTime() + days * 24 * 60 * 60 * 1000);
-}
-
-
-/**
- * Helper: toggle icon color on hover (only for svg sources on img element)
- * 
- * @param {event} event - current event
- * @param {string} hoverColor - file suffix for the hover svg file
- */
-function toggleIconColorOnHover(event, hoverColor = 'blue') {
-    event.stopPropagation();
-    let iconElement = event.currentTarget.querySelector('img');
-    if(!iconElement) return;
-    let hoverFileSuffix = '-' + hoverColor + '.svg';
-    let iconSource = iconElement.src;
-    if(event.type == 'mouseover') {
-        return (!iconSource.endsWith(hoverFileSuffix)) ? iconElement.src = iconElement.src.replace('.svg', hoverFileSuffix) : null;
+async function setContactPropertiesOnSignUp(currentContact, formInputs ) {
+    if(hasLength(formInputs.name)) {
+        currentContact.name = formInputs.name;
+        currentContact.email = formInputs.email;
+        currentContact.password = formInputs.password;
     }
-    if(event.type == 'mouseleave') {
-        return (iconSource.endsWith(hoverFileSuffix)) ? iconElement.src = iconElement.src.replace(hoverFileSuffix, '.svg') : null;
-    }
-}
-
-
-/**
- * Helper: add and remove body class with timer (helper for animation styles)
- * 
- * @param {string} className - class to add
- * @param {number} timemoutAdd - timeout (ms) to add the class (-9 = do not add)
- * @param {number} timemoutRemove - timeout (ms) to remove the class (-9 = do not remove)
- */
-async function addBodyClass(className, timeoutAdd = 0, timeoutRemove = -9) {
-    document.body.classList.remove(className);
-    timeoutAdd >= 0 ? setTimeout(() => document.body.classList.add(className), timeoutAdd) : null;
-    timeoutRemove >= 0 ? removeBodyClass(className, timeoutRemove) : null;
-}
-
-
-/**
- * Helper: remove body class with timer
- * 
- * @param {string} className - class to add
- * @param {number} timemoutRemove - timeout (ms) to remove the class (-1 = default)
- */
-async function removeBodyClass(className, timeout = -1) {
-    timeout === -1 ? timeout = 1500 : null;
-    document.body.classList.remove(className);
-    setTimeout(() => document.body.classList.remove(className), timeout);
-}
-
-
-/**
- * Helper: show floating message with timeout
- * 
- * @param {string} template - code name for specific template (text, addedTask)
- * @param {string} msg - message content
- * @param {number} timeout - timeout milliseconds for class remove (-1 = default)
- * @param {string} optClass - optional class (showing-default, alert)
- */
-async function showFloatingMessage(template, msg = '', timeout = -1, optClass = 'showing-default') {
-    let element = document.getElementById("floatingMsg");
-    element.innerHTML = '';
-    if(element) {
-        timeout === -1 ? timeout = 3000 : null;
-        element.classList.remove('showing-default', 'showing-top', optClass);
-        element.innerHTML = (template == 'addedTask') ? getFloatingMessageTaskAddedTemplate() : getFloatingMessageTextTemplate(msg);
-        element.classList.add('button', 'btn-icon', 'btn-primary', 'animate', optClass);
-        setTimeout(() => element.classList.remove('animate', optClass), timeout);
-    }
-}
-</code></pre>
+}</code></pre>
         </article>
     </section>
 

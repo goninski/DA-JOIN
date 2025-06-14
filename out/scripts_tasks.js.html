@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: script.js</title>
+    <title>JSDoc: Source: scripts/tasks.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: script.js</h1>
+    <h1 class="page-title">Source: scripts/tasks.js</h1>
 
     
 
@@ -26,372 +26,371 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>let currentPage = window.location.pathname;
-let loggedInUserId = null;
-let loggedInUser = null;
-document.addEventListener('click', documentEventHandler);
+            <pre class="prettyprint source linenums"><code>let currentTask = {};
+let taskContacts = [];
+let assignedContacts = [];
+let assignedSubtasks = [];
+let taskStatus = 'todo';
 
 
 /**
- * Checks authorization (redirect to login if unauthorized, if page not public)
- * 
- * @param {boolean} isPublic - public page true/false (e.g. terms pages)
+ * On page load add-task.html
  */
-async function checkAuth(isPublic = false) {
-    loggedInUserId = await getFromLocalStorage('pseudoAuthStatus');
-    if(loggedInUserId == 'guest') return;
-    document.body.classList.add('logged-out');
-    if(loggedInUserId === null) {
-        if(!isPublic) return redirectToLogin();
-    } else {
-        loggedInUser = await getContactById(loggedInUserId);
-        if(!loggedInUser) {
-            if(!isPublic) return redirectToLogin();
-            return;
-        }
-        document.body.classList.remove('logged-out');
-    }
-}
-
-
-/**
- * On page load terms pages
- */
-async function initTermsPages(linkIdSuffix = '') {
-    await getUserData();
-    await checkAuth(true);
+async function initAddTask() {
+    await getContacts();
+    await checkAuth();
     getMainTemplates();
+    await getTaskData();
+    await openAddTaskForm(null, 'add-task-page');
 }
 
 
 /**
- * Sign out procedure (remove auth status and redirect to login)
+ * Redirect to add-task page
  */
-function signOut(event) {
-    event.stopPropagation();
-    redirectToLogin();
+function openAddTaskPage() {
+    window.location.href = "/add-task.html";
 }
 
 
 /**
- * Redirect to login page
+ * Event handler: open add task form
  * 
- * @param {number} timeout - timeout milliseconds
+ * @param {event} event - onclick (button) / inherit
+ * @param {string} source - source from where the form was opened (add-task-page, board)
+ * @param {string} boardId - id of the board from which the form was opened
  */
-function redirectToLogin(event = null, timeout = 250) {
+async function openAddTaskForm(event = null, source = 'board', boardId = 'todo') {
     event ? event.stopPropagation() : null;
-    loggedInUserId = null;
-    localStorage.removeItem('pseudoAuthStatus');
-    setTimeout(() => window.location.href = '/login.html', timeout);
+    formMode = 'add';
+    currentTask = {};
+    taskStatus = (source == 'board') ? boardId : 'todo';
+    await showTaskDialogue('addTaskFormWrapper', source);
+    await renderTaskForm('addTaskFieldGroups');
+    if(source == 'add-task-page') {
+        return;
+    } else {
+        document.getElementById('taskDialogue').classList.add('add-task');
+    }
 }
 
 
 /**
- * Get html main templates (header, sideNavBar etc.)
+ * Event handler: open edit task form in dialogue
+ * 
+ * @param {event} event - onclick (button)
+ * @param {string} taskId - id of the clicked task
  */
-function getMainTemplates() {
-    getHeader();
-    getNavBar();
-    setNavLinkProps();
-    getOrientationOverlay();
+async function openEditTaskForm(event, taskId) {
+    event.stopPropagation();
+    formMode = 'edit';
+    currentTask = await getTaskById(taskId);
+    await showTaskDialogue('editTaskFormWrapper');
+    await renderTaskForm('editTaskFieldGroups', currentTask);
+    document.getElementById('taskDialogue').classList.add('edit-task');
 }
 
 
 /**
- * Get html header
+ * Helper: open task dialogue (board)
+ * 
+ * @param {string} elementId - id of the inner dialogue wrapper
+ * @param {string} source - source from where the dialoge was opened (add-task-page, board)
  */
-function getHeader() {
-    document.getElementById('header').innerHTML = getHeaderTemplate();
+async function showTaskDialogue(elementId, source = 'board') {
+    if(source == 'board') {
+        document.getElementById('addTaskFieldGroups').innerHTML = '';
+        document.getElementById('editTaskFieldGroups').innerHTML = '';
+        document.getElementById('taskDetailsWrapper').style = 'display: none;';
+        document.getElementById('addTaskFormWrapper').style = 'display: none;';
+        document.getElementById('editTaskFormWrapper').style = 'display: none;';
+        document.getElementById(elementId).style = '';
+        let dialogue = document.getElementById('taskDialogue');
+        dialogue.classList.remove('show-task', 'add-task', 'edit-task', 'dialogue-closed');
+        dialogue.classList.add('dialogue-open');
+    }
 }
 
 
 /**
- * Get html sideNavBar/mobile bottom bar
+ * Render task form
+ * 
+ * @param {string} fieldsWrapperId - id of the fields wrapper element
+ * @param {object} currentTask - current task (if edit mode)
  */
-function getNavBar() {
-    let sideNavBar = document.getElementById('sideNavBar');
-    sideNavBar.innerHTML = getNavBarTemplate();
-    sideNavBar.classList.add('hide--ss-mob');
-
-    let footerNavBar = document.getElementById('footerNavBar');
-    footerNavBar.innerHTML = getNavBarTemplate();
-    footerNavBar.classList.add('show--ss-mob');
+async function renderTaskForm(fieldsWrapperId, currentTask = null) {
+    assignedContacts = [];
+    assignedSubtasks = [];
+    document.getElementById(fieldsWrapperId).innerHTML = getTaskFormFieldsTemplate(currentTask);
+    document.getElementById('iconPrioHigh').innerHTML = getIconTemplatePrioHigh();
+    document.getElementById('iconPrioMedium').innerHTML = getIconTemplatePrioMedium();
+    document.getElementById('iconPrioLow').innerHTML = getIconTemplatePrioLow();
+    let formId;
+    if(formMode == 'add') {
+        formId = 'addTaskForm';
+        await renderAddTaskFormProps(formId);
+    } else {
+        formId = 'editTaskForm';
+        await renderEditTaskFormProps(currentTask, formId);        
+    }
+    await setInitialFormState(formId);
 }
 
 
 /**
- * Set dynamic nav properties (user batch, active url styles/icons)
+ * Render add-task form properties
  */
-function setNavLinkProps() {
-    let headerNavToggle = document.getElementById('headerNavTrigger');
-    headerNavToggle.innerText = loggedInUser ? loggedInUser.initials : 'G';
-    let navLinks = document.querySelectorAll('nav .nav-links a');
-    navLinks.forEach(link => {
-        if(link.href === window.location.href) {
-            link.classList.add('active');
-            let iconElement = link.querySelector('img');
-            iconElement ? iconElement.src = iconElement.src.replace('.svg', '-active.svg') : null;
+async function renderAddTaskFormProps(formId) {
+    document.getElementById('btnReset').innerHTML = getIconTemplateCancel('Clear');
+    document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Create Task');
+    await renderTaskFormContactListbox();
+    await renderTaskFormCategoryListbox();
+    await resetForm(formId);
+}
+
+
+/**
+ * Render edit-task form properties
+ * 
+ * @param {object} currentTask - current task
+ */
+async function renderEditTaskFormProps(currentTask, formId) {
+    await resetForm(formId);
+    document.getElementById('btnSubmit').innerHTML = getIconTemplateCheck('Ok');
+    document.getElementById('inputTitle').value = currentTask.title;
+    currentTask.description ? document.getElementById('inputDescription').value = currentTask.description : '';
+    document.getElementById('inputDueDate').value = currentTask.dueDate;
+    if(currentTask.priority) {
+        let priority =  setFirstLetterUpperCase(currentTask.priority);
+        document.getElementById('inputPrio' + priority).checked = true;
+    }
+    assignedContacts = currentTask.contactIds ? currentTask.contactIds.slice() : [];
+    await renderTaskFormContactListbox();
+    await renderTaskFormContactBatches(assignedContacts);
+    await renderEditTaskFormCategories(currentTask);
+    assignedSubtasks = currentTask.subtasks ? currentTask.subtasks.slice() : [];
+    await renderTaskFormSubtasks(assignedSubtasks);
+}
+
+
+/**
+ * Event handler: filter contact select options on task form
+ * 
+ * @param {event} event - oninput (input)
+ */
+async function listenTaskFormContactsListboxSearch(event) {
+    event.stopPropagation()
+    let searchVal = document.getElementById('selectContacts').value;
+    searchVal = searchVal.toLowerCase();
+    await renderTaskFormContactListbox(searchVal);
+}
+
+
+/**
+ * Filter contacts listbox on task form/s &amp;  handle dropdown states
+ * 
+ * @param {string} searchVal - search value (filter)
+ * @param {element} listbox - listbox element
+ */
+async function filterTaskFormContactsListbox(searchVal = '', listbox) {
+    let combox = document.getElementById('selectContacts');
+    listbox.innerHTML = '';
+    taskContacts = contacts;
+    if(searchVal === ' ') {
+        combox.value = '';
+        toggleDropdown(listbox);        
+    } else if(searchVal.length === 1) {
+        closeDropdown(listbox);
+        return;
+    }
+    if(searchVal &amp;&amp; searchVal.length >= 2) {
+        openDropdown(listbox);
+        taskContacts = await taskContacts.filter(contact => contact.name.toLowerCase().includes(searchVal));
+    }
+    return taskContacts;
+}
+
+
+/**
+ * Render contacts listbox on task form/s
+ * 
+ * @param {string} searchVal - search value (filter)
+ */
+async function renderTaskFormContactListbox(searchVal = '') {
+    let listbox = document.getElementById('taskContactsListbox');
+    taskContacts = await filterTaskFormContactsListbox(searchVal, listbox);
+    if(hasLength(taskContacts)) {
+        for (let index = 0; index &lt; taskContacts.length; index++) {
+            listbox.innerHTML += getContactListboxOptionTemplate(taskContacts[index], index);
+            if(assignedContacts &amp;&amp; assignedContacts.length > 0) {
+                let isChecked = assignedContacts.includes(taskContacts[index].id);
+                setTimeout(function() {
+                    document.getElementById('checkboxAssignedContact-' + taskContacts[index].id).checked = isChecked;
+                }, 1);
+            }
         }
-    });
-}
-
-
-/**
- * Toggle header navigation
- * 
- * @param {event} event - click (header nav button)
- */
-function toggleHeaderNav(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    document.getElementById('headerNavDropdown').classList.toggle('is-open');
-}
-
-
-/**
- * Get html orientation overlay
- */
-function getOrientationOverlay() {
-    let element = document.getElementById('orientationOverlay');
-    if(element) {
-        element.textContent = 'Please turn device or window to portrait orientation !';
-        element.addEventListener('click', event => {event.stopPropagation();})
     }
 }
 
 
 /**
- * Document Event handler: close various dialogues
+ * Render assigned contact profile batches on task form/s
  * 
- * @param {event} event - click (document)
+ * @param {array} contactIds - array of assigned contact id's
+ * @param {string} elementId - id of the render wrapper
  */
-function documentEventHandler(event) {
-    if( event.type === "click" ) {
-        let elementIds = ['headerNavDropdown', 'contactOptionsMenu'];
-        elementIds.forEach(elementId => {
-            let element = document.getElementById(elementId);
-            element ? element.classList.remove('is-open') : null;
-        });
-    }
-}
-
-
-/**
- * Close all open elements of certain selector (multiple use)
- * 
- * @param {string} selector - query-all selector 
- */
-function closeOpenElements(selector) {
-    let elements = document.querySelectorAll(selector);
-    if(elements) {
-        elements.forEach(element => {
-            if(element.classList.contains('is-open')) {
-                element.classList.remove('is-open');
-            };
-        });
-    }
-}
-
-/**
- * Event Handler: close current element (multiple use)
- * 
- * @param {event} event - various
- */
-function closeElementByCurrentTarget(event) {
-    event.stopPropagation();
-    let element = event.currentTarget;
-    element ? element.classList.remove('is-open') : null;
-}
-
-
-/**
- * Helper: check if object exists and has length
- * 
- * @param {object} object - any object
- * @returns {boolean}
- */
-function hasLength(object) {
-    if(object &amp;&amp; object.length > 0) {
-        return true;
-    }
-}
-
-
-/**
- * Helper: close parent wrapper
- * 
- * @param {event} event - inherit
- * @param {string} selector - selector of the wrapper to close
- */
-function closeParentWrapper(event, selector = '.close-on-event') {
-    let wrapper = getClosestParentElementFromEvent(event, selector);
-    wrapper ? wrapper.classList.remove('is-open') : null;
-}
-
-
-/**
- * Helper: sort and return array alphabetically
- * 
- * @param {array} array - data array
- * @param {string} sortByProperty - property to sort by
- */
-async function sortArray(array, sortByProperty = 'id') {
-    return await array.sort((a, b) => a[sortByProperty].localeCompare(b[sortByProperty]));
-}
-
-
-/**
- * Helper: return closest specific parent element from element
- * 
- * @param {element} element - dom element
- * @param {string} selector - css selector of the specific parent element
- */
-function getClosestParentElementFromElement(element, selector = '') {
-    return element.closest(selector);
-}
-
-
-/**
- * Helper: return closest specific parent element from event
- * 
- * @param {event} event - inherit
- * @param {string} selector - css selector of the specific parent element
- */
-function getClosestParentElementFromEvent(event, selector = '') {
-    let element = event.currentTarget;
-    if(element) {return element.closest(selector);}
-}
-
-
-/**
- * Helper: return closest specific parent element from id
- * 
- * @param {string} id - current element id
- * @param {string} selector - css selector of the specific parent element
- */
-function getClosestParentElementFromId(id, selector = '') {
-    let element = document.getElementById(id);
-    if(element) {return element.closest(selector);}
-}
-
-
-/**
- * Helper: return boolean from string true/false
- * 
- * @param {string} booleanString - string ('true'/'false')
- */
-function getBooleanFromString(booleanString) {
-    return (booleanString == 'true') ? true : false;
-}
-
-
-/**
- * Helper: convert a date to string for DB (YYYY-MM-DD)
- * 
- * @param {date} date - a date object
- */
-function formatDateToStringDB(date) {
-    let year = date.getFullYear();
-    let month = ('0'+ (date.getMonth() + 1)).slice(-2);
-    let day = ('0' + date.getDate()).slice(-2);
-    let formattedDate = year + '-' + month + '-' + day;
-    return formattedDate;
-}
-
-
-/**
- * Helper: convert a DB date string (YYYY-MM-DD) to a full date string (Month Day, Year)
- * 
- * @param {string} dateStringDB  - date string (YYYY-MM-DD)
- */
-function formatDateFromStringDBToFull(dateStringDB) {
-    let timeStamp = Date.parse(dateStringDB);
-    let date = new Date(timeStamp);
-    let formattedDate = date.toLocaleString('en-US', { month: 'long', day: 'numeric' , year: 'numeric'});
-    return formattedDate;
-}
-
-
-/**
- * Helper: add days to a date
- * 
- * @param {date} date - date object
- * @param {number} days - number of days to add
- * @returns {date}
- */
-function addDaysToDate(date, days) {
-    return new Date(date.getTime() + days * 24 * 60 * 60 * 1000);
-}
-
-
-/**
- * Helper: toggle icon color on hover (only for svg sources on img element)
- * 
- * @param {event} event - current event
- * @param {string} hoverColor - file suffix for the hover svg file
- */
-function toggleIconColorOnHover(event, hoverColor = 'blue') {
-    event.stopPropagation();
-    let iconElement = event.currentTarget.querySelector('img');
-    if(!iconElement) return;
-    let hoverFileSuffix = '-' + hoverColor + '.svg';
-    let iconSource = iconElement.src;
-    if(event.type == 'mouseover') {
-        return (!iconSource.endsWith(hoverFileSuffix)) ? iconElement.src = iconElement.src.replace('.svg', hoverFileSuffix) : null;
-    }
-    if(event.type == 'mouseleave') {
-        return (iconSource.endsWith(hoverFileSuffix)) ? iconElement.src = iconElement.src.replace(hoverFileSuffix, '.svg') : null;
-    }
-}
-
-
-/**
- * Helper: add and remove body class with timer (helper for animation styles)
- * 
- * @param {string} className - class to add
- * @param {number} timemoutAdd - timeout (ms) to add the class (-9 = do not add)
- * @param {number} timemoutRemove - timeout (ms) to remove the class (-9 = do not remove)
- */
-async function addBodyClass(className, timeoutAdd = 0, timeoutRemove = -9) {
-    document.body.classList.remove(className);
-    timeoutAdd >= 0 ? setTimeout(() => document.body.classList.add(className), timeoutAdd) : null;
-    timeoutRemove >= 0 ? removeBodyClass(className, timeoutRemove) : null;
-}
-
-
-/**
- * Helper: remove body class with timer
- * 
- * @param {string} className - class to add
- * @param {number} timemoutRemove - timeout (ms) to remove the class (-1 = default)
- */
-async function removeBodyClass(className, timeout = -1) {
-    timeout === -1 ? timeout = 1500 : null;
-    document.body.classList.remove(className);
-    setTimeout(() => document.body.classList.remove(className), timeout);
-}
-
-
-/**
- * Helper: show floating message with timeout
- * 
- * @param {string} template - code name for specific template (text, addedTask)
- * @param {string} msg - message content
- * @param {number} timeout - timeout milliseconds for class remove (-1 = default)
- * @param {string} optClass - optional class (showing-default, alert)
- */
-async function showFloatingMessage(template, msg = '', timeout = -1, optClass = 'showing-default') {
-    let element = document.getElementById("floatingMsg");
+async function renderTaskFormContactBatches(contactIds = [], elementId = 'profileBatches') {
+    let element = document.getElementById(elementId);
     element.innerHTML = '';
-    if(element) {
-        timeout === -1 ? timeout = 3000 : null;
-        element.classList.remove('showing-default', 'showing-top', optClass);
-        element.innerHTML = (template == 'addedTask') ? getFloatingMessageTaskAddedTemplate() : getFloatingMessageTextTemplate(msg);
-        element.classList.add('button', 'btn-icon', 'btn-primary', 'animate', optClass);
-        setTimeout(() => element.classList.remove('animate', optClass), timeout);
+    for (let index = 0; index &lt; contactIds.length; index++) {
+        let contact = await getContactById(contactIds[index]);
+        contact ? element.innerHTML += getContactProfileBatchTemplate(contact) : null;
     }
 }
-</code></pre>
+
+
+/**
+ * Render category select listbox on task form/s
+ * 
+ * @param {event} event - currently not in use
+ * @param {string} wrapperId - id of the render wrapper
+ */
+async function renderTaskFormCategoryListbox(event = null, wrapperId = 'taskCategoryListbox') {
+    event ? event.stopPropagation() : null;
+    let optionsWrapper = document.getElementById(wrapperId);
+    optionsWrapper.innerHTML = '';
+    categories = await sortCategories(categories);
+    for (let index = 0; index &lt; categories.length; index++) {
+        optionsWrapper.innerHTML += getCategoryListboxOptionTemplate(categories[index], index);
+    }
+}
+
+
+/**
+ * Render edit task form categories
+ * 
+ * @param {object} currentTask - current task (if edit mode)
+ */
+async function renderEditTaskFormCategories(currentTask) {
+    if(currentTask.categoryId) {
+        let category = getCategoryById(currentTask.categoryId)
+        let categoryName = category ? category.Name : null;
+        document.getElementById('categorySelect').value = categoryName;
+        document.getElementById('categorySelect').dataset.optionId = currentTask.categoryId;
+        document.getElementById('categorySelect').classList.remove("clickable");
+        document.getElementById('categorySelect').setAttribute("disabled", '');
+        //document.getElementById('categoryOptionId-' + currentTask.categoryId).setAttribute('aria-selected', 'true');
+    }
+}
+
+
+/**
+ * Event handler: submit create task
+ * 
+ * @param {event} event - onsubmit (form)
+ */
+async function submitCreateTask(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    if(formIsValid('addTaskForm')) {
+        let formInputs = await getFormInputObj('addTaskForm');
+        await setTaskProperties(currentTask, formInputs);
+        await createTask(currentTask);
+        await showFloatingMessage('addedTask');
+        setTimeout(function() {location.href = "/board.html";}, 1500);
+    }
+}
+
+
+/**
+ * Event handler: submit update task
+ * 
+ * @param {event} event - onsubmit (form)
+ */
+async function submitUpdateTask(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    if(formIsValid('editTaskForm')) {
+        let formInputs = await getFormInputObj('editTaskForm');
+        await setTaskProperties(currentTask, formInputs);
+        await updateTask(currentTask);
+        let showConfMsg = 1;
+        showConfMsg ? await showFloatingMessage('text', 'Task successfully edited') : null;
+        await showTaskDetail(event, currentTask.id, false);
+    }
+}
+
+
+/**
+ * Helper: set task properties
+ * 
+ * @param {object} currentTask - current task object
+ * @param {object} formInputs - current form inputs object
+ */
+async function setTaskProperties(currentTask, formInputs ) {
+    if(hasLength(formInputs.title)) {
+        currentTask.title = formInputs.title;
+        currentTask.description = formInputs.description;
+        currentTask.dueDate = formInputs.dueDate;
+        currentTask.priority = formInputs.priority;
+        currentTask.categoryId = document.getElementById('categorySelect').dataset.optionId;
+        currentTask.contactIds = assignedContacts;
+        currentTask.subtasks = assignedSubtasks;
+        !hasLength(currentTask.status) ? currentTask.status = taskStatus : null;
+    }
+}
+
+
+/**
+ * Event handler: submit delete task
+ * 
+ * @param {event} event - onclick (button)
+ * @param {string} taskId - id of the current task
+ */
+async function submitDeleteTask(event, taskId) {
+    event.stopPropagation();
+    await deleteTask(taskId);
+    currentTask = {};
+    await showFloatingMessage('text', 'Task deleted');
+    setTimeout(function() {closeTaskDialogue(event)}, 500);
+}
+
+
+/**
+ * Event handler: reset add task form
+ * 
+ * @param {event} event - onclick (button)
+ */
+async function resetAddTaskForm(event) {
+    event.stopPropagation();
+    let formId = 'addTaskForm';
+    currentTask = {};
+    assignedContacts = [];
+    assignedSubtasks = [];
+    resetForm(formId);
+    await renderTaskFormContactListbox();    
+    await renderTaskFormContactBatches();    
+    await renderTaskFormCategoryListbox();    
+    await renderTaskFormSubtasks(assignedSubtasks);
+    event.preventDefault();
+}
+
+
+/**
+ * Event handler: close task dialogue
+ * 
+ * @param {event} event - onclick (button)
+ */
+async function closeTaskDialogue(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    (formMode == 'add' || formMode == 'edit') ? resetAddTaskForm(event) : null;
+    formMode = '';
+    await renderBoards();
+    let dialogue = document.getElementById('taskDialogue');
+    dialogue.classList.add('dialogue-closed');
+    dialogue.classList.remove('dialogue-open');
+}</code></pre>
         </article>
     </section>
 
