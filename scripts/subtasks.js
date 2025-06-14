@@ -123,6 +123,7 @@ function addSubtaskEventHandler(event) {
     }
 }
 
+
 /**
  * Event handler: focus add new subtas input
  * 
@@ -142,6 +143,7 @@ function addSubtaskEventHandlerFocus(event) {
  * @param {element} element - input element
  */
 async function addSubtask(element) {
+    // console.log(element.value);
     let subtask = {};
     subtask.title = element.value;
     subtask.done = false;

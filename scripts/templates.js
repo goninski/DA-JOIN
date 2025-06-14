@@ -15,6 +15,7 @@ function getHeaderTemplate() {
                     <a class="help-link-mobile" href="/help.html">Help</a>
                     <a href="/legal-notice.html">Legal Notice</a>
                     <a href="/privacy-policy.html">Privacy Policy</a>
+                    <a href="/data-handling.html">Data Handling</a>
                     <a href="#" onclick="signOut(event)">Log out</a>
                 </div> 
             </nav>
@@ -71,7 +72,7 @@ function getBoardTemplate(board) {
         <div class="board" id="board-${board.id}">
             <div class="board-title-bar">
                 <h3 class="board-title">${board.label}</h3>
-                <button class="add-task-button-board" title="add new Task" onclick="addBoardTask(event, '${board.id}')">
+                <button class="add-task-button-board" title="add new Task" onclick="addBoardTask(event, 'todo')">
                     ${addTaskBtn}
                 </button>
             </div>
@@ -152,8 +153,7 @@ function getMoveToBoardMenuTemplate(taskId, currentStatus, statusIndex) {
             <li class="${hideInProgress}"><button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[1].id}')"><img src="./assets/icons/arrow-${arrowInProgress}.svg">${boards[1].label}</button></li>
             <li class="${hideAwaitFeedback}"><button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[2].id}')"><img src="./assets/icons/arrow-${arrowAwaitFeedback}.svg">${boards[2].label}</button></li>
             <li class="${hideDone}"><button onclick="changeBoardTaskStatus(event, '${taskId}', '${boards[3].id}')"><img src="./assets/icons/arrow-downward.svg">${boards[3].label}</button></li>
-        </ul>
-    `
+        </ul>  `
 }
 
 
@@ -230,10 +230,10 @@ function getTaskDetailsAssignedContactTemplate(contact) {
  */
 function getTaskDetailsSubtaskTemplate(task, subtask, subtaskIndex) {
   return `
-    <li class="subtask-item flex-row custom-checkbox-wrapper">
-        <input type="checkbox" id="subtaskStatus-${task.id}-${subtaskIndex}" ${subtask.done ? 'checked' : ''} class="custom-checkbox clickable hide-focus" onchange="toggleSubtaskStatus(event, ${task.id}, ${subtaskIndex})">
+    <li class="subtask-item flex-row align-center">
+        <input type="checkbox" ${subtask.done ? 'checked' : ''} class="custom custom-checkbox clickable hide-focus" onclick="toggleSubtaskStatus(event, ${task.id}, ${subtaskIndex})">
         <img src="assets/icons/checkbox-checked.svg" alt="checkbox-checked" class="icon-checkbox-checked custom-checkbox-checked">
-        <label for="subtaskStatus-${task.id}-${subtaskIndex}">${subtask.title}</label>
+        <label>${subtask.title}</label>
     </li>
   `;
 }
@@ -254,17 +254,17 @@ function getTaskFormFieldsTemplate(task) {
         <div class="field-group flex-col flex-grow">
 
             <div class="field-wrapper has-alert">
-                <label for="inputTitle" class="required top-element">Title</label>
-                <input type="text" id="inputTitle" name="title" placeholder="Enter a title" required maxlength="128" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="setSubmitBtnStateOnEvent(event)" oninput="setSubmitBtnStateOnEvent(event)">
+                <label for="title" class="required top-element">Title</label>
+                <input type="text" id="inputTitle" name="title" placeholder="Enter a title" required maxlength="128" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)">
                 <div role="alert" class="validation-alert">This field is required</div>
             </div>
             <div class="field-wrapper has-alert">
-                <label for="inputDescription">Description</label>
+                <label for="description">Description</label>
                 <textarea id="inputDescription" name="description" placeholder="Enter a description"></textarea>
             </div>
             <div class="field-wrapper has-alert">
-                <label for="inputDueDate" class="required">Due date</label>
-                <input type="date" id="inputDueDate" name="dueDate" required min="2000-01-01" max="2099-12-31" step="1" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" onkeyup="removePlaceholderStyle(event)"  oninput="setSubmitBtnStateOnEvent(event)" data-placeholder-style="true">
+                <label for="dueDate" class="required">Due date</label>
+                <input type="date" id="inputDueDate" name="dueDate" required min="2000-01-01" max="2099-12-31" step="1" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" onkeyup="removePlaceholderStyle(event)" data-placeholder-style="true">
                 <div role="alert" class="validation-alert">Please enter a valid date</div>
             </div>
         </div>
@@ -276,8 +276,7 @@ function getTaskFormFieldsTemplate(task) {
             ${assignedContactsFieldGroup}
             ${categoryFieldGroup}
             ${subtaskFieldGroup}
-        </div>       
-    `
+        </div>       `
 }
 
 
@@ -287,7 +286,7 @@ function getTaskFormFieldsTemplate(task) {
 function getPriorityFormFieldTemplate() {
     return `
         <div class="field-wrapper">
-            <label> Priority</label>
+            <label for="priority">Priority</label>
             <div class="priority-input-wrapper flex-row justify-between align-center">
                 <label for="inputPrioHigh" id="labelPrioHigh" class="prio-high button btn-icon btn-radio hide-child-input" value="high"><input type="radio" id="inputPrioHigh" name="priority" value="high" class="focus-strong"><span>Urgent</span><div id="iconPrioHigh" class="icon-wrapper"></div></label>
 
@@ -333,9 +332,11 @@ function getContactListboxOptionTemplate(contact, index) {
     <li class="select-option" role="option" data-index="${index}" onclick="event.stopPropagation()">
         <label for="checkboxAssignedContact-${contact.id}" class="hide-focus" onkeydown="event.stopPropagation()">${contact.name}
             <div class="profile-batch label-icon" style="--profile-color: ${contact.color};">${contact.initials}</div>
-            <div class="input-icon-wrapper custom-checkbox-wrapper">
-                <input type="checkbox" class="custom-checkbox checkbox-end clickable" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}"  onchange="dropdownOptionClickHandlerMultiple(event, '${contact.id}')">
-                <img src="assets/icons/checkbox-checked-white.svg" alt="checkbox-checked" class="icon-checkbox-checked custom-checkbox-checked">
+            <div class="input-icon-wrapper custom-checkbox">
+                <input type="checkbox" class="custom custom-checkbox checkbox-end clickable" id="checkboxAssignedContact-${contact.id}" name="checkboxAssignedContact-${contact.id}" value="${contact.id}"  onchange="dropdownOptionClickHandlerMultiple(event, '${contact.id}')">
+                <div class="checkbox-checked-wrapper">
+                    <img src="assets/icons/checkbox-checked-white.svg" alt="checkbox-checked" class="icon-checkbox-checked">
+                </div>
             </div>
         </label>
     </li>
@@ -352,7 +353,7 @@ function getCategoryFormFieldTemplate() {
             <label for="categorySelect" class="required">Category</label>
             <div class="select custom-select">
                 <div class="input-wrapper custom-select">
-                    <input type="text" id="categorySelect" name="categorySelect" role="combox" placeholder="Select task category" class="clickable" data-validation-type="required" data-active-index="-1" readonly onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" onclick="dropdownEventHandler(event)" onkeydown="dropdownEventHandler(event)" oninput="setSubmitBtnStateOnEvent(event)">
+                    <input type="text" id="categorySelect" name="categorySelect" role="combox" placeholder="Select task category" class="clickable" data-custom-validation="required" data-active-index="-1" readonly onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" onclick="dropdownEventHandler(event)" onkeydown="dropdownEventHandler(event)"   >
                     <div class="input-icon-wrapper custom-select">
                         <button onclick="event.preventDefault(), dropdownEventHandler(event)">
                             <img src="/assets/icons/arrow-drop-down.svg" class="icon icon-dropdown">
@@ -387,12 +388,12 @@ function getCategoryListboxOptionTemplate(category, index) {
 function getSubtaskFormFieldTemplate() {
     return `
         <div class="field-wrapper subtask-wrapper">
-            <label for="inputSubtasks">Subtasks</label>
+            <label for="subtasks">Subtasks</label>
             <div class="input-wrapper input-wrapper-subtasks">
                 <!--<input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask"> -->
                 <input type="text" id="inputSubtasks" name="subtasks" placeholder="Add new subtask" maxlength="128" onfocus="focusInHandler(event)" oninput="onInputAddSubtask(event)" onkeydown="addSubtaskInputEventHandler(event)">
                 <div id="subtaskInputButtonAdd" class="input-icon-wrapper">
-                    <button class="hide-focus" onclick="addSubtaskEventHandlerFocus(event)"><img src="/assets/icons/add.svg" class="icon-add"></button>
+                    <button onclick="addSubtaskEventHandlerFocus(event)"><img src="/assets/icons/add.svg" class="icon-add"></button>
                 </div>
                 <div id="subtaskInputButtons" class="input-icon-wrapper hide">
                     <button onclick="clearSubtaskEventHandler(event)"><img src="/assets/icons/cancel.svg" class="icon-cancel"></button>
