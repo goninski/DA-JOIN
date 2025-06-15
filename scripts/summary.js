@@ -41,7 +41,7 @@ function showSummaryWelcomeScreen() {
 function showFreshDataSetMessage() {
     let params = new URLSearchParams(document.location.search);
     let fresh = params.get("fresh");
-    fresh ? showFloatingMessage('text', 'A fresh set of dummy data is loaded.') : null;
+    fresh ? showFloatingMessage('text', 'A fresh set of dummy data is loaded.', 8000, 'long') : null;
 }
 
 

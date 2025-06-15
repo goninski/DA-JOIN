@@ -144,7 +144,7 @@ async function loginSuccessfull(formInputs) {
     let floatingMsg = 'You logged in successfully';
     let urlParam = (formInputs.loadFreshDataSet && formInputs.loadFreshDataSet == 'on') ? '?fresh=true' : '';
     await showFloatingMessage('text', floatingMsg);
-    setTimeout(() => window.location.href = '/summary.html' + urlParam, 1000);
+    setTimeout(() => window.location.href = '/summary.html' + urlParam, 1500);
 }
 
 

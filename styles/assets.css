@@ -158,7 +158,7 @@ button {
 .floating-message.animate {
     animation: floating-message 2s;
 }
-.floating-message.animate.alert {
+.floating-message.animate:is(.alert, .long) {
     animation: floating-message 5s;
 }
 .floating-message.alert {
