@@ -94,7 +94,7 @@
 }
 #taskDetailsWrapper.scrollable {
     position: absolute;
-    inset: var(--padding-dialogue);
+    inset: var(--dialogue-padding);
 }
 #taskDetailsWrapper.scrollable .task-details-wrapper {
     overflow-y: auto;
@@ -104,7 +104,7 @@
   font-size: var(--fs-lg);
   color: black;
   gap: 24px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 .task-details-wrapper label {
   font-size: var(--fs-lg);
@@ -269,7 +269,7 @@
   gap: 10px;
 }
 .task-details-wrapper .board-task-meta.flex-col {
-  gap: 10px;
+  gap: 14px;
 }
 .task-details-wrapper .board-task-assigned-to ul {
   gap: 4px;
@@ -282,7 +282,7 @@
 #taskDetailsSubtaskWrapper {
   margin-block: 0;
   padding-inline: 0;
-  gap: 24px;
+  gap: 20px;
 }
 #taskDetailsSubtaskWrapper li {
   position: relative;
@@ -388,6 +388,9 @@
   .task-details-wrapper {
       --fs-main-title: 36px;
       --fs-lg: var(--fs-base);
+  }
+  .task-details-wrapper > div > label {
+    font-weight: var(--fw-bold);
   }
 }
 

@@ -253,6 +253,7 @@ button {
     font-size: 12px;
 }
 
+
 /* DIALOGUES */
 
 .dialogue.slide-in {
@@ -288,12 +289,13 @@ button {
     scrollbar-width: none;
 }
 .task-dialogue:not(.add-task) {
-    --padding-dialogue: 48px 48px;
+    --dialogue-padding: 48px 40px;
 }
 .task-dialogue.show-task .dialogue-inner {
     overflow-y: auto;
 }
 .task-dialogue .dialogue-inner {
+    padding: var(--dialogue-padding);
     max-height: 870px;
 }
 .task-dialogue:not(.show-task) .dialogue-inner {
@@ -303,21 +305,18 @@ button {
     flex-grow: 1;
 }
 .task-dialogue:not(.add-task) .dialogue-inner {
-    padding: var(--padding-dialogue);
     gap: 24px;
     max-width: 525px;
 }
 .task-dialogue.add-task {
-    --padding-dialogue: 64px 74px;
+    --dialogue-padding: 64px 74px;
 }
 .task-dialogue.add-task .dialogue-inner {
-    padding: var(--padding-dialogue);
     max-width: 1124px;
-    padding: 64px 74px;
     gap: 24px;
 }
 .contact-dialogue {
-    --padding-dialogue: 66px 48px;
+    --dialogue-padding: 66px 48px;
 }
 .contact-dialogue .dialogue-inner {
     height: 100%;
@@ -327,7 +326,7 @@ button {
     align-items: stretch;
 }
 .contact-dialogue .dialogue-inner > div {
-    padding: var(--padding-dialogue);
+    padding: var(--dialogue-padding);
     justify-content: center;
 }
 .dialogue-sidebar {
@@ -366,6 +365,8 @@ button {
 
 button.close-dialogue {
     position: absolute;
+    align-self: flex-end;
+    justify-self: flex-start;
     width: 32px;
     height: 32px;
     z-index: 2000;
@@ -384,19 +385,15 @@ button.close-dialogue:hover .close-icon.dark {
 button.close-dialogue:hover .close-icon.light {
     display: flex;
 }
-.task-dialogue button.close-dialogue {
-    top: 32px;
-    right: 40px;
-}
-.task-dialogue.add-task button.close-dialogue {
-    top: 64px;
+.task-dialogue.edit-task button.close-dialogue {
+    transform: translateY(-12px);
 }
 .contact-dialogue button.close-dialogue {
     top: 40px;
-    right: 40px;
+    right: 48px;
 }
-.contact-dialogue button.close-dialogue img {
-    margin-left: 2px;
+button.close-dialogue img {
+    margin-left: 1px;
 }
 
 
@@ -408,13 +405,13 @@ button.close-dialogue:hover .close-icon.light {
         margin-bottom: 32px;
     }
     .task-dialogue.add-task {
-        --padding-dialogue: 48px 40px;
+        --dialogue-padding: 48px 40px;
     }
     .task-dialogue.add-task .dialogue-inner {
         max-width: 525px;
-        padding: var(--padding-dialogue);
         gap: 24px;
     }
+ 
 }
 
 @media(max-width: 800px) {
@@ -427,14 +424,6 @@ button.close-dialogue:hover .close-icon.light {
         width: 90px;
         height: 3px;
     }
-    .task-dialogue button.close-dialogue {
-        top: 24px;        
-        right: 6vw;        
-    }
-    .contact-dialogue button.close-dialogue {
-        top: 24px;
-        right: 16px;
-    }
     .floating-message.showing {
         left: 50%;
         transform: translateX(-50%);
@@ -445,20 +434,24 @@ button.close-dialogue:hover .close-icon.light {
 }
 
 @media(max-width: 599px) {
-    .task-dialogue {
-        --padding-dialogue: 32px 16px !important;
+    .dialogue-inner {
+        --dialogue-padding: 32px 24px;
+    }
+    .contact-dialogue .dialogue-inner {
+        --dialogue-padding: 61px 16px;
+    }
+    .contact-dialogue button.close-dialogue {
+        top: 24px;
+        right: 24px;
+    }
+    .contact-dialogue .dialogue-sidebar {
+        padding-inline: 24px !important;
     }
     .task-dialogue .dialogue-inner {
         max-width: 396px !important;
     }
-    .task-dialogue.add-task .dialogue-inner {
-        --padding-inline: 16px;
-    }
-    .task-dialogue button.close-dialogue {
-        right: 16px;        
-    }
-    .contact-dialogue {
-        --padding-dialogue: 61px 16px;
+    .task-dialogue .option-buttons {
+        padding-right: 12px;        
     }
     .floating-message {
         font-size: var(--fs-base) !important;
@@ -473,4 +466,10 @@ button.close-dialogue:hover .close-icon.light {
         max-width: 85vw !important;
         white-space: wrap;
    }
+}
+
+@media(max-width: 375px) {
+    .dialogue-inner {
+        padding-inline: 16px !important;
+    }
 }

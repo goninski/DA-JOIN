@@ -211,10 +211,12 @@ function validateInput(element) {
 function setFieldValidity(element) {
     let isValidElement = validateElement(element);
     let fieldWrapper = getFieldWrapperFromId(element.id);
-    if(fieldWrapper){
-        isValidElement ? fieldWrapper.classList.remove('invalid') : fieldWrapper.classList.add('invalid');
-    }
     setPlaceholderStyle(element);
+    setTimeout(() => {
+        if(fieldWrapper){
+            isValidElement ? fieldWrapper.classList.remove('invalid') : fieldWrapper.classList.add('invalid');
+        }
+    }, 175);
 }
 
 
