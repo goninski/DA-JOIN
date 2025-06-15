@@ -62,6 +62,8 @@
     --height-header: 96px;
     --height-footer: 0px;
     --field-width: 424px;
+    --full-height: 100vh;
+    --full-height: 100svh;
 }
 
 html {

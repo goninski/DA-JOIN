@@ -312,6 +312,9 @@ async function setContactProperties(currentContact, formInputs ) {
 async function submitDeleteContact(event, contactId) {
     event.stopPropagation();
     event.preventDefault();
+    if(loggedInUserId != 'guest' && loggedInUserId == currentContact.id) {
+       return await showFloatingMessage('text', 'Deletion of the logged in user not possible.', -1, 'alert');
+    };
     await deleteContact(contactId);
     currentContact = {};
     lastListContactId = ''

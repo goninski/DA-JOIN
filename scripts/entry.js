@@ -142,14 +142,9 @@ async function submitLoginFormHandler(event, isGuest = false) {
 async function loginSuccessfull(formInputs) {
     await saveToLocalStorage('pseudoAuthStatus', loggedInUserId);
     let floatingMsg = 'You logged in successfully';
-    let timeout = 1000;
-    if(formInputs.loadFreshDataSet && formInputs.loadFreshDataSet == 'on') {
-        await resetData();
-        floatingMsg = 'You logged in successfully <br>and a fresh set of dummy data is loaded';
-        timeout = 1750;
-    }
+    let urlParam = (formInputs.loadFreshDataSet && formInputs.loadFreshDataSet == 'on') ? '?fresh=true' : '';
     await showFloatingMessage('text', floatingMsg);
-    setTimeout(() => window.location.href = '/summary.html', timeout);
+    setTimeout(() => window.location.href = '/summary.html' + urlParam, 1000);
 }
 
 

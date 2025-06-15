@@ -146,7 +146,7 @@
 
 @media(max-width: 800px) {
     :root {
-        --field-width: 366px;
+        --field-width: 100%;
     }
     .entry-page {
         padding-block-end: 24px;
@@ -160,6 +160,8 @@
     .entry-page .sign-up-links-wrapper {
         align-self: center;
         margin-top: auto;
+        font-size: var(--fs-base);
+        margin-bottom: calc((var(--full-height) - 590px - 310px) / 2);
     }
     .login-page .term-links-wrapper {
         margin-top: unset;
@@ -174,9 +176,6 @@
     }
     .entry-page .back-button {
         left: 0;   
-    }
-    .entry-page .sign-up-links-wrapper {
-        font-size: var(--fs-base);
     }
     .entry-form .submit-button-wrapper {
         flex-direction: column;
@@ -213,7 +212,9 @@
         top: unset;
         left: unset;
         transform: translate(0,0);
-        /* max-height: 80vh; */
+    }
+    .entry-page .sign-up-links-wrapper {
+        margin-bottom: unset;
     }
 }
 

@@ -31,6 +31,17 @@ function showSummaryWelcomeScreen() {
         greetingScreen.classList.remove('active')
       } , 2000);
     }
+    setTimeout(() => showFreshDataSetMessage(), 1750);
+}
+
+
+/**
+ * Show Message if fresh dummy data is loaded
+ */
+function showFreshDataSetMessage() {
+    let params = new URLSearchParams(document.location.search);
+    let fresh = params.get("fresh");
+    fresh ? showFloatingMessage('text', 'A fresh set of dummy data is loaded.') : null;
 }
 
 
