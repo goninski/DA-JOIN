@@ -139,8 +139,11 @@ async function createTask(task) {
  */
 async function updateContact(contact) {
     await sanitizeContactProperties(contact);
+    if(contacts) {
+        let index = await getContactIndexFromId(contact.id);
+        contacts[index] = contact;
+    };
     localStorageMode ? await saveContactsToLS() : await saveContactToDB(contact, 'update');
-    await getContacts();
 }
 
 
@@ -151,6 +154,10 @@ async function updateContact(contact) {
  */
 async function updateTask(task) {
     await sanitizeTaskProperties(task);
+    if(tasks) {
+        let index = await getTaskIndexFromId(task.id);
+        tasks[index] = task;
+    };
     localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task, 'update');
 }
 

@@ -188,24 +188,6 @@ function resetContactsForm(event) {
 
 
 /**
- * Event handler: close add/edit contacts form dialogue
- * 
- * @param {event} event - click (close button)
- */
-async function closeContactsFormDialogue(event) {
-    event.stopPropagation();
-    resetForm('contactsForm');
-    formMode = '';
-    document.getElementById('addNewContactBtnFloating').style = '';
-    let dialogue = document.getElementById('addContactDialogue');
-    dialogue.classList.remove('dialogue-open');
-    dialogue.classList.add('dialogue-closed');
-    await renderContactList();
-    await showContactDetail(event, lastListContactId);
-}
-
-
-/**
  * Set specific values for add contact mode
  */
 async function setAddContactValues() {
@@ -255,7 +237,7 @@ async function submitContactsForm(event) {
         if(!emailUpdateIsValid) {
             return;
         }
-        emailIsUpdated = false;         
+        emailIsUpdated = false;
         await setContactProperties(currentContact, formInputs);
         formMode == 'edit' ? await submitUpdateContact(event, currentContact) : await submitCreateContact(event, currentContact);
     }
@@ -289,8 +271,7 @@ async function submitCreateContact(event, currentContact) {
     await createContact(currentContact);
     lastListContactId = currentContact.id;
     await showFloatingMessage('text', 'Contact successfully created');
-    // setTimeout(function() {closeContactsFormDialogue(event);}, 1000);
-    await closeContactsFormDialogue(event);
+    setTimeout(() => closeContactsFormDialogue(event), 1000);
 }
 
 
@@ -302,8 +283,7 @@ async function submitCreateContact(event, currentContact) {
 async function submitUpdateContact(event, currentContact) {
     await updateContact(currentContact);
     await showFloatingMessage('text', 'Contact successfully edited');
-    // setTimeout(function() {closeContactsFormDialogue(event)}, 1000);
-    await closeContactsFormDialogue(event);
+    setTimeout(() => closeContactsFormDialogue(event), 1000);
 }
 
 
@@ -340,3 +320,22 @@ async function submitDeleteContact(event, contactId) {
     await showFloatingMessage('text', 'Contact deleted');
     setTimeout(() => closeContactsFormDialogue(event), 1000);
 }
+
+
+/**
+ * Event handler: close add/edit contacts form dialogue
+ * 
+ * @param {event} event - click (close button)
+ */
+async function closeContactsFormDialogue(event) {
+    event.stopPropagation();
+    resetForm('contactsForm');
+    formMode = '';
+    document.getElementById('addNewContactBtnFloating').style = '';
+    let dialogue = document.getElementById('addContactDialogue');
+    dialogue.classList.remove('dialogue-open');
+    dialogue.classList.add('dialogue-closed');
+    await renderContactList();
+    await showContactDetail(event, lastListContactId);
+}
+

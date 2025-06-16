@@ -159,7 +159,7 @@ button {
     animation: floating-message 2s;
 }
 .floating-message.animate:is(.alert, .long) {
-    animation: floating-message 5s;
+    animation: floating-message 4s;
 }
 .floating-message.alert {
     background-color: red;
@@ -255,8 +255,11 @@ button {
     flex-shrink: 0;
 }
 .profile-batch-plus {
+    width: 28px !important;
+    height: 28px !important;
     font-size: 16px;
     padding-bottom: 2px;
+    align-self: center;
 }
 
 /* DIALOGUES */
