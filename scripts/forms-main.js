@@ -175,7 +175,7 @@ function getFormElementsArray(formId) {
 
 
 /**
- * Set edit form state
+ * Set initial form state
  * 
  * @param {string} formId - id of the form element
  */
@@ -185,11 +185,53 @@ function setInitialFormState(formId) {
     formElements.forEach(function(element) {
         setPlaceholderStyle(element);
     });
-    let topElement = form.querySelector('.top-element');
-    topElement ? topElement.scrollIntoView() : null;
-    setTimeout(() => formElements[0].focus(), 200);
+    let topScrollWrapper = document.querySelector('.top-scroll-wrapper');
+    topScrollWrapper ? topScrollWrapper.scrollTop = 0 : null;
+    setTimeout(() => formElements[0].focus({preventScroll: true}), 125);
     setSubmitBtnState(formId);
 }
+
+
+/**
+ * Reset form
+ * 
+ * @param {string} formId - id of the form element
+ */
+function resetForm(formId) {
+    let form = document.getElementById(formId);
+    form.reset();
+    listboxElements = [];
+    let formElements = getFormElementsArray(formId);
+    formElements.forEach(function(element) {
+        resetFormElements(element);
+    });
+    getInvalidInputIds(formId);
+    let topScrollWrapper = document.querySelector('.top-scroll-wrapper');
+    topScrollWrapper ? topScrollWrapper.scrollTop = 0 : null;
+    setTimeout(() => formElements[0].focus({preventScroll: true}), 125);
+ }
+
+
+/**
+ * Reset a form element
+ * 
+ * @param {element} element - form element
+ */
+function resetFormElements(element) {
+    setPlaceholderStyle(element);
+    getCurrentFieldElements(element);
+    if(currentFieldElements.fieldWrapper) {
+        currentFieldElements.fieldWrapper.classList.remove('invalid');
+    }
+    if(currentFieldElements.combox) {
+        currentFieldElements.combox.removeAttribute('data-option-id');
+        currentFieldElements.combox.removeAttribute('data-active-index');
+    }
+    if(currentFieldElements.listbox) {
+        listboxElements.push(currentFieldElements.listbox);
+        closeDropdown(currentFieldElements.listbox);
+    }
+};
 
 
 /**
@@ -289,7 +331,7 @@ function validatePhoneInput(element) {
     let inputValue = element.value;
     let formattedValue = inputValue;
     let rawValue = inputValue.replaceAll(' ', '');
-    if(rawValue.length >= 10){
+    if(rawValue.length >= 9){
         if(! inputValue.startsWith("+")) {
             formattedValue = "+49 " + inputValue;
         }
@@ -359,44 +401,3 @@ function setSubmitBtnStateOnEvent(event) {
     setSubmitBtnState(formId);
 }
 
-
-/**
- * Reset form
- * 
- * @param {string} formId - id of the form element
- */
-function resetForm(formId) {
-    let form = document.getElementById(formId);
-    form.reset();
-    listboxElements = [];
-    let formElements = getFormElementsArray(formId);
-    formElements.forEach(function(element) {
-        resetFormElements(element);
-    });
-    getInvalidInputIds(formId);
-    let topElement = form.querySelector('.top-element');
-    topElement ? topElement.scrollIntoView() : null;
-    setTimeout(() => formElements[0].focus(), 200);
-}
-
-
-/**
- * Reset a form element
- * 
- * @param {element} element - form element
- */
-function resetFormElements(element) {
-    setPlaceholderStyle(element);
-    getCurrentFieldElements(element);
-    if(currentFieldElements.fieldWrapper) {
-        currentFieldElements.fieldWrapper.classList.remove('invalid');
-    }
-    if(currentFieldElements.combox) {
-        currentFieldElements.combox.removeAttribute('data-option-id');
-        currentFieldElements.combox.removeAttribute('data-active-index');
-    }
-    if(currentFieldElements.listbox) {
-        listboxElements.push(currentFieldElements.listbox);
-        closeDropdown(currentFieldElements.listbox);
-    }
-};

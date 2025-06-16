@@ -223,7 +223,7 @@ const tasksDummy = [
  * 
  * @param {boolean} confirm - confirm reset true/false
  */
-async function resetData(confirm) {
+async function resetData(confirm = false) {
     if(confirm) {
       if(! window.confirm('All data will be reset to default dummy data! OK?')) return;
     }

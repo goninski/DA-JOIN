@@ -49,7 +49,6 @@ async function listenTaskSearchInput(event) {
   let taskSearchInput = document.getElementById('inputTaskSearch');
   let taskSearchBtn = document.getElementById('taskSearchBtn');
   let searchVal = taskSearchInput.value.toLowerCase();
-  console.log(searchVal);
   if (searchVal.length > 0) {
     taskSearchBtn.tabIndex = 0;
     taskSearchBtn.classList.remove('not-clickable');
@@ -116,7 +115,7 @@ async function renderBoardTasks(renderTasks, boardId, boardTaskList) {
       let subtaskCount = await getSubtaskProgress(task, 'count');
       let subtaskProgressWidth = (128 * await getSubtaskProgress(task, 'progress') / 100) + 'px';
       boardTaskList.innerHTML += await getBoardTasksTemplate(task, category, subtaskCount, subtaskProgressWidth);
-      await renderTaskFormContactBatches(task.contactIds, elementId = 'profileBatchesTaskBoard-' + task.id);
+      await renderTaskFormContactBatches(task.contactIds, elementId = 'profileBatchesTaskBoard-' + task.id, 6);
     }
   } else {
     boardTaskList.innerHTML = getBoardNoTaskTemplate();
@@ -153,8 +152,8 @@ async function renderTaskDetailsAssignedContacts(task) {
   let contactIds = task.contactIds;
   let wrapper = document.getElementById('taskDetailsAssignedContactsWrapper');
   wrapper.innerHTML = '';
-  if (hasLength(contactIds)) {
-    for (let index = 0; index < contactIds.length; index++) {
+  if(hasLength(contactIds)) {
+    for (let index = 0; index < contactIds; index++) {
       let contact = await getContactById(contactIds[index]);
       contact ? wrapper.innerHTML += getTaskDetailsAssignedContactTemplate(contact) : null;
     }

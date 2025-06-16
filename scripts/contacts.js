@@ -164,7 +164,7 @@ async function openEditContactForm(event, contactId) {
  * @param {string} contactId - id of the current contact (empty for new contact)
  */
 async function openContactsFormDialogue(formMode, contactId = '') {
-    await resetForm('contactsForm');
+    resetForm('contactsForm');
     let dialogue = document.getElementById('addContactDialogue');
     dialogue.classList.add('dialogue-open');
     dialogue.classList.remove('dialogue-closed');
@@ -227,13 +227,13 @@ async function setAddContactValues() {
 async function setEditContactValues(contactId) {
     document.getElementById('dialogueTeaser').style = 'display: none;';
     document.getElementById('dialogueTitle').innerHTML = 'Edit Contact';
-    let contact = await getContactById(contactId);
-    document.getElementById('dialogueProfileBatch').innerHTML = contact.initials;
-    document.getElementById('dialogueProfileBatch').style = '--profile-color: '+ contact.color;
-    document.getElementById('inputName').value = contact.name;
-    document.getElementById('inputEmail').value = contact.email;
-    document.getElementById('inputEmail').dataset.valueBeforeUpdate = contact.email;
-    contact.phone ? document.getElementById('inputPhone').value = contact.phone : '';
+    currentContact = await getContactById(contactId);
+    document.getElementById('dialogueProfileBatch').innerHTML = currentContact.initials;
+    document.getElementById('dialogueProfileBatch').style = '--profile-color: '+ currentContact.color;
+    document.getElementById('inputName').value = currentContact.name;
+    document.getElementById('inputEmail').value = currentContact.email;
+    document.getElementById('inputEmail').dataset.valueBeforeUpdate = currentContact.email;
+    currentContact.phone ? document.getElementById('inputPhone').value = currentContact.phone : '';
     document.getElementById('submitBtnWrapper').innerHTML = getEditContactSubmitButtonsTemplate(contactId);
     let showDeleteBtn = 0;
     showDeleteBtn ? document.getElementById('dialogueBtnDelete').innerHTML = getIconTemplateCancel('Cancel') : null;
@@ -251,13 +251,32 @@ async function submitContactsForm(event) {
     event.preventDefault();
     if(formIsValid('contactsForm')) {
         let formInputs = await getFormInputObj('contactsForm');
-        let isExisting = formMode == 'add' ? await isExistingContact(formInputs.email) : emailIsUpdated;
-        if(isExisting) {
-            return await showFloatingMessage('text', 'This email address already exists !', -1, 'alert');
+        let emailUpdateIsValid = await emailUpdateValidation(formInputs.email);
+        if(!emailUpdateIsValid) {
+            return;
         }
+        emailIsUpdated = false;         
         await setContactProperties(currentContact, formInputs);
         formMode == 'edit' ? await submitUpdateContact(event, currentContact) : await submitCreateContact(event, currentContact);
     }
+}
+
+
+/**
+ * Email Update Validation
+ * 
+ * @param {string} email - updated email address
+ * @returns {boolean} - true if email update is valid (new address not existing)
+ */
+async function emailUpdateValidation(email) {
+    if(emailIsUpdated && formMode == 'edit') {
+        let isInvalid = await isExistingContact(email);
+        if(isInvalid) {
+            await showFloatingMessage('text', 'This email address already exists !', -1, 'alert');
+            return false;
+        }
+    }
+    return true;
 }
 
 
@@ -267,11 +286,11 @@ async function submitContactsForm(event) {
  * @param {event} event - inherit (submit contact form)
  */
 async function submitCreateContact(event, currentContact) {
-    event.stopPropagation();
     await createContact(currentContact);
     lastListContactId = currentContact.id;
     await showFloatingMessage('text', 'Contact successfully created');
-    setTimeout(function() {closeContactsFormDialogue(event);}, 1000);
+    // setTimeout(function() {closeContactsFormDialogue(event);}, 1000);
+    await closeContactsFormDialogue(event);
 }
 
 
@@ -281,10 +300,10 @@ async function submitCreateContact(event, currentContact) {
  * @param {event} event - inherit (submit contact form)
  */
 async function submitUpdateContact(event, currentContact) {
-    event.stopPropagation();
     await updateContact(currentContact);
     await showFloatingMessage('text', 'Contact successfully edited');
-    setTimeout(function() {closeContactsFormDialogue(event)}, 1000);
+    // setTimeout(function() {closeContactsFormDialogue(event)}, 1000);
+    await closeContactsFormDialogue(event);
 }
 
 
@@ -295,10 +314,15 @@ async function submitUpdateContact(event, currentContact) {
  * @param {object} formInputs - current form inputs object
  */
 async function setContactProperties(currentContact, formInputs ) {
+    console.log(currentContact.email);
+    console.log(formInputs.email);
     if(hasLength(formInputs.email)) {
         currentContact.name = formInputs.name;
+        console.log(contacts);
         currentContact.email = formInputs.email;
+        console.log(contacts);
         currentContact.phone = formInputs.phone;
+        console.log(contacts);
     }
 }
 

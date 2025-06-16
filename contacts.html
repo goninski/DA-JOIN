@@ -60,9 +60,9 @@
 
 
     <div id="addContactDialogue" class="dialogue contact-dialogue add-contact-dialogue dialogue-closed">
-        <div class="dialogue-inner flex-row align-center pos-relative">
+        <div class="dialogue-inner flex-row align-center pos-relative top-scroll-wrapper">
 
-            <button class="close-dialogue top-element" onclick="closeContactsFormDialogue(event)" title="close dialogue">
+            <button class="close-dialogue" onclick="closeContactsFormDialogue(event)" title="close dialogue">
                 <img src="assets/icons/close.svg" alt="close-icon" class="close-icon dark">
                 <img src="assets/icons/close-white.svg" alt="close-icon" class="close-icon light">
             </button>
@@ -87,7 +87,7 @@
                                 <div class="field-wrapper has-alert">
                                     <div class="input-wrapper">
                                         <input type="text" id="inputName" name="name" placeholder="Name" required maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="setSubmitBtnStateOnEvent(event)">
-                                        <div class="input-icon-wrapper simple top-element">
+                                        <div class="input-icon-wrapper simple">
                                             <img src="assets/icons/input-name.svg" alt="person-icon" class="icon-name-input">
                                         </div>
                                     </div>
@@ -104,12 +104,12 @@
                                 </div>
                                 <div class="field-wrapper has-alert">
                                     <div class="input-wrapper">
-                                        <input type="tel" id="inputPhone" name="phone" placeholder="Phone" minlength="10" maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="setSubmitBtnStateOnEvent(event)">
+                                        <input type="tel" id="inputPhone" name="phone" placeholder="Phone" minlength="9" maxlength="64" pattern="^[0-9 +]+$" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="setSubmitBtnStateOnEvent(event)">
                                         <div class="input-icon-wrapper simple">
                                             <img src="assets/icons/input-phone.svg" alt="phone-icon" class="icon-phone-input">
                                         </div>
                                     </div>
-                                    <div role="alert" class="validation-alert">Please enter a valid phone number (min. 10 digits)</div>
+                                    <div role="alert" class="validation-alert">Please enter a valid phone number (min. 9 numeric digits)</div>
                                 </div>
                                 <div id="submitBtnWrapper" class="submit-button-wrapper flex-row gap">
                                     <button id="btnSubmit"></button>

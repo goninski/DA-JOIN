@@ -252,6 +252,13 @@
 }
 .board-task-user {
   height: 32px;
+  margin-top: auto;
+}
+.profile-batches.task-board {
+    flex-wrap: nowrap;
+    width: 100%;
+    max-width: 85%;
+    overflow: hidden;
 }
 .profile-batches.task-board .profile-batch {
     width: 32px;

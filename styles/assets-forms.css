@@ -210,7 +210,7 @@ label.prio-low:has( > input:checked) {
 .select-options-wrapper.multiple label {
     height: 56px;
 }
-.select-options-wrapper.multiple.right label {
+.select-options-wrapper.multiple.end label {
     padding-right: 54px;
 }
 .select.custom-select .label-icon {

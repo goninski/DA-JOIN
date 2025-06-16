@@ -73,11 +73,11 @@ async function saveCategoryToDB(category) {
 
 
 /**
- * Validate a contact object
+ * Validate the contact object properties
  * 
  * @param {object} contact - a contact object
  */
-async function validateContactProperties(contact) {
+async function sanitizeContactProperties(contact) {
     contact.id = hasLength(contact.id) ? contact.id : await getNewContactId();
     contact.initials = await getInitialsOfFirstAndLastWord(contact.name);
     !hasLength(contact.color) ? contact.color = getRandomColor() : null;
@@ -86,11 +86,11 @@ async function validateContactProperties(contact) {
 
 
 /**
- * Validate a task object
+ * Validate the task object properties
  * 
  * @param {object} task - a task object
  */
-async function validateTaskProperties(task) {
+async function sanitizeTaskProperties(task) {
     delete task.searchBase;
     task.id = hasLength(task.id) ? task.id : await getNewTaskId();
     task.status = hasLength(task.status) ? task.status : 'todo';

@@ -112,7 +112,7 @@ async function isExistingContact(email) {
  * @param {object} contact - a contact object
  */
 async function createContact(contact) {
-    await validateContactProperties(contact);
+    await sanitizeContactProperties(contact);
     !contacts ? contacts = [] : null;
     contacts.push(contact);
     localStorageMode ? await saveContactsToLS() : await saveContactToDB(contact);
@@ -125,7 +125,7 @@ async function createContact(contact) {
  * @param {object} task - a task object
  */
 async function createTask(task) {
-    await validateTaskProperties(task);
+    await sanitizeTaskProperties(task);
     !tasks ? tasks = [] : null;
     tasks.push(task);
     localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task);
@@ -138,8 +138,9 @@ async function createTask(task) {
  * @param {object} contact - a contact object
  */
 async function updateContact(contact) {
-    await validateContactProperties(contact);
+    await sanitizeContactProperties(contact);
     localStorageMode ? await saveContactsToLS() : await saveContactToDB(contact, 'update');
+    await getContacts();
 }
 
 
@@ -149,7 +150,7 @@ async function updateContact(contact) {
  * @param {object} task - a task object
  */
 async function updateTask(task) {
-    await validateTaskProperties(task);
+    await sanitizeTaskProperties(task);
     localStorageMode ? await saveTasksToLS() : await saveTaskToDB(task, 'update');
 }
 

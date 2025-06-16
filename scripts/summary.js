@@ -31,17 +31,20 @@ function showSummaryWelcomeScreen() {
         greetingScreen.classList.remove('active')
       } , 2000);
     }
-    setTimeout(() => showFreshDataSetMessage(), 1750);
+    setTimeout(() => loadFreshDummyData(), 1750);
 }
 
 
 /**
- * Show Message if fresh dummy data is loaded
+ * Load a fresh set of dummy data and show confirmation
  */
-function showFreshDataSetMessage() {
+async function loadFreshDummyData() {
     let params = new URLSearchParams(document.location.search);
     let fresh = params.get("fresh");
-    fresh ? showFloatingMessage('text', 'A fresh set of dummy data is loaded.', 8000, 'long') : null;
+    if(fresh) {
+      await resetData();
+      showFloatingMessage('text', 'A fresh set of dummy data is loaded.', 8000, 'long')
+    }
 }
 
 

@@ -210,14 +210,19 @@ async function renderTaskFormContactListbox(searchVal = '') {
  * 
  * @param {array} contactIds - array of assigned contact id's
  * @param {string} elementId - id of the render wrapper
+ * @param {number} maxQty - max. batches to render
  */
-async function renderTaskFormContactBatches(contactIds = [], elementId = 'profileBatches') {
+async function renderTaskFormContactBatches(contactIds = [], elementId = 'profileBatches', maxQty = 0) {
     let element = document.getElementById(elementId);
     element.innerHTML = '';
-    for (let index = 0; index < contactIds.length; index++) {
+    let renderQty = maxQty > 0 ? Math.min(maxQty, contactIds.length) : contactIds.length;
+    for (let index = 0; index < renderQty; index++) {
         let contact = await getContactById(contactIds[index]);
         contact ? element.innerHTML += getContactProfileBatchTemplate(contact) : null;
     }
+    if(contactIds.length > renderQty) {
+        element.innerHTML += getContactProfileBatchPlusTemplate();
+    };
 }
 
 
@@ -345,6 +350,8 @@ async function resetAddTaskForm(event) {
     await renderTaskFormCategoryListbox();    
     await renderTaskFormSubtasks(assignedSubtasks);
     event.preventDefault();
+    let topElement = document.getElementById(formId).querySelector('.top-element');
+    topElement ? topElement.scrollIntoView() : null;
 }
 
 

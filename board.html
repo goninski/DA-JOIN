@@ -10,6 +10,7 @@
   <script src="scripts/data-main.js"></script>
   <script src="scripts/data-sub.js"></script>
   <script src="scripts/templates.js"></script>
+  <script src="scripts/templates-tasks.js"></script>
   <script src="script.js"></script>
   <script src="scripts/forms-main.js"></script>
   <script src="scripts/forms-sub.js"></script>
@@ -30,7 +31,6 @@
           <div class="input-wrapper search-input-wrapper">
             <input id="inputTaskSearch" type="text" name="taskSearch" placeholder="Find Task" class="search-input" oninput="listenTaskSearchInput(event)"/>
             <div class="input-icon-wrapper input-icon-wrapper-search">
-              <!-- <div class="divider"></div> -->
               <button id="taskSearchBtn" class="not-clickable" tabindex="-1" onclick="filterTasks(event)">
                 <img src="assets/icons/search.svg" alt="search icon" class="icon-search">
               </button>
@@ -49,7 +49,7 @@
 
   <!-- DIALOG -->
   <div id="taskDialogue" class="dialogue task-dialogue dialogue-closed" xaria-hidden="true" xinert>
-    <div class="dialogue-inner flex-col pos-relative">
+    <div class="dialogue-inner flex-col pos-relative top-scroll-wrapper">
 
         <button class="close-dialogue" onclick="closeTaskDialogue(event)" title="close dialogue">
             <img src="assets/icons/close.svg" alt="close-icon" class="close-icon dark">
