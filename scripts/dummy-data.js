@@ -232,7 +232,7 @@ async function resetData(confirm = false) {
     contacts = contactsDummy;
     contacts.sort((a, b) => a.name.localeCompare(b.name));
     tasks = tasksDummy;
-    contacts.forEach((contact) => validateContactProperties(contact));
+    contacts.forEach((contact) => sanitizeContactProperties(contact));
     tasks.forEach((task) => convertRelationalDueDatesToDateStringDB(task));
     await saveAllData()
 }

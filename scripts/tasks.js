@@ -350,8 +350,6 @@ async function resetAddTaskForm(event) {
     await renderTaskFormCategoryListbox();    
     await renderTaskFormSubtasks(assignedSubtasks);
     event.preventDefault();
-    let topElement = document.getElementById(formId).querySelector('.top-element');
-    topElement ? topElement.scrollIntoView() : null;
 }
 
 

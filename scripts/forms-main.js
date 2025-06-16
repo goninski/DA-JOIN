@@ -185,10 +185,8 @@ function setInitialFormState(formId) {
     formElements.forEach(function(element) {
         setPlaceholderStyle(element);
     });
-    let topScrollWrapper = document.querySelector('.top-scroll-wrapper');
-    topScrollWrapper ? topScrollWrapper.scrollTop = 0 : null;
-    setTimeout(() => formElements[0].focus({preventScroll: true}), 125);
     setSubmitBtnState(formId);
+    setInitialFocus(formId, formElements);
 }
 
 
@@ -206,10 +204,24 @@ function resetForm(formId) {
         resetFormElements(element);
     });
     getInvalidInputIds(formId);
+    setInitialFocus(formId, formElements);
+}
+
+
+/**
+ * Set initial focus/scroll view
+ * 
+ * @param {string} formId - id of the form element
+ * @param {Elements} formElements - all form elements
+ */
+function setInitialFocus(formId, formElements = null) {
+    formElements ? setTimeout(() => formElements[0].focus({preventScroll: true}), 125) : null;
     let topScrollWrapper = document.querySelector('.top-scroll-wrapper');
     topScrollWrapper ? topScrollWrapper.scrollTop = 0 : null;
-    setTimeout(() => formElements[0].focus({preventScroll: true}), 125);
- }
+    let topElement = document.getElementById(formId).querySelector('.top-element');
+    topElement ? topElement.scrollIntoView() : null;
+}
+
 
 
 /**

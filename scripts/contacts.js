@@ -314,15 +314,10 @@ async function submitUpdateContact(event, currentContact) {
  * @param {object} formInputs - current form inputs object
  */
 async function setContactProperties(currentContact, formInputs ) {
-    console.log(currentContact.email);
-    console.log(formInputs.email);
     if(hasLength(formInputs.email)) {
         currentContact.name = formInputs.name;
-        console.log(contacts);
         currentContact.email = formInputs.email;
-        console.log(contacts);
         currentContact.phone = formInputs.phone;
-        console.log(contacts);
     }
 }
 

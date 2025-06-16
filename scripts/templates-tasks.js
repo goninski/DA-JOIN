@@ -190,7 +190,7 @@ function getTaskFormFieldsTemplate(task) {
     return `
         <div class="field-group flex-col flex-grow">
 
-            <div class="field-wrapper has-alert top-element">
+            <div class="field-wrapper has-alert">
                 <label for="title" class="required top-element">Title</label>
                 <input type="text" id="inputTitle" name="title" placeholder="Enter a title" required maxlength="128" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)">
                 <div role="alert" class="validation-alert">This field is required</div>
