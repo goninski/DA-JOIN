@@ -212,11 +212,9 @@ function setFieldValidity(element) {
     let isValidElement = validateElement(element);
     let fieldWrapper = getFieldWrapperFromId(element.id);
     setPlaceholderStyle(element);
-    setTimeout(() => {
-        if(fieldWrapper){
-            isValidElement ? fieldWrapper.classList.remove('invalid') : fieldWrapper.classList.add('invalid');
-        }
-    }, 175);
+    if(fieldWrapper){
+        isValidElement ? fieldWrapper.classList.remove('invalid') : fieldWrapper.classList.add('invalid');
+    }
 }
 
 

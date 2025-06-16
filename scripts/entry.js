@@ -109,6 +109,8 @@ function validateConfirmPassword(element) {
  * @param {event} event - onclick (guest log in button)
  */
 async function loginAsGuest(event) {
+    let invalids = document.getElementById('loginForm').querySelectorAll('.invalid');
+    invalids.forEach(element => element.classList.remove('invalid'));
     event.preventDefault();
     await submitLoginFormHandler(event, true);
 }
