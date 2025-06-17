@@ -153,7 +153,7 @@ async function renderTaskDetailsAssignedContacts(task) {
   let wrapper = document.getElementById('taskDetailsAssignedContactsWrapper');
   wrapper.innerHTML = '';
   if(hasLength(contactIds)) {
-    for (let index = 0; index < contactIds; index++) {
+    for (let index = 0; index < contactIds.length; index++) {
       let contact = await getContactById(contactIds[index]);
       contact ? wrapper.innerHTML += getTaskDetailsAssignedContactTemplate(contact) : null;
     }
