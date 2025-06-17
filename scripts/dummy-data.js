@@ -221,10 +221,11 @@ const tasksDummy = [
 /**
  * Delete all data and load a the fresh set of dummy data
  * 
- * @param {boolean} confirm - confirm reset true/false
+ * @param {boolean} aks - aks before reset true/false
+ * @param {boolean} msg - show confirm message true/false
  */
-async function resetData(confirm = false) {
-    if(confirm) {
+async function resetData(ask = false, msg = true) {
+    if(ask) {
       if(! window.confirm('All data will be reset to default dummy data! OK?')) return;
     }
     await deleteAllData();
@@ -235,6 +236,7 @@ async function resetData(confirm = false) {
     contacts.forEach((contact) => sanitizeContactProperties(contact));
     tasks.forEach((task) => convertRelationalDueDatesToDateStringDB(task));
     await saveAllData()
+    msg ? await showFloatingMessage('text', 'All data deleted and a fresh <br>set of dummy data is loaded.', 8000, 'long') : null;
 }
 
 

@@ -8,59 +8,58 @@ document.addEventListener('keydown', documentEventHandlerForms);
 
 
 /**
- * Helper: set and return an object 'currentFieldElements' with all relevant elements within a field wrapper
- * (e.g. wrapper, input, alert, combox, listbox)
+ * Document Event handler: close dropdowns on outslide click or ESC
  * 
- * @param {element} element - a dom element within a field wrapper
+ * @param {event} event - click, ESC (document)
  */
-function getCurrentFieldElements(element) {
-    currentFieldElements = {};
-    let fieldWrapper = element.closest('.field-wrapper');
-    if(fieldWrapper) {
-        currentFieldElements.fieldWrapper = fieldWrapper;
-        let input = fieldWrapper.querySelector('input');
-        input ? currentFieldElements.input = input : null;
-        let alert = fieldWrapper.querySelector('[role="alert"]');
-        alert ? currentFieldElements.alert = alert : null;
-        let combox = fieldWrapper.querySelector('[role="combox"]');
-        combox ? currentFieldElements.combox = combox : null;
-        let listbox = fieldWrapper.querySelector('[role="listbox"]');
-        if(listbox) {
-            currentFieldElements.listbox = listbox;
-            currentFieldElements.options = getCurrentSelectOptions(listbox);
-        }
+function documentEventHandlerForms(event) {
+    if( event.key === 'Escape' || event.type === "click" ) {
+        closeAllDropdowns(listboxElements);
+        focusCurrentCombox(event.target);
+        return;
     }
-    return currentFieldElements;
+    if( event.key === 'Enter') {
+        event.preventDefault();
+    }
 }
 
 
 /**
- * Helper: return field wrapper element from element
+ * Event handler: procedure on element focus
  * 
- * @param {element} element - current element
+ * @param {event} event - onfocus (inputs)
  */
-function getFieldWrapperFromElement(element) {
-    return element.closest('.field-wrapper');
+function focusInHandler(event) {
+    event.stopPropagation();
+    let element = event.currentTarget;
+    getCurrentFieldElements(element);
+    resetInputValidation(event);
 }
 
 
 /**
- * Helper: return field wrapper element from event
+ * Event handler: procedure on element focus out
  * 
- * @param {event} event - inherit
+ * @param {event} event - onfocusout (inputs)
  */
-function getFieldWrapperFromEvent(event) {
-    return getClosestParentElementFromEvent(event, '.field-wrapper');
+function focusOutHandler(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    let element = event.currentTarget;
+    (element.dataset.type == 'password') ? togglePasswordVisibility(event) : null;
+    validateInput(element);
 }
 
 
 /**
- * Helper: return field wrapper element from id
+ * Event handler: procedure on element input
  * 
- * @param {string} id - id of the current element
+ * @param {event} event - oninput (inputs)
  */
-function getFieldWrapperFromId(id) {
-    return getClosestParentElementFromId(id, '.field-wrapper');
+function onInputHandler(event) {
+    event.stopPropagation();
+    let formId = event.currentTarget.form.id;
+    setSubmitBtnState(formId);
 }
 
 
@@ -112,50 +111,6 @@ async function getInvalidInputIds(formId) {
 function formIsValid(formId) {
     getInvalidInputIds(formId);
     return !hasLength(invalidFields) ? true : false;
-}
-
-
-/**
- * Document Event handler: close dropdowns on outslide click or ESC
- * 
- * @param {event} event - click, ESC (document)
- */
-function documentEventHandlerForms(event) {
-    if( event.key === 'Escape' || event.type === "click" ) {
-        closeAllDropdowns(listboxElements);
-        focusCurrentCombox(event.target);
-        return;
-    }
-    if( event.key === 'Enter') {
-        event.preventDefault();
-    }
-}
-
-
-/**
- * Event handler: procedure on element focus
- * 
- * @param {event} event - onfocus (inputs)
- */
-function focusInHandler(event) {
-    event.stopPropagation();
-    let element = event.currentTarget;
-    getCurrentFieldElements(element);
-    resetInputValidation(event);
-}
-
-
-/**
- * Event handler: procedure on element focus out
- * 
- * @param {event} event - onfocusout (inputs)
- */
-function focusOutHandler(event) {
-    event.stopPropagation();
-    event.preventDefault();
-    let element = event.currentTarget;
-    (element.dataset.type == 'password') ? togglePasswordVisibility(event) : null;
-    validateInput(element);
 }
 
 
@@ -349,14 +304,27 @@ function validatePhoneInput(element) {
  */
 function setPlaceholderStyle(element) {
     if(element.hasAttribute('data-placeholder-style')) {
-        element.value == '' ? element.dataset.placeholderStyle = 'true' : element.dataset.placeholderStyle = 'false';
+        element.value.length > 0 ? element.dataset.placeholderStyle = 'false' : element.dataset.placeholderStyle = 'true';
+    }
+    setInitialAlert(element);
+}
+
+
+/**
+ * Set initial alert
+ * 
+ * @param {element} element - input element
+ */
+function setInitialAlert(element, event = null) {
+    if(event) {
+        event.stopPropagation();
+        element = event.currentTarget;
     }
     if(element.hasAttribute('data-initial-alert')) {
+        let isValidElement = validateElement(element);
         getCurrentFieldElements(element);
-        currentFieldElements.fieldWrapper.classList.remove('initial-alert');
-        if(element.value == '') {
-            currentFieldElements.fieldWrapper.classList.add('initial-alert');
-        }
+        currentFieldElements.fieldWrapper.classList.add('initial');
+        isValidElement ? currentFieldElements.fieldWrapper.classList.remove('initial') : null;
     }
 }
 
@@ -381,6 +349,7 @@ function removePlaceholderStyle(event) {
 function resetInputValidation(event) {
     let fieldWrapper = getFieldWrapperFromEvent(event);
     fieldWrapper ? fieldWrapper.classList.remove('invalid', 'fail') : null;
+    setPlaceholderStyle(event.currentTarget);
 }
 
 
@@ -391,9 +360,6 @@ function resetInputValidation(event) {
  */
 function setSubmitBtnState(formId) {
     let form = document.getElementById(formId);
-    // if(!formIsValid) {
-
-    // }
     let submitBtn = form.querySelector('[type="submit"]');
     if(submitBtn) {
         submitBtn.setAttribute('disabled', '');
@@ -401,15 +367,4 @@ function setSubmitBtnState(formId) {
     }
 }
 
-
-/**
- * Set submit button state from event
- * 
- * @param {string} formId - id of the form
- */
-function setSubmitBtnStateOnEvent(event) {
-    event.stopPropagation();
-    let formId = event.currentTarget.form.id;
-    setSubmitBtnState(formId);
-}
 

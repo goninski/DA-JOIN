@@ -93,7 +93,7 @@ textarea {
 .invalid input {
     border-color: var(--clr-warning) !important;
 }
-.validation-alert, .fail-alert {
+.initial-alert, .validation-alert, .fail-alert {
     visibility: hidden;
     position: absolute;
     bottom: 0;
@@ -105,9 +105,9 @@ textarea {
 .has-alert.fail .fail-alert {
     visibility: visible;
 }
-.has-alert.initial-alert:not(.invalid) .validation-alert {
-    color: var(--clr-subtle);
+.has-alert.initial:not(.invalid, .fail) .initial-alert {
     visibility: visible;
+    color: var(--clr-main);
 }
 .required-info {
     position: relative;

@@ -8,16 +8,12 @@ let boards = [
 
 let renderTasks = [];
 let currentDragTaskId;
-let dragScrollMouseIsDown = false;
-let dragScrollStartX;
-let dragScrollScrollLeft;
 document.addEventListener('click', documentEventHandlerBoard);
 document.addEventListener('keydown', documentEventHandlerBoard);
 
 
 /**
  * On page load board.html
- * @returns {Promise<void>}
  */
 async function initBoard() {
   await getContacts()
@@ -43,7 +39,6 @@ function documentEventHandlerBoard(event) {
 /**
  * Event handler: listen to search input and start actions
  * @param {Event} event - oninput (search input)
- * @returns {Promise<void>}
  */
 async function listenTaskSearchInput(event) {
   let taskSearchInput = document.getElementById('inputTaskSearch');
@@ -63,7 +58,6 @@ async function listenTaskSearchInput(event) {
 /**
  * Filter board tasks based on search input
  * @param {Event} event - input event
- * @returns {Promise<void>}
  */
 async function filterTasks(event) {
   event.preventDefault();
@@ -84,7 +78,6 @@ async function filterTasks(event) {
 
 /**
  * Render task boards
- * @returns {Promise<void>}
  */
 async function renderBoards() {
   let boardsWrapper = document.getElementById('boardsWrapper');
@@ -104,7 +97,6 @@ async function renderBoards() {
  * @param {Array<Object>} renderTasks - Array of task objects
  * @param {string} boardId - id of the current board
  * @param {HTMLElement} boardTaskList - html element of the task list wrapper
- * @returns {Promise<void>}
  */
 async function renderBoardTasks(renderTasks, boardId, boardTaskList) {
   let boardTasks = await renderTasks.filter(task => task.status == boardId);
@@ -128,7 +120,6 @@ async function renderBoardTasks(renderTasks, boardId, boardTaskList) {
  * @param {Event} event - onclick (board task)
  * @param {string} taskId - id of the clicked task
  * @param {boolean} [animated=true] - show dialogue with animation true/false
- * @returns {Promise<void>}
  */
 async function showTaskDetail(event, taskId, animated = true) {
   event.stopPropagation();
@@ -146,7 +137,6 @@ async function showTaskDetail(event, taskId, animated = true) {
 /**
  * Render assigned contacts on task detail
  * @param {Object} task - current task
- * @returns {Promise<void>}
  */
 async function renderTaskDetailsAssignedContacts(task) {
   let contactIds = task.contactIds;
@@ -164,7 +154,6 @@ async function renderTaskDetailsAssignedContacts(task) {
 /**
  * Render subtasks on task detail
  * @param {Object} task - current task
- * @returns {Promise<void>}
  */
 async function renderTaskDetailsSubtasks(task) {
   let subtasks = task.subtasks;
@@ -184,7 +173,6 @@ async function renderTaskDetailsSubtasks(task) {
  * @param {Event} event - click (three dot menu button)
  * @param {string} taskId - id of the current task
  * @param {string} currentStatus - current status of the current task
- * @returns {Promise<void>}
  */
 async function renderTaskOptionsMenu(event, taskId, currentStatus) {
   event.stopPropagation();
@@ -247,7 +235,6 @@ function onDragOver(event) {
  * @param {DragEvent} event - ondragleave (board tasklist)
  */
 function onDragLeave(event) {
-  // event.preventDefault();
   element = event.currentTarget;
   element.classList.remove('dropzone');
 }
@@ -257,7 +244,6 @@ function onDragLeave(event) {
  * Event handler: task drop
  * @param {DragEvent} event - ondrop (board tasklist)
  * @param {string} boardId - id of the target board
- * @returns {Promise<void>}
  */
 async function taskDrop(event, boardId) {
   element = event.currentTarget;
@@ -272,7 +258,6 @@ async function taskDrop(event, boardId) {
  * @param {string} taskId - id of the selected task
  * @param {string} statusNew - id of the new status (target board)
  * @param {string} [msg=''] - confirmation message
- * @returns {Promise<void>}
  */
 async function changeBoardTaskStatus(event, taskId, statusNew, msg = '') {
   event.stopPropagation();

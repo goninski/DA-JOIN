@@ -1,4 +1,61 @@
 /**
+ * Helper: set and return an object 'currentFieldElements' with all relevant elements within a field wrapper
+ * (e.g. wrapper, input, alert, combox, listbox)
+ * 
+ * @param {element} element - a dom element within a field wrapper
+ */
+function getCurrentFieldElements(element) {
+    currentFieldElements = {};
+    let fieldWrapper = element.closest('.field-wrapper');
+    if(fieldWrapper) {
+        currentFieldElements.fieldWrapper = fieldWrapper;
+        let input = fieldWrapper.querySelector('input');
+        input ? currentFieldElements.input = input : null;
+        let alert = fieldWrapper.querySelector('[role="alert"]');
+        alert ? currentFieldElements.alert = alert : null;
+        let combox = fieldWrapper.querySelector('[role="combox"]');
+        combox ? currentFieldElements.combox = combox : null;
+        let listbox = fieldWrapper.querySelector('[role="listbox"]');
+        if(listbox) {
+            currentFieldElements.listbox = listbox;
+            currentFieldElements.options = getCurrentSelectOptions(listbox);
+        }
+    }
+    return currentFieldElements;
+}
+
+
+/**
+ * Helper: return field wrapper element from element
+ * 
+ * @param {element} element - current element
+ */
+function getFieldWrapperFromElement(element) {
+    return element.closest('.field-wrapper');
+}
+
+
+/**
+ * Helper: return field wrapper element from event
+ * 
+ * @param {event} event - inherit
+ */
+function getFieldWrapperFromEvent(event) {
+    return getClosestParentElementFromEvent(event, '.field-wrapper');
+}
+
+
+/**
+ * Helper: return field wrapper element from id
+ * 
+ * @param {string} id - id of the current element
+ */
+function getFieldWrapperFromId(id) {
+    return getClosestParentElementFromId(id, '.field-wrapper');
+}
+
+
+/**
  * Event handler: dropdown (custom select)
  * 
  * @param {event} event - onclick (combox), onkeydown (combox single select)

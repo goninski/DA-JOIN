@@ -31,20 +31,6 @@ function showSummaryWelcomeScreen() {
         greetingScreen.classList.remove('active')
       } , 2000);
     }
-    setTimeout(() => loadFreshDummyData(), 1750);
-}
-
-
-/**
- * Load a fresh set of dummy data and show confirmation
- */
-async function loadFreshDummyData() {
-    let params = new URLSearchParams(document.location.search);
-    let fresh = params.get("fresh");
-    if(fresh) {
-      await resetData();
-      showFloatingMessage('text', 'A fresh set of dummy data is loaded.', 8000, 'long')
-    }
 }
 
 

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="styles/entry.css">
     <script src="scripts/data-main.js"></script>
     <script src="scripts/data-sub.js"></script>
+    <script src="scripts/dummy-data.js"></script>
     <script src="scripts/templates.js"></script>
     <script src="script.js"></script>
     <script src="scripts/forms-main.js"></script>
@@ -46,7 +47,7 @@
 
                     <div class="field-wrapper has-alert">
                         <div class="input-wrapper">
-                            <input type="email" id="inputEmail" name="email" placeholder="Email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="setSubmitBtnStateOnEvent(event)">
+                            <input type="email" id="inputEmail" name="email" placeholder="Email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="onInputHandler(event)">
                             <div class="input-icon-wrapper simple">
                                 <img src="assets/icons/input-email.svg" alt="email-icon" class="icon-email-input">
                             </div>
@@ -55,7 +56,7 @@
                     </div>
                     <div class="field-wrapper has-alert">
                         <div class="input-wrapper">
-                            <input type="password" data-type="password" id="inputPassword" name="password" placeholder="Password" required minlength="8" maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="passwordInputHandler(event)">
+                            <input type="password" data-type="password" id="inputPassword" name="password" placeholder="Password" required minlength="8" maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="passwordInputHandler(event), onInputHandler(event)">
                             <div class="input-icon-wrapper simple">
                                 <img src="assets/icons/input-password.svg" alt="password-icon" class="icon-size-default">
                                 <button onclick="togglePasswordVisibility(event)" tabindex="-1" class="hide hide-focus"><img src="assets/icons/input-password-hidden.svg" alt="password-hidden-icon" class="icon-size-default"></button>
@@ -65,17 +66,12 @@
                         <div id="loginFailAlert" role="alert" class="fail-alert">Check your email and password. Please try again.</div>
                     </div>
 
-                    <div class="field-wrapper field-wrapper-terms">
-                        <div class="input-wrapper custom-checkbox-wrapper left" title="Delete all data and start with a fresh set of dummy data (recommended on first test use)">
-                            <input type="checkbox" id="inputLoadFreshDataset" name="loadFreshDataSet" class="custom-checkbox clickable hide-focus">
-                            <img src="assets/icons/checkbox-checked.svg" alt="checkbox-checked" class="icon-checkbox-checked custom-checkbox-checked">
-                            <label for="inputLoadFreshDataset" class="label xpointer-events-none">Start with a fresh set of dummy&nbsp;data</label>
-                        </div>
-                    </div>
-
                     <div id="submitBtnWrapper" class="submit-button-wrapper flex-row justify-center align-center">
-                        <button id="btnSubmit" type="submit" class="button btn-check btn-icon btn-primary" disabled="">Log in</button>
-                        <button id="btnLoginAsGuest" class="button btn-check btn-icon btn-secondary" onclick="loginAsGuest(event)" title="Log in as Guest">Guest Log in</button>
+                        <button id="btnSubmit" type="submit" class="button btn-check btn-iconless btn-primary" disabled="">Log in</button>
+                        <button id="btnLoginAsGuest" class="button btn-check btn-iconless btn-secondary" onclick="loginAsGuest(event)" title="Log in as Guest">Guest Log in</button>
+                    </div>
+                    <div class="dummy-data-button-wrapper" title="All data will be resetted including new signups!">
+                        <button onclick="loadFreshDummyData(event)">click here</button><span>to load a fresh set of dummy data</span>
                     </div>
                 </div>
             </form>

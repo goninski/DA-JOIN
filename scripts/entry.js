@@ -30,7 +30,6 @@ async function initSignUp() {
  */
 function passwordInputHandler(event) {
     event.stopPropagation();
-    setSubmitBtnStateOnEvent(event);
     getCurrentFieldElements(event.currentTarget);
     let inputValue = currentFieldElements.input.value;
     let pwIconElement = currentFieldElements.fieldWrapper.querySelector('[alt="password-icon"]');
@@ -104,6 +103,17 @@ function validateConfirmPassword(element) {
 
 
 /**
+ * Load a fresh set of dummy data
+ * 
+ * @param {event} event - click (login form)
+ */
+async function loadFreshDummyData(event) {
+    event.preventDefault();
+    await resetData();
+}
+
+
+/**
  * Sign in as guest
  * 
  * @param {event} event - onclick (guest log in button)
@@ -144,9 +154,8 @@ async function submitLoginFormHandler(event, isGuest = false) {
 async function loginSuccessfull(formInputs) {
     await saveToLocalStorage('pseudoAuthStatus', loggedInUserId);
     let floatingMsg = 'You logged in successfully';
-    let urlParam = (formInputs.loadFreshDataSet && formInputs.loadFreshDataSet == 'on') ? '?fresh=true' : '';
     await showFloatingMessage('text', floatingMsg);
-    setTimeout(() => window.location.href = '/summary.html' + urlParam, 1500);
+    setTimeout(() => window.location.href = '/summary.html', 1500);
 }
 
 
@@ -182,7 +191,7 @@ async function signUpSuccessfull(formInputs) {
       await setContactPropertiesOnSignUp(currentContact, formInputs);
       await createContact(currentContact);
       await showFloatingMessage('text', 'You Signed Up successfully');
-      redirectToLogin();
+      redirectToLogin(null, 1500);
 }
 
 
