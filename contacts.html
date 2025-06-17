@@ -84,16 +84,16 @@
                             </div>
 
                             <div class="field-group flex-col flex-grow">
-                                <div class="field-wrapper has-alert">
+                                <div class="field-wrapper has-alert initial-alert">
                                     <div class="input-wrapper">
                                         <input type="text" id="inputName" name="name" placeholder="Name" required maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="setSubmitBtnStateOnEvent(event)">
                                         <div class="input-icon-wrapper simple">
                                             <img src="assets/icons/input-name.svg" alt="person-icon" class="icon-name-input">
                                         </div>
                                     </div>
-                                    <div role="alert" class="validation-alert">This field is required</div>
+                                    <div role="alert" class="validation-alert">Please enter your name</div>
                                 </div>
-                                <div class="field-wrapper has-alert">
+                                <div class="field-wrapper has-alert initial-alert">
                                     <div class="input-wrapper">
                                         <input type="email" id="inputEmail" name="email" placeholder="Email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required maxlength="64" onfocus="focusInHandler(event)" onfocusout="focusOutHandler(event)" oninput="setSubmitBtnStateOnEvent(event)">
                                         <div class="input-icon-wrapper simple">

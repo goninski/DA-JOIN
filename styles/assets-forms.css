@@ -105,6 +105,10 @@ textarea {
 .has-alert.fail .fail-alert {
     visibility: visible;
 }
+.has-alert.initial-alert:not(.invalid) .validation-alert {
+    color: var(--clr-light-blue);
+    visibility: visible;
+}
 .required-info {
     position: relative;
     margin-left: 16px;

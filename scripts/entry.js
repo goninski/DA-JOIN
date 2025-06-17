@@ -190,8 +190,7 @@ async function signUpSuccessfull(formInputs) {
  * Sign up fail procedure (notification if user already exists and redirect to login page)
  */
 async function signUpFail() {
-      await showFloatingMessage('text', 'Your Email Address already exists. <br>Please sign in.', 7000, 'alert');
-      redirectToLogin(null, 4000);
+      await showFloatingMessage('text', 'Your Email Address already exists.', 7000, 'alert');
 }
 
 
