@@ -98,9 +98,7 @@ async function getInvalidInputIds(formId) {
     let formElements = getFormElementsArray(formId);
     formElements.forEach(function(element) {
         let isValidElement = validateElement(element);
-        if(!isValidElement) {
-            invalidFields.push(element.id);
-        }
+        !isValidElement ? invalidFields.push(element.id) : null;
     });
 }
 
@@ -180,11 +178,8 @@ function getFormElementsArray(formId) {
  * @param {string} formId - id of the form element
  */
 function setInitialFormState(formId) {
-    let form = document.getElementById(formId);
     let formElements = getFormElementsArray(formId);
-    formElements.forEach(function(element) {
-        setPlaceholderStyle(element);
-    });
+    formElements.forEach((element) => setPlaceholderStyle(element));
     setSubmitBtnState(formId);
     setInitialFocus(formId, formElements);
 }
@@ -200,9 +195,7 @@ function resetForm(formId) {
     form.reset();
     listboxElements = [];
     let formElements = getFormElementsArray(formId);
-    formElements.forEach(function(element) {
-        resetFormElements(element);
-    });
+    formElements.forEach((element) => resetFormElements(element));
     getInvalidInputIds(formId);
     setInitialFocus(formId, formElements);
 }
@@ -221,7 +214,6 @@ function setInitialFocus(formId, formElements = null) {
     let topElement = document.getElementById(formId).querySelector('.top-element');
     topElement ? topElement.scrollIntoView() : null;
 }
-
 
 
 /**
@@ -344,9 +336,7 @@ function validatePhoneInput(element) {
     let formattedValue = inputValue;
     let rawValue = inputValue.replaceAll(' ', '');
     if(rawValue.length >= 9){
-        if(! inputValue.startsWith("+")) {
-            formattedValue = "+49 " + inputValue;
-        }
+        formattedValue = !inputValue.startsWith("+") ? "+49 " + inputValue : formattedValue;
     }
     element.value = formattedValue;
 }
