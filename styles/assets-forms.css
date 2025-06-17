@@ -106,7 +106,7 @@ textarea {
     visibility: visible;
 }
 .has-alert.initial-alert:not(.invalid) .validation-alert {
-    color: var(--clr-light-blue);
+    color: var(--clr-subtle);
     visibility: visible;
 }
 .required-info {

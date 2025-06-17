@@ -343,13 +343,20 @@ function validatePhoneInput(element) {
 
 
 /**
- * Set placeholder style for input without placeholder functionality if needed (e.g date)
+ * Set custom placeholder styles and inital alerts
  * 
  * @param {element} element - input element
  */
 function setPlaceholderStyle(element) {
     if(element.hasAttribute('data-placeholder-style')) {
         element.value == '' ? element.dataset.placeholderStyle = 'true' : element.dataset.placeholderStyle = 'false';
+    }
+    if(element.hasAttribute('data-initial-alert')) {
+        getCurrentFieldElements(element);
+        currentFieldElements.fieldWrapper.classList.remove('initial-alert');
+        if(element.value == '') {
+            currentFieldElements.fieldWrapper.classList.add('initial-alert');
+        }
     }
 }
 
@@ -384,6 +391,9 @@ function resetInputValidation(event) {
  */
 function setSubmitBtnState(formId) {
     let form = document.getElementById(formId);
+    // if(!formIsValid) {
+
+    // }
     let submitBtn = form.querySelector('[type="submit"]');
     if(submitBtn) {
         submitBtn.setAttribute('disabled', '');
