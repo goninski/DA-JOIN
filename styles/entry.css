@@ -154,6 +154,7 @@
     font-size: 14px;
     line-height: 1.4;
     margin-bottom: -8px;
+    cursor: context-menu;
 }
 .dummy-data-button-wrapper:hover .remark {
     color: var(--clr-warning);
