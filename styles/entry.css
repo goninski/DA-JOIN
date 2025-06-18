@@ -133,7 +133,7 @@
     background-color: transparent;
 }
 .entry-form .field-wrapper-terms {
-    margin-top: 16px;
+    margin-top: 12px;
     margin-bottom: 4px;
     align-items: center;
     color: #A8A8A8;
@@ -141,6 +141,9 @@
 .entry-form .submit-button-wrapper {
     margin-top: 28px;
     gap: 32px;
+}
+.sign-up-page .submit-button-wrapper {
+    margin-top: 6px;
 }
 .dummy-data-button-wrapper {
     display: block;
@@ -150,6 +153,7 @@
     text-align: center;
     font-size: 14px;
     line-height: 1.4;
+    margin-bottom: -8px;
 }
 .dummy-data-button-wrapper:hover .remark {
     color: var(--clr-warning);
