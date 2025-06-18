@@ -143,19 +143,23 @@
     gap: 32px;
 }
 .dummy-data-button-wrapper {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5em;
+    display: block;
     width: 100%;
     margin-top: 32px;
     color: #A8A8A8;
     text-align: center;
+    font-size: 14px;
+    line-height: 1.4;
+}
+.dummy-data-button-wrapper:hover .remark {
+    color: var(--clr-warning);
 }
 .dummy-data-button-wrapper button {
+    display: inline;
     text-decoration: underline;
     color: inherit;
     font-size: inherit;
+    margin-top: 10px;
 }
 .dummy-data-button-wrapper span {
     padding-top: 1px;
@@ -163,6 +167,11 @@
 .dummy-data-button-wrapper button:hover {
     color: var(--clr-light-blue);
 }
+.dummy-data-button-wrapper .remark {
+    margin-top: 8px;
+    font-size: 11px;
+}
+
 
 @media(max-width: 800px) {
     :root {
@@ -204,16 +213,6 @@
     .entry-form .submit-button-wrapper button {
         width: 100%;
         max-width: 180px;
-    }
-    .dummy-data-button-wrapper {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 0.6em;
-        width: 100%;
-        margin-top: 32px;
-        color: #A8A8A8;
     }
 }
 

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="styles/entry.css">
     <script src="scripts/data-main.js"></script>
     <script src="scripts/data-sub.js"></script>
+    <script src="scripts/dummy-data.js"></script>
     <script src="scripts/templates.js"></script>
     <script src="script.js"></script>
     <script src="scripts/forms-main.js"></script>
@@ -89,6 +90,11 @@
 
                     <div id="submitBtnWrapper" class="submit-button-wrapper flex-row justify-center align-center">
                         <button id="btnSubmit" type="submit" class="button btn-check btn-iconless btn-primary" disabled="">Sign up</button>
+                    </div>
+                    <div class="dummy-data-button-wrapper">
+                        <div>wanna load a fresh set of dummy&nbsp;data?</div>
+                        <div class="remark">any existing sign ups and tasks will be replaced !</div>
+                        <button onclick="loadFreshDummyData(event)">click here</button><span>&ensp;to load</span>
                     </div>
                 </div>
             </form>
